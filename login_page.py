@@ -1,10 +1,12 @@
 import streamlit as st
-from firebase_setup import auth
+from firebase_setup import initialize_firebase
 
-def login_page(auth):
+def login_page():
     st.title("Login")
     email = st.text_input("Email")
     password = st.text_input("Senha", type="password")
+
+    auth = initialize_firebase()
 
     if st.button("Entrar"):
         try:
@@ -15,3 +17,4 @@ def login_page(auth):
             st.error("Erro no login. Verifique suas credenciais.")
             st.write(e)
     return None
+
