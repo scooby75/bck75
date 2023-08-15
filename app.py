@@ -5,7 +5,7 @@ from content_page import content_page
 def main():
     st.set_page_config(page_title="App com Streamlit e Firebase")
     
-    user = login_page()
+    user = main()
     content_page(user)
 
 if __name__ == "__main__":
