@@ -5,7 +5,7 @@ from firebase_admin import credentials
 from firebase_admin import auth
 
 
-cred = credentials.Certificate("pondering-5ff7c-c033cfade319.json")
+cred = credentials.Certificate("footballdata.json")
 firebase_admin.initialize_app(cred)
 def app():
 # Usernm = []
