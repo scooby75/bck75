@@ -1,17 +1,13 @@
 import streamlit as st
 from firebase_setup import auth
+from content_page import content_page
+from login_page import login_page
 
-def login_page():
-    st.title("Login")
-    email = st.text_input("Email")
-    password = st.text_input("Senha", type="password")
+def main():
+    st.set_page_config(page_title="App com Streamlit e Firebase")
+    
+    user = login_page()
+    content_page(user)
 
-    if st.button("Entrar"):
-        try:
-            user = auth.sign_in_with_email_and_password(email, password)
-            st.success("Login bem-sucedido!")
-            return user
-        except Exception as e:
-            st.error("Erro no login. Verifique suas credenciais.")
-            st.write(e)
-    return None
+if __name__ == "__main__":
+    main()
