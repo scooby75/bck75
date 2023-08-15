@@ -1,14 +1,18 @@
 import streamlit as st
-from firebase_setup import initialize_firebase
 from login_page import login_page
 from content_page import content_page
+from firebase_setup import initialize_firebase
 
-def main():
-    st.set_page_config(page_title="App com Streamlit e Firebase")
-    auth = initialize_firebase()
-    user = login_page(auth)
-    content_page(user)
+st.set_page_config(page_title="App com Streamlit e Firebase")
 
-if __name__ == "__main__":
-    main()
+# Inicializa a autenticação do Firebase
+auth = initialize_firebase()
+
+# Página de Login
+if not st.session_state.logged_in:
+    login_page()
+    
+# Páginas de Conteúdo
+else:
+    content_page()
 
