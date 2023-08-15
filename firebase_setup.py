@@ -21,9 +21,3 @@ firebase_config = {
 def initialize_firebase():
     firebase = pyrebase.initialize_app(firebase_config)
     return firebase.auth()
-
-def initialize_firebase():
-    firebase = pyrebase.initialize_app(firebase_config)
-    return firebase.auth()
-
-auth = initialize_firebase()
