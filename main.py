@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 from login import app as login_app
+from login import app as games_app
 from cs import app as cs_app
 from tips import app as tips_app
 
@@ -24,7 +25,7 @@ class MultiApp:
         with st.sidebar:
             app = option_menu(
                 menu_title='Football Data Analysis ',
-                options=['Conta', 'CS', 'Tips'],
+                options=['Conta', 'Jogos do Dia', 'CS', 'Tips'],
                 icons=['house-fill', 'calculator-fill', 'currency-dollar'],
                 menu_icon='chat-text-fill',
                 default_index=1,
@@ -38,6 +39,8 @@ class MultiApp:
 
         if app == "Conta":
             login_app()
+        if app == "Jogos do Dia":
+            games_app()
         if app == "CS":
             cs_app()
         if app == "Tips":
@@ -48,6 +51,7 @@ multi_app = MultiApp()
 
 # Adicionar os aplicativos à instância
 multi_app.add_app("Conta", login_app)
+multi_app.add_app("Jogos do Dia", games_app)
 multi_app.add_app("CS", cs_app)
 multi_app.add_app("Tips", tips_app)
 
