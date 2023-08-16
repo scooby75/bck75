@@ -26,6 +26,7 @@ class MultiApp:
                 app["function"]()  # Chama a função do aplicativo correspondente
 
 def login():
+    st.session_state.sync()  # Sincroniza o estado da sessão
     if not st.session_state.is_logged_in:
         username = st.text_input("Nome de usuário")
         password = st.text_input("Senha", type="password")
@@ -48,6 +49,7 @@ def main():
 if __name__ == "__main__":
     app = MultiApp()
     app.add_app("Conta", test.app)  # Substitua test.app pela função apropriada do seu aplicativo
-    st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", use_column_width=True)
+    
+    st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=230", use_column_width=True)
     main()
 
