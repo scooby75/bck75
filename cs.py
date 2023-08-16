@@ -99,3 +99,7 @@ def app():
         # Formatar e exibir a tabela
         formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
         st.dataframe(formatted_df)
+
+# Call the app function to run the Streamlit app
+app()
+
