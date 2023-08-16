@@ -1,19 +1,46 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
+import firebase_admin
+from firebase_admin import credentials, auth
+import pandas as pd
+import numpy as np
+from scipy.stats import poisson
 
-from login import app as login_app
-from games import app as jogos_do_dia_app
-from cs import app as cs_app
-from tips import app as tips_app
+# Initialize Firebase
+cred = credentials.Certificate("football-data-analysis-29975-firebase-adminsdk-ejqyp-bd278ebaff.json")
+firebase_admin.initialize_app(cred)
 
-st.set_page_config(
-    page_title="Football Data Analysis",
-)
+# Login Function
+def login_app():
+    st.title('Bem Vindo :red[Football Data Analysis]:')
+    
+    if 'user' not in st.session_state:
+        st.session_state.user = None
+        
+    def f():
+        try:
+            user = auth.get_user_by_email(email)
+            st.session_state.user = user
+            st.success('Login successful!')
+        except:
+            st.warning('Login Failed')
+            
+    def t():
+        st.session_state.user = None
+        st.session_state.signed_out = True
+        
+    if st.session_state.user is None:
+        email = st.text_input('Email Address')
+        password = st.text_input('Password', type='password')
+        st.button('Login', on_click=f)
+    else:
+        st.text('Logged in as: ' + st.session_state.user.email)
+        st.button('Sign Out', on_click=t)
 
+# MultiApp Class
 class MultiApp:
     def __init__(self):
         self.apps = []
-
+        
     def add_app(self, title, func):
         self.apps.append({
             "title": title,
@@ -22,40 +49,22 @@ class MultiApp:
 
     @staticmethod
     def run():
+        app_names = [app["title"] for app in multi_app.apps]
         with st.sidebar:
-            # Adicionar uma imagem na barra lateral
-            st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", use_column_width=True)
-            app = option_menu(
-                menu_title='Football Data Analysis ',
-                options=['Conta', 'Jogos do Dia', 'CS', 'Tips'],
-                icons=['house-fill', 'calendar2', 'calculator-fill', 'currency-dollar'],
-                menu_icon='chat-text-fill',
-                default_index=1,
-                styles={
-                    "container": {"padding": "5!important", "background-color": 'black'},
-                    "icon": {"color": "white", "font-size": "23px"},
-                    "nav-link": {"color": "white", "font-size": "20px", "text-align": "left", "margin": "0px", "--hover-color": "blue"},
-                    "nav-link-selected": {"background-color": "#02ab21"},
-                }
-            )
+            selected_app = st.selectbox('Select Module', app_names)
+        
+        for app in multi_app.apps:
+            if selected_app == app["title"]:
+                app["function"]()
 
-        if app == "Conta":
-            login_app()
-        if app == "Jogos do Dia":
-            jogos_do_dia_app()
-        if app == "CS":
-            cs_app()
-        if app == "Tips":
-            tips_app()
-
-# Criar uma instância de MultiApp
+# Create instance of MultiApp
 multi_app = MultiApp()
 
-# Adicionar os aplicativos à instância
-multi_app.add_app("Conta", login_app)
+# Add apps to the instance
+multi_app.add_app("Login", login_app)
 multi_app.add_app("Jogos do Dia", jogos_do_dia_app)
 multi_app.add_app("CS", cs_app)
 multi_app.add_app("Tips", tips_app)
 
-# Executar o aplicativo selecionado
+# Run the selected app
 multi_app.run()
