@@ -1,9 +1,11 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
-import login, cs
 
+from streamlit_option_menu import option_menu
+
+
+import login, cs
 st.set_page_config(
-    page_title="Football Data Analysis",
+        page_title="Football Data Analysis",
 )
 
 class MultiApp:
