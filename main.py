@@ -3,7 +3,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 
-import home, trending, test, your, about
+import trending, test, your, about
 st.set_page_config(
         page_title="Football Data Analysis",
 )
