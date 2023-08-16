@@ -83,4 +83,4 @@ def app():
 
                             
     def ap():
-        st.write('login')
+        st.write('Jogos do Dia')
