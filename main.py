@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 from login import app as login_app
-from jogos_do_dia import app as jogos_do_dia_app  # Renomeado o módulo aqui
+from games import app as jogos_do_dia_app
 from cs import app as cs_app
 from tips import app as tips_app
 
