@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 from login import app as login_app
-from jogos do dia import app as games_app
+from jogos_do_dia import app as games_app  # Renomeado o módulo aqui
 from cs import app as cs_app
 from tips import app as tips_app
 
@@ -23,6 +23,8 @@ class MultiApp:
     @staticmethod
     def run():
         with st.sidebar:
+            # Adicionar uma imagem na barra lateral
+            st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", use_column_width=True)
             app = option_menu(
                 menu_title='Football Data Analysis ',
                 options=['Conta', 'Jogos do Dia', 'CS', 'Tips'],
@@ -57,7 +59,3 @@ multi_app.add_app("Tips", tips_app)
 
 # Executar o aplicativo selecionado
 multi_app.run()
-
-         
-
-
