@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from scipy.stats import poisson
 
-def cs_app():
+def app():
     if st.session_state.user is None:
         st.warning('Please log in to access this module.')
         return
