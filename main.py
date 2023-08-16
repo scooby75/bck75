@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 from login import app as login_app
-from login import app as games_app
+from jogos do dia import app as games_app
 from cs import app as cs_app
 from tips import app as tips_app
 
