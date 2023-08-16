@@ -9,7 +9,7 @@ cred = credentials.Certificate("football-data-analysis-29975-firebase-adminsdk-e
 firebase_admin.initialize_app(cred)
 def app():
 # Usernm = []
-    st.title('Bem Vindo : red[Football Data Analysis]:')
+    st.title('Bem Vindo :red[Football Data Analysis]:')
 
     if 'username' not in st.session_state:
         st.session_state.username = ''
@@ -83,4 +83,4 @@ def app():
 
                             
     def ap():
-        st.write('CS')
+        st.write('login')
