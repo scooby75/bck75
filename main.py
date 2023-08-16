@@ -41,9 +41,9 @@ class MultiApp:
 
         
         if app == "Login":
-            home.app()
+            login.app()
         if app == "CS":
-            test.app()    
+            cs.app()    
         
              
           
