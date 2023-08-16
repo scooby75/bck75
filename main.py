@@ -26,9 +26,9 @@ class MultiApp:
         # app = st.sidebar(
         with st.sidebar:        
             app = option_menu(
-                menu_title='Football Data Analysis ',
+                menu_title='Football Data Analysis',
                 options=['Home', 'Login', 'CS'],
-                icons=['house-fill','person-circle', 'calculator'],
+                icons=['house-fill', 'person-circle', 'calculator'],
                 menu_icon='chat-text-fill',
                 default_index=1,
                 styles={
