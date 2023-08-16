@@ -1,3 +1,0 @@
-streamlit
-pyrebase4
-python-dotenv
