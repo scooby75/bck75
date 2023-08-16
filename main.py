@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
+
 from login import app as login_app
 from cs import app as cs_app
 from tips import app as tips_app
@@ -24,7 +25,7 @@ class MultiApp:
             app = option_menu(
                 menu_title='Football Data Analysis ',
                 options=['Conta', 'CS', 'Tips'],
-                icons=['house-fill', 'person-circle', 'trophy-fill', 'chat-fill', 'info-circle-fill'],
+                icons=['house-fill', 'calculator-fill', 'currency-dollar'],
                 menu_icon='chat-text-fill',
                 default_index=1,
                 styles={
