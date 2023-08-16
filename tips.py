@@ -2,7 +2,13 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-def app():
+def tips_app():
+    if st.session_state.user is None:
+        st.warning('Please log in to access this module.')
+        return
+    
+    st.subheader("Betting Tips")
+
     # URL do arquivo CSV
     url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
 
