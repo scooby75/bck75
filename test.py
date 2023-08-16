@@ -9,7 +9,7 @@ cred = credentials.Certificate("football-data-analysis-29975-firebase-adminsdk-e
 firebase_admin.initialize_app(cred)
 def app():
 # Usernm = []
-    st.title('Welcome to :violet[Football Data Analysis] :sunglasses:')
+    st.title('Welcome to :red[Football Data Analysis] :')
 
     if 'username' not in st.session_state:
         st.session_state.username = ''
