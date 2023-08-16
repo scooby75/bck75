@@ -25,9 +25,21 @@ class MultiApp:
             if active_app == app["title"]:
                 app["function"]()  # Chama a função do aplicativo correspondente
 
-app = MultiApp()
-app.add_app("Conta", test.app)  # Substitua test.app pela função apropriada do seu aplicativo
-app.add_app("Tendências", trending.app)  # Substitua trending.app pela função apropriada do seu aplicativo
-app.add_app("Suas Postagens", your.app)  # Substitua your.app pela função apropriada do seu aplicativo
-app.add_app("Sobre", about.app)  # Substitua about.app pela função apropriada do seu aplicativo
-app.run()
+def login():
+    username = st.text_input("Nome de usuário")
+    password = st.text_input("Senha", type="password")
+    login_button = st.button("Entrar")
+
+    if login_button:
+        # Faça a validação do login aqui
+        # Se as credenciais estiverem corretas, mostre o seletor de página
+        if username == "usuario" and password == "senha":
+            app.run()
+        else:
+            st.error("Credenciais inválidas")
+
+def main():
+    login()
+
+if __name__ == "__main__":
+    main()
