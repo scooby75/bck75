@@ -3,7 +3,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 
-import home, login, cs
+import login, cs
 st.set_page_config(
         page_title="Football Data Analysis",
 )
@@ -27,7 +27,7 @@ class MultiApp:
         with st.sidebar:        
             app = option_menu(
                 menu_title='Football Data Analysis',
-                options=['Home', 'Login', 'CS'],
+                options=['Login', 'CS'],
                 icons=['house-fill', 'person-circle', 'calculator'],
                 menu_icon='chat-text-fill',
                 default_index=1,
@@ -39,8 +39,7 @@ class MultiApp:
                 
                 )
 
-        if app == "Home":
-            home.app()
+        
         if app == "Login":
             login.app()
         if app == "CS":
