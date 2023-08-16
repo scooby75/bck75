@@ -27,7 +27,7 @@ class MultiApp:
         with st.sidebar:        
             app = option_menu(
                 menu_title='Football Data Analysis',
-                options=['Home','Account','Trending','Your Posts','about'],
+                options=['Account','Trending','Your Posts','about'],
                 icons=['house-fill','person-circle','trophy-fill','chat-fill','info-circle-fill'],
                 menu_icon='chat-text-fill',
                 default_index=1,
@@ -40,8 +40,8 @@ class MultiApp:
                 )
 
         
-        if app == "Home":
-            home.app()
+        #if app == "Home":
+            #home.app()
         if app == "Account":
             test.app()    
         if app == "Trending":
