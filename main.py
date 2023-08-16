@@ -26,20 +26,28 @@ class MultiApp:
                 app["function"]()  # Chama a função do aplicativo correspondente
 
 def login():
-    username = st.text_input("Nome de usuário")
-    password = st.text_input("Senha", type="password")
-    login_button = st.button("Entrar")
+    if not st.session_state.is_logged_in:
+        username = st.text_input("Nome de usuário")
+        password = st.text_input("Senha", type="password")
+        login_button = st.button("Entrar")
 
-    if login_button:
-        # Faça a validação do login aqui
-        # Se as credenciais estiverem corretas, mostre o seletor de página
-        if username == "usuario" and password == "senha":
-            app.run()
-        else:
-            st.error("Credenciais inválidas")
+        if login_button:
+            # Faça a validação do login aqui
+            # Se as credenciais estiverem corretas, defina is_logged_in como True
+            if username == "usuario" and password == "senha":
+                st.session_state.is_logged_in = True
+            else:
+                st.error("Credenciais inválidas")
 
 def main():
     login()
 
+    if st.session_state.is_logged_in:
+        app.run()
+
 if __name__ == "__main__":
+    app = MultiApp()
+    app.add_app("Conta", test.app)  # Substitua test.app pela função apropriada do seu aplicativo
+    st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", use_column_width=True)
     main()
+
