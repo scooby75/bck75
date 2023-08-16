@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from scipy.stats import poisson 
 
 def app():
 # URL do arquivo CSV com os dados dos jogos
