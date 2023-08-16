@@ -3,7 +3,14 @@ import pandas as pd
 import numpy as np
 from scipy.stats import poisson
 
-def app():
+def cs_app():
+    if st.session_state.user is None:
+        st.warning('Please log in to access this module.')
+        return
+    
+    st.subheader("CS Analysis")
+    
+
     # URL do arquivo CSV com os dados dos jogos
     url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
 
