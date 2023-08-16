@@ -1,6 +1,5 @@
 import streamlit as st
 import firebase_admin
-from firebase_admin import firestore
 from firebase_admin import credentials
 from firebase_admin import auth
 
@@ -14,17 +13,20 @@ def app():
     # Usernm = []
     st.title('Bem Vindo :red[Football Data Analysis]:')
 
+    # Inicialize o estado de sessão
     if 'username' not in st.session_state:
         st.session_state.username = ''
     if 'useremail' not in st.session_state:
         st.session_state.useremail = ''
+    if 'signedout' not in st.session_state:
+        st.session_state.signedout = False
+    if 'signout' not in st.session_state:
+        st.session_state.signout = False
 
-    # Resto do seu código de autenticação...
+    # ... Resto do seu código de autenticação ...
 
-    if st.session_state.signout:
-        st.text('Name ' + st.session_state.username)
-        st.text('Email id: ' + st.session_state.useremail)
-        st.button('Sign out', on_click=t)
+    if not st.session_state.signedout:
+        # Resto do seu código de exibição
 
     # Chame a função ap() para exibir o seu conteúdo
     ap()
