@@ -1,14 +1,10 @@
 import streamlit as st
-
 from streamlit_option_menu import option_menu
-
-
 import trending, test, your, about
+
 st.set_page_config(
-        page_title="Football Data Analysis",
+    page_title="Football Data Analysis",
 )
-
-
 
 class MultiApp:
 
@@ -16,41 +12,22 @@ class MultiApp:
         self.apps = []
 
     def add_app(self, title, func):
-
         self.apps.append({
             "title": title,
             "function": func
         })
 
-    def run():
-        # app = st.sidebar(
-        with st.sidebar:        
-            app = option_menu(
-                menu_title='Football Data Analysis',
-                options=['Account','Trending','Your Posts','about'],
-                icons=['house-fill','person-circle','trophy-fill','chat-fill','info-circle-fill'],
-                menu_icon='chat-text-fill',
-                default_index=1,
-                styles={
-                    "container": {"padding": "5!important","background-color":'black'},
-        "icon": {"color": "white", "font-size": "23px"}, 
-        "nav-link": {"color":"white","font-size": "20px", "text-align": "left", "margin":"0px", "--hover-color": "blue"},
-        "nav-link-selected": {"background-color": "#02ab21"},}
-                
-                )
+    def run(self):
+        app_names = [app["title"] for app in self.apps]
+        active_app = st.selectbox("Selecione uma página:", app_names)
 
-        
-        #if app == "Home":
-            #home.app()
-        if app == "Account":
-            test.app()    
-        if app == "Trending":
-            trending.app()        
-        if app == 'Your Posts':
-            your.app()
-        if app == 'about':
-            about.app()    
-             
-          
-             
-    run()            
+        for app in self.apps:
+            if active_app == app["title"]:
+                app["function"]()  # Chama a função do aplicativo correspondente
+
+app = MultiApp()
+app.add_app("Conta", test.app)  # Substitua test.app pela função apropriada do seu aplicativo
+app.add_app("Tendências", trending.app)  # Substitua trending.app pela função apropriada do seu aplicativo
+app.add_app("Suas Postagens", your.app)  # Substitua your.app pela função apropriada do seu aplicativo
+app.add_app("Sobre", about.app)  # Substitua about.app pela função apropriada do seu aplicativo
+app.run()
