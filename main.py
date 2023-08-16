@@ -26,7 +26,7 @@ class MultiApp:
             app = option_menu(
                 menu_title='Football Data Analysis ',
                 options=['Conta', 'Jogos do Dia', 'CS', 'Tips'],
-                icons=['house-fill', 'calculator-fill', 'currency-dollar'],
+                icons=['house-fill', 'calendar2', 'calculator-fill', 'currency-dollar'],
                 menu_icon='chat-text-fill',
                 default_index=1,
                 styles={
