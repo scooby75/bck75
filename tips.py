@@ -106,28 +106,7 @@ def app():
     #csv_file = layzebraht_df.to_csv(index=False)
     #st.download_button(label="Download CSV", data=csv_file, file_name="eventos_raros_layzebraht.csv", mime="text/csv")
 
-    ####
 
-# URL to the CSV file
-    #url = "https://github.com/futpythontrader/YouTube/blob/main/Jogos_do_Dia_FlashScore/2023-08-03_Jogos_do_Dia_FlashScore.csv?raw=true"
-    url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
-
-# Load the CSV data from the URL into a DataFrame
-    df = pd.read_csv(url)
-    
-# Check if any "home" team is present in top_over_05HT_casa
-    matches_over_05 = df[df["Home"].isin(top_over_05HT_casa)]
-
-# Create df.over05 with the matches where the "home" team is in top_over_05HT_casa
-    df_over05 = matches_over_05.copy()
-
-# Selecionar apenas as colunas desejadas: Date, Time, League, Home e Away
-    colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
-    df_over05 = df_over05[colunas_desejadas]
-
-# Display the DataFrame df.over05
-    st.subheader("Back Over 05HT")
-    st.dataframe(df_over05)
 
 ##### HA -0,25 ######
 
