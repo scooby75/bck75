@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-import login, cs, tips
+import login, cs
 
 st.set_page_config(
     page_title="Football Data Analysis",
@@ -21,12 +21,12 @@ def run():
     multi_app = MultiApp()
     multi_app.add_app("Conta", login.app)
     multi_app.add_app("CS", cs.app)
-    multi_app.add_app("Tips", tips.app)
+    
 
     with st.sidebar:
         app = option_menu(
             menu_title='FDA ',
-            options=['Conta', 'CS', 'Tips'],
+            options=['Conta', 'CS'],
             icons=['house-fill', 'person-circle', 'trophy-fill', 'chat-fill', 'info-circle-fill'],
             menu_icon='chat-text-fill',
             default_index=1,
@@ -42,8 +42,7 @@ def run():
         login.app()
     if app == "CS":
         cs.app()
-    if app == 'Tips':
-        tips.app()
+   
 
 run()
 
