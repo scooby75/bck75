@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 from login import app as login_app
-from jogos_do_dia import app as games_app  # Renomeado o módulo aqui
+from jogos_do_dia import app as jogos_do_dia_app  # Renomeado o módulo aqui
 from cs import app as cs_app
 from tips import app as tips_app
 
@@ -42,7 +42,7 @@ class MultiApp:
         if app == "Conta":
             login_app()
         if app == "Jogos do Dia":
-            games_app()
+            jogos_do_dia_app()
         if app == "CS":
             cs_app()
         if app == "Tips":
@@ -53,7 +53,7 @@ multi_app = MultiApp()
 
 # Adicionar os aplicativos à instância
 multi_app.add_app("Conta", login_app)
-multi_app.add_app("Jogos do Dia", games_app)
+multi_app.add_app("Jogos do Dia", jogos_do_dia_app)
 multi_app.add_app("CS", cs_app)
 multi_app.add_app("Tips", tips_app)
 
