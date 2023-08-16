@@ -3,7 +3,18 @@ import pandas as pd
 import numpy as np
 from scipy.stats import poisson
 
-def app():   
+def app():
+    
+    if 'db' not in st.session_state:
+        st.session_state.db = ''
+
+    db=firestore.client()
+    st.session_state.db=db
+    # st.title('  :violet[Pondering]  :sunglasses:')
+    
+    ph = ''
+    if st.session_state.username=='':
+        ph = 'Login to be able to post!!'
      
 
     # URL do arquivo CSV com os dados dos jogos
