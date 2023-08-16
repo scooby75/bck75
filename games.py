@@ -2,7 +2,12 @@ import streamlit as st
 import pandas as pd
 import datetime as dt
 
-def app():
+def jogos_do_dia_app():
+    if st.session_state.user is None:
+        st.warning('Favor realize o login')
+        return
+
+
     st.subheader("Jogos do Dia")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
