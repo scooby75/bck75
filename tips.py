@@ -158,4 +158,8 @@ def app():
     st.subheader("HA -0.25")
     st.text("Apostar em HA -0.25 casa, Odd minima 1.50")
     st.dataframe(ha_df)
+
+# Call the app function to run the Streamlit app
+app()
+
     
