@@ -1,21 +1,14 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
+from google.cloud import firestore
 from scipy.stats import poisson
 
-def app():
-    
-    if 'db' not in st.session_state:
-        st.session_state.db = ''
+# Initialize Firestore client
+db = firestore.Client()
 
-    db=firestore.client()
-    st.session_state.db=db
-    # st.title('  :violet[Pondering]  :sunglasses:')
-    
-    ph = ''
-    if st.session_state.username=='':
-        ph = 'Login to be able to post!!'
-     
+def app():
+    if 'db' not in st.session_state:
+        st.session_state.db = db
 
     # URL do arquivo CSV com os dados dos jogos
     url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
@@ -113,5 +106,8 @@ def app():
         formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
         st.dataframe(formatted_df)
 
+# Run the Streamlit app
+if __name__ == "__main__":
+    app()
 
 
