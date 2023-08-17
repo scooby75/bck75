@@ -1,4 +1,7 @@
-from . import login
-from . import page1
-from . import page2
-from . import page3
+- app.py
+- pages
+  - __init__.py
+  - login.py
+  - page1.py
+  - page2.py
+  - page3.py
