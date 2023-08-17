@@ -1,7 +1,6 @@
 import streamlit as st
 
-def cs_page():
+def tab1():
     st.title("CS")
     st.subheader("DAVI")
 
-cs_page()
