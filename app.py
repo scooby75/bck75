@@ -13,12 +13,11 @@ def main():
         page = st.selectbox("Selecione a página", ["Página 1", "Página 2", "Página 3"])
 
         if page == "Página 1":
-            page1.show_content()
+            page1.show_content("Página 1")  # Passa o título "Página 1"
         elif page == "Página 2":
-            page2.show_content()
+            page2.show_content("Página 2")  # Passa o título "Página 2"
         elif page == "Página 3":
-            page3.show_content()
+            page3.show_content("Página 3")  # Passa o título "Página 3"
 
 if __name__ == "__main__":
     main()
-
