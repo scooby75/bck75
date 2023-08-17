@@ -8,7 +8,7 @@ valid_users = {
 }
 
 def login_page():
-    st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
+    st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", width=150)
     st.title("Página de Login")
     username = st.text_input("Nome de usuário")
     password = st.text_input("Senha", type="password")
