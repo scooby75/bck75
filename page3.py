@@ -1,5 +1,6 @@
 import streamlit as st
 
-def show_content(title):
-    st.title(title)  # Defina o título da página
-    st.write("Conteúdo da Página 3.")
+def show_content():
+    st.title("Conteúdo da Página 3")
+    st.write("Bem-vindo à Página 3!")
+
