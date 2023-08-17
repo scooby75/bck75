@@ -4,8 +4,10 @@ from jogos import jogos_do_dia_page
 from cs import cs_page
 from tips import tips_page
 
+# Set page configuration outside of the main function
+st.set_page_config(page_title="Football Data Analysis", layout="wide")
+
 def main():
-    st.set_page_config(page_title="Football Data Analysis", layout="wide")
     if not hasattr(st.session_state, "logged_in"):
         st.session_state.logged_in = False
 
