@@ -1,4 +1,5 @@
 streamlit
+streamlit_multiselect
 firebase_admin
 streamlit_option_menu
 scipy
