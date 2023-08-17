@@ -57,14 +57,6 @@ def main():
         elif st_tabs == "Tips":
             tips_page()
 
-    # Ocultar o rodapé "Made with Streamlit"
-    hide_footer_style = """
-    <style>
-    .reportview-container .main footer {visibility: hidden;}
-    </style>
-    """
-    st.markdown(hide_footer_style, unsafe_allow_html=True)
-
 def logout():
     st.session_state.logged_in = False
     st.session_state.pop("username", None)
