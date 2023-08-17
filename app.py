@@ -39,6 +39,9 @@ def main():
     if not st.session_state.logged_in:
         login_page()
     else:
+        st.sidebar.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
+        st.sidebar.markdown("by Lyssandro Silveira")
+
         st.sidebar.write(f"Logado como: {st.session_state.username}")  # Mostra o nome do usuário na barra lateral
         st.sidebar.button("Logout", key="logout_button", on_click=logout)  # Botão de logout na barra lateral
 
