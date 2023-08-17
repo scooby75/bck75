@@ -1,8 +1,5 @@
 import streamlit as st
-from pages import login
-from pages import page1
-from pages import page2
-from pages import page3
+from pages import login, page1, page2, page3
 
 # Função principal
 def main():
@@ -16,11 +13,11 @@ def main():
         page = st.selectbox("Selecione a página", ["Página 1", "Página 2", "Página 3"])
 
         if page == "Página 1":
-            page1.show_content("Página 1")  # Passa o título "Página 1"
+            page1.show_content()
         elif page == "Página 2":
-            page2.show_content("Página 2")  # Passa o título "Página 2"
+            page2.show_content()
         elif page == "Página 3":
-            page3.show_content("Página 3")  # Passa o título "Página 3"
+            page3.show_content()
 
 if __name__ == "__main__":
     main()
