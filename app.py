@@ -14,6 +14,7 @@ def login_page():
     if st.button("Entrar"):
         if username in valid_users and valid_users[username] == password:
             st.session_state.logged_in = True
+            st.session_state.username = username  # Armazena o nome de usuário
             st.session_state.login_time = datetime.datetime.now()
         else:
             st.error("Credenciais inválidas.")
