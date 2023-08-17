@@ -22,17 +22,16 @@ def main():
         if st.sidebar.button("Logout", key="logout_button"):
             logout()
 
-        # Cria abas para diferentes páginas
-        tabs = st.sidebar.radio("Selecione uma aba", ["Jogos do Dia", "CS", "Tips"])
+        # Caixa de seleção para diferentes páginas
+        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "CS", "Tips"])
 
         # Exibe o conteúdo da página selecionada
-        if tabs == "Jogos do Dia":
+        if selected_tab == "Jogos do Dia":
             jogos_do_dia_page()
-        elif tabs == "CS":
+        elif selected_tab == "CS":
             cs_page()
-        elif tabs == "Tips":
+        elif selected_tab == "Tips":
             tips_page()
 
 if __name__ == "__main__":
     main()
-
