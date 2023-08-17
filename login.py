@@ -21,4 +21,3 @@ def login():
             st.error("Usuário ou senha incorretos.")
 
     return False
-
