@@ -8,10 +8,14 @@ valid_users = {
 }
 
 def login_page():
-    st.title("Football Data Analysis")
+    st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
+    st.title("Página de Login")
     username = st.text_input("Nome de usuário")
     password = st.text_input("Senha", type="password")
-    if st.button("Entrar"):
+
+    login_button = st.button("Entrar")  # Criar botão de login
+
+    if login_button:  # Verificar se o botão foi clicado
         if username in valid_users and valid_users[username] == password:
             st.session_state.logged_in = True
             st.session_state.username = username  # Armazena o nome de usuário
@@ -32,7 +36,7 @@ def tips_page():
     # Coloque aqui a lógica e o conteúdo da página de Tips
 
 def main():
-    st.set_page_config(page_title="Football Data Analysis", layout="wide")
+    st.set_page_config(page_title="Meu Sistema", layout="wide")
     if not hasattr(st.session_state, "logged_in"):
         st.session_state.logged_in = False
 
