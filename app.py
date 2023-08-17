@@ -4,10 +4,10 @@ from jogos import jogos_do_dia_page
 from cs import cs_page
 from tips import tips_page
 
-with open("style.css") as f:
-	st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html = True)
-
 def main():
+    with open("style.css") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
     st.set_page_config(page_title="Football Data Analysis", layout="wide")
     if not hasattr(st.session_state, "logged_in"):
         st.session_state.logged_in = False
