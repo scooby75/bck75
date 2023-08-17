@@ -8,7 +8,7 @@ valid_users = {
 }
 
 def login_page():
-    st.title("Página de Login")
+    st.title("Football Data Analysis")
     username = st.text_input("Nome de usuário")
     password = st.text_input("Senha", type="password")
     if st.button("Entrar"):
@@ -32,7 +32,7 @@ def tips_page():
     # Coloque aqui a lógica e o conteúdo da página de Tips
 
 def main():
-    st.set_page_config(page_title="Meu Sistema", layout="wide")
+    st.set_page_config(page_title="Football Data Analysis", layout="wide")
     if not hasattr(st.session_state, "logged_in"):
         st.session_state.logged_in = False
 
