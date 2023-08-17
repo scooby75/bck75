@@ -4,11 +4,10 @@ from jogos import jogos_do_dia_page
 from cs import cs_page
 from tips import tips_page
 
+#st.set_page_config(page_title="Probabilidade de Placar", layout="wide")
+
 def main():
    
-    #st.title("Football Data Analysis")
-
-
     # Verifica se o estado de sessão "logged_in" já existe
     if not hasattr(st.session_state, "logged_in"):
         st.session_state.logged_in = False
