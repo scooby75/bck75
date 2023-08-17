@@ -20,7 +20,7 @@ def main():
     else:
         # Barra lateral com imagem e informações
         st.sidebar.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
-        st.sidebar.subheader("Footbal Data Analysis")
+        st.sidebar.header("Footbal Data Analysis")
 
         # Mostra informações do usuário e botão de logout na barra lateral
         st.sidebar.write(f"Logado como: {st.session_state.username}")
