@@ -4,6 +4,7 @@ from scipy.stats import poisson
 
 def cs_page():
     st.title("CS")
+    
     # URL do arquivo CSV com os dados dos jogos
     url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
 
@@ -81,26 +82,24 @@ def cs_page():
     st.subheader("Probabilidade de Placar")
 
     # Loop para exibir os detalhes e a tabela
-   for index, row in resultado_df.iterrows():
+    for index, row in resultado_df.iterrows():
         details1 = f"**Hora:** {row['Time']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
         details2 = f"**Odd Casa:** {row['FT_Odds_H']} |  **Odd Empate:** {row['FT_Odds_D']} |  **Odd Visitante:** {row['FT_Odds_A']}"
+        st.write(details1)
+        st.write(details2)
 
-    # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
+        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
         prob_game_df = resultado_df[placares].iloc[[index]]
 
-    # Selecionar os 6 placares mais prováveis
+        # Selecionar os 6 placares mais prováveis
         top_placares = prob_game_df.T.nlargest(8, index)[index].index
 
-    # Filtrar o DataFrame temporário para incluir apenas os 6 placares mais prováveis
+        # Filtrar o DataFrame temporário para incluir apenas os 6 placares mais prováveis
         prob_game_df = prob_game_df[top_placares]
 
-    # Formatar e exibir a tabela
+        # Formatar e exibir a tabela
         formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
-        st.dataframe(formatted_df)  # Display the DataFrame
-
-        st.write(details1)  # Display other details after the DataFrame
-        st.write(details2)
+        st.dataframe(formatted_df)
 
 # Call the function to run the Streamlit app
 cs_page()
-
