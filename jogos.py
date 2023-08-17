@@ -8,7 +8,7 @@ def jogos_do_dia_page():
     st.subheader("Jogos do Dia")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
-    @st.cache_data(ttl=dt.timedelta(hours=24))
+    #@st.cache_data(ttl=dt.timedelta(hours=24))
     def load_base():
         # url = "https://github.com/futpythontrader/YouTube/blob/main/Jogos_do_Dia_FlashScore/2023-08-03_Jogos_do_Dia_FlashScore.csv?raw=true"
         url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
