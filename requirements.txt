@@ -1,2 +1,13 @@
 streamlit
+firebase_admin
+streamlit_option_menu
+scipy
+seaborn
+openpyxl
+numpy
 pandas
+pillow
+protobuf
+pydeck
+pytz
+requests
