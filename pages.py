@@ -1,6 +1,6 @@
-- app.py
-- pages
-  - login.py
-  - page1.py
-  - page2.py
-  - page3.py
+import streamlit as st
+from . import login
+from . import page1
+from . import page2
+from . import page3
+
