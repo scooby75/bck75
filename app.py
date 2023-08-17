@@ -6,7 +6,7 @@ from tips import tips_page
 
 def main():
     # Configuração da página
-    st.set_page_config(page_title="Análise de Dados de Futebol", layout="wide")
+    st.set_page_config(page_title="Football Data Analysis", layout="wide")
 
     # Verifica se o estado de sessão "logged_in" já existe
     if not hasattr(st.session_state, "logged_in"):
