@@ -28,7 +28,6 @@ def load_base():
 df2 = load_base()
 
 # Exibir o DataFrame filtrado apenas no tab9
-with tab7:
     # Select the specific columns to display in the "Jogos Filtrados" table
     columns_to_display = [
         'Date', 'Time', 'League', 'Home', 'Away', 'Round', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes' 
