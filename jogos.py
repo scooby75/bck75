@@ -9,6 +9,6 @@ def jogos_do_dia_page():
 
 
 # Créditos
-st.text("Desenvolvido por Lyssandro Silveira")
-st.markdown("Fale Comigo [link](https://t.me/Lyssandro)")
+    st.text("Desenvolvido por Lyssandro Silveira")
+    st.markdown("Fale Comigo [link](https://t.me/Lyssandro)")
 
