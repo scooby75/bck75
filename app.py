@@ -38,6 +38,9 @@ def main():
     if not st.session_state.logged_in:
         login_page()
     else:
+        st.sidebar.write(f"Logado como: {st.session_state.username}")  # Mostra o nome do usuário na barra lateral
+        st.sidebar.button("Logout", key="logout_button", on_click=logout)  # Botão de logout na barra lateral
+
         st_tabs = st.tabs(["Jogos do Dia", "CS", "Tips"])
         if st_tabs == "Jogos do Dia":
             jogos_do_dia_page()
@@ -45,6 +48,11 @@ def main():
             cs_page()
         elif st_tabs == "Tips":
             tips_page()
+
+def logout():
+    st.session_state.logged_in = False
+    st.session_state.pop("username", None)
+    st.session_state.pop("login_time", None)
 
 if __name__ == "__main__":
     main()
