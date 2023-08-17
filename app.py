@@ -2,7 +2,7 @@ import streamlit as st
 
 # Dados de exemplo para simular o login (substitua por um mecanismo seguro em um ambiente de produção)
 valid_users = {
-    "usuario1": "senha123",
+    "lsilveira": "senha123",
     "usuario2": "senha456"
 }
 
