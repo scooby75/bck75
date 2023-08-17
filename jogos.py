@@ -8,11 +8,11 @@ def jogos_do_dia_page():
 
     @st.cache_data(ttl=dt.timedelta(hours=24))
     def load_base():
-    # url = "https://github.com/futpythontrader/YouTube/blob/main/Jogos_do_Dia_FlashScore/2023-08-03_Jogos_do_Dia_FlashScore.csv?raw=true"
+        # url = "https://github.com/futpythontrader/YouTube/blob/main/Jogos_do_Dia_FlashScore/2023-08-03_Jogos_do_Dia_FlashScore.csv?raw=true"
         url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
         data_jogos = pd.read_csv(url)
 
-    # Rename the columns
+        # Rename the columns
         data_jogos.rename(columns={
             'FT_Odds_H': 'FT_Odd_H',
             'FT_Odds_D': 'FT_Odd_D',
@@ -27,13 +27,16 @@ def jogos_do_dia_page():
 
     df2 = load_base()
 
-# Select the specific columns to display in the "Jogos Filtrados" table
+    # Select the specific columns to display in the "Jogos Filtrados" table
     columns_to_display = [
         'Date', 'Time', 'League', 'Home', 'Away', 'Round', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes' 
     ]
     st.dataframe(df2[columns_to_display])
 
-# Créditos
+    # Créditos
     st.text("Desenvolvido por Lyssandro Silveira")
-    st.mrkdown("Fale Comigo [link](https://t.me/Lyssandro)")
+    st.markdown("Fale Comigo [link](https://t.me/Lyssandro)")
 
+# Run the Streamlit app
+if __name__ == '__main__':
+    jogos_do_dia_page()
