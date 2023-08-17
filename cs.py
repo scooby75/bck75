@@ -94,7 +94,7 @@ def cs_page():
     # Filtrar o DataFrame temporário para incluir apenas os 6 placares mais prováveis
         prob_game_df = prob_game_df[top_placares]
 
-with tab2:
+with cs_page():
     # Formatar e exibir a tabela
         formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
         st.dataframe(formatted_df)
