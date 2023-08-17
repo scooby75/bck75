@@ -25,12 +25,12 @@ def main():
         st.sidebar.button("Logout", key="logout_button", on_click=logout)
 
         # Cria abas para diferentes páginas
-        st_tabs = st.tabs(["Jogos do Dia", "CS", "Tips"])
-        if st_tabs == "Jogos do Dia":
+        tab0, tab1, tab2 = st.tabs(["Jogos do Dia", "CS", "Tips"])
+        if tab0 == "Jogos do Dia":
             jogos_do_dia_page()
-        elif st_tabs == "CS":
+        elif tab1 == "CS":
             cs_page()
-        elif st_tabs == "Tips":
+        elif tab2 == "Tips":
             tips_page()
 
 if __name__ == "__main__":
