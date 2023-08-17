@@ -27,13 +27,13 @@ def load_base():
 
 df2 = load_base()
 
-# Exibir o DataFrame filtrado apenas no tab9
-    # Select the specific columns to display in the "Jogos Filtrados" table
-    columns_to_display = [
-        'Date', 'Time', 'League', 'Home', 'Away', 'Round', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes' 
-    ]
-    st.dataframe(df2[columns_to_display])
+# Select the specific columns to display in the "Jogos Filtrados" table
+columns_to_display = [
+    'Date', 'Time', 'League', 'Home', 'Away', 'Round', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes' 
+]
+st.dataframe(df2[columns_to_display])
 
 # Créditos
 st.text("Desenvolvido por Lyssandro Silveira")
 st.markdown("Fale Comigo [link](https://t.me/Lyssandro)")
+
