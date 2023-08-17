@@ -3,6 +3,8 @@ import pandas as pd
 import datetime as dt
 
 def jogos_do_dia_page():
+    st.set_page_config(page_title="Football Data Analysis", layout="wide")
+    
     st.subheader("Jogos do Dia")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
