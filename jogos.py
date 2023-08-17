@@ -3,9 +3,6 @@ import pandas as pd
 import datetime as dt
 
 def jogos_do_dia_page():
-    st.title("Jogos do Dia")
-    # Lógica e conteúdo da página de jogos do dia
-
     st.subheader("Jogos do Dia")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
