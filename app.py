@@ -8,6 +8,8 @@ def main():
     # Configuração da página
     #st.set_page_config(page_title="Football Data Analysis", layout="wide")
 
+    #st.title("Football Data Analysis")
+
     # Verifica se o estado de sessão "logged_in" já existe
     if not hasattr(st.session_state, "logged_in"):
         st.session_state.logged_in = False
@@ -18,7 +20,7 @@ def main():
     else:
         # Barra lateral com imagem e informações
         st.sidebar.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
-        st.sidebar.markdown("por Lyssandro Silveira")
+        st.sidebar.subheader("Footbal Data Analysis")
 
         # Mostra informações do usuário e botão de logout na barra lateral
         st.sidebar.write(f"Logado como: {st.session_state.username}")
