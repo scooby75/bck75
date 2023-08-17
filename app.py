@@ -20,4 +20,7 @@ def main():
             page3.show_content()
 
 if __name__ == "__main__":
+    # Defina a porta do servidor Streamlit (por exemplo, 8502)
+    st.server.port = 8502
+
     main()
