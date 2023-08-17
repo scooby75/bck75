@@ -1,0 +1,16 @@
+stButton > button {
+	color: #FFFFFF;
+	background-color: #C60C35;
+	font-size: 20px;
+	height: 60px;
+	width: 100%;
+}
+
+stButton > button:hover {
+	color: #FFFFFF;
+	background-color: #920000;
+	border-color: #920000
+	font-size: 20px;
+	height: 60px;
+	width: 100%;
+}
