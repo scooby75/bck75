@@ -1,5 +1,8 @@
 import streamlit as st
-from pages import login, page1, page2, page3
+from pages import login
+from pages import page1
+from pages import page2
+from pages import page3
 
 # Função principal
 def main():
