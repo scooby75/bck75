@@ -1,4 +1,5 @@
 import streamlit as st
+import datetime
 
 # Dados de exemplo para simular o login (substitua por um mecanismo seguro em um ambiente de produção)
 valid_users = {
@@ -32,14 +33,28 @@ def tips_page():
 
 def main():
     st.set_page_config(page_title="Meu Sistema", layout="wide")
-    if login_page():
-        st_tabs = st.tabs(["Jogos do Dia", "CS", "Tips"])
-        if st_tabs == "Jogos do Dia":
-            jogos_do_dia_page()
-        elif st_tabs == "CS":
-            cs_page()
-        elif st_tabs == "Tips":
-            tips_page()
+    logged_in = st.session_state.get("logged_in", False)
+    
+    if not logged_in:
+        if login_page():
+            st.session_state.logged_in = True
+            st.session_state.login_time = datetime.datetime.now()
+    else:
+        current_time = datetime.datetime.now()
+        login_time = st.session_state.login_time
+        time_elapsed = current_time - login_time
+
+        if time_elapsed.total_seconds() > 24 * 3600:  # 24 horas
+            st.session_state.logged_in = False
+            st.session_state.login_time = None
+        else:
+            st_tabs = st.tabs(["Jogos do Dia", "CS", "Tips"])
+            if st_tabs == "Jogos do Dia":
+                jogos_do_dia_page()
+            elif st_tabs == "CS":
+                cs_page()
+            elif st_tabs == "Tips":
+                tips_page()
 
 if __name__ == "__main__":
     main()
