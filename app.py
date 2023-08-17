@@ -5,9 +5,7 @@ from cs import cs_page
 from tips import tips_page
 
 def main():
-    # Configuração da página
-    st.set_page_config(page_title="Football Data Analysis", layout="wide")
-
+   
     #st.title("Football Data Analysis")
 
 
