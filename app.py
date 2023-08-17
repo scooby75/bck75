@@ -15,7 +15,7 @@ def main():
     else:
         # Barra lateral com imagem e informações
         st.sidebar.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
-        st.sidebar.header("Football Data Analysis")  # Corrigido "Footbal" para "Football"
+        st.sidebar.header("Football Data Analysis")
 
         # Mostra informações do usuário e botão de logout na barra lateral
         st.sidebar.write(f"Logado como: {st.session_state.username}")
@@ -23,13 +23,16 @@ def main():
             logout()
 
         # Cria abas para diferentes páginas
-        tab0, tab1, tab2 = st.sidebar.beta_columns(3)
-        if tab0.button("Jogos do Dia"):
+        tabs = st.sidebar.radio("Selecione uma aba", ["Jogos do Dia", "CS", "Tips"])
+
+        # Exibe o conteúdo da página selecionada
+        if tabs == "Jogos do Dia":
             jogos_do_dia_page()
-        if tab1.button("CS"):
+        elif tabs == "CS":
             cs_page()
-        if tab2.button("Tips"):
+        elif tabs == "Tips":
             tips_page()
 
 if __name__ == "__main__":
     main()
+
