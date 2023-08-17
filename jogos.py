@@ -27,23 +27,13 @@ def load_base():
 
 df2 = load_base()
 
-# Filtrar Odds
-# Aplicar o filtro ao DataFrame df2
-filtered_df2 = df2[
-    (df2['FT_Odd_H'].between(odd_casa_ft_min, odd_casa_ft_max)) &
-    (df2['FT_Odd_D'].between(odd_casa_empate_min, odd_casa_empate_max)) &
-    (df2['FT_Odd_A'].between(odd_fora_ft_min, odd_fora_ft_max)) &
-    (df2['FT_Odd_Over25'].between(odd_over25_ft_min, odd_over25_ft_max)) &
-    (df2['FT_Odd_BTTS_Yes'].between(odd_btts_min, odd_btts_max))
-]
-
 # Exibir o DataFrame filtrado apenas no tab9
 with tab7:
     # Select the specific columns to display in the "Jogos Filtrados" table
     columns_to_display = [
         'Date', 'Time', 'League', 'Home', 'Away', 'Round', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes' 
     ]
-    st.dataframe(filtered_df2[columns_to_display])
+    st.dataframe(df2[columns_to_display])
 
 # Créditos
 st.text("Desenvolvido por Lyssandro Silveira")
