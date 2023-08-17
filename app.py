@@ -1,53 +1,24 @@
 import streamlit as st
-from streamlit.components.v1 import components
-
-# Dicionário de usuários (você pode substituir isso por um banco de dados real)
-users = {
-    'user1': 'password1',
-    'user2': 'password2',
-    'user3': 'password3'
-}
-
-# Função para fazer o login
-def login():
-    st.title("Login")
-
-    username = st.text_input("Usuário")
-    password = st.text_input("Senha", type='password')
-
-    if st.button("Entrar"):
-        if username in users and users[username] == password:
-            st.success("Login realizado com sucesso!")
-            return True
-        else:
-            st.error("Usuário ou senha incorretos.")
-
-    return False
-
-# Função para exibir o conteúdo da página após o login
-def show_content():
-    st.title("Conteúdo Restrito")
-    st.write("Bem-vindo à página de conteúdo restrito.")
+from pages import login, page1, page2, page3
 
 # Função principal
 def main():
     st.set_page_config(page_title="Controle de Acesso", layout="wide")
 
     if not st.session_state.logged_in:
-        st.session_state.logged_in = login()
+        st.session_state.logged_in = login.login()
 
     if st.session_state.logged_in:
         st.write("Menu de Navegação")
-        
-        # Usando abas para organizar as páginas
-        tabs = st.tabs(["Página 1", "Página 2", "Página 3"])
-        
-        if tabs == "Página 1":
-            show_content()
-        elif tabs == "Página 2":
-            show_content()
-        elif tabs == "Página 3":
-            show_content()
+        page = st.selectbox("Selecione a página", ["Página 1", "Página 2", "Página 3"])
+
+        if page == "Página 1":
+            page1.show_content()
+        elif page == "Página 2":
+            page2.show_content()
+        elif page == "Página 3":
+            page3.show_content()
 
 if __name__ == "__main__":
     main()
+
