@@ -3,7 +3,7 @@ import pandas as pd
 import datetime as dt
 
 def predict_page():
-    st.subheader("Jogos do Dia")
+    st.subheader("Filtro Preditivo")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
     # Load the data
@@ -29,22 +29,31 @@ def predict_page():
     df2 = load_base()
 
     # Create number inputs for filter conditions
-    prob_vitoria_home_min = st.number_input("Prob de Vitória Home (mínimo)", 0, 100, 0)
-    prob_vitoria_home_max = st.number_input("Prob de Vitória Home (máximo)", prob_vitoria_home_min, 100, 100)
-    prob_vitoria_away_min = st.number_input("Prob de Vitória Away (mínimo)", 0, 100, 0)
-    prob_vitoria_away_max = st.number_input("Prob de Vitória Away (máximo)", prob_vitoria_away_min, 100, 100)
-    prob_over25_home_min = st.number_input("Prob Over 2.5 Home (mínimo)", 0, 100, 0)
-    prob_over25_home_max = st.number_input("Prob Over 2.5 Home (máximo)", prob_over25_home_min, 100, 100)
-    prob_over25_away_min = st.number_input("Prob Over 2.5 Away (mínimo)", 0, 100, 0)
-    prob_over25_away_max = st.number_input("Prob Over 2.5 Away (máximo)", prob_over25_away_min, 100, 100)
-    media_gols_h_min = st.number_input("Media Gols H (mínimo)", 0.0, 10.0, 0.0)
-    media_gols_h_max = st.number_input("Media Gols H (máximo)", media_gols_h_min, 10.0, 10.0)
-    media_gols_a_min = st.number_input("Media Gols A (mínimo)", 0.0, 10.0, 0.0)
-    media_gols_a_max = st.number_input("Media Gols A (máximo)", media_gols_a_min, 10.0, 10.0)
-    ppg_h_min = st.number_input("PPG_H (mínimo)", 0.0, 3.0, 0.0)
-    ppg_h_max = st.number_input("PPG_H (máximo)", ppg_h_min, 3.0, 3.0)
-    ppg_a_min = st.number_input("PPG_A (mínimo)", 0.0, 3.0, 0.0)
-    ppg_a_max = st.number_input("PPG_A (máximo)", ppg_a_min, 3.0, 3.0)
+    col1, col2, col3, col4 = st.beta_columns(4)
+
+    with col1:
+        prob_vitoria_home_min = st.number_input("Prob Vitória Home (min)", 0, 100, 0)
+        prob_vitoria_home_max = st.number_input("Prob Vitória Home (max)", prob_vitoria_home_min, 100, 100)
+        prob_vitoria_away_min = st.number_input("Prob Vitória Away (min)", 0, 100, 0)
+        prob_vitoria_away_max = st.number_input("Prob Vitória Away (max)", prob_vitoria_away_min, 100, 100)
+
+    with col2:
+        prob_over25_home_min = st.number_input("Prob Over 2.5 Home (min)", 0, 100, 0)
+        prob_over25_home_max = st.number_input("Prob Over 2.5 Home (max)", prob_over25_home_min, 100, 100)
+        prob_over25_away_min = st.number_input("Prob Over 2.5 Away (min)", 0, 100, 0)
+        prob_over25_away_max = st.number_input("Prob Over 2.5 Away (max)", prob_over25_away_min, 100, 100)
+
+    with col3:
+        media_gols_h_min = st.number_input("Média Gols H (min)", 0.0, 10.0, 0.0)
+        media_gols_h_max = st.number_input("Média Gols H (max)", media_gols_h_min, 10.0, 10.0)
+        media_gols_a_min = st.number_input("Média Gols A (min)", 0.0, 10.0, 0.0)
+        media_gols_a_max = st.number_input("Média Gols A (max)", media_gols_a_min, 10.0, 10.0)
+
+    with col4:
+        ppg_h_min = st.number_input("PPG H (min)", 0.0, 3.0, 0.0)
+        ppg_h_max = st.number_input("PPG H (max)", ppg_h_min, 3.0, 3.0)
+        ppg_a_min = st.number_input("PPG A (min)", 0.0, 3.0, 0.0)
+        ppg_a_max = st.number_input("PPG A (max)", ppg_a_min, 3.0, 3.0)
 
     # Specify columns to display in the sorted data
     columns_to_display = [
@@ -85,3 +94,4 @@ def predict_page():
 
 # Call the function to display the web application
 predict_page()
+
