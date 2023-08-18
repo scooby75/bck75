@@ -46,12 +46,12 @@ def predict_page():
 
     # Specify columns to display in the sorted data
     columns_to_display = [
-        'Time', 'Home', 'Away', 'Prob_Vitoria_Home', 'Prob_Vitoria_Away',
+        'Hora', 'Home', 'Away', 'Prob_Vitoria_Home', 'Prob_Vitoria_Away',
         'Prob_Over25_Home', 'Prob_Over25_Away', 'Media_Gols_H', 'Media_Gols_A'
     ]
 
     if not df2.empty:
-        sorted_filtered_data = df2.sort_values(by='Time')
+        sorted_filtered_data = df2.sort_values(by='Hora')
         st.dataframe(sorted_filtered_data[columns_to_display])
     else:
         st.warning("Não existem jogos com esses critérios!")
