@@ -38,18 +38,18 @@ def jogos_do_dia_page():
     # Filters for selected columns
     with col1:
         selected_ft_odd_h_min = st.number_input("Min FT Odds Home:", min_value=1.0)
-        selected_ft_odd_h_max = st.number_input("Max FT Odds Home:", max_value=1.0)
+        selected_ft_odd_h_max = st.number_input("Max FT Odds Home:", max_value=10.0)
         selected_ft_odd_d_min = st.number_input("Min FT Odds Draw:", min_value=1.0)
-        selected_ft_odd_d_max = st.number_input("Max FT Odds Draw:", max_value=1.0)
+        selected_ft_odd_d_max = st.number_input("Max FT Odds Draw:", max_value=10.0)
         selected_ft_odd_a_min = st.number_input("Min FT Odds Away:", min_value=1.0)
-        selected_ft_odd_a_max = st.number_input("Max FT Odds Away:", max_value=1.0)
+        selected_ft_odd_a_max = st.number_input("Max FT Odds Away:", max_value=10.0)
 
     with col2:
-        selected_ft_odd_over25_min = st.number_input("Min FT Odds Over 2.5:", min_value=10.0)
+        selected_ft_odd_over25_min = st.number_input("Min FT Odds Over 2.5:", min_value=1.0)
         selected_ft_odd_over25_max = st.number_input("Max FT Odds Over 2.5:", max_value=10.0)
-        selected_ft_odd_under25_min = st.number_input("Min FT Odds Under 2.5:", min_value=10.0)
+        selected_ft_odd_under25_min = st.number_input("Min FT Odds Under 2.5:", min_value=1.0)
         selected_ft_odd_under25_max = st.number_input("Max FT Odds Under 2.5:", max_value=10.0)
-        selected_ft_odd_btts_yes_min = st.number_input("Min FT Odds BTTS Yes:", min_value=10.0)
+        selected_ft_odd_btts_yes_min = st.number_input("Min FT Odds BTTS Yes:", min_value=1.0)
         selected_ft_odd_btts_yes_max = st.number_input("Max FT Odds BTTS Yes:", max_value=10.0)
 
     filtered_data = df2[
