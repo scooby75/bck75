@@ -44,7 +44,20 @@ def goleada_page():
     st.text("Apostar em Lay Goleada Casa, Odd máxima 30")
     st.dataframe(eventos_raros_df)
 
-    # ... Repetir o padrão para outras seções ...
+    ### Lay goleada Visitante @@@
+    
+# Filtrando os jogos com valores de "FT_Odd_A" entre 1.40 e 2.0 e "Round_Num" maior ou igual a 10
+    eventos_raros2_df = df[(df["FT_Odd_A"] >= 1.71) & (df["FT_Odd_A"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Round_Num"] >= 10)]
+
+# Selecionar apenas as colunas desejadas: Date, Time, League, Home e Away
+    colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
+    eventos_raros2_df = eventos_raros2_df[colunas_desejadas]
+
+# Exibir o dataframe "Eventos Raros"
+    st.subheader("Lay Goleada Visitante")
+    st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
+    st.dataframe(eventos_raros2_df)
+
 
 # Chamar a função para iniciar o aplicativo
 goleada_page()
