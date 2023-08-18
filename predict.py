@@ -41,8 +41,8 @@ def predict_page():
     prob_vitoria_away_threshold = st.slider("Prob de Vitória Away", 0, 100, 50)
     prob_over25_home_threshold = st.slider("Prob Over 2.5 Home", 0, 100, 60)
     prob_over25_away_threshold = st.slider("Prob Over 2.5 Away", 0, 100, 60)
-    media_gols_h_threshold = st.slider("Media Gols H", 0, 10, 3)
-    media_gols_a_threshold = st.slider("Media Gols A", 0, 10, 3)
+    media_gols_h_threshold = st.slider("Media Gols H", 0, 10, 1)
+    media_gols_a_threshold = st.slider("Media Gols A", 0, 10, 1)
 
     def convert_percentage_string_to_float(percentage_str):
         return float(percentage_str.strip('%')) / 100.0
@@ -59,8 +59,8 @@ def predict_page():
 
     # Specify columns to display in the sorted data
     columns_to_display = [
-        'Time', 'Rodada_Home', 'Rodada_Away', 'Prob_Vitoria_Home', 'Prob_Vitoria_Away',
-        'Prob_Over25_Home', 'Prob_Over25_Away', 'Gols_Marcados_H', 'Gols_Marcados_A'
+        'Time', 'Home', 'Away', 'Prob_Vitoria_Home', 'Prob_Vitoria_Away',
+        'Prob_Over25_Home', 'Prob_Over25_Away', 'Media_Gols_H', 'Media_Gols_A'
     ]
 
     if not filtered_data.empty:
