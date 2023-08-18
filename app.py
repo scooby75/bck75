@@ -2,6 +2,7 @@ import streamlit as st
 from login import login_page, logout
 from jogos import jogos_do_dia_page
 from cs import cs_page
+from goleada import goleada_page
 from tips import tips_page
 
 def main():
@@ -23,13 +24,15 @@ def main():
             logout()
 
         # Caixa de seleção para diferentes páginas
-        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "CS", "Tips"])
+        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Dutching", "Lay Goleada", "Tips"])
 
         # Exibe o conteúdo da página selecionada
         if selected_tab == "Jogos do Dia":
             jogos_do_dia_page()
-        elif selected_tab == "CS":
+        elif selected_tab == "Dutching":
             cs_page()
+        elif selected_tab == "Lay Goleada":
+            goleada_page()
         elif selected_tab == "Tips":
             tips_page()
 
