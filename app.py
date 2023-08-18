@@ -7,6 +7,7 @@ from tips import tips_page
 
 def main():
     # Verifica se o estado de sessão "logged_in" já existe
+    st.set_page_config(page_title="Football Data Analysis", layout="wide")
     if not hasattr(st.session_state, "logged_in"):
         st.session_state.logged_in = False
 
