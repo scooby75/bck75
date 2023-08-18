@@ -37,25 +37,34 @@ def jogos_do_dia_page():
 
     # Filters for selected columns
     with col1:
-        selected_ft_odd_h = st.number_input("Filter by FT Odds Home:", min_value=1.0)
-        selected_ft_odd_d = st.number_input("Filter by FT Odds Draw:", min_value=1.0)
-        selected_ft_odd_a = st.number_input("Filter by FT Odds Away:", min_value=1.0)
+        selected_ft_odd_h_min = st.number_input("Min FT Odds Home:", min_value=1.0)
+        selected_ft_odd_h_max = st.number_input("Max FT Odds Home:", max_value=1.0)
+        selected_ft_odd_d_min = st.number_input("Min FT Odds Draw:", min_value=1.0)
+        selected_ft_odd_d_max = st.number_input("Max FT Odds Draw:", max_value=1.0)
+        selected_ft_odd_a_min = st.number_input("Min FT Odds Away:", min_value=1.0)
+        selected_ft_odd_a_max = st.number_input("Max FT Odds Away:", max_value=1.0)
 
     with col2:
-        selected_ft_odd_over25 = st.number_input("Filter by FT Odds Over 2.5:", min_value=1.0)
-        selected_ft_odd_under25 = st.number_input("Filter by FT Odds Under 2.5:", min_value=1.0)
-        selected_ft_odd_btts_yes = st.number_input("Filter by FT Odds BTTS Yes:", min_value=1.0)
+        selected_ft_odd_over25_min = st.number_input("Min FT Odds Over 2.5:", min_value=10.0)
+        selected_ft_odd_over25_max = st.number_input("Max FT Odds Over 2.5:", max_value=10.0)
+        selected_ft_odd_under25_min = st.number_input("Min FT Odds Under 2.5:", min_value=10.0)
+        selected_ft_odd_under25_max = st.number_input("Max FT Odds Under 2.5:", max_value=10.0)
+        selected_ft_odd_btts_yes_min = st.number_input("Min FT Odds BTTS Yes:", min_value=10.0)
+        selected_ft_odd_btts_yes_max = st.number_input("Max FT Odds BTTS Yes:", max_value=10.0)
 
     filtered_data = df2[
-        (df2['FT_Odd_H'] >= selected_ft_odd_h) &
-        (df2['FT_Odd_D'] >= selected_ft_odd_d) &
-        (df2['FT_Odd_A'] >= selected_ft_odd_a) &
-        (df2['FT_Odd_Over25'] >= selected_ft_odd_over25) &
-        (df2['FT_Odd_Under25'] >= selected_ft_odd_under25) &
-        (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes)
+        (df2['FT_Odd_H'] >= selected_ft_odd_h_min) & (df2['FT_Odd_H'] <= selected_ft_odd_h_max) &
+        (df2['FT_Odd_D'] >= selected_ft_odd_d_min) & (df2['FT_Odd_D'] <= selected_ft_odd_d_max) &
+        (df2['FT_Odd_A'] >= selected_ft_odd_a_min) & (df2['FT_Odd_A'] <= selected_ft_odd_a_max) &
+        (df2['FT_Odd_Over25'] >= selected_ft_odd_over25_min) & (df2['FT_Odd_Over25'] <= selected_ft_odd_over25_max) &
+        (df2['FT_Odd_Under25'] >= selected_ft_odd_under25_min) & (df2['FT_Odd_Under25'] <= selected_ft_odd_under25_max) &
+        (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_min) & (df2['FT_Odd_BTTS_Yes'] <= selected_ft_odd_btts_yes_max)
     ]
 
-    st.dataframe(filtered_data[columns_to_display])
+    if not filtered_data.empty:
+        st.dataframe(filtered_data[columns_to_display])
+    else:
+        st.warning("No matches found for the selected filters.")
 
 # Call the function to display the web application
 jogos_do_dia_page()
