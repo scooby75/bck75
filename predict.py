@@ -15,18 +15,10 @@ def predict_page():
 
         # Rename the columns
         data_jogos.rename(columns={
-            'GP_H': 'Rodada_Home',
-            'GP_A': 'Rodada_Away',
-            'Vitoria_H': 'Prob_Vitoria_Home',
-            'Vitoria_A': 'Prob_Vitoria_Away',
+            'GP_H': 'Prob_Vitoria_Home',
+            'GP_A': 'Prob_Vitoria_Away',
             'Over25_H': 'Prob_Over25_Home',
             'Over25_A': 'Prob_Over25_Away',
-            'BTTS_H': 'Prob_BTTS_H',
-            'BTTS_A': 'Prob_BTTS_A',
-            'GolsMarcados_H': 'Gols_Marcados_H',
-            'GolsSofridos_H': 'Gols_Sofridos_H',
-            'GolsMarcados_A': 'Gols_Marcados_A',
-            'GolsSofridos_A': 'Gols_Sofridos_A',
             'MediaGols_H': 'Media_Gols_H',
             'MediaGols_A': 'Media_Gols_A',
             'PPG_H': 'PPG_H',
@@ -37,7 +29,7 @@ def predict_page():
 
     df2 = load_base()
 
-     # Create sliders for filter conditions
+    # Create sliders for filter conditions
     prob_vitoria_home_threshold = st.slider("Prob de Vitória Home", 0, 100, 50)
     prob_vitoria_away_threshold = st.slider("Prob de Vitória Away", 0, 100, 50)
     prob_over25_home_threshold = st.slider("Prob Over 2.5 Home", 0, 100, 60)
@@ -54,6 +46,11 @@ def predict_page():
     ]
 
     if not df2.empty:
+        print("Before filtering:")
+        print("Prob_Vitoria_Home:", df2['Prob_Vitoria_Home'])
+        print("Prob_Vitoria_Away:", df2['Prob_Vitoria_Away'])
+        # ... other columns
+        
         filtered_data = df2[
             (df2['Prob_Vitoria_Home'] >= prob_vitoria_home_threshold) &
             (df2['Prob_Vitoria_Away'] >= prob_vitoria_away_threshold) &
@@ -64,6 +61,9 @@ def predict_page():
             (df2['PPG_H'] >= ppg_h_threshold) &
             (df2['PPG_A'] >= ppg_a_threshold)
         ].sort_values(by='Hora')
+
+        print("After filtering:")
+        print(filtered_data)
 
         st.dataframe(filtered_data[columns_to_display])
     else:
