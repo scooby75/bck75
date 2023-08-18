@@ -61,7 +61,7 @@ def predict_page():
             (df2['Media_Gols_H'] >= media_gols_h_threshold) &
             (df2['Media_Gols_A'] >= media_gols_a_threshold) &
             (df2['PPG_H'] >= ppg_h_threshold) &
-            (df2['PPG_A'] >= ppg_a_threshold) &
+            (df2['PPG_A'] >= ppg_a_threshold) 
         ].sort_values(by='Hora')
 
         st.dataframe(sorted_filtered_data[columns_to_display])
