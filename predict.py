@@ -45,16 +45,34 @@ def predict_page():
     ]
 
     if not df2.empty:
-        filtered_data = df2[
-            (df2['Prob_Vitoria_Home'] >= prob_vitoria_home_threshold) &
-            (df2['Prob_Vitoria_Away'] >= prob_vitoria_away_threshold) &
-            (df2['Prob_Over25_Home'] >= prob_over25_home_threshold) &
-            (df2['Prob_Over25_Away'] >= prob_over25_away_threshold) &
-            (df2['Media_Gols_H'] >= media_gols_h_threshold) &
-            (df2['Media_Gols_A'] >= media_gols_a_threshold) &
-            (df2['PPG_H'] >= ppg_h_threshold) &
-            (df2['PPG_A'] >= ppg_a_threshold)
-        ].sort_values(by='Hora')
+        filtered_data = df2.copy()
+
+        # Aplicar filtro Prob de Vitória Home
+        filtered_data = filtered_data[filtered_data['Prob_Vitoria_Home'] >= prob_vitoria_home_threshold]
+
+        # Aplicar filtro Prob de Vitória Away
+        filtered_data = filtered_data[filtered_data['Prob_Vitoria_Away'] >= prob_vitoria_away_threshold]
+
+        # Aplicar filtro Prob Over 2.5 Home
+        filtered_data = filtered_data[filtered_data['Prob_Over25_Home'] >= prob_over25_home_threshold]
+
+        # Aplicar filtro Prob Over 2.5 Away
+        filtered_data = filtered_data[filtered_data['Prob_Over25_Away'] >= prob_over25_away_threshold]
+
+        # Aplicar filtro Media Gols H
+        filtered_data = filtered_data[filtered_data['Media_Gols_H'] >= media_gols_h_threshold]
+
+        # Aplicar filtro Media Gols A
+        filtered_data = filtered_data[filtered_data['Media_Gols_A'] >= media_gols_a_threshold]
+
+        # Aplicar filtro PPG_H
+        filtered_data = filtered_data[filtered_data['PPG_H'] >= ppg_h_threshold]
+
+        # Aplicar filtro PPG_A
+        filtered_data = filtered_data[filtered_data['PPG_A'] >= ppg_a_threshold]
+
+        # Ordenar os dados filtrados por Hora
+        filtered_data = filtered_data.sort_values(by='Hora')
 
         st.dataframe(filtered_data[columns_to_display])
     else:
@@ -62,5 +80,3 @@ def predict_page():
 
 # Chamar a função para exibir a aplicação web
 predict_page()
-
-
