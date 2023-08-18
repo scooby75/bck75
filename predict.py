@@ -29,7 +29,7 @@ def predict_page():
     df2 = load_base()
 
     # Create number inputs for filter conditions
-    col1, col2, col3, col4 = st.beta_columns(4)
+    col1, col2, col3, col4 = st.columns(4)
 
     with col1:
         prob_vitoria_home_min = st.number_input("Prob Vitória Home (min)", 0, 100, 0)
