@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import datetime as dt
 
-def jogos_do_dia_page():
+def predict_page():
     st.subheader("Jogos do Dia")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
@@ -67,4 +67,4 @@ def jogos_do_dia_page():
         st.warning("Não existem jogos com esses critérios!")
 
 # Call the function to display the web application
-jogos_do_dia_page()
+predict_page()
