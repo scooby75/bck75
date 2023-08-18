@@ -7,9 +7,6 @@ def predict_page():
     st.subheader("Jogos do Dia")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
-    # Set locale to use period (.) as decimal separator
-    locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
-
     # Load the data
     @st.cache_data(ttl=dt.timedelta(hours=24))
     def load_base():
