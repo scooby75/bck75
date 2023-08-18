@@ -50,11 +50,12 @@ def predict_page():
         'Prob_Over25_Home', 'Prob_Over25_Away', 'Media_Gols_H', 'Media_Gols_A'
     ]
 
-    if not filtered_data.empty:
-        sorted_filtered_data = filtered_data.sort_values(by='Time')
+    if not df2.empty:
+        sorted_filtered_data = df2.sort_values(by='Time')
         st.dataframe(sorted_filtered_data[columns_to_display])
     else:
         st.warning("Não existem jogos com esses critérios!")
 
 # Call the function to display the web application
 predict_page()
+
