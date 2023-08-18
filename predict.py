@@ -46,11 +46,6 @@ def predict_page():
     ]
 
     if not df2.empty:
-        print("Before filtering:")
-        print("Prob_Vitoria_Home:", df2['Prob_Vitoria_Home'])
-        print("Prob_Vitoria_Away:", df2['Prob_Vitoria_Away'])
-        # ... other columns
-        
         filtered_data = df2[
             (df2['Prob_Vitoria_Home'] >= prob_vitoria_home_threshold) &
             (df2['Prob_Vitoria_Away'] >= prob_vitoria_away_threshold) &
@@ -62,12 +57,10 @@ def predict_page():
             (df2['PPG_A'] >= ppg_a_threshold)
         ].sort_values(by='Hora')
 
-        print("After filtering:")
-        print(filtered_data)
-
         st.dataframe(filtered_data[columns_to_display])
     else:
         st.warning("Não existem jogos com esses critérios!")
 
-# Call the function to display the web application
+# Chamar a função para exibir a aplicação web
 predict_page()
+
