@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import re
 
-def tips_page():
+def ha_025_page():
 
 ##### HA -0,25 ######
 
