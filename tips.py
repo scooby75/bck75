@@ -96,10 +96,10 @@ def tips_page():
 
        
     # URL do arquivo CSV com os dados dos jogos
-    url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.xlsx?raw=true"
+    url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
 
     # Carregar os dados do arquivo CSV em um DataFrame
-    df = pd.read_excel(url)
+    df = pd.read_csv(url)
 
     # Rename the columns
     df.rename(columns={
