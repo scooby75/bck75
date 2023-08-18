@@ -14,8 +14,8 @@ def predict_page():
 
         # Rename the columns
         data_jogos.rename(columns={
-            'GP_H': 'Prob_Vitoria_Home',
-            'GP_A': 'Prob_Vitoria_Away',
+            'Vitoria_H': 'Prob_Vitoria_Home',
+            'Vitoria_A': 'Prob_Vitoria_Away',
             'Over25_H': 'Prob_Over25_Home',
             'Over25_A': 'Prob_Over25_Away',
             'MediaGols_H': 'Media_Gols_H',
