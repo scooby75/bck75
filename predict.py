@@ -1,10 +1,14 @@
 import streamlit as st
 import pandas as pd
 import datetime as dt
+import locale
 
 def predict_page():
     st.subheader("Jogos do Dia")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
+
+    # Set locale to use period (.) as decimal separator
+    locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
     # Load the data
     @st.cache_data(ttl=dt.timedelta(hours=24))
@@ -36,6 +40,9 @@ def predict_page():
 
     df2 = load_base()
 
+    # Reset locale to default (back to comma as decimal separator)
+    locale.setlocale(locale.LC_ALL, '')
+
     # Create sliders for filter conditions
     prob_vitoria_home_threshold = st.slider("Prob de Vitória Home", 0, 100, 50)
     prob_vitoria_away_threshold = st.slider("Prob de Vitória Away", 0, 100, 50)
@@ -53,7 +60,7 @@ def predict_page():
     ]
 
     if not df2.empty:
-        sorted_filtered_data = df2[
+        filtered_data = df2[
             (df2['Prob_Vitoria_Home'] >= prob_vitoria_home_threshold) &
             (df2['Prob_Vitoria_Away'] >= prob_vitoria_away_threshold) &
             (df2['Prob_Over25_Home'] >= prob_over25_home_threshold) &
@@ -61,10 +68,10 @@ def predict_page():
             (df2['Media_Gols_H'] >= media_gols_h_threshold) &
             (df2['Media_Gols_A'] >= media_gols_a_threshold) &
             (df2['PPG_H'] >= ppg_h_threshold) &
-            (df2['PPG_A'] >= ppg_a_threshold) 
+            (df2['PPG_A'] >= ppg_a_threshold)
         ].sort_values(by='Hora')
 
-        st.dataframe(sorted_filtered_data[columns_to_display])
+        st.dataframe(filtered_data[columns_to_display])
     else:
         st.warning("Não existem jogos com esses critérios!")
 
