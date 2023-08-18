@@ -43,19 +43,30 @@ def predict_page():
     prob_over25_away_threshold = st.slider("Prob Over 2.5 Away", 0, 100, 60)
     media_gols_h_threshold = st.slider("Media Gols H", 0, 10, 1)
     media_gols_a_threshold = st.slider("Media Gols A", 0, 10, 1)
+    ppg_h_threshold = st.slider("PPG_H", 0, 3, 1)
+    ppg_a_threshold = st.slider("PPG_A", 0, 3, 1)
 
     # Specify columns to display in the sorted data
     columns_to_display = [
         'Hora', 'Home', 'Away', 'Prob_Vitoria_Home', 'Prob_Vitoria_Away',
-        'Prob_Over25_Home', 'Prob_Over25_Away', 'Media_Gols_H', 'Media_Gols_A'
+        'Prob_Over25_Home', 'Prob_Over25_Away', 'Media_Gols_H', 'Media_Gols_A', 'PPG_H', 'PPG_A'
     ]
 
     if not df2.empty:
-        sorted_filtered_data = df2.sort_values(by='Hora')
+        sorted_filtered_data = df2[
+            (df2['Prob_Vitoria_Home'] >= prob_vitoria_home_threshold) &
+            (df2['Prob_Vitoria_Away'] >= prob_vitoria_away_threshold) &
+            (df2['Prob_Over25_Home'] >= prob_over25_home_threshold) &
+            (df2['Prob_Over25_Away'] >= prob_over25_away_threshold) &
+            (df2['Media_Gols_H'] >= media_gols_h_threshold) &
+            (df2['Media_Gols_A'] >= media_gols_a_threshold) &
+            (df2['PPG_H'] >= ppg_h_threshold) &
+            (df2['PPG_A'] >= ppg_a_threshold) &
+        ].sort_values(by='Hora')
+
         st.dataframe(sorted_filtered_data[columns_to_display])
     else:
         st.warning("Não existem jogos com esses critérios!")
 
 # Call the function to display the web application
 predict_page()
-
