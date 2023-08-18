@@ -5,6 +5,7 @@ from cs import cs_page
 from goleada import goleada_page
 from ha_025 import ha_025_page
 from lay_zebra import lay_zebra_page
+from predict import predict_page
 from tips import tips_page
 
 def main():
@@ -27,7 +28,7 @@ def main():
             logout()
 
         # Caixa de seleção para diferentes páginas
-        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Dutching", "HA", "Lay Goleada", "Lay Zebra", "Tips"])
+        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Dutching", "HA", "Lay Goleada", "Lay Zebra", "Predict", "Tips"])
 
         # Exibe o conteúdo da página selecionada
         if selected_tab == "Jogos do Dia":
@@ -40,6 +41,8 @@ def main():
             goleada_page()
         elif selected_tab == "Lay Zebra":
             lay_zebra_page()
+        elif selected_tab == "Predict":
+            predict_page()
         elif selected_tab == "Tips":
             tips_page()
 
