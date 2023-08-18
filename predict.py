@@ -45,7 +45,7 @@ def predict_page():
     media_gols_a_threshold = st.slider("Media Gols A", 0, 10, 3)
 
     def convert_percentage_string_to_float(percentage_str):
-    return float(percentage_str.strip('%')) / 100.0
+        return float(percentage_str.strip('%')) / 100.0
 
     # Apply filters to the DataFrame
     filtered_data = df2[
