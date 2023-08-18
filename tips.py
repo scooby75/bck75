@@ -61,7 +61,7 @@ def tips_page():
         'FT_Odds_Over25': 'FT_Odd_Over25',
         'FT_Odds_Under25': 'FT_Odd_Under25',
         'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
-        'Rodada': 'Round'
+        'Rodada': 'Round',
     }, inplace=True)
 
     # Função para extrair o número do texto "ROUND N"
@@ -94,11 +94,11 @@ def tips_page():
 
 ##### HA -0,25 ######
 
-       
-    # URL do arquivo CSV com os dados dos jogos
+    # URL to the CSV file
+    #url = "https://github.com/futpythontrader/YouTube/blob/main/Jogos_do_Dia_FlashScore/2023-08-03_Jogos_do_Dia_FlashScore.csv?raw=true"
     url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
 
-    # Carregar os dados do arquivo CSV em um DataFrame
+    # Load the CSV data from the URL into a DataFrame
     df = pd.read_csv(url)
 
     # Rename the columns
@@ -109,7 +109,7 @@ def tips_page():
         'FT_Odds_Over25': 'FT_Odd_Over25',
         'FT_Odds_Under25': 'FT_Odd_Under25',
         'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
-        'Rodada': 'Round'
+        'Rodada': 'Round',
     }, inplace=True)
 
 # Função para extrair o número do texto "ROUND N"
@@ -145,5 +145,4 @@ def tips_page():
 
 # Chamar a função para iniciar o aplicativo
 tips_page()
-
     
