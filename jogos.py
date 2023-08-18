@@ -52,7 +52,7 @@ def jogos_do_dia_page():
             min_val, max_val = st.slider(f"Filter by {label}:", 0.0, 10.0, (0.0, 10.0))
             filter_values[var_name] = (min_val, max_val)
 
-    # Apply filters to the DataFrame
+# Apply filters to the DataFrame
     filtered_data = df2[
         (df2['FT_Odd_H'].between(*filter_values['selected_ft_odd_h'])) &
         (df2['FT_Odd_D'].between(*filter_values['selected_ft_odd_d'])) &
@@ -63,9 +63,10 @@ def jogos_do_dia_page():
     ]
 
     if not filtered_data.empty:
-        st.dataframe(filtered_data[columns_to_display])
+        sorted_filtered_data = filtered_data.sort_values(by='Time')
+        st.dataframe(sorted_filtered_data[columns_to_display])
     else:
-        st.warning("No matches found for the selected filters.")
+        st.warning("Não existem jogos com esses critérios!")
 
 # Call the function to display the web application
 jogos_do_dia_page()
