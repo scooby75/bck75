@@ -47,6 +47,6 @@ def goleada_page():
     # ... Repetir o padrão para outras seções ...
 
 # Chamar a função para iniciar o aplicativo
-tips_page()
+goleada_page()
 
     
