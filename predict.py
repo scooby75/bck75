@@ -28,30 +28,23 @@ def predict_page():
 
     df2 = load_base()
 
-    # Create sliders for filter conditions
-    prob_vitoria_home_min = st.slider("Prob de Vitória Home (mínimo)", 0, 100, 0)
-    prob_vitoria_home_max = st.slider("Prob de Vitória Home (máximo)", prob_vitoria_home_min, 100, 100)
-    
-    prob_vitoria_away_min = st.slider("Prob de Vitória Away (mínimo)", 0, 100, 0)
-    prob_vitoria_away_max = st.slider("Prob de Vitória Away (máximo)", prob_vitoria_away_min, 100, 100)
-
-    prob_over25_home_min = st.slider("Prob Over 2.5 Home (mínimo)", 0, 100, 0)
-    prob_over25_home_max = st.slider("Prob Over 2.5 Home (máximo)", prob_over25_home_min, 100, 100)
-    
-    prob_over25_away_min = st.slider("Prob Over 2.5 Away (mínimo)", 0, 100, 0)
-    prob_over25_away_max = st.slider("Prob Over 2.5 Away (máximo)", prob_over25_away_min, 100, 100)
-
-    media_gols_h_min = st.slider("Media Gols H (mínimo)", 0.0, 10.0, 0.0)
-    media_gols_h_max = st.slider("Media Gols H (máximo)", media_gols_h_min, 10.0, 10.0)
-    
-    media_gols_a_min = st.slider("Media Gols A (mínimo)", 0.0, 10.0, 0.0)
-    media_gols_a_max = st.slider("Media Gols A (máximo)", media_gols_a_min, 10.0, 10.0)
-
-    ppg_h_min = st.slider("PPG_H (mínimo)", 0.0, 3.0, 0.0)
-    ppg_h_max = st.slider("PPG_H (máximo)", ppg_h_min, 3.0, 3.0)
-    
-    ppg_a_min = st.slider("PPG_A (mínimo)", 0.0, 3.0, 0.0)
-    ppg_a_max = st.slider("PPG_A (máximo)", ppg_a_min, 3.0, 3.0)
+    # Create number inputs for filter conditions
+    prob_vitoria_home_min = st.number_input("Prob de Vitória Home (mínimo)", 0, 100, 0)
+    prob_vitoria_home_max = st.number_input("Prob de Vitória Home (máximo)", prob_vitoria_home_min, 100, 100)
+    prob_vitoria_away_min = st.number_input("Prob de Vitória Away (mínimo)", 0, 100, 0)
+    prob_vitoria_away_max = st.number_input("Prob de Vitória Away (máximo)", prob_vitoria_away_min, 100, 100)
+    prob_over25_home_min = st.number_input("Prob Over 2.5 Home (mínimo)", 0, 100, 0)
+    prob_over25_home_max = st.number_input("Prob Over 2.5 Home (máximo)", prob_over25_home_min, 100, 100)
+    prob_over25_away_min = st.number_input("Prob Over 2.5 Away (mínimo)", 0, 100, 0)
+    prob_over25_away_max = st.number_input("Prob Over 2.5 Away (máximo)", prob_over25_away_min, 100, 100)
+    media_gols_h_min = st.number_input("Media Gols H (mínimo)", 0.0, 10.0, 0.0)
+    media_gols_h_max = st.number_input("Media Gols H (máximo)", media_gols_h_min, 10.0, 10.0)
+    media_gols_a_min = st.number_input("Media Gols A (mínimo)", 0.0, 10.0, 0.0)
+    media_gols_a_max = st.number_input("Media Gols A (máximo)", media_gols_a_min, 10.0, 10.0)
+    ppg_h_min = st.number_input("PPG_H (mínimo)", 0.0, 3.0, 0.0)
+    ppg_h_max = st.number_input("PPG_H (máximo)", ppg_h_min, 3.0, 3.0)
+    ppg_a_min = st.number_input("PPG_A (mínimo)", 0.0, 3.0, 0.0)
+    ppg_a_max = st.number_input("PPG_A (máximo)", ppg_a_min, 3.0, 3.0)
 
     # Specify columns to display in the sorted data
     columns_to_display = [
@@ -92,4 +85,3 @@ def predict_page():
 
 # Call the function to display the web application
 predict_page()
-
