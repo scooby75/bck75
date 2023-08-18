@@ -3,7 +3,7 @@ import pandas as pd
 import datetime as dt
 
 def predict_page():
-    st.subheader("Jogos do Dia")
+    st.subheader("Previsão")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
     # Load the data
