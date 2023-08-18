@@ -40,18 +40,15 @@ def predict_page():
 
     df2 = load_base()
 
-    # Reset locale to default (back to comma as decimal separator)
-    locale.setlocale(locale.LC_ALL, '')
-
-    # Create sliders for filter conditions
+     # Create sliders for filter conditions
     prob_vitoria_home_threshold = st.slider("Prob de Vitória Home", 0, 100, 50)
     prob_vitoria_away_threshold = st.slider("Prob de Vitória Away", 0, 100, 50)
     prob_over25_home_threshold = st.slider("Prob Over 2.5 Home", 0, 100, 60)
     prob_over25_away_threshold = st.slider("Prob Over 2.5 Away", 0, 100, 60)
-    media_gols_h_threshold = st.slider("Media Gols H", 0, 10, 1)
-    media_gols_a_threshold = st.slider("Media Gols A", 0, 10, 1)
-    ppg_h_threshold = st.slider("PPG_H", 0, 3, 1)
-    ppg_a_threshold = st.slider("PPG_A", 0, 3, 1)
+    media_gols_h_threshold = st.slider("Media Gols H", 0.0, 10.0, 0.1)
+    media_gols_a_threshold = st.slider("Media Gols A", 0.0, 10.0, 0.1)
+    ppg_h_threshold = st.slider("PPG_H", 0.0, 3.0, 0.1)
+    ppg_a_threshold = st.slider("PPG_A", 0.0, 3.0, 0.1)
 
     # Specify columns to display in the sorted data
     columns_to_display = [
