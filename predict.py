@@ -3,7 +3,7 @@ import pandas as pd
 import datetime as dt
 
 def predict_page():
-    st.subheader("Previsão")
+    st.subheader("Jogos do Dia")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
     # Load the data
@@ -46,12 +46,12 @@ def predict_page():
 
     # Apply filters to the DataFrame
     filtered_data = df2[
-        (df2['Prob_Vitoria_Home'] > prob_vitoria_home_threshold) &
-        (df2['Prob_Vitoria_Away'] > prob_vitoria_away_threshold) &
-        (df2['Prob_Over25_Home'] > prob_over25_home_threshold) &
-        (df2['Prob_Over25_Away'] > prob_over25_away_threshold) &
-        (df2['Media_Gols_H'] > media_gols_h_threshold) &
-        (df2['Media_Gols_A'] > media_gols_a_threshold)
+        (df2['Prob_Vitoria_Home'].astype(float) > prob_vitoria_home_threshold) &
+        (df2['Prob_Vitoria_Away'].astype(float) > prob_vitoria_away_threshold) &
+        (df2['Prob_Over25_Home'].astype(float) > prob_over25_home_threshold) &
+        (df2['Prob_Over25_Away'].astype(float) > prob_over25_away_threshold) &
+        (df2['Media_Gols_H'].astype(float) > media_gols_h_threshold) &
+        (df2['Media_Gols_A'].astype(float) > media_gols_a_threshold)
     ]
 
     # Specify columns to display in the sorted data
