@@ -33,17 +33,22 @@ def jogos_do_dia_page():
         'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes'
     ]
 
+    col1, col2, col3 = st.beta_columns(3)
+
     # Filters for selected columns
-    selected_round = st.selectbox("Filter by Round:", df2['Round'].unique())
-    selected_ft_odd_h = st.number_input("Filter by FT Odds Home:", min_value=1.0)
-    selected_ft_odd_d = st.number_input("Filter by FT Odds Draw:", min_value=1.0)
-    selected_ft_odd_a = st.number_input("Filter by FT Odds Away:", min_value=1.0)
-    selected_ft_odd_over25 = st.number_input("Filter by FT Odds Over 2.5:", min_value=1.0)
-    selected_ft_odd_under25 = st.number_input("Filter by FT Odds Under 2.5:", min_value=1.0)
-    selected_ft_odd_btts_yes = st.number_input("Filter by FT Odds BTTS Yes:", min_value=1.0)
+    with col1:
+        selected_ft_odd_h = st.number_input("Filter by FT Odds Home:", min_value=1.0)
+        selected_ft_odd_over25 = st.number_input("Filter by FT Odds Over 2.5:", min_value=1.0)
+
+    with col2:
+        selected_ft_odd_d = st.number_input("Filter by FT Odds Draw:", min_value=1.0)
+        selected_ft_odd_under25 = st.number_input("Filter by FT Odds Under 2.5:", min_value=1.0)
+
+    with col3:
+        selected_ft_odd_a = st.number_input("Filter by FT Odds Away:", min_value=1.0)
+        selected_ft_odd_btts_yes = st.number_input("Filter by FT Odds BTTS Yes:", min_value=1.0)
 
     filtered_data = df2[
-        (df2['Round'] == selected_round) &
         (df2['FT_Odd_H'] >= selected_ft_odd_h) &
         (df2['FT_Odd_D'] >= selected_ft_odd_d) &
         (df2['FT_Odd_A'] >= selected_ft_odd_a) &
