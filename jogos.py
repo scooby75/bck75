@@ -9,7 +9,7 @@ def jogos_do_dia_page():
     # Load the data
     @st.cache_data(ttl=dt.timedelta(hours=24))
     def load_base():
-        url = "https://github.com/scooby75/bck75/blob/main/jogos_do_dia.csv?raw=true"
+        url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia.csv?raw=true"
         data_jogos = pd.read_csv(url)
 
         # Rename the columns
