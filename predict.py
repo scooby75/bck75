@@ -49,10 +49,10 @@ def predict_page():
 
     # Apply filters to the DataFrame
     filtered_data = df2[
-        (df2['Prob_Vitoria_Home'].astype(float) > prob_vitoria_home_threshold) &
-        (df2['Prob_Vitoria_Away'].astype(float) > prob_vitoria_away_threshold) &
-        (df2['Prob_Over25_Home'].astype(float) > prob_over25_home_threshold) &
-        (df2['Prob_Over25_Away'].astype(float) > prob_over25_away_threshold) &
+        (df2['Prob_Vitoria_Home'].apply(convert_percentage_string_to_float) > prob_vitoria_home_threshold) &
+        (df2['Prob_Vitoria_Away'].apply(convert_percentage_string_to_float) > prob_vitoria_away_threshold) &
+        (df2['Prob_Over25_Home'].apply(convert_percentage_string_to_float) > prob_over25_home_threshold) &
+        (df2['Prob_Over25_Away'].apply(convert_percentage_string_to_float) > prob_over25_away_threshold) &
         (df2['Media_Gols_H'].astype(float) > media_gols_h_threshold) &
         (df2['Media_Gols_A'].astype(float) > media_gols_a_threshold)
     ]
