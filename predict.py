@@ -81,7 +81,8 @@ def predict_page():
             (filtered_data['PPG_H'] >= ppg_h_min) &
             (filtered_data['PPG_H'] <= ppg_h_max) &
             (filtered_data['PPG_A'] >= ppg_a_min) &
-            (filtered_data['PPG_A'] <= ppg_a_max)
+            (filtered_data['PPG_A'] <= ppg_a_max) &
+            (filtered_data['GP_H'] >= 5)
         ]
 
         # Sort the filtered data by 'Hora'
