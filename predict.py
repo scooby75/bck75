@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import datetime as dt
-import locale
 
 def predict_page():
     st.subheader("Jogos do Dia")
