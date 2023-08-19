@@ -36,7 +36,7 @@ def tips_page():
     df["Round_Num"] = df["Round"].apply(extrair_numero_round)
 
 # Filtrando os jogos com valores de "FT_Odd_H" eh menor que 1.50 e "Round_Num" maior ou igual a 10
-    layzebraht_df = df[
+    layzebraft_df = df[
     (df["FT_Odd_H"] >= 1.4) & (df["FT_Odd_H"] <= 2.1) &
     (df["FT_Odd_A"] >= 5) & (df["FT_Odd_A"] <= 10) &
     (df["Round_Num"] >= 10)
