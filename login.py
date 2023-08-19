@@ -6,7 +6,7 @@ import bcrypt
 def create_db():
     conn = psycopg2.connect(
         host="containers-us-west-64.railway.app",
-        database="login",
+        database="railway",
         user="postgres",
         password="Kamk5HXHc9hcQsjsA4f2"
     )
@@ -33,7 +33,7 @@ def login_page():
     if login_button:
         conn = psycopg2.connect(
             host="containers-us-west-64.railway.app",
-            database="login",
+            database="railway",
             user="postgres",
             password="Kamk5HXHc9hcQsjsA4f2"
         )
@@ -51,16 +51,34 @@ def login_page():
 
         conn.close()
 
-    # Restante da função...
+def registration_page():
+    st.title("Registro de Novo Usuário")
+    new_username = st.text_input("Novo Usuário")
+    new_password = st.text_input("Nova Senha", type="password")
 
-def logout():
-    st.session_state.logged_in = False
-    st.session_state.pop("username", None)
-    st.session_state.pop("login_time", None)
+    register_button = st.button("Registrar")
+
+    if register_button and new_username and new_password:
+        conn = psycopg2.connect(
+            host="containers-us-west-64.railway.app",
+            database="railway",
+            user="postgres",
+            password="Kamk5HXHc9hcQsjsA4f2"
+        )
+        cursor = conn.cursor()
+
+        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+        cursor.execute('INSERT INTO users (username, password) VALUES (%s, %s)', (new_username, hashed_password))
+
+        conn.commit()
+        conn.close()
+
+        st.success("Usuário registrado com sucesso!")
 
 def main():
     create_db()
     login_page()
+    registration_page()
 
 if __name__ == "__main__":
     main()
