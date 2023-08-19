@@ -1,14 +1,17 @@
 import streamlit as st
 import datetime
-import sqlite3
+import psycopg2
 import bcrypt
 
 def create_db():
-    # Criar e conectar ao banco de dados
-    conn = sqlite3.connect("user_credentials.db")
+    conn = psycopg2.connect(
+        host="seu-host",
+        database="seu-banco-de-dados",
+        user="seu-usuario",
+        password="sua-senha"
+    )
     cursor = conn.cursor()
 
-    # Criar a tabela se ela ainda não existir
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             username TEXT PRIMARY KEY,
@@ -16,7 +19,6 @@ def create_db():
         )
     ''')
 
-    # Salvar as mudanças e fechar a conexão
     conn.commit()
     conn.close()
 
@@ -29,13 +31,18 @@ def login_page():
     login_button = st.button("Entrar")
 
     if login_button:
-        conn = sqlite3.connect("user_credentials.db")
+        conn = psycopg2.connect(
+            host="containers-us-west-64.railway.app",
+            database="railway",
+            user="postgres",
+            password="Kamk5HXHc9hcQsjsA4f2"
+        )
         cursor = conn.cursor()
 
-        cursor.execute('SELECT password FROM users WHERE username = ?', (username,))
+        cursor.execute('SELECT password FROM users WHERE username = %s', (username,))
         result = cursor.fetchone()
 
-        if result and bcrypt.checkpw(password.encode('utf-8'), result[0]):
+        if result and bcrypt.checkpw(password.encode('utf-8'), result[0].encode('utf-8')):
             st.session_state.logged_in = True
             st.session_state.username = username
             st.session_state.login_time = datetime.datetime.now()
@@ -44,30 +51,7 @@ def login_page():
 
         conn.close()
 
-    new_user = st.checkbox("Criar novo usuário")
-
-    if new_user:
-        new_username = st.text_input("Novo usuário")
-        new_password = st.text_input("Nova senha", type="password")
-        confirm_password = st.text_input("Confirmar senha", type="password")
-
-        if new_username and new_password and new_password == confirm_password:
-            conn = sqlite3.connect("user_credentials.db")
-            cursor = conn.cursor()
-
-            cursor.execute('SELECT username FROM users WHERE username = ?', (new_username,))
-            existing_user = cursor.fetchone()
-
-            if existing_user:
-                st.error("Este usuário já existe.")
-            else:
-                hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
-
-                cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (new_username, hashed_password))
-                conn.commit()
-                st.success("Novo usuário criado com sucesso.")
-
-            conn.close()
+    # Restante da função...
 
 def logout():
     st.session_state.logged_in = False
