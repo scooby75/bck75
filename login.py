@@ -40,7 +40,7 @@ def login_page():
             st.session_state.username = username
             st.session_state.login_time = datetime.datetime.now()
         else:
-            st.error("Credenciais inválidas.")
+            st.error("Credenciais inválidas ou usuário não encontrado.")
 
         conn.close()
 
@@ -74,6 +74,9 @@ def logout():
     st.session_state.pop("username", None)
     st.session_state.pop("login_time", None)
 
-if __name__ == "__main__":
+def main():
     create_db()
     login_page()
+
+if __name__ == "__main__":
+    main()
