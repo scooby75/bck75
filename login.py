@@ -5,10 +5,10 @@ import bcrypt
 
 def create_db():
     conn = psycopg2.connect(
-        host="seu-host",
-        database="seu-banco-de-dados",
-        user="seu-usuario",
-        password="sua-senha"
+        host="containers-us-west-64.railway.app",
+        database="login",
+        user="postgres",
+        password="Kamk5HXHc9hcQsjsA4f2"
     )
     cursor = conn.cursor()
 
@@ -33,7 +33,7 @@ def login_page():
     if login_button:
         conn = psycopg2.connect(
             host="containers-us-west-64.railway.app",
-            database="railway",
+            database="login",
             user="postgres",
             password="Kamk5HXHc9hcQsjsA4f2"
         )
