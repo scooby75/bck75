@@ -4,3 +4,4 @@ datetime
 scipy
 openpyxl
 bcrypt
+psycopg2
