@@ -49,7 +49,8 @@ def jogos_do_dia_page():
 
     for i, (label, var_name) in enumerate(filter_columns):
         with col1 if i < len(filter_columns) // 2 else col2:
-            min_val, max_val = st.slider(f"Filter by {label}:", 0.0, 10.0, (0.0, 10.0))
+            min_val = st.number_input(f"Min {label}:", value=0.0, step=0.1)
+            max_val = st.number_input(f"Max {label}:", value=10.0, step=0.1)
             filter_values[var_name] = (min_val, max_val)
 
     # Apply filters to the DataFrame
@@ -70,3 +71,4 @@ def jogos_do_dia_page():
 
 # Call the function to display the web application
 jogos_do_dia_page()
+
