@@ -45,22 +45,29 @@ def jogos_do_dia_page():
         ('FT Odds BTTS Yes', 'selected_ft_odd_btts_yes')
     ]
 
-    col1, col2 = st.columns(2)
+    # Create number inputs for filter conditions
+    col1, col2, col3 = st.columns(3)
 
-    for i, (label, var_name) in enumerate(filter_columns):
-        with col1 if i < len(filter_columns) // 2 else col2:
-            min_val = st.number_input(f"Min {label}:", value=0.0, step=0.1)
-            max_val = st.number_input(f"Max {label}:", value=10.0, step=0.1)
-            filter_values[var_name] = (min_val, max_val)
+    with col1:
+        selected_ft_odd_h = st.number_input("FT Odds Home (min)", 0.0, 10.0, 0.0)
+        selected_ft_odd_d = st.number_input("FT Odds Draw (min)", 0.0, 10.0, 0.0)
+        selected_ft_odd_a = st.number_input("FT Odds Away (min)", 0.0, 10.0, 0.0)
+
+    with col2:
+        selected_ft_odd_over25 = st.number_input("FT Odds Over 2.5 (min)", 0.0, 10.0, 0.0)
+        selected_ft_odd_under25 = st.number_input("FT Odds Under 2.5 (min)", 0.0, 10.0, 0.0)
+
+    with col3:
+        selected_ft_odd_btts_yes = st.number_input("FT Odds BTTS Yes (min)", 0.0, 10.0, 0.0)
 
     # Apply filters to the DataFrame
     filtered_data = df2[
-        (df2['FT_Odd_H'].between(*filter_values['selected_ft_odd_h'])) &
-        (df2['FT_Odd_D'].between(*filter_values['selected_ft_odd_d'])) &
-        (df2['FT_Odd_A'].between(*filter_values['selected_ft_odd_a'])) &
-        (df2['FT_Odd_Over25'].between(*filter_values['selected_ft_odd_over25'])) &
-        (df2['FT_Odd_Under25'].between(*filter_values['selected_ft_odd_under25'])) &
-        (df2['FT_Odd_BTTS_Yes'].between(*filter_values['selected_ft_odd_btts_yes']))
+        (df2['FT_Odd_H'] >= selected_ft_odd_h) &
+        (df2['FT_Odd_D'] >= selected_ft_odd_d) &
+        (df2['FT_Odd_A'] >= selected_ft_odd_a) &
+        (df2['FT_Odd_Over25'] >= selected_ft_odd_over25) &
+        (df2['FT_Odd_Under25'] >= selected_ft_odd_under25) &
+        (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes)
     ]
 
     if not filtered_data.empty:
@@ -71,4 +78,5 @@ def jogos_do_dia_page():
 
 # Call the function to display the web application
 jogos_do_dia_page()
+
 
