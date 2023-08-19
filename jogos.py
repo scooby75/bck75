@@ -49,25 +49,34 @@ def jogos_do_dia_page():
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        selected_ft_odd_h = st.number_input("FT Odds Home (min)", 0.0, 10.0, 0.0)
-        selected_ft_odd_d = st.number_input("FT Odds Draw (min)", 0.0, 10.0, 0.0)
-        selected_ft_odd_a = st.number_input("FT Odds Away (min)", 0.0, 10.0, 0.0)
+        selected_ft_odd_h_min = st.number_input("FT Odds Home (min)", 0.0, 10.0, 0.0)
+        selected_ft_odd_h_max = st.number_input("FT Odds Home (max)", selected_ft_odd_h_min, 10.0, 10.0)
+        
+        selected_ft_odd_d_min = st.number_input("FT Odds Draw (min)", 0.0, 10.0, 0.0)
+        selected_ft_odd_d_max = st.number_input("FT Odds Draw (max)", selected_ft_odd_d_min, 10.0, 10.0)
+        
+        selected_ft_odd_a_min = st.number_input("FT Odds Away (min)", 0.0, 10.0, 0.0)
+        selected_ft_odd_a_max = st.number_input("FT Odds Away (max)", selected_ft_odd_a_min, 10.0, 10.0)
 
     with col2:
-        selected_ft_odd_over25 = st.number_input("FT Odds Over 2.5 (min)", 0.0, 10.0, 0.0)
-        selected_ft_odd_under25 = st.number_input("FT Odds Under 2.5 (min)", 0.0, 10.0, 0.0)
+        selected_ft_odd_over25_min = st.number_input("FT Odds Over 2.5 (min)", 0.0, 10.0, 0.0)
+        selected_ft_odd_over25_max = st.number_input("FT Odds Over 2.5 (max)", selected_ft_odd_over25_min, 10.0, 10.0)
+        
+        selected_ft_odd_under25_min = st.number_input("FT Odds Under 2.5 (min)", 0.0, 10.0, 0.0)
+        selected_ft_odd_under25_max = st.number_input("FT Odds Under 2.5 (max)", selected_ft_odd_under25_min, 10.0, 10.0)
 
     with col3:
-        selected_ft_odd_btts_yes = st.number_input("FT Odds BTTS Yes (min)", 0.0, 10.0, 0.0)
+        selected_ft_odd_btts_yes_min = st.number_input("FT Odds BTTS Yes (min)", 0.0, 10.0, 0.0)
+        selected_ft_odd_btts_yes_max = st.number_input("FT Odds BTTS Yes (max)", selected_ft_odd_btts_yes_min, 10.0, 10.0)
 
     # Apply filters to the DataFrame
     filtered_data = df2[
-        (df2['FT_Odd_H'] >= selected_ft_odd_h) &
-        (df2['FT_Odd_D'] >= selected_ft_odd_d) &
-        (df2['FT_Odd_A'] >= selected_ft_odd_a) &
-        (df2['FT_Odd_Over25'] >= selected_ft_odd_over25) &
-        (df2['FT_Odd_Under25'] >= selected_ft_odd_under25) &
-        (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes)
+        (df2['FT_Odd_H'] >= selected_ft_odd_h_min) &
+        (df2['FT_Odd_D'] >= selected_ft_odd_d_min) &
+        (df2['FT_Odd_A'] >= selected_ft_odd_a_min) &
+        (df2['FT_Odd_Over25'] >= selected_ft_odd_over25_min) &
+        (df2['FT_Odd_Under25'] >= selected_ft_odd_under25_min) &
+        (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_min)
     ]
 
     if not filtered_data.empty:
@@ -78,5 +87,6 @@ def jogos_do_dia_page():
 
 # Call the function to display the web application
 jogos_do_dia_page()
+
 
 
