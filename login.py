@@ -5,7 +5,7 @@ import bcrypt
 
 def create_db():
     conn = psycopg2.connect(
-        host="postgresql://postgres:Kamk5HXHc9hcQsjsA4f2@containers-us-west-64.railway.app:7354/railway",
+        host="containers-us-west-64.railway.app",
         database="railway",
         user="postgres",
         password="Kamk5HXHc9hcQsjsA4f2"
@@ -32,7 +32,7 @@ def login_page():
 
     if login_button:
         conn = psycopg2.connect(
-            host="postgresql://postgres:Kamk5HXHc9hcQsjsA4f2@containers-us-west-64.railway.app:7354/railway",
+            host="containers-us-west-64.railway.app",
             database="railway",
             user="postgres",
             password="Kamk5HXHc9hcQsjsA4f2"
@@ -75,10 +75,6 @@ def registration_page():
 
         st.success("Usuário registrado com sucesso!")
 
-def main():
-    create_db()
-    login_page()
-    registration_page()
+# Exportando as funções para serem usadas em outros módulos
+__all__ = ['create_db', 'login_page', 'registration_page']
 
-if __name__ == "__main__":
-    main()
