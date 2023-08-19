@@ -3,4 +3,3 @@ pandas
 datetime
 scipy
 openpyxl
-sqlite3
