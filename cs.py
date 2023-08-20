@@ -13,7 +13,8 @@ def cs_page():
     df = df[df['Rodada'] >= 10]
 
     # Filtrar jogos com home menor ou igual a 1.90
-    df = df[(df['FT_Odds_H'] >= 1.40) & (df['FT_Odds_H'] <= 2)]
+    #df = df[(df['FT_Odds_H'] >= 1.40) & (df['FT_Odds_H'] <= 2)]
+    df = df[(df['FT_Odds_H'] >= 2) & (df['FT_Odds_H'] <= 2.40)]
 
     # Filtrar jogos com home menor ou igual a 1.90
     df = df[(df['FT_Odds_Under25'] <= 2.20)]
