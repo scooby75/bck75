@@ -89,7 +89,7 @@ def cs_page():
         details1 = f"**Hora:** {row['Time']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
         details2 = f"**Odd Casa:** {row['FT_Odds_H']} |  **Odd Empate:** {row['FT_Odds_D']} |  **Odd Visitante:** {row['FT_Odds_A']}"
         st.write(details1)
-        st.write(details2)
+        #st.write(details2)
 
         # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
         prob_game_df = resultado_df[placares].iloc[[index]]
