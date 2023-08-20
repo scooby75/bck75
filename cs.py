@@ -13,19 +13,13 @@ def cs_page():
     df = df[df['Rodada'] >= 10]
 
     # Filtrar jogos com home e away maior ou igual a 2
-    #df = df[(df['FT_Odds_H'] >= 1.40) & (df['FT_Odds_H'] <= 2)]
-    df = df[(df['FT_Odds_H'] >= 2) 
-    df = df[(df['FT_Odds_A'] >= 2) 
+    df = df[(df['FT_Odds_H'] >= 2) & (df['FT_Odds_A'] >= 2)]
 
-    # Filtrar jogos com home menor ou igual a 1.90
-    #df = df[(df['FT_Odds_Under25'] <= 2.20)]
-
-    # Filtrar jogos com XG menor ou igual a 1.80
+    # Filtrar jogos com XG entre 1 e 1.8 e total XG menor ou igual a 2
     df = df[(df['XG_Home_Pre'] >= 1) & (df['XG_Home_Pre'] <= 1.8)]
     df = df[(df['XG_Away_Pre'] >= 1) & (df['XG_Away_Pre'] <= 1.8)]
-    df = df[(df['XG_Total_Pre'] <= 2)
+    df = df[df['XG_Total_Pre'] <= 2]
 
-    
     # Placares para os quais você deseja calcular a probabilidade
     placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x2', '3x3', '4x0', '4x1', '4x2', '4x3', '4x4', '5x0', '5x1', '5x2', '5x3']
 
