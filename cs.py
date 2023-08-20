@@ -46,7 +46,7 @@ def cs_page():
 
             prob_home = poisson.pmf(gols_home, lambda_home)
             prob_away = poisson.pmf(gols_away, lambda_away)
-            prob_total = poisson.pmf(gols_home + gols_away, lambda_total)
+            
 
             # Aplicar o ajuste de zero inflado para placares "estranhos"
             if (lambda_home < gols_home) or (lambda_away < gols_away):
