@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import re
 
-def tips_page():
+def zebra_ft_page():
     # URL do arquivo CSV
 ### Lay Zebra FT ####
 
@@ -53,7 +53,7 @@ def tips_page():
 
 
 # Chamar a função para iniciar o aplicativo
-tips_page()
+zebra_ft_page()
 
     
 
