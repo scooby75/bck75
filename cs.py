@@ -41,6 +41,9 @@ def main():
     
     df = df[df['Rodada'] >= 10]
     df = df[(df['FT_Odds_H'] >= 2) & (df['FT_Odds_A'] >= 2)]
+     
+    # Filtrar jogos com home menor ou igual a 1.80
+    df = df[(df['FT_Odds_Under25'] <= 1.80)]
 
     # Filtrar jogos com XG entre 1 e 1.6
     df = df[(df['XG_Home_Pre'] >= 1) & (df['XG_Home_Pre'] <= 1.6)]
