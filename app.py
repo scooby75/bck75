@@ -6,7 +6,7 @@ from goleada import goleada_page
 from ha_025 import ha_025_page
 from lay_zebra import lay_zebra_page
 from predict import predict_page
-from tips import tips_page
+from zebra_ft import zebra_ft_page
 
 def main():
     # Verifica se o estado de sessão "logged_in" já existe
@@ -28,7 +28,7 @@ def main():
             logout()
 
         # Caixa de seleção para diferentes páginas
-        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Dutching", "HA", "Lay Goleada", "Lay Zebra", "Predict", "Tips"])
+        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Dutching", "HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict")
 
         # Exibe o conteúdo da página selecionada
         if selected_tab == "Jogos do Dia":
@@ -39,12 +39,12 @@ def main():
             ha_025_page()
         elif selected_tab == "Lay Goleada":
             goleada_page()
-        elif selected_tab == "Lay Zebra":
+        elif selected_tab == "Lay Zebra HT":
             lay_zebra_page()
         elif selected_tab == "Predict":
             predict_page()
-        elif selected_tab == "Tips":
-            tips_page()
+        elif selected_tab == "Lay Zebra FT":
+            zebra_ft_page()
 
 if __name__ == "__main__":
     main()
