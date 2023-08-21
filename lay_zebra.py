@@ -24,8 +24,8 @@ def lay_zebra_page():
         'Rodada': 'Round',
     }, inplace=True)
 
-    # Função para extrair o número do texto "ROUND N"
-    def extrair_numero_round(text):
+    # Função para extrair o número do texto "RODADA N"
+    def extrair_numero_rodada(text):
         if isinstance(text, int):
             return text
         match = re.search(r'\d+', text)
@@ -33,14 +33,14 @@ def lay_zebra_page():
             return int(match.group())
         return None
 
-    # Aplicando a função para extrair o número do "Round" e criando uma nova coluna "Round_Num"
-    df["Round_Num"] = df["Round"].apply(extrair_numero_round)
+    # Aplicando a função para extrair o número do "Rodada" e criando uma nova coluna "Rodada_Num"
+    df["Rodada_Num"] = df["Rodada"].apply(extrair_numero_rodada)
 
 # Filtrando os jogos com valores de "FT_Odd_H" eh menor que 1.50 e "Round_Num" maior ou igual a 10
     layzebraht_df = df[
     (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
     (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10) &
-    (df["Round_Num"] >= 10)
+    (df["Rodada_Num"] >= 10)
     ]
 
 # Selecionar apenas as colunas desejadas: Date, Time, League, Home e Away
