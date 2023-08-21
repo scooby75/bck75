@@ -16,7 +16,6 @@ def jogos_do_dia_page():
         #data_jogos = pd.read_excel(url)
         data_jogos = pd.read_csv(url)
         
-
         # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
             'FT_Odds_H': 'FT_Odd_H',
@@ -27,6 +26,10 @@ def jogos_do_dia_page():
             'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
             'ROUND': 'Rodada',
         }, inplace=True)
+        
+        # Converter a coluna 'Rodada' para o formato de texto (string)
+        data_jogos['Rodada'] = data_jogos['Rodada'].astype(str)
+        # Aplicar as operações de substituição e remoção de espaços na coluna 'Rodada'
         data_jogos['Rodada'] = data_jogos['Rodada'].str.replace('ROUND', '').str.strip()
 
         return data_jogos
@@ -101,5 +104,6 @@ def jogos_do_dia_page():
     else:
         st.warning("Não existem jogos com esses critérios!")
 
-# Call the function to display the web application
+# Chamar a função para exibir a aplicação web
 jogos_do_dia_page()
+
