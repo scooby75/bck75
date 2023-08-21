@@ -3,34 +3,24 @@ import pandas as pd
 from scipy.stats import poisson
 
 def cs_page():
-   # URL do arquivo CSV
+    # URL do arquivo CSV com os dados dos jogos
     url = "https://github.com/scooby75/bdfootball/blob/main/2023-08-22_Jogos_do_Dia_FS.csv?raw=true"
-  
-    # Carregar o arquivo CSV em um dataframe
+
+    # Carregar os dados do arquivo CSV em um DataFrame
     df = pd.read_csv(url)
 
-    # Rename the columns
-    df.rename(columns={
+    # Rename the columns and process 'Rodada'
+    data_jogos.rename(columns={
         'FT_Odds_H': 'FT_Odd_H',
         'FT_Odds_D': 'FT_Odd_D',
         'FT_Odds_A': 'FT_Odd_A',
         'FT_Odds_Over25': 'FT_Odd_Over25',
         'FT_Odds_Under25': 'FT_Odd_Under25',
         'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
+        'League': 'Liga',
+        'Time': 'Hora',
         'ROUND': 'Rodada',
     }, inplace=True)
-
-    # Função para extrair o número do texto "RODADA N"
-    def extrair_numero_rodada(text):
-        if isinstance(text, int):
-            return text
-        match = re.search(r'\d+', text)
-        if match:
-            return int(match.group())
-        return None
-
-    # Aplicando a função para extrair o número do "Rodada" e criando uma nova coluna "Rodada_Num"
-    df["Rodada_Num"] = df["Rodada"].apply(extrair_numero_rodada)
 
     # Filtrar jogos com round maior ou igual a 10
     df = df[df['Rodada'] >= 10]
@@ -56,7 +46,6 @@ def cs_page():
         # Calcular as médias de gols esperados para cada time e o total esperado
         lambda_home = row['XG_Home_Pre']
         lambda_away = row['XG_Away_Pre']
-        
 
         # Calcular as probabilidades usando a distribuição de Poisson
         probabilidades = []
@@ -69,7 +58,6 @@ def cs_page():
 
             prob_home = poisson.pmf(gols_home, lambda_home)
             prob_away = poisson.pmf(gols_away, lambda_away)
-            
 
             # Aplicar o ajuste de zero inflado para placares "estranhos"
             if (lambda_home < gols_home) or (lambda_away < gols_away):
@@ -111,7 +99,7 @@ def cs_page():
         details1 = f"**Hora:** {row['Time']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
         details2 = f"**Odd Casa:** {row['FT_Odds_H']} |  **Odd Empate:** {row['FT_Odds_D']} |  **Odd Visitante:** {row['FT_Odds_A']}"
         st.write(details1)
-        #st.write(details2)
+        # st.write(details2)
 
         # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
         prob_game_df = resultado_df[placares].iloc[[index]]
