@@ -66,8 +66,9 @@ def jogos_do_dia_page():
     with col3:
         selected_ft_odd_btts_yes_min = st.number_input("FT Odds BTTS Yes (min)", 0.0, 10.0, 0.0)
         selected_ft_odd_btts_yes_max = st.number_input("FT Odds BTTS Yes (max)", selected_ft_odd_btts_yes_min, 10.0, 10.0)
-        selected_rodada_min = st.number_input("Rodada (min)", 0.0, 1.0, 0.0)  # Change 1 to 1.0 (float)
-        selected_rodada_max = st.number_input("Rodada (max)", selected_rodada_min, 40.0, 10.0)
+        selected_rodada_min = st.number_input("Rodada (min)", min_value=0.0, max_value=50.0, step=1.0)
+        selected_rodada_max = st.number_input("Rodada (max)", min_value=selected_rodada_min, max_value=50.0, step=1.0)
+
 
     # Convert 'Rodada' column to integers
     df2['Rodada'] = pd.to_numeric(df2['Rodada'], errors='coerce')
