@@ -24,12 +24,13 @@ def jogos_do_dia_page():
             'FT_Odds_Over25': 'FT_Odd_Over25',
             'FT_Odds_Under25': 'FT_Odd_Under25',
             'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
+            'League': 'Liga',
+            'Time': 'Hora',
             'ROUND': 'Rodada',
         }, inplace=True)
         
         # Converter a coluna 'Rodada' para o formato de texto (string)
         data_jogos['Rodada'] = data_jogos['Rodada'].astype(str)
-        # Aplicar as operações de substituição e remoção de espaços na coluna 'Rodada'
         data_jogos['Rodada'] = data_jogos['Rodada'].str.replace('ROUND', '').str.strip()
 
         return data_jogos
@@ -38,7 +39,7 @@ def jogos_do_dia_page():
 
     # Define columns to display
     columns_to_display = [
-        'Date', 'Time', 'Country', 'Paises', 'Home', 'Away', 'Rodada',
+        'Date', 'Hora', 'Liga', 'Home', 'Away', 'Rodada',
         'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
         'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes'
     ]
