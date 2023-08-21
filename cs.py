@@ -1,35 +1,46 @@
 import streamlit as st
 import pandas as pd
 from scipy.stats import poisson
+import re
 
 def cs_page():
-    # URL do arquivo CSV com os dados dos jogos
+    # URL do arquivo CSV
     url = "https://github.com/scooby75/bdfootball/blob/main/2023-08-22_Jogos_do_Dia_FS.csv?raw=true"
-
-    # Carregar os dados do arquivo CSV em um DataFrame
+  
+    # Carregar o arquivo CSV em um dataframe
     df = pd.read_csv(url)
 
-    # Rename the columns and process 'Rodada'
-    data_jogos.rename(columns={
+    # Rename the columns
+    df.rename(columns={
         'FT_Odds_H': 'FT_Odd_H',
         'FT_Odds_D': 'FT_Odd_D',
         'FT_Odds_A': 'FT_Odd_A',
         'FT_Odds_Over25': 'FT_Odd_Over25',
         'FT_Odds_Under25': 'FT_Odd_Under25',
         'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
-        'League': 'Liga',
-        'Time': 'Hora',
         'ROUND': 'Rodada',
     }, inplace=True)
 
+    # Função para extrair o número do texto "RODADA N"
+    def extrair_numero_rodada(text):
+        if isinstance(text, int):
+            return text
+        match = re.search(r'\d+', text)
+        if match:
+            return int(match.group())
+        return None
+
+    # Aplicando a função para extrair o número do "Rodada" e criando uma nova coluna "Rodada_Num"
+    df["Rodada_Num"] = df["Rodada"].apply(extrair_numero_rodada)
+
     # Filtrar jogos com round maior ou igual a 10
-    df = df[df['Rodada'] >= 10]
+    df = df[df['Rodada_Num'] >= 10]
 
     # Filtrar jogos com home menor ou igual a 1.90
-    df = df[(df['FT_Odds_H'] >= 1.4) & (df['FT_Odds_H'] <= 2)]
+    df = df[(df['FT_Odd_H'] >= 1.4) & (df['FT_Odd_H'] <= 2)]
 
     # Filtrar jogos com home menor ou igual a 1.80
-    df = df[(df['FT_Odds_Under25'] <= 1.80)]
+    df = df[(df['FT_Odd_Under25'] <= 1.80)]
 
     # Filtrar jogos com XG entre 1 e 1.6 e total XG menor ou igual a 1.60
     df = df[(df['XG_Home_Pre'] >= 1) & (df['XG_Home_Pre'] <= 1.6)]
