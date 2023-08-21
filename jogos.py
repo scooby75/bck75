@@ -76,11 +76,17 @@ def jogos_do_dia_page():
 # Apply filters to the DataFrame
     filtered_data = df2[
         (df2['FT_Odd_H'] >= selected_ft_odd_h_min) &
+        (df2['FT_Odd_H'] >= selected_ft_odd_h_max) &
         (df2['FT_Odd_D'] >= selected_ft_odd_d_min) &
-        (df2['FT_Odd_A'] >= selected_ft_odd_a_min) &
+        (df2['FT_Odd_D'] >= selected_ft_odd_d_max) &
+        (df2['FT_Odd_A'] >= selected_ft_odd_a_min) &    
+        (df2['FT_Odd_A'] >= selected_ft_odd_a_max) &
         (df2['FT_Odd_Over25'] >= selected_ft_odd_over25_min) &
+        (df2['FT_Odd_Over25'] >= selected_ft_odd_over25_max) &
         (df2['FT_Odd_Under25'] >= selected_ft_odd_under25_min) &
+        (df2['FT_Odd_Under25'] >= selected_ft_odd_under25_max) &
         (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_min) &
+        (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_max) &
         (df2['Rodada'] >= selected_rodada_min) &
         (df2['Rodada'] <= selected_rodada_max)
     ]
