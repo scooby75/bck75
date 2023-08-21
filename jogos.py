@@ -9,8 +9,13 @@ def jogos_do_dia_page():
     # Load the data
     @st.cache_data(ttl=86400.0)  # 24 hours in seconds
     def load_base():
-        url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.xlsx?raw=true"
-        data_jogos = pd.read_excel(url)
+        #url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.xlsx?raw=true"
+        url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
+        
+        # Carregar os dados do arquivo CSV em um DataFrame
+        #data_jogos = pd.read_excel(url)
+        data_jogos = pd.read_csv(url)
+        
 
         # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
