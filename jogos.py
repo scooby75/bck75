@@ -100,7 +100,7 @@ def jogos_do_dia_page():
     ]
 
     if not filtered_data.empty:
-        sorted_filtered_data = filtered_data.sort_values(by='Time')
+        sorted_filtered_data = filtered_data.sort_values(by='Hora')
         st.dataframe(sorted_filtered_data[columns_to_display])
     else:
         st.warning("Não existem jogos com esses critérios!")
