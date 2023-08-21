@@ -69,10 +69,7 @@ def jogos_do_dia_page():
         selected_rodada_min = st.number_input("Rodada (min)", 0.0, 1.0, 0.0)  # Change 1 to 1.0 (float)
         selected_rodada_max = st.number_input("Rodada (max)", selected_rodada_min, 40.0, 10.0)
 
-    # Convert 'Rodada' column to integers
-    df2['Rodada'] = pd.to_numeric(df2['Rodada'], errors='coerce')
-
-# Apply filters to the DataFrame
+    # Apply filters to the DataFrame
     filtered_data = df2[
         (df2['FT_Odd_H'] >= selected_ft_odd_h_min) &
         (df2['FT_Odd_D'] >= selected_ft_odd_d_min) &
@@ -81,7 +78,8 @@ def jogos_do_dia_page():
         (df2['FT_Odd_Under25'] >= selected_ft_odd_under25_min) &
         (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_min) &
         (df2['Rodada'] >= selected_rodada_min) &
-        (df2['Rodada'] <= selected_rodada_max)
+        (df2['Rodada'] <= selected_rodada_max)  # Changed >= to <= for Rodada max
+    ]
 
     if not filtered_data.empty:
         sorted_filtered_data = filtered_data.sort_values(by='Time')
@@ -91,6 +89,3 @@ def jogos_do_dia_page():
 
 # Call the function to display the web application
 jogos_do_dia_page()
-
-
-
