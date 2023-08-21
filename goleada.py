@@ -4,7 +4,7 @@ import re
 
 def goleada_page():
     # URL do arquivo CSV
-    url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
+    url = "https://github.com/scooby75/bdfootball/blob/main/2023-08-22_Jogos_do_Dia_FS.csv?raw=true"
 
     # Carregar o arquivo CSV em um dataframe
     df = pd.read_csv(url)
@@ -16,7 +16,7 @@ def goleada_page():
         'FT_Odds_A': 'FT_Odd_A',
         'FT_Odds_Over25': 'FT_Odd_Over25',
         'FT_Odds_Under25': 'FT_Odd_Under25',
-        'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
+        'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
         'Rodada': 'Round',
     }, inplace=True)
 
