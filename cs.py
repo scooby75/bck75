@@ -1,50 +1,22 @@
 import streamlit as st
 import pandas as pd
 from scipy.stats import poisson
-import re
 
 def cs_page():
-    # URL do arquivo CSV
-    url = "https://github.com/scooby75/bdfootball/blob/main/2023-08-22_Jogos_do_Dia_FS.csv?raw=true"
-  
-    # Carregar o arquivo CSV em um dataframe
+    # URL do arquivo CSV com os dados dos jogos
+    url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
+
+    # Carregar os dados do arquivo CSV em um DataFrame
     df = pd.read_csv(url)
 
-    # Rename the columns
-    df.rename(columns={
-        'FT_Odds_H': 'FT_Odd_H',
-        'FT_Odds_D': 'FT_Odd_D',
-        'FT_Odds_A': 'FT_Odd_A',
-        'FT_Odds_Over25': 'FT_Odd_Over25',
-        'FT_Odds_Under25': 'FT_Odd_Under25',
-        'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
-        'ROUND': 'Rodada',
-    }, inplace=True)
-
-    # Função para extrair o número do texto "RODADA N"
-    def extrair_numero_rodada(text):
-        if isinstance(text, int):
-            return text
-        match = re.search(r'\d+', text)
-        if match:
-            return int(match.group())
-        return None
-
-    # Aplicando a função para extrair o número do "Rodada" e criando uma nova coluna "Rodada_Num"
-    df["Rodada_Num"] = df["Rodada"].apply(extrair_numero_rodada)
-
     # Filtrar jogos com round maior ou igual a 10
-    df = df[df['Rodada_Num'] >= 10]
+    df = df[df['Rodada'] >= 10]
 
     # Filtrar jogos com home menor ou igual a 1.90
-    df = df[(df['FT_Odd_H'] >= 1.4) & (df['FT_Odd_H'] <= 2)]
+    df = df[(df['FT_Odds_H'] >= 1.40) & (df['FT_Odds_H'] <= 2.4)]
 
-    # Filtrar jogos com home menor ou igual a 1.80
-    df = df[(df['FT_Odd_Under25'] <= 1.80)]
-
-    # Filtrar jogos com XG entre 1 e 1.6 e total XG menor ou igual a 1.60
-    df = df[(df['XG_Home_Pre'] >= 1) & (df['XG_Home_Pre'] <= 1.6)]
-    df = df[(df['XG_Away_Pre'] >= 1) & (df['XG_Away_Pre'] <= 1.6)]
+    # Filtrar jogos com home menor ou igual a 1.90
+    df = df[(df['FT_Odds_Under25'] <= 2.20)]
 
     # Placares para os quais você deseja calcular a probabilidade
     placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x2', '3x3', '4x0', '4x1', '4x2', '4x3', '4x4', '5x0', '5x1', '5x2', '5x3']
@@ -57,6 +29,7 @@ def cs_page():
         # Calcular as médias de gols esperados para cada time e o total esperado
         lambda_home = row['XG_Home_Pre']
         lambda_away = row['XG_Away_Pre']
+        lambda_total = row['XG_Total_Pre']
 
         # Calcular as probabilidades usando a distribuição de Poisson
         probabilidades = []
@@ -69,12 +42,13 @@ def cs_page():
 
             prob_home = poisson.pmf(gols_home, lambda_home)
             prob_away = poisson.pmf(gols_away, lambda_away)
+            prob_total = poisson.pmf(gols_home + gols_away, lambda_total)
 
             # Aplicar o ajuste de zero inflado para placares "estranhos"
             if (lambda_home < gols_home) or (lambda_away < gols_away):
-                prob_placar = prob_home * prob_away * 2
+                prob_placar = prob_home * prob_away * prob_total * 2
             else:
-                prob_placar = prob_home * prob_away 
+                prob_placar = prob_home * prob_away * prob_total
 
             total_prob += prob_placar
             probabilidades.append(prob_placar)
@@ -110,7 +84,7 @@ def cs_page():
         details1 = f"**Hora:** {row['Time']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
         details2 = f"**Odd Casa:** {row['FT_Odds_H']} |  **Odd Empate:** {row['FT_Odds_D']} |  **Odd Visitante:** {row['FT_Odds_A']}"
         st.write(details1)
-        # st.write(details2)
+        st.write(details2)
 
         # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
         prob_game_df = resultado_df[placares].iloc[[index]]
@@ -127,5 +101,6 @@ def cs_page():
 
 # Chamar a função para executar o aplicativo
 cs_page()
+
 
 
