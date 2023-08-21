@@ -7,7 +7,7 @@ def jogos_do_dia_page():
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
     # Load the data
-    @st.cache(ttl=86400.0)  # 24 horas em segundos
+    @st.cache_data(ttl=86400.0)  # 24 hours in seconds
     def load_base():
         url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.xlsx?raw=true"
         data_jogos = pd.read_excel(url)
@@ -66,8 +66,8 @@ def jogos_do_dia_page():
     with col3:
         selected_ft_odd_btts_yes_min = st.number_input("FT Odds BTTS Yes (min)", 0.0, 10.0, 0.0)
         selected_ft_odd_btts_yes_max = st.number_input("FT Odds BTTS Yes (max)", selected_ft_odd_btts_yes_min, 10.0, 10.0)
-        selected_rodada_min = st.number_input("Rodada (min)", 0.0, 1, 10.0)
-        selected_rodada_max = st.number_input("Rodada (max)", selected_rodada_min, 40.0, 10.0)  # Fixed max value
+        selected_rodada_min = st.number_input("Rodada (min)", 0.0, 1.0, 0.0)  # Change 1 to 1.0 (float)
+        selected_rodada_max = st.number_input("Rodada (max)", selected_rodada_min, 40.0, 10.0)
 
     # Apply filters to the DataFrame
     filtered_data = df2[
