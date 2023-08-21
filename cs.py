@@ -4,7 +4,7 @@ from scipy.stats import poisson
 
 def cs_page():
     # URL do arquivo CSV com os dados dos jogos
-    url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
+    url = "https://github.com/scooby75/bdfootball/blob/main/2023-08-22_Jogos_do_Dia_FS.csv?raw=true"
 
     # Carregar os dados do arquivo CSV em um DataFrame
     df = pd.read_csv(url)
