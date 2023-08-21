@@ -13,7 +13,7 @@ def cs_page():
     df = df[df['Rodada'] >= 10]
 
     # Filtrar jogos com home menor ou igual a 1.90
-    df = df[(df['FT_Odds_H'] >= 2) & (df['FT_Odds_A'] >= 2)]
+    df = df[(df['FT_Odds_H'] >= 1.4) & (df['FT_Odds_H'] <= 2)]
 
     # Filtrar jogos com home menor ou igual a 1.80
     df = df[(df['FT_Odds_Under25'] <= 1.80)]
@@ -50,7 +50,7 @@ def cs_page():
 
             # Aplicar o ajuste de zero inflado para placares "estranhos"
             if (lambda_home < gols_home) or (lambda_away < gols_away):
-                prob_placar = prob_home * prob_away * 1.5
+                prob_placar = prob_home * prob_away * 2
             else:
                 prob_placar = prob_home * prob_away 
 
