@@ -9,6 +9,19 @@ def cs_page():
     # Carregar os dados do arquivo CSV em um DataFrame
     df = pd.read_csv(url)
 
+     # Rename the columns and process 'Rodada'
+        data_jogos.rename(columns={
+            'FT_Odds_H': 'FT_Odd_H',
+            'FT_Odds_D': 'FT_Odd_D',
+            'FT_Odds_A': 'FT_Odd_A',
+            'FT_Odds_Over25': 'FT_Odd_Over25',
+            'FT_Odds_Under25': 'FT_Odd_Under25',
+            'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
+            'League': 'Liga',
+            'Time': 'Hora',
+            'ROUND': 'Rodada',
+        }, inplace=True)
+
     # Filtrar jogos com round maior ou igual a 10
     df = df[df['Rodada'] >= 10]
 
