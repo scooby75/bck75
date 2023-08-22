@@ -2,18 +2,19 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 from datetime import datetime, timedelta  
+
 def cs_page():
     # Carregar os dados CSV a partir das URLs para DataFrames
     url = "https://github.com/scooby75/bdfootball/blob/main/bd%202019_2023%20com%20placar.csv?raw=true"
     bdgeral = pd.read_csv(url)
 
-    # Calcular a média de gols marcados e sofridos em casa (Home)
-    df_media_gols_casa = bdgeral.groupby('Home').agg({'FT_Goals_H': 'mean', 'FT_Goals_A': 'mean'}).reset_index()
-    df_media_gols_casa.rename(columns={'FT_Goals_H': 'Media_Gols_Casa', 'FT_Goals_A': 'Media_Gols_For'}, inplace=True)
+    # Calcular a média de gols marcados em casa (Home)
+    df_media_gols_casa = bdgeral.groupby('Home').agg({'FT_Goals_H': 'mean'}).reset_index()
+    df_media_gols_casa.rename(columns={'FT_Goals_H': 'Media_Gols_Casa'}, inplace=True)
 
-    # Calcular a média de gols marcados e sofridos fora de casa (Away)
-    df_media_gols_fora = bdgeral.groupby('Away').agg({'FT_Goals_A': 'mean', 'FT_Goals_H': 'mean'}).reset_index()
-    df_media_gols_fora.rename(columns={'FT_Goals_A': 'Media_Gols_For', 'FT_Goals_H': 'Media_Gols_Casa'}, inplace=True)
+    # Calcular a média de gols marcados fora de casa (Away)
+    df_media_gols_fora = bdgeral.groupby('Away').agg({'FT_Goals_A': 'mean'}).reset_index()
+    df_media_gols_fora.rename(columns={'FT_Goals_A': 'Media_Gols_For'}, inplace=True)
 
     # Carregar os dados CSV de outra URL para um DataFrame
     url = "https://github.com/scooby75/bdfootball/blob/main/2023-08-22_Jogos_do_Dia_FS.csv?raw=true"
@@ -27,20 +28,18 @@ def cs_page():
     def poisson_prob(media, k):
         return (np.exp(-media) * media ** k) / np.math.factorial(k)
 
-     
-    
     # Loop para prever os 6 placares mais prováveis para cada jogo
     for index, row in jogos_filtrados.iterrows():
         time_casa = row['Home']
         time_visitante = row['Away']
-        data_jogo = row['Date']  # Supondo que a coluna com a data se chama 'Date'
-        hora_jogo = row['Time']  # Supondo que a coluna com a hora se chama 'Time'
-        media_gols_casa = row['Media_Gols_Casa_x']
-        media_gols_fora = row['Media_Gols_For_x']
+        data_jogo = row['Date']
+        hora_jogo = row['Time']
+        media_gols_casa = row['Media_Gols_Casa']
+        media_gols_fora = row['Media_Gols_For']
 
         # Converter a hora do jogo em um objeto de hora
         hora_jogo_obj = datetime.strptime(hora_jogo, '%H:%M').time()
-        
+
         # Subtrair 3 horas para ajustar para o horário local (time - 3)
         hora_jogo_obj_local = (datetime.combine(datetime.today(), hora_jogo_obj) - timedelta(hours=3)).time()
 
@@ -58,7 +57,7 @@ def cs_page():
         # Exibir os resultados para cada jogo usando o Streamlit
         st.write(f"**{time_casa} vs {time_visitante} - {data_jogo} {hora_jogo_obj_local.strftime('%H:%M')} (Horário Local)**")
         
-        # Criar um DataFrame para os resultados do jogo
+        # Criar uma lista para os resultados do jogo
         resultados_jogo = []
         for i in range(6):
             prob_porcentagem = f"{placares_previstos[i][2] * 100:.2f}%"
@@ -69,7 +68,7 @@ def cs_page():
         resultados_jogo = sorted(resultados_jogo, key=lambda x: float(x['Probabilidade'][:-1]), reverse=True)
         
         # Exibir os resultados usando st.dataframe
-        st.dataframe(pd.DataFrame(resultados_jogo), index=False)
+        st.write(pd.DataFrame(resultados_jogo))
 
 # Chamar a função para executar o app
 cs_page()
