@@ -28,7 +28,7 @@ def cs_page():
         return (np.exp(-media) * media ** k) / np.math.factorial(k)
 
      
-    # Loop para prever os 6 placares mais prováveis para cada jogo
+       # Loop para prever os 6 placares mais prováveis para cada jogo
     for index, row in jogos_filtrados.iterrows():
         time_casa = row['Home']
         time_visitante = row['Away']
@@ -62,7 +62,7 @@ def cs_page():
         resultados_jogo = sorted(resultados_jogo, key=lambda x: x['Probabilidade'], reverse=True)
         
         # Exibir os resultados usando st.dataframe
-        st.dataframe(pd.DataFrame(resultados_jogo), index=False)
+        st.dataframe(pd.DataFrame(resultados_jogo))
 
 # Chamar a função para executar o app
 cs_page()
