@@ -5,3 +5,4 @@ scipy
 openpyxl
 bcrypt
 psycopg2
+numpy
