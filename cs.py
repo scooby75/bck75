@@ -27,7 +27,8 @@ def cs_page():
     def poisson_prob(media, k):
         return (np.exp(-media) * media ** k) / np.math.factorial(k)
 
-        # Loop para prever os 6 placares mais prováveis para cada jogo
+     
+    # Loop para prever os 6 placares mais prováveis para cada jogo
     for index, row in jogos_filtrados.iterrows():
         time_casa = row['Home']
         time_visitante = row['Away']
@@ -48,7 +49,7 @@ def cs_page():
         placares_previstos.sort(key=lambda x: x[2], reverse=True)
 
         # Exibir os resultados para cada jogo usando o Streamlit
-        st.write(f"**{time_casa} vs {time_visitante}**")
+        st.write(f"**{time_casa} vs {time_visitante} - {data_jogo} {hora_jogo}**")
         
         # Criar um DataFrame para os resultados do jogo
         resultados_jogo = []
@@ -57,15 +58,11 @@ def cs_page():
             resultados_jogo.append({'Placar': f"{placares_previstos[i][0]} - {placares_previstos[i][1]}",
                                  'Probabilidade': prob_porcentagem})
         
-        # Adicionar colunas de Data e Hora ao DataFrame
-        df_resultados = pd.DataFrame(resultados_jogo)
-        df_resultados['Data'] = data_jogo
-        df_resultados['Hora'] = hora_jogo
+        # Organizar os resultados em ordem decrescente
+        resultados_jogo = sorted(resultados_jogo, key=lambda x: x['Probabilidade'], reverse=True)
         
-        # Organizar o DataFrame em ordem decrescente
-        df_resultados = df_resultados.sort_values(by='Probabilidade', ascending=False)
-        
-        st.dataframe(df_resultados)
+        # Exibir os resultados usando st.dataframe
+        st.dataframe(pd.DataFrame(resultados_jogo), index=False)
 
 # Chamar a função para executar o app
 cs_page()
