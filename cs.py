@@ -3,62 +3,59 @@ import numpy as np
 import streamlit as st
 
 def cs_page():
-    # Load the CSV data from the URL into a DataFrame
+    # Carregar os dados CSV a partir das URLs para DataFrames
     url = "https://github.com/scooby75/bdfootball/blob/main/bd%202019_2023%20com%20placar.csv?raw=true"
     bdgeral = pd.read_csv(url)
 
-    # Calculate the average goals scored and conceded at home (Home)
-    df_media_gols_home = bdgeral.groupby('Home').agg({'FT_Goals_H': 'mean', 'FT_Goals_A': 'mean'}).reset_index()
-    df_media_gols_home.rename(columns={'FT_Goals_H': 'Mean_Goals_Home', 'FT_Goals_A': 'Mean_Goals_Away'}, inplace=True)
+    # Calcular a média de gols marcados e sofridos em casa (Home)
+    df_media_gols_casa = bdgeral.groupby('Home').agg({'FT_Goals_H': 'mean', 'FT_Goals_A': 'mean'}).reset_index()
+    df_media_gols_casa.rename(columns={'FT_Goals_H': 'Media_Gols_Casa', 'FT_Goals_A': 'Media_Gols_For'}, inplace=True)
 
-    # Calculate the average goals scored and conceded away from home (Away)
-    df_media_gols_away = bdgeral.groupby('Away').agg({'FT_Goals_A': 'mean', 'FT_Goals_H': 'mean'}).reset_index()
-    df_media_gols_away.rename(columns={'FT_Goals_A': 'Mean_Goals_Away', 'FT_Goals_H': 'Mean_Goals_Home'}, inplace=True)
+    # Calcular a média de gols marcados e sofridos fora de casa (Away)
+    df_media_gols_fora = bdgeral.groupby('Away').agg({'FT_Goals_A': 'mean', 'FT_Goals_H': 'mean'}).reset_index()
+    df_media_gols_fora.rename(columns={'FT_Goals_A': 'Media_Gols_For', 'FT_Goals_H': 'Media_Gols_Casa'}, inplace=True)
 
-    # Load the CSV data from another URL into a DataFrame
+    # Carregar os dados CSV de outra URL para um DataFrame
     url = "https://github.com/scooby75/bdfootball/blob/main/2023-08-22_Jogos_do_Dia_FS.csv?raw=true"
     jogosdodia = pd.read_csv(url)
 
-    # Merge the filtered games with the calculated mean goals data
-    jogos_filtrados = jogosdodia.merge(df_media_gols_home, left_on='Home', right_on='Home')
-    jogos_filtrados = jogos_filtrados.merge(df_media_gols_away, left_on='Away', right_on='Away')
+    # Combinar os jogos filtrados com os dados de média de gols calculados
+    jogos_filtrados = jogosdodia.merge(df_media_gols_casa, left_on='Home', right_on='Home')
+    jogos_filtrados = jogos_filtrados.merge(df_media_gols_fora, left_on='Away', right_on='Away')
 
-    # Function to calculate the probability of a certain number of goals using the Poisson distribution
-    def poisson_prob(mean, k):
-        return (np.exp(-mean) * mean ** k) / np.math.factorial(k)
+    # Função para calcular a probabilidade de um certo número de gols usando a distribuição de Poisson
+    def poisson_prob(media, k):
+        return (np.exp(-media) * media ** k) / np.math.factorial(k)
 
-     # List to store the results for display
-    results = []
-
-    # Predict the 6 most probable scores for each game
+    # Loop para prever os 6 placares mais prováveis para cada jogo
     for index, row in jogos_filtrados.iterrows():
-        home_team = row['Home']
-        away_team = row['Away']
-        home_mean_goals = row['Mean_Goals_Home_x']
-        away_mean_goals = row['Mean_Goals_Away_x']
+        time_casa = row['Home']
+        time_visitante = row['Away']
+        media_gols_casa = row['Media_Gols_Casa_x']
+        media_gols_fora = row['Media_Gols_For_x']
 
-        predicted_scores = []
-        for home_goals in range(7):
-            for away_goals in range(7):
-                home_prob = poisson_prob(home_mean_goals, home_goals)
-                away_prob = poisson_prob(away_mean_goals, away_goals)
-                total_prob = home_prob * away_prob
-                predicted_scores.append((home_goals, away_goals, total_prob))
+        placares_previstos = []
+        for gols_casa in range(7):
+            for gols_fora in range(7):
+                prob_gols_casa = poisson_prob(media_gols_casa, gols_casa)
+                prob_gols_fora = poisson_prob(media_gols_fora, gols_fora)
+                prob_total = prob_gols_casa * prob_gols_fora
+                placares_previstos.append((gols_casa, gols_fora, prob_total))
 
-        # Sort the predicted scores by probability in descending order
-        predicted_scores.sort(key=lambda x: x[2], reverse=True)
+        # Ordenar os placares previstos por probabilidade em ordem decrescente
+        placares_previstos.sort(key=lambda x: x[2], reverse=True)
 
-        # Add the results to the list
+        # Exibir os resultados para cada jogo usando o Streamlit
+        st.write(f"**{time_casa} vs {time_visitante}**")
+        
+        # Criar um DataFrame para os resultados do jogo
+        resultados_jogo = []
         for i in range(6):
-            # Format the probability as a percentage with two decimal places
-            prob_percentage = f"{predicted_scores[i][2] * 100:.2f}%"
-            
-            results.append({'Jogo': f"{home_team} vs {away_team}",
-                            'Placar': f"{predicted_scores[i][0]} - {predicted_scores[i][1]}",
-                            'Probabilidade': prob_percentage})
+            prob_porcentagem = f"{placares_previstos[i][2] * 100:.2f}%"
+            resultados_jogo.append({'Placar': f"{placares_previstos[i][0]} - {placares_previstos[i][1]}",
+                                 'Probabilidade': prob_porcentagem})
+        
+        st.dataframe(pd.DataFrame(resultados_jogo))
 
-    # Display the results using Streamlit
-    st.dataframe(pd.DataFrame(results))
-
-# Call the function to execute the app
+# Chamar a função para executar o app
 cs_page()
