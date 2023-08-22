@@ -4,6 +4,10 @@ import streamlit as st
 from datetime import datetime, timedelta  
 
 def cs_page():
+
+    st.subheader("Probabilidade de Placar")
+    st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
+    
     # Carregar os dados CSV a partir das URLs para DataFrames
     url = "https://github.com/scooby75/bdfootball/blob/main/bd%202019_2023%20com%20placar.csv?raw=true"
     bdgeral = pd.read_csv(url)
