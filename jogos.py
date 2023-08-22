@@ -14,10 +14,10 @@ def jogos_do_dia_page():
         data_jogos = pd.read_csv(url)
     
     # Convert the 'Hora' column to a datetime object
-        data_jogos['Hora'] = pd.to_datetime(data_jogos['Hora'])
+        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'])
     
     # Convert the game times to the local time zone (subtracting 3 hours)
-        data_jogos['Hora'] = data_jogos['Hora'] - pd.to_timedelta('3 hours')
+        data_jogos['Time'] = data_jogos['Time'] - pd.to_timedelta('3 hours')
         
         # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
