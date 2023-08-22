@@ -46,7 +46,7 @@ def cs_page():
 
             # Aplicar o ajuste de zero inflado para placares "estranhos"
             if (lambda_home < gols_home) or (lambda_away < gols_away):
-                prob_placar = prob_home * prob_away * prob_total * 2
+                prob_placar = prob_home * prob_away * prob_total * 1.50
             else:
                 prob_placar = prob_home * prob_away * prob_total
 
