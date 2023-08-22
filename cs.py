@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import streamlit as st
-
+from datetime import datetime, timedelta  
 def cs_page():
     # Carregar os dados CSV a partir das URLs para DataFrames
     url = "https://github.com/scooby75/bdfootball/blob/main/bd%202019_2023%20com%20placar.csv?raw=true"
