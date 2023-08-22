@@ -71,7 +71,8 @@ def cs_page():
         jogos_filtrados_sem_keywords = [jogo for jogo in jogos_filtrados if all(keyword not in jogo['Home'] and keyword not in jogo['Away'] for keyword in ["U19", "U20", "U21", "U23"])]
 
         # Exibindo os resultados filtrados usando st.dataframe
-        st.write(pd.DataFrame(jogos_filtrados_sem_keywords))    
+        st.write(pd.DataFrame(resultados_jogo))  # Mostrar os resultados filtrados
+   
 
 # Chamar a função para executar o app
 cs_page()
