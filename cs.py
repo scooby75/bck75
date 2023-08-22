@@ -54,8 +54,19 @@ def cs_page():
                             'Placar': f"{predicted_scores[i][0]} - {predicted_scores[i][1]}",
                             'Probabilidade': predicted_scores[i][2]})
 
-    # Display the results using Streamlit
-    st.write(pd.DataFrame(results))
+    # Create a DataFrame with the predicted results
+    predicted_results_df = pd.DataFrame(results)
+
+    # Group the scores by the "Placar" column and count occurrences
+    grouped_scores = bdgeral['Placar_FT'].value_counts().reset_index()
+    grouped_scores.columns = ['Placar', 'Ocorrências']
+
+    # Display the predicted results and grouped scores using Streamlit
+    st.write("Predicted Match Results:")
+    st.write(predicted_results_df)
+    
+    st.write("Grouped Scores Occurrences:")
+    st.write(grouped_scores)
 
 # Call the function to execute the app
 cs_page()
