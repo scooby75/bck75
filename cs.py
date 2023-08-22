@@ -67,11 +67,11 @@ def cs_page():
         # Organizar os resultados em ordem decrescente de probabilidade
         resultados_jogo = sorted(resultados_jogo, key=lambda x: float(x['Probabilidade'][:-1]), reverse=True)
 
-        # Excluding games with keywords "U19", "U20", "U21", "U23"
+        # Excluindo jogos com as palavras-chave "U19", "U20", "U21" e "U23"
         jogos_filtrados_sem_keywords = [jogo for jogo in jogos_filtrados if all(keyword not in jogo['Home'] and keyword not in jogo['Away'] for keyword in ["U19", "U20", "U21", "U23"])]
-        
-        # Exibir os resultados usando st.dataframe
-        st.write(pd.DataFrame(resultados_jogo))
+
+        # Exibindo os resultados filtrados usando st.dataframe
+        st.write(pd.DataFrame(jogos_filtrados_sem_keywords))    
 
 # Chamar a função para executar o app
 cs_page()
