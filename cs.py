@@ -8,6 +8,10 @@ def cs_page():
     url = "https://github.com/scooby75/bdfootball/blob/main/bd%202019_2023%20com%20placar.csv?raw=true"
     bdgeral = pd.read_csv(url)
 
+    # Excluir jogos com palavras-chave "U19", "U20", "U21" e "U23"
+    keywords_to_exclude = ["U19", "U20", "U21", "U23"]
+    bdgeral = bdgeral[~bdgeral['Home'].str.contains('|'.join(keywords_to_exclude)) & ~bdgeral['Away'].str.contains('|'.join(keywords_to_exclude))]
+
     # Calcular a média de gols marcados em casa (Home)
     df_media_gols_casa = bdgeral.groupby('Home').agg({'FT_Goals_H': 'mean'}).reset_index()
     df_media_gols_casa.rename(columns={'FT_Goals_H': 'Media_Gols_Casa'}, inplace=True)
@@ -66,13 +70,9 @@ def cs_page():
         
         # Organizar os resultados em ordem decrescente de probabilidade
         resultados_jogo = sorted(resultados_jogo, key=lambda x: float(x['Probabilidade'][:-1]), reverse=True)
-
-        # Excluindo jogos com as palavras-chave "U19", "U20", "U21" e "U23"
-        jogos_filtrados_sem_keywords = [jogo for jogo in jogos_filtrados if all(keyword not in jogo['Home'] and keyword not in jogo['Away'] for keyword in ["U19", "U20", "U21", "U23"])]
-
-        # Exibindo os resultados filtrados usando st.dataframe
-        st.write(pd.DataFrame(resultados_jogo))  # Mostrar os resultados filtrados
-   
+        
+        # Exibir os resultados usando st.dataframe
+        st.write(pd.DataFrame(resultados_jogo))
 
 # Chamar a função para executar o app
 cs_page()
