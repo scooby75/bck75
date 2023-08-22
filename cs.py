@@ -27,7 +27,7 @@ def cs_page():
     def poisson_prob(mean, k):
         return (np.exp(-mean) * mean ** k) / np.math.factorial(k)
 
-    # List to store the results for display
+     # List to store the results for display
     results = []
 
     # Predict the 6 most probable scores for each game
@@ -50,13 +50,15 @@ def cs_page():
 
         # Add the results to the list
         for i in range(6):
+            # Format the probability as a percentage with two decimal places
+            prob_percentage = f"{predicted_scores[i][2] * 100:.2f}%"
+            
             results.append({'Jogo': f"{home_team} vs {away_team}",
                             'Placar': f"{predicted_scores[i][0]} - {predicted_scores[i][1]}",
-                            'Probabilidade': predicted_scores[i][2]})
+                            'Probabilidade': prob_percentage})
 
     # Display the results using Streamlit
-    st.write(pd.DataFrame(results))
+    st.dataframe(pd.DataFrame(results))
 
 # Call the function to execute the app
 cs_page()
-
