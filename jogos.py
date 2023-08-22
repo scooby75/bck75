@@ -9,12 +9,15 @@ def jogos_do_dia_page():
     # Load the data
     @st.cache_data(ttl=86400.0)  # 24 hours in seconds
     def load_base():
-        #url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.xlsx?raw=true"
         url = "https://github.com/scooby75/bdfootball/blob/main/2023-08-22_Jogos_do_Dia_FS.csv?raw=true"
         
-        # Carregar os dados do arquivo CSV em um DataFrame
-        #data_jogos = pd.read_excel(url)
         data_jogos = pd.read_csv(url)
+    
+    # Convert the 'Hora' column to a datetime object
+        data_jogos['Hora'] = pd.to_datetime(data_jogos['Hora'])
+    
+    # Convert the game times to the local time zone (subtracting 3 hours)
+        data_jogos['Hora'] = data_jogos['Hora'] - pd.to_timedelta('3 hours')
         
         # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
