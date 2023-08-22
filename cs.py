@@ -27,10 +27,12 @@ def cs_page():
     def poisson_prob(media, k):
         return (np.exp(-media) * media ** k) / np.math.factorial(k)
 
-    # Loop para prever os 6 placares mais prováveis para cada jogo
+        # Loop para prever os 6 placares mais prováveis para cada jogo
     for index, row in jogos_filtrados.iterrows():
         time_casa = row['Home']
         time_visitante = row['Away']
+        data_jogo = row['Date']  # Supondo que a coluna com a data se chama 'Date'
+        hora_jogo = row['Time']  # Supondo que a coluna com a hora se chama 'Time'
         media_gols_casa = row['Media_Gols_Casa_x']
         media_gols_fora = row['Media_Gols_For_x']
 
@@ -55,7 +57,15 @@ def cs_page():
             resultados_jogo.append({'Placar': f"{placares_previstos[i][0]} - {placares_previstos[i][1]}",
                                  'Probabilidade': prob_porcentagem})
         
-        st.dataframe(pd.DataFrame(resultados_jogo))
+        # Adicionar colunas de Data e Hora ao DataFrame
+        df_resultados = pd.DataFrame(resultados_jogo)
+        df_resultados['Data'] = data_jogo
+        df_resultados['Hora'] = hora_jogo
+        
+        # Organizar o DataFrame em ordem decrescente
+        df_resultados = df_resultados.sort_values(by='Probabilidade', ascending=False)
+        
+        st.dataframe(df_resultados)
 
 # Chamar a função para executar o app
 cs_page()
