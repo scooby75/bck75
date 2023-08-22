@@ -3,7 +3,7 @@ import datetime
 
 valid_users = {
     "lsilveira": "senha123",
-    "usuario2": "senha456"
+    "lamaral": "lamaral23"
 }
 
 def login_page():
