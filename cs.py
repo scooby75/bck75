@@ -68,7 +68,7 @@ def cs_page():
         resultados_jogo = sorted(resultados_jogo, key=lambda x: float(x['Probabilidade'][:-1]), reverse=True)
 
         # Excluding games with keywords "U19", "U20", "U21", "U23"
-        filtered_resultados_jogo = [result for result in resultados_jogo if all(keyword not in result['Placar'] for keyword in ["U19", "U20", "U21", "U23"])]
+        jogos_filtrados_sem_keywords = [jogo for jogo in jogos_filtrados if all(keyword not in jogo['Home'] and keyword not in jogo['Away'] for keyword in ["U19", "U20", "U21", "U23"])]
         
         # Exibir os resultados usando st.dataframe
         st.write(pd.DataFrame(resultados_jogo))
