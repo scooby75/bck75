@@ -28,7 +28,8 @@ def cs_page():
         return (np.exp(-media) * media ** k) / np.math.factorial(k)
 
      
-       # Loop para prever os 6 placares mais prováveis para cada jogo
+    
+    # Loop para prever os 6 placares mais prováveis para cada jogo
     for index, row in jogos_filtrados.iterrows():
         time_casa = row['Home']
         time_visitante = row['Away']
@@ -36,6 +37,12 @@ def cs_page():
         hora_jogo = row['Time']  # Supondo que a coluna com a hora se chama 'Time'
         media_gols_casa = row['Media_Gols_Casa_x']
         media_gols_fora = row['Media_Gols_For_x']
+
+        # Converter a hora do jogo em um objeto de hora
+        hora_jogo_obj = datetime.strptime(hora_jogo, '%H:%M').time()
+        
+        # Subtrair 3 horas para ajustar para o horário local (time - 3)
+        hora_jogo_obj_local = (datetime.combine(datetime.today(), hora_jogo_obj) - timedelta(hours=3)).time()
 
         placares_previstos = []
         for gols_casa in range(7):
@@ -49,7 +56,7 @@ def cs_page():
         placares_previstos.sort(key=lambda x: x[2], reverse=True)
 
         # Exibir os resultados para cada jogo usando o Streamlit
-        st.write(f"**{time_casa} vs {time_visitante} - {data_jogo} {hora_jogo}**")
+        st.write(f"**{time_casa} vs {time_visitante} - {data_jogo} {hora_jogo_obj_local.strftime('%H:%M')} (Horário Local)**")
         
         # Criar um DataFrame para os resultados do jogo
         resultados_jogo = []
@@ -58,11 +65,11 @@ def cs_page():
             resultados_jogo.append({'Placar': f"{placares_previstos[i][0]} - {placares_previstos[i][1]}",
                                  'Probabilidade': prob_porcentagem})
         
-        # Organizar os resultados em ordem decrescente
-        resultados_jogo = sorted(resultados_jogo, key=lambda x: x['Probabilidade'], reverse=True)
+        # Organizar os resultados em ordem decrescente de probabilidade
+        resultados_jogo = sorted(resultados_jogo, key=lambda x: float(x['Probabilidade'][:-1]), reverse=True)
         
         # Exibir os resultados usando st.dataframe
-        st.dataframe(pd.DataFrame(resultados_jogo))
+        st.dataframe(pd.DataFrame(resultados_jogo), index=False)
 
 # Chamar a função para executar o app
 cs_page()
