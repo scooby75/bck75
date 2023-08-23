@@ -8,7 +8,7 @@ def lay_zebra_page():
     st.text("Apostar em Lay visitante, Odd máxima 6")
 
     # URL for the CSV file
-    url = "https://github.com/scooby75/bdfootball/blob/main/2023-08-22_Jogos_do_Dia_FS.csv?raw=true"
+    url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
     
     # Load CSV data into a DataFrame
     df = pd.read_csv(url)
