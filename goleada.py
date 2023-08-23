@@ -3,11 +3,18 @@ import pandas as pd
 import re
 
 def goleada_page():
-    # URL do arquivo CSV
-    url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
-
-    # Carregar o arquivo CSV em um dataframe
-    df = pd.read_csv(url)
+   # Load the data
+    @st.cache_data(ttl=86400.0)  # 24 hours in seconds
+    def load_base():
+        url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
+        
+        data_jogos = pd.read_csv(url)
+    
+    # Convert the 'Hora' column to a datetime object
+        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'])
+    
+    # Convert the game times to the local time zone (subtracting 3 hours)
+        data_jogos['Time'] = data_jogos['Time'] - pd.to_timedelta('3 hours')
 
     # Rename the columns
     df.rename(columns={
