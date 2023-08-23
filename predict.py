@@ -97,6 +97,11 @@ def predict_page(perfil_usuario):
     else:
         st.warning("Não existem jogos com esses critérios!")
 
-# Call the function to display the web application
-predict_page()
+# Determinar o valor do perfil_usuario com base na lógica de autenticação ou gerenciamento de perfil
+perfil_usuario = 1  # Substitua pelo valor real obtido da lógica de autenticação
+
+# Chamar a função para executar o app
+predict_page(perfil_usuario)
+
+
 
