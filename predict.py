@@ -2,11 +2,7 @@ import streamlit as st
 import pandas as pd
 import datetime as dt
 
-def predict_page(perfil_usuario):
-    if perfil_usuario == 1:  # Verifica o nível de acesso do usuário
-        st.warning("Você não tem acesso a esta funcionalidade.")
-        return
-        
+def predict_page():
     st.subheader("Filtro Preditivo")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
@@ -97,11 +93,6 @@ def predict_page(perfil_usuario):
     else:
         st.warning("Não existem jogos com esses critérios!")
 
-# Determinar o valor do perfil_usuario com base na lógica de autenticação ou gerenciamento de perfil
-perfil_usuario = 1  # Substitua pelo valor real obtido da lógica de autenticação
-
-# Chamar a função para executar o app
-predict_page(perfil_usuario)
-
-
+# Call the function to display the web application
+predict_page()
 
