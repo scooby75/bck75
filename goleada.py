@@ -2,7 +2,11 @@ import streamlit as st
 import pandas as pd
 import re
 
-def goleada_page():
+def goleada_page(perfil_usuario):
+    if perfil_usuario == 1:  # Verifica o nível de acesso do usuário
+        st.warning("Você não tem acesso a esta funcionalidade.")
+        return
+        
     # Load the data
     @st.cache_data(ttl=86400.0)  # 24 hours in seconds
     def load_base():
