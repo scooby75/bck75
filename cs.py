@@ -3,8 +3,11 @@ import numpy as np
 import streamlit as st
 from datetime import datetime, timedelta  
 
-def cs_page():
-
+def cs_page(perfil_usuario):
+    if perfil_usuario == 1:  # Verifica o nível de acesso do usuário
+        st.warning("Você não tem acesso a esta funcionalidade.")
+        return
+    
     st.subheader("Probabilidade de Placar")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
     
