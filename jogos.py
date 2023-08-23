@@ -2,7 +2,11 @@ import streamlit as st
 import pandas as pd
 import datetime as dt
 
-def jogos_do_dia_page():
+def jogos_do_dia_page(perfil_usuario):
+    if perfil_usuario == 1:  # Verifica o nível de acesso do usuário
+        st.warning("Você não tem acesso a esta funcionalidade.")
+        return
+        
     st.subheader("Jogos do Dia")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
