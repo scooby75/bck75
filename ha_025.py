@@ -21,7 +21,7 @@ def ha_025_page():
         'FT_Odds_Over25': 'FT_Odd_Over25',
         'FT_Odds_Under25': 'FT_Odd_Under25',
         'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
-        'Rodada': 'Round',
+        'ROUND': 'Round',
     }, inplace=True)
 
 # Função para extrair o número do texto "ROUND N"
