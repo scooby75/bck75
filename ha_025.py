@@ -51,7 +51,7 @@ def ha_025_page():
         (df["FT_Odd_H"] <= 1.90) &
         (df["DC_1X"] <= 1.15) &
         (df["HA"] <= 1.7) &
-        (df["Round_Num"] >= 10)
+        (df["Rodada_Num"] >= 10)
     ]
 
     # Selecionar apenas as colunas desejadas: Date, Time, League, Home e Away
