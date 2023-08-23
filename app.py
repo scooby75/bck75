@@ -10,7 +10,6 @@ from zebra_ft import zebra_ft_page
 
 def main():
     # Verifica se o estado de sessão "logged_in" já existe
-    
     if not hasattr(st.session_state, "logged_in"):
         st.session_state.logged_in = False
 
@@ -30,21 +29,42 @@ def main():
         # Caixa de seleção para diferentes páginas
         selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Dutching", "HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict"])
 
-        # Exibe o conteúdo da página selecionada
+        # Exibe o conteúdo da página selecionada, verificando o nível de acesso
         if selected_tab == "Jogos do Dia":
-            jogos_do_dia_page()
+            if tem_acesso(st.session_state.perfil_usuario, "Jogos do Dia"):
+                jogos_do_dia_page()
+            else:
+                st.write("Você não tem permissão para acessar esta funcionalidade.")
         elif selected_tab == "Dutching":
-            cs_page()
+            if tem_acesso(st.session_state.perfil_usuario, "Dutching"):
+                cs_page()
+            else:
+                st.write("Você não tem permissão para acessar esta funcionalidade.")
         elif selected_tab == "HA":
-            ha_025_page()
+            if tem_acesso(st.session_state.perfil_usuario, "HA"):
+                ha_025_page()
+            else:
+                st.write("Você não tem permissão para acessar esta funcionalidade.")
         elif selected_tab == "Lay Goleada":
-            goleada_page()
+            if tem_acesso(st.session_state.perfil_usuario, "Lay Goleada"):
+                goleada_page()
+            else:
+                st.write("Você não tem permissão para acessar esta funcionalidade.")
         elif selected_tab == "Lay Zebra HT":
-            lay_zebra_page()
+            if tem_acesso(st.session_state.perfil_usuario, "Lay Zebra HT"):
+                lay_zebra_page()
+            else:
+                st.write("Você não tem permissão para acessar esta funcionalidade.")
         elif selected_tab == "Predict":
-            predict_page()
+            if tem_acesso(st.session_state.perfil_usuario, "Predict"):
+                predict_page()
+            else:
+                st.write("Você não tem permissão para acessar esta funcionalidade.")
         elif selected_tab == "Lay Zebra FT":
-            zebra_ft_page()
+            if tem_acesso(st.session_state.perfil_usuario, "Lay Zebra FT"):
+                zebra_ft_page()
+            else:
+                st.write("Você não tem permissão para acessar esta funcionalidade.")
 
 if __name__ == "__main__":
     main()
