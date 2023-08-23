@@ -56,6 +56,8 @@ def lay_zebra_page():
     layzebraht_df = layzebraht_df[colunas_desejadas]
     
     # Display the "Lay Zebra HT" DataFrame
+    st.subheader("Lay Zebra HT")
+    st.text("Apostar em Lay visitante, Odd máxima 6")
     st.dataframe(layzebraht_df)
 
 # Call the function to start the Streamlit app
