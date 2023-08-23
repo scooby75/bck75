@@ -4,7 +4,7 @@ import re
 
 def goleada_page():
     # URL do arquivo CSV
-    url = "https://github.com/scooby75/bdfootball/blob/main/2023-08-22_Jogos_do_Dia_FS.csv?raw=true"
+    url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
 
     # Carregar o arquivo CSV em um dataframe
     df = pd.read_csv(url)
