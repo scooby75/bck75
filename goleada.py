@@ -74,8 +74,11 @@ def goleada_page(perfil_usuario):
     st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
     st.dataframe(eventos_raros2_df)
 
+# Determinar o valor do perfil_usuario com base na lógica de autenticação ou gerenciamento de perfil
+perfil_usuario = 1  # Substitua pelo valor real obtido da lógica de autenticação
+
 # Chamar a função para iniciar o aplicativo
-goleada_page()
+goleada_page(perfil_usuario)
 
 
     
