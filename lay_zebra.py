@@ -3,35 +3,36 @@ import pandas as pd
 import re
 
 def lay_zebra_page():
-    # Load Zebra HT Data
-    st.subheader("Lay Zebra HT")
-    st.text("Apostar em Lay visitante, Odd máxima 6")
-
     # Load the data
     @st.cache_data(ttl=86400.0)  # 24 hours in seconds
     def load_base():
         url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
         
-        data_jogos = pd.read_csv(url)
-    
-    # Convert the 'Hora' column to a datetime object
-        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'])
-    
-    # Convert the game times to the local time zone (subtracting 3 hours)
-        data_jogos['Time'] = data_jogos['Time'] - pd.to_timedelta('3 hours')
-    
-    # Rename the columns
-    df.rename(columns={
-        'FT_Odds_H': 'FT_Odd_H',
-        'FT_Odds_D': 'FT_Odd_D',
-        'FT_Odds_A': 'FT_Odd_A',
-        'FT_Odds_Over25': 'FT_Odd_Over25',
-        'FT_Odds_Under25': 'FT_Odd_Under25',
-        'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
-        'ROUND': 'Rodada',
-    }, inplace=True)
-    
-    # Function to extract round numbers from text
+        df = pd.read_csv(url)
+        
+        # Convert the 'Hora' column to a datetime object
+        df['Time'] = pd.to_datetime(df['Time'])
+        
+        # Convert the game times to the local time zone (subtracting 3 hours)
+        df['Time'] = df['Time'] - pd.to_timedelta('3 hours')
+
+        # Rename the columns
+        df.rename(columns={
+            'FT_Odds_H': 'FT_Odd_H',
+            'FT_Odds_D': 'FT_Odd_D',
+            'FT_Odds_A': 'FT_Odd_A',
+            'FT_Odds_Over25': 'FT_Odd_Over25',
+            'FT_Odds_Under25': 'FT_Odd_Under25',
+            'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
+            'ROUND': 'Rodada',
+        }, inplace=True)
+
+        # Apply the function to extract the round number and create a new column "Rodada_Num"
+        df["Rodada_Num"] = df["Rodada"].apply(extrair_numero_rodada)
+
+        return df
+
+    # Função para extrair o número do texto "ROUND N"
     def extrair_numero_rodada(text):
         if isinstance(text, int):
             return text
@@ -39,9 +40,9 @@ def lay_zebra_page():
         if match:
             return int(match.group())
         return None
-    
-    # Apply the function to extract round numbers and create a new column "Rodada_Num"
-    df["Rodada_Num"] = df["Rodada"].apply(extrair_numero_rodada)
+
+    # Call the load_base function to load the data
+    df = load_base()
     
     # Filter matches with conditions
     layzebraht_df = df[
