@@ -8,6 +8,19 @@ from lay_zebra import lay_zebra_page
 from predict import predict_page
 from zebra_ft import zebra_ft_page
 
+def tem_acesso(perfil_usuario, funcionalidade):
+    # Defina as permissões de acesso com base nos perfis de usuário e funcionalidades
+    permissoes = {
+        1: ["Jogos do Dia", "Dutching", "HA"],
+        2: ["Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict"]
+    }
+
+    # Verifica se o perfil do usuário tem acesso à funcionalidade
+    if funcionalidade in permissoes.get(perfil_usuario, []):
+        return True
+    else:
+        return False
+
 def main():
     # Verifica se o estado de sessão "logged_in" já existe
     if not hasattr(st.session_state, "logged_in"):
