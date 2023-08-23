@@ -2,11 +2,7 @@ import streamlit as st
 import pandas as pd
 import re
 
-def goleada_page(perfil_usuario):
-    if perfil_usuario == 1:  # Verifica o nível de acesso do usuário
-        st.warning("Você não tem acesso a esta funcionalidade.")
-        return
-        
+def goleada_page():
     # Load the data
     @st.cache_data(ttl=86400.0)  # 24 hours in seconds
     def load_base():
@@ -74,11 +70,8 @@ def goleada_page(perfil_usuario):
     st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
     st.dataframe(eventos_raros2_df)
 
-# Determinar o valor do perfil_usuario com base na lógica de autenticação ou gerenciamento de perfil
-perfil_usuario = 1  # Substitua pelo valor real obtido da lógica de autenticação
-
 # Chamar a função para iniciar o aplicativo
-goleada_page(perfil_usuario)
+goleada_page()
 
 
     
