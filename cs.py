@@ -81,5 +81,8 @@ def cs_page(perfil_usuario):
         # Exibir os resultados usando st.dataframe
         st.write(pd.DataFrame(resultados_jogo))
 
+# Determinar o valor do perfil_usuario com base na lógica de autenticação ou gerenciamento de perfil
+perfil_usuario = 1  # Substitua pelo valor real obtido da lógica de autenticação
+
 # Chamar a função para executar o app
-cs_page()
+cs_page(perfil_usuario)
