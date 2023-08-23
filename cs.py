@@ -25,7 +25,7 @@ def cs_page():
     df_media_gols_fora.rename(columns={'FT_Goals_A': 'Media_Gols_For'}, inplace=True)
 
     # Carregar os dados CSV de outra URL para um DataFrame
-    url = "https://github.com/scooby75/bdfootball/blob/main/2023-08-22_Jogos_do_Dia_FS.csv?raw=true"
+    url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
     jogosdodia = pd.read_csv(url)
 
     # Combinar os jogos filtrados com os dados de média de gols calculados
