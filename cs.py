@@ -3,11 +3,8 @@ import numpy as np
 import streamlit as st
 from datetime import datetime, timedelta  
 
-def cs_page(perfil_usuario):
-    if perfil_usuario == 1:  # Verifica o nível de acesso do usuário
-        st.warning("Você não tem acesso a esta funcionalidade.")
-        return
-    
+def cs_page():
+
     st.subheader("Probabilidade de Placar")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
     
@@ -81,8 +78,5 @@ def cs_page(perfil_usuario):
         # Exibir os resultados usando st.dataframe
         st.write(pd.DataFrame(resultados_jogo))
 
-# Determinar o valor do perfil_usuario com base na lógica de autenticação ou gerenciamento de perfil
-perfil_usuario = 1  # Substitua pelo valor real obtido da lógica de autenticação
-
 # Chamar a função para executar o app
-cs_page(perfil_usuario)
+cs_page()
