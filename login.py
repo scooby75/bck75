@@ -2,8 +2,8 @@ import streamlit as st
 import datetime
 
 valid_users = {
-    "lsilveira": {"senha": "senha123", "perfil": 1},
-    "lamaral": {"senha": "lamaral23", "perfil": 2}
+    "lsilveira": "senha123",
+    "lamaral": "lamaral23"
 }
 
 def login_page():
@@ -15,11 +15,9 @@ def login_page():
     login_button = st.button("Entrar")
 
     if login_button:
-        if username in valid_users and valid_users[username]["senha"] == password:
-            perfil_usuario = valid_users[username]["perfil"]
+        if username in valid_users and valid_users[username] == password:
             st.session_state.logged_in = True
             st.session_state.username = username
-            st.session_state.perfil_usuario = perfil_usuario
             st.session_state.login_time = datetime.datetime.now()
         else:
             st.error("Credenciais inválidas.")
@@ -27,5 +25,5 @@ def login_page():
 def logout():
     st.session_state.logged_in = False
     st.session_state.pop("username", None)
-    st.session_state.pop("perfil_usuario", None)
     st.session_state.pop("login_time", None)
+
