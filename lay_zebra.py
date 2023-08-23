@@ -2,13 +2,7 @@ import streamlit as st
 import pandas as pd
 import re
 
-def lay_zebra_page(perfil_usuario):
-    if perfil_usuario == 1:  # Verifica o nível de acesso do usuário
-        st.subheader("Lay Zebra HT")
-        st.text("Apostar em Lay visitante, Odd máxima 6")
-        st.warning("Você não tem acesso a esta funcionalidade.")
-        return
-    
+def lay_zebra_page():
     # Load the data
     @st.cache_data(ttl=86400.0)  # 24 hours in seconds
     def load_base():
@@ -66,13 +60,8 @@ def lay_zebra_page(perfil_usuario):
     st.text("Apostar em Lay visitante, Odd máxima 6")
     st.dataframe(layzebraht_df)
 
-# Determinar o valor do perfil_usuario com base na lógica de autenticação ou gerenciamento de perfil
-perfil_usuario = 1  # Substitua pelo valor real obtido da lógica de autenticação
-
-# Chamar a função para executar o app
-lay_zebra_page(perfil_usuario)
-
-
+# Call the function to start the Streamlit app
+lay_zebra_page()
 
 
     
