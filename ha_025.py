@@ -2,11 +2,7 @@ import streamlit as st
 import pandas as pd
 import re
 
-def ha_025_page(perfil_usuario):
-    if perfil_usuario == 1:  # Verifica o nível de acesso do usuário
-        st.warning("Você não tem acesso a esta funcionalidade.")
-        return
-        
+def ha_025_page():
     ##### HA -0.25 ######
 
     # Load the data
@@ -67,11 +63,8 @@ def ha_025_page(perfil_usuario):
     st.text("Apostar em HA -0.25 casa, Odd minima 1.40")
     st.dataframe(ha_df)
 
-# Determinar o valor do perfil_usuario com base na lógica de autenticação ou gerenciamento de perfil
-perfil_usuario = 1  # Substitua pelo valor real obtido da lógica de autenticação
-
 # Chamar a função para iniciar o aplicativo
-ha_025_page(perfil_usuario)
+ha_025_page()
 
     
 
