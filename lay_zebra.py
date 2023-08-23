@@ -7,11 +7,18 @@ def lay_zebra_page():
     st.subheader("Lay Zebra HT")
     st.text("Apostar em Lay visitante, Odd máxima 6")
 
-    # URL for the CSV file
-    url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
+    # Load the data
+    @st.cache_data(ttl=86400.0)  # 24 hours in seconds
+    def load_base():
+        url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
+        
+        data_jogos = pd.read_csv(url)
     
-    # Load CSV data into a DataFrame
-    df = pd.read_csv(url)
+    # Convert the 'Hora' column to a datetime object
+        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'])
+    
+    # Convert the game times to the local time zone (subtracting 3 hours)
+        data_jogos['Time'] = data_jogos['Time'] - pd.to_timedelta('3 hours')
     
     # Rename the columns
     df.rename(columns={
