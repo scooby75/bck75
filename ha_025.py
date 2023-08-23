@@ -40,7 +40,7 @@ def ha_025_page():
 # Filtrando os jogos 
     ha_df = df[
         (df["FT_Odd_H"] <= 1.90) &
-        (df["DC_1X"] <= 1.30) &
+        (df["DC_1X"] <= 1.15) &
         (df["HA"] <= 1.7) &
         (df["Round_Num"] >= 10)
     ]
