@@ -51,7 +51,7 @@ def ha_025_page():
 
 # Exibir o dataframe "Eventos Raros"
     st.subheader("HA -0.25")
-    st.text("Apostar em HA -0.25 casa, Odd minima 1.50")
+    st.text("Apostar em HA -0.25 casa, Odd minima 1.40")
     st.dataframe(ha_df)
 
 # Chamar a função para iniciar o aplicativo
