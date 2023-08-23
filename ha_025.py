@@ -2,7 +2,11 @@ import streamlit as st
 import pandas as pd
 import re
 
-def ha_025_page():
+def ha_025_page(perfil_usuario):
+    if perfil_usuario == 1:  # Verifica o nível de acesso do usuário
+        st.warning("Você não tem acesso a esta funcionalidade.")
+        return
+        
     ##### HA -0.25 ######
 
     # Load the data
