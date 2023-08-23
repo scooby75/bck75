@@ -59,7 +59,7 @@ def zebra_ft_page():
     colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
     layzebraft_df = layzebraft_df[colunas_desejadas]
 
-# Exibir o dataframe "Eventos Raros"
+# Exibir o dataframe "Lay Zebra FT"
     st.subheader("Lay Zebra FT")
     st.text("Apostar em Lay visitante, Odd máxima 6")
     st.dataframe(layzebraft_df)
