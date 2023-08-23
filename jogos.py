@@ -1,27 +1,25 @@
 import streamlit as st
 import pandas as pd
 import datetime as dt
-import pytz
-from pytz import timezone
 
-# Defina a função para a página dos jogos do dia
-def jogos_do_dia_page(perfil_usuario):
-    if perfil_usuario == 1:
-        st.warning("Você não tem acesso a esta funcionalidade.")
-        return
-    
+def jogos_do_dia_page():
     st.subheader("Jogos do Dia")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
-    @st.cache(ttl=86400.0)  # 24 horas em segundos
-    def carregar_base():
+    # Load the data
+    @st.cache_data(ttl=86400.0)  # 24 hours in seconds
+    def load_base():
         url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
+        
         data_jogos = pd.read_csv(url)
+    
+    # Convert the 'Hora' column to a datetime object
+        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'])
+    
+    # Convert the game times to the local time zone (subtracting 3 hours)
+        data_jogos['Time'] = data_jogos['Time'] - pd.to_timedelta('3 hours')
         
-        fuso_horario_local = timezone('YOUR_TIMEZONE')  # Substitua pelo fuso horário apropriado
-        data_jogos['Time'] = pd.to_datetime(data_jogos['Time']) - pd.to_timedelta('3 hours')
-        data_jogos['Time'] = data_jogos['Time'].apply(fuso_horario_local.localize)
-        
+        # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
             'FT_Odds_H': 'FT_Odd_H',
             'FT_Odds_D': 'FT_Odd_D',
@@ -34,10 +32,13 @@ def jogos_do_dia_page(perfil_usuario):
             'ROUND': 'Rodada',
         }, inplace=True)
         
-        data_jogos['Rodada'] = data_jogos['Rodada'].astype(str).str.replace('ROUND', '').str.strip()
+        # Converter a coluna 'Rodada' para o formato de texto (string)
+        data_jogos['Rodada'] = data_jogos['Rodada'].astype(str)
+        data_jogos['Rodada'] = data_jogos['Rodada'].str.replace('ROUND', '').str.strip()
+
         return data_jogos
 
-    df2 = carregar_base()
+    df2 = load_base()
 
     # Define columns to display
     columns_to_display = [
@@ -108,10 +109,6 @@ def jogos_do_dia_page(perfil_usuario):
     else:
         st.warning("Não existem jogos com esses critérios!")
 
-# Determinar o valor do perfil_usuario com base na lógica de autenticação ou gerenciamento de perfil
-perfil_usuario = 1  # Substitua pelo valor real obtido da lógica de autenticação
-
-jogos_do_dia_page(perfil_usuario)
-
-
+# Chamar a função para exibir a aplicação web
+jogos_do_dia_page()
 
