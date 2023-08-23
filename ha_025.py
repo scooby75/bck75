@@ -8,7 +8,7 @@ def ha_025_page():
 
     # URL to the CSV file
     #url = "https://github.com/futpythontrader/YouTube/blob/main/Jogos_do_Dia_FlashScore/2023-08-03_Jogos_do_Dia_FlashScore.csv?raw=true"
-    url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
+    url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
 
     # Load the CSV data from the URL into a DataFrame
     df = pd.read_csv(url)
@@ -37,12 +37,11 @@ def ha_025_page():
     df["Round_Num"] = df["Round"].apply(extrair_numero_round)
 
     
-# Filtrando os jogos com valores de "FT_Odd_A" entre 1.40 e 2.0 e "Round_Num" maior ou igual a 10
+# Filtrando os jogos 
     ha_df = df[
         (df["FT_Odd_H"] <= 1.90) &
-        (df["Odds_DuplaChance_1X"] <= 1.25) &
-        (df["PPG_Home"] >= 2) &
-        (df["PPG_Away"] <= 1.50) &
+        (df["DC_1X"] <= 1.30) &
+        (df["HA"] <= 1.7) &
         (df["Round_Num"] >= 10)
     ]
 
