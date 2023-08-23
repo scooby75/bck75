@@ -66,9 +66,13 @@ def lay_zebra_page(perfil_usuario):
     st.text("Apostar em Lay visitante, Odd máxima 6")
     st.dataframe(layzebraht_df)
 
-# Uncomment the next lines to test this page without app.py
-# perfil_usuario = 1
-# lay_zebra_page(perfil_usuario)
+# Determinar o valor do perfil_usuario com base na lógica de autenticação ou gerenciamento de perfil
+perfil_usuario = 1  # Substitua pelo valor real obtido da lógica de autenticação
+
+# Chamar a função para executar o app
+lay_zebra_page(perfil_usuario)
+
+
 
 
     
