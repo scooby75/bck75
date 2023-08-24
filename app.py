@@ -7,12 +7,6 @@ from ha_025 import ha_025_page
 from lay_zebra import lay_zebra_page
 from zebra_ft import zebra_ft_page
 from scalping import scalping_page
-from backtesting import backtesting_page
-from bck_home import bck_home_page
-from bck_away import bck_away_page
-from bck_league import bck_league_page
-from h2h import h2h_page
-from min_gol import min_gol_page
 
 def main():
     # Verifica se o estado de sessão "logged_in" já existe
@@ -33,7 +27,7 @@ def main():
             logout()
 
          # Caixa de seleção para diferentes páginas
-        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Dutching", "HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict", "Scalping", "Backtesting", "Bck Home", "Bck Away", "Bck League", "H2H", "Min Gol"])
+        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Dutching", "HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict", "Scalping"])
 
         # Exibe o conteúdo da página selecionada, considerando as permissões do perfil
         user_profile = st.session_state.user_profile
@@ -42,30 +36,19 @@ def main():
             jogos_do_dia_page()
         elif selected_tab == "Dutching":
             cs_page()
-        elif selected_tab == "HA":
+        elif selected_tab == "HA "and user_profile >= 2:
             ha_025_page()
-        elif selected_tab == "Lay Goleada":
+        elif selected_tab == "Lay Goleada" and user_profile >= 2:
             goleada_page()
-        elif selected_tab == "Lay Zebra HT":
+        elif selected_tab == "Lay Zebra HT" and user_profile >= 2:
             lay_zebra_page()
-        elif selected_tab == "Predict":
+        elif selected_tab == "Predict" and user_profile >= 3:
             predict_page()
-        elif selected_tab == "Lay Zebra FT":
+        elif selected_tab == "Lay Zebra FT"and user_profile >= 2:
             zebra_ft_page()
-        elif selected_tab == "Scalping" and user_profile >= 2:
+        elif selected_tab == "Scalping" and user_profile >= 3:
             scalping_page()
-        elif selected_tab == "Backtesting" and user_profile >= 2:
-            backtesting_page()
-        elif selected_tab == "Bck Home" and user_profile >= 3:
-            bck_home_page()
-        elif selected_tab == "Bck Away" and user_profile >= 3:
-            bck_away_page()
-        elif selected_tab == "Bck League" and user_profile >= 3:
-            bck_league_page()
-        elif selected_tab == "H2H" and user_profile >= 3:
-            h2h_page()
-        elif selected_tab == "Min Gol" and user_profile >= 3:
-            min_gol_page()
+       
 
 if __name__ == "__main__":
     main()
