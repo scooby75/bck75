@@ -22,7 +22,7 @@ def main():
         st.sidebar.header("Football Data Analysis")
         
         # Mostra informações do usuário e botão de logout na barra lateral
-        st.sidebar.write(f"Logado como: {st.session_state.username}")
+        st.sidebar.write(f"Logado como: {session_state.username}")
         if st.sidebar.button("Logout", key="logout_button"):
             logout()
 
