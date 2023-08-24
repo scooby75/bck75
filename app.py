@@ -10,7 +10,8 @@ from scalping import scalping_page
 from session_state import session_state
 
 def main():
-    # Verifica se o estado de sessão "logged_in" já existe
+    # Inicializa o estado da sessão
+    session_state = SessionState(user_profile=0)  # Defina o valor do user_profile conforme necessário
     if not hasattr(st.session_state, "logged_in"):
         st.session_state.logged_in = False
 
