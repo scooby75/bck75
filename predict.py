@@ -1,8 +1,17 @@
 import streamlit as st
 import pandas as pd
-import datetime as dt
+import re
+from session_state import SessionState
 
-def predict_page():
+def lay_zebra_page():
+    # Inicializa o estado da sessão
+    session_state = SessionState(user_profile=1)
+
+    # Verifica se o usuário tem permissão para acessar a página
+    if session_state.user_profile < 2:
+        st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
+        return
+
     st.subheader("Filtro Preditivo")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
