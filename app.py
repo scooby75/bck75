@@ -8,16 +8,13 @@ from lay_zebra import lay_zebra_page
 from zebra_ft import zebra_ft_page
 from scalping import scalping_page
 from goleada import goleada_page
-from session_state import SessionState
+from session_state import get_or_create_session_state
 
 def main():
-    # Inicializa o estado da sessão
-    session_state = SessionState(user_profile=0)  # Defina o valor do user_profile conforme necessário
-    if not hasattr(st.session_state, "logged_in"):
-        st.session_state.logged_in = False
+    # Obtém ou cria o estado da sessão
+    session_state = get_or_create_session_state()
 
-    # Verifica se o usuário está logado ou não
-    if not st.session_state.logged_in:
+    if not session_state.logged_in:
         login_page()
     else:
         # Barra lateral com imagem e informações
