@@ -4,7 +4,7 @@ import streamlit as st
 import datetime
 
 valid_users = {
-    "lsilveira": {"password": "senha123", "profile": 3},
+    "lsilveira": {"password": "senha123", "profile": 2},
     "lamaral": {"password": "lamaral23", "profile": 1},
     "user3": {"password": "password3", "profile": 3}
 }
