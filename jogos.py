@@ -7,7 +7,8 @@ def jogos_do_dia_page():
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
     # Load the data
-    @st.cache_data(ttl=86400.0)  # 24 hours in seconds
+    #@st.cache_data(ttl=86400.0)  # 24 hours in seconds
+    @st.cache_data(ttl=23200.0)  # 24 hours in seconds
     def load_base():
         url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
         
