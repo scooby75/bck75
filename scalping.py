@@ -1,7 +1,17 @@
 import streamlit as st
 import pandas as pd
+import re
+from session_state import SessionState
 
 def scalping_page():
+    # Inicializa o estado da sessão
+    session_state = SessionState(user_profile=1)
+
+    # Verifica se o usuário tem permissão para acessar a página
+    if session_state.user_profile < 2:
+        st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
+        return
+
     # Definir URLs para os arquivos CSV
     url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
     url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
