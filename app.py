@@ -41,7 +41,7 @@ def main():
             cs_page()
         elif selected_tab == "HA" and user_profile >= 2:
             ha_025_page()
-        elif selected_tab == "Lay Goleada" and user_profile >= 2:
+        elif selected_tab == "Lay Goleada" and user_profile >= 3:
             goleada_page()
         elif selected_tab == "Lay Zebra HT" and user_profile >= 2:
             lay_zebra_page()
