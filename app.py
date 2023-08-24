@@ -7,6 +7,7 @@ from ha_025 import ha_025_page
 from lay_zebra import lay_zebra_page
 from zebra_ft import zebra_ft_page
 from scalping import scalping_page
+from session_state import session_state
 
 def main():
     # Verifica se o estado de sessão "logged_in" já existe
@@ -36,7 +37,7 @@ def main():
             jogos_do_dia_page()
         elif selected_tab == "Dutching":
             cs_page()
-        elif selected_tab == "HA "and user_profile >= 2:
+        elif selected_tab == "HA" and user_profile >= 2:
             ha_025_page()
         elif selected_tab == "Lay Goleada" and user_profile >= 2:
             goleada_page()
