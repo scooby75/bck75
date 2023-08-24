@@ -7,6 +7,7 @@ from ha_025 import ha_025_page
 from lay_zebra import lay_zebra_page
 from zebra_ft import zebra_ft_page
 from scalping import scalping_page
+from goleada import goleada_page
 from session_state import SessionState
 
 def main():
