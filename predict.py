@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import re
+import datetime as dt
+
 from session_state import SessionState
 
 def predict_page():
@@ -16,7 +18,7 @@ def predict_page():
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
     # Load the data
-    #@st.cache_data(ttl=dt.timedelta(hours=24))
+    @st.cache_data(ttl=dt.timedelta(hours=24))
     def load_base():
         url = "https://github.com/scooby75/bdfootball/blob/main/Predict.csv?raw=true"
         data_jogos = pd.read_csv(url)
