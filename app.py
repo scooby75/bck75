@@ -14,6 +14,9 @@ def main():
     # Obtém ou cria o estado da sessão
     session_state = get_or_create_session_state()
 
+    if not hasattr(session_state, 'logged_in'):
+        session_state.logged_in = False
+
     if not session_state.logged_in:
         login_page()
     else:
