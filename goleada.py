@@ -3,12 +3,18 @@ import pandas as pd
 import re
 
 def goleada_page():
+    # Inicializa o estado da sessão
+    session_state = SessionState(user_profile=3)
+
+    # Verifica se o usuário tem permissão para acessar a página
+    if session_state.user_profile < 3:
+        st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
+        return   
+
     # Load the data
-    @st.cache_data(ttl=86400.0)  # 24 hours in seconds
     def load_base():
-        url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
-        
-        df = pd.read_csv(url)
+        url = "https://github.com/scooby75/bdfootball/blob/main/Predict.csv?raw=true"
+        data_jogos = pd.read_csv(url)
         
         # Convert the 'Hora' column to a datetime object
         df['Time'] = pd.to_datetime(df['Time'])
