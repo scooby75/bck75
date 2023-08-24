@@ -3,7 +3,7 @@ import pandas as pd
 import re
 from session_state import SessionState
 
-def lay_zebra_page():
+def predict_page():
     # Inicializa o estado da sessão
     session_state = SessionState(user_profile=1)
 
