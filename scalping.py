@@ -3,9 +3,9 @@ import pandas as pd
 
 def scalping_page():
     # Carregar arquivos CSV via URL
-    url_jogosdodia = '/content/Jogos_do_Dia_FS.csv'
-    url_momento_gol_home = '/content/scalping_home.csv'
-    url_momento_gol_away = '/content/scalping_away.csv'
+    url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
+    url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
+    url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
 
     jogosdodia = pd.read_csv(url_jogosdodia)
     momento_gol_home = pd.read_csv(url_momento_gol_home)
