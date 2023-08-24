@@ -5,7 +5,7 @@ from session_state import SessionState
 
 def predict_page():
     # Inicializa o estado da sessão
-    session_state = SessionState(user_profile=1)
+    session_state = SessionState(user_profile=3)
 
     # Verifica se o usuário tem permissão para acessar a página
     if session_state.user_profile < 3:
