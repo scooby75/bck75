@@ -3,6 +3,12 @@ import pandas as pd
 import re
 
 def lay_zebra_page():
+    # Verifica se o usuário tem permissão para acessar a página
+    user_profile = st.session_state.user_profile
+    if user_profile < 2:
+        st.error("Você não tem permissão para acessar esta página.")
+        return
+
     # Load the data
     @st.cache_data(ttl=86400.0)  # 24 hours in seconds
     def load_base():
