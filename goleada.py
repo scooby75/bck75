@@ -14,9 +14,9 @@ def goleada_page():
         return   
 
     # Load the data
-    def load_base():
+    def load_base(df):
         url = "https://github.com/scooby75/bdfootball/blob/main/Predict.csv?raw=true"
-        data_jogos = pd.read_csv(url)
+        df = pd.read_csv(url)  # Carregar os dados do CSV
         
         # Convert the 'Hora' column to a datetime object
         df['Time'] = pd.to_datetime(df['Time'])
@@ -50,7 +50,7 @@ def goleada_page():
         return None
 
     # Call the load_base function to load the data
-    df = load_base()
+    df = load_base(df)  # Pass the df to the function
 
     # Filtrando os jogos com valores de "FT_Odd_H" entre 1.40 e 2.0 e "Rodada_Num" maior ou igual a 10
     eventos_raros_df = df[(df["FT_Odd_H"] >= 1.71) & (df["FT_Odd_H"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
