@@ -46,10 +46,10 @@ def load_base():
     df = pd.read_csv(url)  # Carregar os dados do CSV
     
     # Convert the 'Hora' column to a datetime object
-    df['Hora'] = pd.to_datetime(df['Hora'])
+    df['Time'] = pd.to_datetime(df['Time'])
     
     # Convert the game times to the local time zone (subtracting 3 hours)
-    df['Hora'] = df['Hora'] - pd.to_timedelta('3 hours')
+    df['Time'] = df['Time'] - pd.to_timedelta('3 hours')
 
     # Rename the columns
     df.rename(columns={
