@@ -33,7 +33,7 @@ def main():
         selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Dutching", "HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict", "Scalping"])
 
         # Exibe o conteúdo da página selecionada, considerando as permissões do perfil
-        user_profile = st.session_state.user_profile
+        user_profile = session_state.user_profile  # Use session_state here
         
         if selected_tab == "Jogos do Dia":
             jogos_do_dia_page()
@@ -47,11 +47,10 @@ def main():
             lay_zebra_page()
         elif selected_tab == "Predict" and user_profile == 3:
             predict_page()
-        elif selected_tab == "Lay Zebra FT"and user_profile >= 2:
+        elif selected_tab == "Lay Zebra FT" and user_profile >= 2:
             zebra_ft_page()
         elif selected_tab == "Scalping" and user_profile == 3:
             scalping_page()
-       
 
 if __name__ == "__main__":
     main()
