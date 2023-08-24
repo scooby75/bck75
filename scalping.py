@@ -29,7 +29,8 @@ def scalping_page():
     result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
 
     # Streamlit App
-    st.title("Jogos Filtrados")
+    st.subheader("Lay Over 25FT")
+    st.text("Apostar em Lay Over 25FT e fechar posição com 3% ou 5min de exposição.")
     st.dataframe(result_df)
 
 # Call the function to start the Streamlit app
