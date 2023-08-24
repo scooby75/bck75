@@ -1,10 +1,10 @@
 # login.py
-
 import streamlit as st
 import datetime
+from session_state import get_or_create_session_state
 
 valid_users = {
-    "lsilveira": {"password": "senha123", "profile": 2},
+    "lsilveira": {"password": "senha123", "profile": 3},
     "lamaral": {"password": "lamaral23", "profile": 1},
     "user3": {"password": "password3", "profile": 3}
 }
@@ -19,15 +19,17 @@ def login_page():
 
     if login_button:
         if username in valid_users and valid_users[username]["password"] == password:
-            st.session_state.logged_in = True
-            st.session_state.username = username
-            st.session_state.login_time = datetime.datetime.now()
-            st.session_state.user_profile = valid_users[username]["profile"]  # Store user profile
+            session_state = get_or_create_session_state()
+            session_state.logged_in = True
+            session_state.username = username
+            session_state.login_time = datetime.datetime.now()
+            session_state.user_profile = valid_users[username]["profile"]  # Store user profile
         else:
             st.error("Credenciais inválidas.")
 
 def logout():
-    st.session_state.logged_in = False
-    st.session_state.pop("username", None)
-    st.session_state.pop("login_time", None)
-    st.session_state.pop("user_profile", None)  # Clear user profile on logout
+    session_state = get_or_create_session_state()
+    session_state.logged_in = False
+    session_state.pop("username", None)
+    session_state.pop("login_time", None)
+    session_state.pop("user_profile", None)  # Clear user profile on logout
