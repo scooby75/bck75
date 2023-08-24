@@ -42,7 +42,7 @@ def extrair_numero_rodada(text):
     return None
 
 def load_base():
-    url = "https://github.com/scooby75/bdfootball/blob/main/Predict.csv?raw=true"
+    url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
     df = pd.read_csv(url)  # Carregar os dados do CSV
     
     # Convert the 'Hora' column to a datetime object
@@ -60,6 +60,7 @@ def load_base():
         'FT_Odds_Under25': 'FT_Odd_Under25',
         'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
         'ROUND': 'Rodada',
+        'Time': 'Hora',
     }, inplace=True)
 
     # Apply the function to extract the round number and create a new column "Rodada_Num"
