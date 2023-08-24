@@ -3,9 +3,9 @@ import pandas as pd
 
 def scalping_page():
     # Carregar arquivos CSV via URL
-    url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
-    url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
-    url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
+    url_jogosdodia = '/content/Jogos_do_Dia_FS.csv'
+    url_momento_gol_home = '/content/scalping_home.csv'
+    url_momento_gol_away = '/content/scalping_away.csv'
 
     jogosdodia = pd.read_csv(url_jogosdodia)
     momento_gol_home = pd.read_csv(url_momento_gol_home)
@@ -29,9 +29,9 @@ def scalping_page():
     result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
 
     # Streamlit App
-    st.subheader("Lay Over 25FT")
-    st.text("Apostar em Lay Over 25FT e fechar posição com 3% ou 5min de exposição.")
+    st.title("Jogos Filtrados")
     st.dataframe(result_df)
 
 # Call the function to start the Streamlit app
 scalping_page()
+
