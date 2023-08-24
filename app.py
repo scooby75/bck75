@@ -47,7 +47,7 @@ def main():
         elif selected_tab == "Lay Zebra FT":
             zebra_ft_page()
         elif selected_tab == "Lay Zebra FT":
-            scalping_ft_page()
+            scalping_page()
 
 if __name__ == "__main__":
     main()
