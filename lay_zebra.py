@@ -1,11 +1,14 @@
 import streamlit as st
 import pandas as pd
 import re
+from session_state import SessionState
 
 def lay_zebra_page():
+    # Inicializa o estado da sessão
+    session_state = SessionState(user_profile=0)
+
     # Verifica se o usuário tem permissão para acessar a página
-    user_profile = st.session_state.user_profile
-    if user_profile < 2:
+    if session_state.user_profile < 2:
         st.error("Você não tem permissão para acessar esta página.")
         return
 
