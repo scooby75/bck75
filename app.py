@@ -41,15 +41,15 @@ def main():
             cs_page()
         elif selected_tab == "HA" and user_profile >= 2:
             ha_025_page()
-        elif selected_tab == "Lay Goleada" and user_profile = 3:
+        elif selected_tab == "Lay Goleada" and user_profile == 3:
             goleada_page()
         elif selected_tab == "Lay Zebra HT" and user_profile >= 2:
             lay_zebra_page()
-        elif selected_tab == "Predict" and user_profile = 3:
+        elif selected_tab == "Predict" and user_profile == 3:
             predict_page()
         elif selected_tab == "Lay Zebra FT"and user_profile >= 2:
             zebra_ft_page()
-        elif selected_tab == "Scalping" and user_profile = 3:
+        elif selected_tab == "Scalping" and user_profile == 3:
             scalping_page()
        
 
