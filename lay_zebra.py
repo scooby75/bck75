@@ -9,7 +9,7 @@ def lay_zebra_page():
 
     # Verifica se o usuário tem permissão para acessar a página
     if session_state.user_profile < 2:
-        st.error("Você não tem permissão para acessar esta página.")
+        st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
 
     # Carrega o dado
