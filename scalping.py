@@ -5,7 +5,7 @@ from session_state import SessionState
 
 def scalping_page():
     # Inicializa o estado da sessão
-    session_state = SessionState(user_profile<=2)
+    session_state = SessionState(user_profile=3)
 
     # Verifica se o usuário tem permissão para acessar a página
     if session_state.user_profile < 3:
