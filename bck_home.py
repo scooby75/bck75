@@ -18,7 +18,7 @@ def bck_home_page():
     st.header("Filtros")
 
     # Organize filters into columns
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
 
     # Filter by League
     with col1:
@@ -35,13 +35,19 @@ def bck_home_page():
         all_rounds = "Todos"
         selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique()))
 
+    # Multiselect for Home
+    with col4:
+        home_options = ["Casa", "Fora", "Todos"]
+        selected_home = st.multiselect("Selecionar Mandante", home_options)
+
     # ... Add other filters ...
 
     # Apply filters
     filtered_df = bck_home_df[
         (bck_home_df['League'].isin(selected_leagues) if all_leagues not in selected_leagues else True) &
         (bck_home_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
-        (bck_home_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True)
+        (bck_home_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
+        (bck_home_df['Home'].isin(selected_home) if "Todos" not in selected_home else True)
         # Add more filtering conditions for other columns here...
     ]
 
