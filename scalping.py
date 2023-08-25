@@ -34,13 +34,13 @@ def scalping_page():
         url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
         url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
 
+        # Carregar dados CSV para momento de gol
         momento_gol_home = pd.read_csv(url_momento_gol_home)
         momento_gol_away = pd.read_csv(url_momento_gol_away)
 
         jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home', right_on='Equipe')
         jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away', right_on='Equipe')
         jogos_filtrados = jogos_filtrados_home.merge(jogos_filtrados_away, on=['Date', 'Home', 'Away'], suffixes=('_home', '_away'))
-
 
         # Filtrar jogos com critérios específicos
         filtered_games = jogos_filtrados[
@@ -56,7 +56,7 @@ def scalping_page():
         result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home']]
         result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
 
-        # Streamlit App
+        # App Streamlit
         st.subheader("Lay Over 25FT")
         st.text("Apostar em Lay Over 25FT e fechar posição com 3% ou 5min de exposição.")
         st.dataframe(result_df)
