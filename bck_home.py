@@ -5,7 +5,7 @@ def bck_home_page():
     ##### PÁGINA BCK HOME ######
 
     # Carregar os dados
-    @st.cache(ttl=86400.0)  # 24 horas em segundos
+    @st.cache_data(ttl=86400.0)  # 24 horas em segundos
     def load_base():
         url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
         df = pd.read_csv(url)
@@ -31,7 +31,7 @@ def bck_home_page():
 
     # Group all rounds together
     all_rounds = "Todos"
-    selected_round = st.selectbox("Selecionar Rodada", [all_rounds] + list(bck_home_df['Round'].unique()), index=0 if all_rounds in selected_rounds else None)
+    selected_round = st.selectbox("Selecionar Rodada", [all_rounds] + list(bck_home_df['Round'].unique()))
     if selected_round == all_rounds:
         selected_rounds = list(bck_home_df['Round'].unique())
     else:
