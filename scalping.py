@@ -13,9 +13,9 @@ def scalping_page():
         return
 
     # Definir URLs para os arquivos CSV
-    url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
-    url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
-    url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
+    url_jogosdodia = 'https://github.com/scooby75/bdfootball/raw/main/Jogos_do_Dia_FS.csv'
+    url_momento_gol_home = 'https://github.com/scooby75/bdfootball/raw/main/scalping_home.csv'
+    url_momento_gol_away = 'https://github.com/scooby75/bdfootball/raw/main/scalping_away.csv'
 
     try:
         # Carregar dados CSV
@@ -39,7 +39,7 @@ def scalping_page():
         ]
 
         # Selecionar colunas relevantes e renomear
-        result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home', 'ROUND_x']]
+        result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home', 'ROUND']]
         result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25', 'Rodada']
 
         # Extraindo apenas os números da coluna 'Rodada'
