@@ -5,8 +5,8 @@ def bck_home_page():
     ##### PÁGINA BCK HOME ######
 
     # Create tabs
-    tabs = ["Filtros", "Tab 2", "Tab 3"]
-    current_tab = st.radio("Selecione a aba:", tabs)
+    tabs = ["Filtros", "Tab 1", "Tab 2"]
+    current_tab = st.tabs(tabs)
 
     # Load data
     @st.cache_data(ttl=86400.0)  # 24 hours in seconds
@@ -87,13 +87,13 @@ def bck_home_page():
         ]
         st.dataframe(filtered_df[selected_columns])
 
+    elif current_tab == "Tab 1":
+        # Placeholder for content in Tab 1
+        st.write("Content for Tab 1 goes here.")
+
     elif current_tab == "Tab 2":
         # Placeholder for content in Tab 2
         st.write("Content for Tab 2 goes here.")
-
-    elif current_tab == "Tab 3":
-        # Placeholder for content in Tab 3
-        st.write("Content for Tab 3 goes here.")
 
 # Execute the function to create the page
 bck_home_page()
