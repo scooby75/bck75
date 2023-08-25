@@ -26,35 +26,21 @@ def scalping_page():
     try:
         # Carregar dados CSV
         jogosdodia = pd.read_csv(url_jogosdodia)
-
+        
         # Extrair número da rodada
         jogosdodia["Rodada_Num"] = jogosdodia["ROUND"].apply(extrair_numero_rodada)
 
-        # Lógica de mesclagem e filtragem de dados
-        url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
-        url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
-
-        # Carregar dados CSV para momento de gol
-        momento_gol_home = pd.read_csv(url_momento_gol_home)
-        momento_gol_away = pd.read_csv(url_momento_gol_away)
-
-        jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home', right_on='Equipe')
-        jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away', right_on='Equipe')
-        jogos_filtrados = jogos_filtrados_home.merge(jogos_filtrados_away, on=['Date', 'Home', 'Away'], suffixes=('_home', '_away'))
-
         # Filtrar jogos com critérios específicos
-        filtered_games = jogos_filtrados[
-            (jogos_filtrados['0_15_mar_home'] == 0) & (jogos_filtrados['0_15_sofri_home'] == 0) &
-            (jogos_filtrados['0_15_mar_away'] == 0) & (jogos_filtrados['0_15_sofri_away'] == 0)
+        filtered_games = jogosdodia[
+            (jogosdodia['0_15_mar_home'] == 0) & (jogosdodia['0_15_sofri_home'] == 0) &
+            (jogosdodia['0_15_mar_away'] == 0) & (jogosdodia['0_15_sofri_away'] == 0)
         ]
 
         # Extrair número da rodada e filtrar com condição
-        filtered_games["Rodada_Num"] = filtered_games["ROUND"].apply(extrair_numero_rodada)
         filtered_games = filtered_games[filtered_games["Rodada_Num"] >= 5]
 
         # Selecionar colunas relevantes e renomear
-        result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home']]
-        result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
+        result_df = filtered_games[['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']]
 
         # App Streamlit
         st.subheader("Lay Over 25FT")
