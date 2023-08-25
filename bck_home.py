@@ -5,7 +5,7 @@ def bck_home_page():
     ##### PÁGINA BCK HOME ######
 
     # Carregar os dados
-    @st.cache_data(ttl=86400.0)  # 24 horas em segundos
+    @st.cache(ttl=86400.0)  # 24 horas em segundos
     def load_base():
         url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
         df = pd.read_csv(url)
@@ -29,13 +29,11 @@ def bck_home_page():
     if all_seasons in selected_seasons:
         selected_seasons.remove(all_seasons)
 
-    # Group all rounds together
+    # Multiselect for Round
     all_rounds = "Todos"
-    selected_round = st.selectbox("Selecionar Rodada", [all_rounds] + list(bck_home_df['Round'].unique()))
-    if selected_round == all_rounds:
-        selected_rounds = list(bck_home_df['Round'].unique())
-    else:
-        selected_rounds = [selected_round]
+    selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique()), default=all_rounds)
+    if all_rounds in selected_rounds:
+        selected_rounds.remove(all_rounds)
 
     # ... Add other filters ...
 
@@ -43,7 +41,7 @@ def bck_home_page():
     filtered_df = bck_home_df[
         (bck_home_df['League'].isin(selected_leagues) | (all_leagues in selected_leagues)) &
         (bck_home_df['Season'].isin(selected_seasons) | (all_seasons in selected_seasons)) &
-        (bck_home_df['Round'].isin(selected_rounds))
+        (bck_home_df['Round'].isin(selected_rounds) | (all_rounds in selected_rounds))
         # Add more filtering conditions for other columns here...
     ]
 
