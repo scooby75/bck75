@@ -5,7 +5,7 @@ def bck_home_page():
     ##### PÁGINA BCK HOME ######
 
     # Carregar os dados
-    @st.cache(ttl=86400.0)  # 24 horas em segundos
+    @st.cache_data(ttl=86400.0)  # 24 horas em segundos
     def load_base():
         url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
         df = pd.read_csv(url)
@@ -17,17 +17,23 @@ def bck_home_page():
     # Filtros interativos
     st.header("Filtros")
 
+    # Organize filters into columns
+    col1, col2, col3 = st.beta_columns(3)
+
     # Filter by League
-    all_leagues = "Todos"
-    selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_home_df['League'].unique()))
+    with col1:
+        all_leagues = "Todos"
+        selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_home_df['League'].unique()))
 
     # Filter by Season
-    all_seasons = "Todos"
-    selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_home_df['Season'].unique()))
+    with col2:
+        all_seasons = "Todos"
+        selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_home_df['Season'].unique()))
 
     # Multiselect for Round
-    all_rounds = "Todos"
-    selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique()))
+    with col3:
+        all_rounds = "Todos"
+        selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique()))
 
     # ... Add other filters ...
 
@@ -44,3 +50,4 @@ def bck_home_page():
 
 # Execute the function to create the page
 bck_home_page()
+
