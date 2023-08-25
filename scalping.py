@@ -46,7 +46,7 @@ def scalping_page():
         result_df['Rodada'] = result_df['Rodada'].str.extract('(\d+)')
 
         # Filtrar jogos com ROUND >= 5
-        result_df = result_df[result_df['Rodada'].astype(int) >= 5]
+        result_df = result_df[result_df['Rodada'].astype(int) >= 3]
 
         # Streamlit App
         st.subheader("Lay Over 25FT")
