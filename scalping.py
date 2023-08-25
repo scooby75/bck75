@@ -31,8 +31,8 @@ def scalping_page():
         jogosdodia["Rodada_Num"] = jogosdodia["ROUND"].apply(extrair_numero_rodada)
 
         # Lógica de mesclagem e filtragem de dados
-        momento_gol_home = pd.read_csv(url_momento_gol_home)
-        momento_gol_away = pd.read_csv(url_momento_gol_away)
+        url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
+        url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
 
         jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home', right_on='Equipe')
         jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away', right_on='Equipe')
