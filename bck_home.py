@@ -29,9 +29,13 @@ def bck_home_page():
     if all_seasons in selected_seasons:
         selected_seasons.remove(all_seasons)
 
-    # Filter by Round
-    selected_round_min = st.number_input("Selecionar Rodada Mínima", min_value=5, max_value=20, value=5)
-    selected_round_max = st.number_input("Selecionar Rodada Máxima", min_value=5, max_value=20, value=20)
+    # Group all rounds together
+    all_rounds = "Todos"
+    selected_round = st.selectbox("Selecionar Rodada", [all_rounds] + list(bck_home_df['Round'].unique()), index=0 if all_rounds in selected_rounds else None)
+    if selected_round == all_rounds:
+        selected_rounds = list(bck_home_df['Round'].unique())
+    else:
+        selected_rounds = [selected_round]
 
     # ... Add other filters ...
 
@@ -39,8 +43,7 @@ def bck_home_page():
     filtered_df = bck_home_df[
         (bck_home_df['League'].isin(selected_leagues) | (all_leagues in selected_leagues)) &
         (bck_home_df['Season'].isin(selected_seasons) | (all_seasons in selected_seasons)) &
-        (bck_home_df['Round'] >= selected_round_min) &
-        (bck_home_df['Round'] <= selected_round_max)
+        (bck_home_df['Round'].isin(selected_rounds))
         # Add more filtering conditions for other columns here...
     ]
 
