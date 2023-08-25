@@ -37,8 +37,8 @@ def bck_home_page():
 
     # Multiselect for Home
     with col4:
-        home_options = ["Casa", "Fora", "Todos"]
-        selected_home = st.multiselect("Selecionar Mandante", home_options)
+        home_teams = bck_home_df['Home'].unique()  # Get unique teams from 'Home' column
+        selected_home = st.multiselect("Selecionar Mandante", home_teams)
 
     # ... Add other filters ...
 
@@ -47,12 +47,16 @@ def bck_home_page():
         (bck_home_df['League'].isin(selected_leagues) if all_leagues not in selected_leagues else True) &
         (bck_home_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
         (bck_home_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
-        (bck_home_df['Home'].isin(selected_home) if "Todos" not in selected_home else True)
+        (bck_home_df['Home'].isin(selected_home) if selected_home else True)
         # Add more filtering conditions for other columns here...
     ]
 
-    # Display filtered data
-    st.dataframe(filtered_df)
+    # Display selected columns from the filtered data
+    selected_columns = [
+        "Date", "League", "Season", "Round", "Home", "Away",
+        "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "Placar_HT", "Placar_FT"
+    ]
+    st.dataframe(filtered_df[selected_columns])
 
 # Execute the function to create the page
 bck_home_page()
