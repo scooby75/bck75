@@ -64,10 +64,3 @@ def lay_zebra_page():
 # Chamar a função para exibir a aplicação web
 lay_zebra_page()
 
-
-    
-    except Exception as e:
-        st.error("Ocorreu um erro: " + str(e))
-
-# Chamar a função para iniciar o aplicativo Streamlit
-scalping_page()
