@@ -18,21 +18,29 @@ def bck_home_page():
     st.header("Filtros")
 
     # Filter by League
-    selected_leagues = st.multiselect("Selecionar Liga(s)", bck_home_df['League'].unique(), default=bck_home_df['League'].unique())
+    all_leagues = "Todos"
+    selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_home_df['League'].unique()), default=all_leagues)
+    if all_leagues in selected_leagues:
+        selected_leagues.remove(all_leagues)
 
     # Filter by Season
-    selected_seasons = st.multiselect("Selecionar Temporada(s)", bck_home_df['Season'].unique(), default=bck_home_df['Season'].unique())
+    all_seasons = "Todos"
+    selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_home_df['Season'].unique()), default=all_seasons)
+    if all_seasons in selected_seasons:
+        selected_seasons.remove(all_seasons)
 
     # Filter by Round
-    selected_round = st.number_input("Selecionar Rodada", min_value=1, max_value=bck_home_df['Round'].max(), value=1)
+    selected_round_min = st.number_input("Selecionar Rodada Mínima", min_value=5, max_value=20, value=5)
+    selected_round_max = st.number_input("Selecionar Rodada Máxima", min_value=5, max_value=20, value=20)
 
-    # ... Add number_input or other appropriate filters for other columns ...
+    # ... Add other filters ...
 
     # Apply filters
     filtered_df = bck_home_df[
-        (bck_home_df['League'].isin(selected_leagues)) &
-        (bck_home_df['Season'].isin(selected_seasons)) &
-        (bck_home_df['Round'] == selected_round)
+        (bck_home_df['League'].isin(selected_leagues) | (all_leagues in selected_leagues)) &
+        (bck_home_df['Season'].isin(selected_seasons) | (all_seasons in selected_seasons)) &
+        (bck_home_df['Round'] >= selected_round_min) &
+        (bck_home_df['Round'] <= selected_round_max)
         # Add more filtering conditions for other columns here...
     ]
 
