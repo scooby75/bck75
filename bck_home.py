@@ -19,15 +19,15 @@ def bck_home_page():
 
     # Filter by League
     all_leagues = "Todos"
-    selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_home_df['League'].unique()), default=[all_leagues])
+    selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_home_df['League'].unique()))
 
     # Filter by Season
     all_seasons = "Todos"
-    selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_home_df['Season'].unique()), default=[all_seasons])
+    selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_home_df['Season'].unique()))
 
     # Multiselect for Round
     all_rounds = "Todos"
-    selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique()), default=[all_rounds])
+    selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique()))
 
     # ... Add other filters ...
 
