@@ -40,8 +40,7 @@ def scalping_page():
         filtered_games = filtered_games[filtered_games["Rodada_Num"] >= 5]
 
         # Selecionar colunas relevantes e renomear
-        result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home']]
-        result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
+        result_df = filtered_games[['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']]
 
         # App Streamlit
         st.subheader("Lay Over 25FT")
