@@ -3,66 +3,53 @@ import pandas as pd
 import re
 from session_state import SessionState
 
-def lay_zebra_page():
+def extrair_numero_rodada(text):
+    if isinstance(text, int):
+        return text
+    match = re.search(r'\d+', text)
+    if match:
+        return int(match.group())
+    return None
+
+def scalping_page():
     # Inicializa o estado da sessão
-    session_state = SessionState(user_profile=2)
+    session_state = SessionState(user_profile=3)
 
     # Verifica se o usuário tem permissão para acessar a página
-    if session_state.user_profile < 2:
+    if session_state.user_profile < 3:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
 
-    # Carrega o dado
-    url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
-    df = pd.read_csv(url)
-    
-    # Convert the 'Hora' column to a datetime object
-    df['Time'] = pd.to_datetime(df['Time'])
-    
-    # Convert the game times to the local time zone (subtracting 3 hours)
-    df['Time'] = df['Time'] - pd.to_timedelta('3 hours')
+    # Definir URLs para os arquivos CSV
+    url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
 
-    # Rename the columns
-    df.rename(columns={
-        'FT_Odds_H': 'FT_Odd_H',
-        'FT_Odds_D': 'FT_Odd_D',
-        'FT_Odds_A': 'FT_Odd_A',
-        'FT_Odds_Over25': 'FT_Odd_Over25',
-        'FT_Odds_Under25': 'FT_Odd_Under25',
-        'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
-        'ROUND': 'Rodada',
-    }, inplace=True)
+    try:
+        # Carregar dados CSV
+        jogosdodia = pd.read_csv(url_jogosdodia)
+        
+        # Extrair número da rodada
+        jogosdodia["Rodada_Num"] = jogosdodia["ROUND"].apply(extrair_numero_rodada)
 
-    # Função para extrair o número do texto "ROUND N"
-    def extrair_numero_rodada(text):
-        if isinstance(text, int):
-            return text
-        match = re.search(r'\d+', text)
-        if match:
-            return int(match.group())
-        return None
+        # Filtrar jogos com critérios específicos
+        filtered_games = jogosdodia[
+            (jogosdodia['0_15_mar_home'] == 0) & (jogosdodia['0_15_sofri_home'] == 0) &
+            (jogosdodia['0_15_mar_away'] == 0) & (jogosdodia['0_15_sofri_away'] == 0)
+        ]
 
-    # Apply the function to extract the round number and create a new column "Rodada_Num"
-    df["Rodada_Num"] = df["Rodada"].apply(extrair_numero_rodada)
+        # Extrair número da rodada e filtrar com condição
+        filtered_games = filtered_games[filtered_games["Rodada_Num"] >= 5]
 
-    # Filter matches with conditions
-    layzebraht_df = df[
-        (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
-        (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10) &
-        (df["Rodada_Num"] >= 10)
-    ]
-    
-    # Select desired columns: Date, Time, League, Home, and Away
-    colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
-    layzebraht_df = layzebraht_df[colunas_desejadas]
-    
-    # Display the "Lay Zebra HT" DataFrame
-    st.subheader("Lay Zebra HT")
-    st.text("Apostar em Lay visitante, Odd máxima 6")
-    st.dataframe(layzebraht_df)
+        # Selecionar colunas relevantes e renomear
+        result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home']]
+        result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
 
-# Chamar a função para exibir a aplicação web
-lay_zebra_page()
+        # App Streamlit
+        st.subheader("Lay Over 25FT")
+        st.text("Apostar em Lay Over 25FT e fechar posição com 3% ou 5min de exposição.")
+        st.dataframe(result_df)
 
+    except Exception as e:
+        st.error("Ocorreu um erro: " + str(e))
 
-    
+# Chamar a função para iniciar o aplicativo Streamlit
+scalping_page()
