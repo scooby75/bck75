@@ -42,10 +42,16 @@ def bck_home_page():
         odd_a_min = st.number_input("Odd_Away Mínimo", value=0.0)
         odd_a_max = st.number_input("Odd_Away Máximo", value=10.0)
 
-    # Filter for Over_05HT (HT_Odd_Over05) range
+    # Filter for Over_05HT (HT_Odd_Over05) range and Over_25FT (FT_Odd_Over25)
     with col3:
         over_05ht_min = st.number_input("Over_05HT Mínimo", value=0.0)
         over_05ht_max = st.number_input("Over_05HT Máximo", value=10.0)
+
+        over_25ft_min = st.number_input("Over_25FT Mínimo", value=0.0)
+        over_25ft_max = st.number_input("Over_25FT Máximo", value=10.0)
+        
+        btts_yes_min = st.number_input("BTTS_Yes Mínimo", value=0.0)
+        btts_yes_max = st.number_input("BTTS_Yes Máximo", value=10.0)
 
     # Apply filters
     filtered_df = bck_home_df[
@@ -58,16 +64,19 @@ def bck_home_page():
         (bck_home_df['FT_Odd_A'] >= odd_a_min) &
         (bck_home_df['FT_Odd_A'] <= odd_a_max) &
         (bck_home_df['HT_Odd_Over05'] >= over_05ht_min) &
-        (bck_home_df['HT_Odd_Over05'] <= over_05ht_max)
+        (bck_home_df['HT_Odd_Over05'] <= over_05ht_max) &
+        (bck_home_df['FT_Odd_Over25'] >= over_25ft_min) &
+        (bck_home_df['FT_Odd_Over25'] <= over_25ft_max) &
+        (bck_home_df['Odd_BTTS_Yes'] >= btts_yes_min) &
+        (bck_home_df['Odd_BTTS_Yes'] <= btts_yes_max)
     ]
 
     # Display selected columns from the filtered data
     selected_columns = [
-        "Date", "League", "Season", "Round", "Home", "Away",
-        "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "HT_Odd_Over05", "Placar_HT", "Placar_FT"
+        "Date", "League", "Season", "Home", "Away",
+        "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "HT_Odd_Over05", "FT_Odd_Over25", "Odd_BTTS_Yes", "Placar_HT", "Placar_FT"
     ]
     st.dataframe(filtered_df[selected_columns])
 
 # Execute the function to create the page
 bck_home_page()
-
