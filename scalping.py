@@ -14,8 +14,8 @@ def scalping_page():
 
     # Definir URLs para os arquivos CSV
     url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
-    url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/momento_gol_home.csv?raw=true'
-    url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/momento_gol_away.csv?raw=true'
+    url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
+    url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
 
     try:
         # Carregar dados CSV
