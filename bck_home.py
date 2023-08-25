@@ -18,7 +18,7 @@ def bck_home_page():
     st.header("Filtros")
 
     # Organize filters into columns
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3 = st.columns(3)
 
     # Filter by League
     with col1:
@@ -30,15 +30,18 @@ def bck_home_page():
         all_seasons = "Todos"
         selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_home_df['Season'].unique()))
 
+        # Filter for Odd_Home (FT_Odd_H) range
+        odd_h_min = st.number_input("Odd_Home Mínimo", value=0.0)
+        odd_h_max = st.number_input("Odd_Home Máximo", value=10.0)
+
     # Multiselect for Round
     with col3:
         all_rounds = "Todos"
         selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique()))
 
     # Multiselect for Home
-    with col4:
-        home_teams = bck_home_df['Home'].unique()  # Get unique teams from 'Home' column
-        selected_home = st.multiselect("Selecionar Mandante", home_teams)
+    home_teams = bck_home_df['Home'].unique()  # Get unique teams from 'Home' column
+    selected_home = st.multiselect("Selecionar Mandante", home_teams)
 
     # ... Add other filters ...
 
@@ -47,7 +50,9 @@ def bck_home_page():
         (bck_home_df['League'].isin(selected_leagues) if all_leagues not in selected_leagues else True) &
         (bck_home_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
         (bck_home_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
-        (bck_home_df['Home'].isin(selected_home) if selected_home else True)
+        (bck_home_df['Home'].isin(selected_home) if selected_home else True) &
+        (bck_home_df['FT_Odd_H'] >= odd_h_min) &
+        (bck_home_df['FT_Odd_H'] <= odd_h_max)
         # Add more filtering conditions for other columns here...
     ]
 
