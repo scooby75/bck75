@@ -49,6 +49,7 @@ def scalping_page():
         ]
 
         # Extrair número da rodada e filtrar com condição
+        filtered_games["Rodada_Num"] = filtered_games["ROUND"].apply(extrair_numero_rodada)
         filtered_games = filtered_games[filtered_games["Rodada_Num"] >= 5]
 
         # Selecionar colunas relevantes e renomear
