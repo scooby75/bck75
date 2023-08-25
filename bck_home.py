@@ -18,7 +18,7 @@ def bck_home_page():
     st.header("Filtros")
 
     # Organize filters into columns
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3 = st.columns(3)
 
     # Filter by League
     with col1:
@@ -50,4 +50,3 @@ def bck_home_page():
 
 # Execute the function to create the page
 bck_home_page()
-
