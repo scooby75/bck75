@@ -34,9 +34,13 @@ def scalping_page():
         url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
         url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
 
+        momento_gol_home = pd.read_csv(url_momento_gol_home)
+        momento_gol_away = pd.read_csv(url_momento_gol_away)
+
         jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home', right_on='Equipe')
         jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away', right_on='Equipe')
         jogos_filtrados = jogos_filtrados_home.merge(jogos_filtrados_away, on=['Date', 'Home', 'Away'], suffixes=('_home', '_away'))
+
 
         # Filtrar jogos com critérios específicos
         filtered_games = jogos_filtrados[
