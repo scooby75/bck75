@@ -3,7 +3,7 @@ import pandas as pd
 
 def bck_home_page():
     ##### PÁGINA BCK HOME ######
-    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Desempenho", "Away", "League"])
+    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "League"])
 
     with tab0:
         # Carregar os dados
@@ -107,80 +107,14 @@ def bck_home_page():
         tamanho_amostra_ht = total_jogos_home_ht
 
         # Criando o novo DataFrame
-        data_ht = {'Performance': [f"{performance_home_ht:.2f}%"], 'Amostra': [tamanho_amostra_ht]}
+        data_ht = {'Winrate': [f"{performance_home_ht:.2f}%"], 'Amostra': [tamanho_amostra_ht]}
         df_resultado_ht = pd.DataFrame(data_ht)
 
         # Exibindo o resultado
         st.subheader('Desempenho da Equipe HT')
-        st.dataframe(df_resultado_ht)
+        st.dataframe(df_resultado_ht)        
 
-    ##### Desempenho da Equipe FT ######
-
-        # Calculando a quantidade de vezes que "Home" ganhou no intervalo FT
-        quantidade_vitorias_home_ft = len(filtered_df[filtered_df['Resultado_FT'] == 'H'])
-
-        # Calculando o total de jogos no intervalo FT
-        total_jogos_home_ft = len(filtered_df)
-
-        # Calculando a performance de "Home" no intervalo FT
-        if total_jogos_home_ft > 0:
-            performance_home_ft = (quantidade_vitorias_home_ft / total_jogos_home_ft) * 100
-        else:
-            performance_home_ft = 0
-
-        # Arredondando a performance para 2 casas decimais e garantindo que não seja maior que 100%
-        performance_home_ft = min(performance_home_ft, 100)
-        performance_home_ft = round(performance_home_ft, 2)
-
-        # Calculando o tamanho da amostra
-        tamanho_amostra_ft = total_jogos_home_ft
-
-        # Criando o novo DataFrame para o desempenho da equipe FT
-        data_ft = {'Performance': [f"{performance_home_ft:.2f}%"], 'Amostra': [tamanho_amostra_ft]}
-        df_resultado_ft = pd.DataFrame(data_ft)
-
-        # Exibindo o resultado do desempenho da equipe FT
-        st.subheader('Desempenho da Equipe FT')
-        st.dataframe(df_resultado_ft)
-
-     ##### Desempenho Geral - Casa ####
-
-        # Group the filtered dataframe by home team (equipe da casa) and calculate cumulative sum of 'Profit'
-        df_home_profit = filtered_df.groupby('Home')['profit_home'].sum().reset_index()
-
-        # Group the filtered dataframe by home team (equipe da casa) and calculate cumulative sum of 'Profit'
-        df_home_profit = filtered_df.groupby(['Season', 'Home'])['profit_home'].sum().reset_index()
-
-        # Create a pivot table of profit/loss by home team for the selected season
-        home_team_profit_loss_pivot = df_home_profit.pivot_table(index="Home", columns="Season", values="profit_home")
-
-        # Display the table with profit/loss by home team (pivot table)
-        st.subheader("Desempenho Geral - Equipe da Casa")
-        st.text("Serão exibidas todas as Equipes que se enquadraram no(s) filtro(s) de Odd")
-        st.dataframe(home_team_profit_loss_pivot)
-
-    ##### Top Back Casa ####
-
-        # Group the filtered DataFrame by 'Home' (Home Team) and calculate the cumulative sum of 'Profit'
-        df_home_profit = filtered_df.groupby('Home')['profit_home'].cumsum()
-
-        # Add the 'Profit_acumulado' column to the filtered DataFrame
-        filtered_df['profit_home_acumulado'] = df_home_profit
-
-        # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
-        filtered_home_profit = filtered_df[filtered_df['profit_home_acumulado'] >= 3]
-
-        # Group the filtered DataFrame by 'Home' (Home Team) and calculate the total profit for each home team
-        home_team_total_profit = filtered_home_profit.groupby('Home')['profit_home_acumulado'].last()
-
-        # Sort the home_team_total_profit DataFrame in descending order of profit
-        home_team_total_profit_sorted = home_team_total_profit.sort_values(ascending=False)
-
-        # Display the table with total profit by home team in descending order
-        st.subheader("Top Back Casa")
-        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
-        st.dataframe(home_team_total_profit_sorted)
-
+  
     #### TOP Equipes HT - Casa ####
 
         # Função para formatar os valores da média de gols com duas casas decimais
@@ -254,7 +188,73 @@ def bck_home_page():
         
         
     with tab2:
-        st.write("dados")
+          ##### Desempenho da Equipe FT ######
+
+        # Calculando a quantidade de vezes que "Home" ganhou no intervalo FT
+        quantidade_vitorias_home_ft = len(filtered_df[filtered_df['Resultado_FT'] == 'H'])
+
+        # Calculando o total de jogos no intervalo FT
+        total_jogos_home_ft = len(filtered_df)
+
+        # Calculando a performance de "Home" no intervalo FT
+        if total_jogos_home_ft > 0:
+            performance_home_ft = (quantidade_vitorias_home_ft / total_jogos_home_ft) * 100
+        else:
+            performance_home_ft = 0
+
+        # Arredondando a performance para 2 casas decimais e garantindo que não seja maior que 100%
+        performance_home_ft = min(performance_home_ft, 100)
+        performance_home_ft = round(performance_home_ft, 2)
+
+        # Calculando o tamanho da amostra
+        tamanho_amostra_ft = total_jogos_home_ft
+
+        # Criando o novo DataFrame para o desempenho da equipe FT
+        data_ft = {'Winrate': [f"{performance_home_ft:.2f}%"], 'Amostra': [tamanho_amostra_ft]}
+        df_resultado_ft = pd.DataFrame(data_ft)
+
+        # Exibindo o resultado do desempenho da equipe FT
+        st.subheader('Desempenho da Equipe FT')
+        st.dataframe(df_resultado_ft)
+
+     ##### Desempenho Geral - Casa ####
+
+        # Group the filtered dataframe by home team (equipe da casa) and calculate cumulative sum of 'Profit'
+        df_home_profit = filtered_df.groupby('Home')['profit_home'].sum().reset_index()
+
+        # Group the filtered dataframe by home team (equipe da casa) and calculate cumulative sum of 'Profit'
+        df_home_profit = filtered_df.groupby(['Season', 'Home'])['profit_home'].sum().reset_index()
+
+        # Create a pivot table of profit/loss by home team for the selected season
+        home_team_profit_loss_pivot = df_home_profit.pivot_table(index="Home", columns="Season", values="profit_home")
+
+        # Display the table with profit/loss by home team (pivot table)
+        st.subheader("Desempenho Geral - Equipe da Casa")
+        st.text("Serão exibidas todas as Equipes que se enquadraram no(s) filtro(s) de Odd")
+        st.dataframe(home_team_profit_loss_pivot)
+
+    ##### Top Back Casa ####
+
+        # Group the filtered DataFrame by 'Home' (Home Team) and calculate the cumulative sum of 'Profit'
+        df_home_profit = filtered_df.groupby('Home')['profit_home'].cumsum()
+
+        # Add the 'Profit_acumulado' column to the filtered DataFrame
+        filtered_df['profit_home_acumulado'] = df_home_profit
+
+        # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
+        filtered_home_profit = filtered_df[filtered_df['profit_home_acumulado'] >= 3]
+
+        # Group the filtered DataFrame by 'Home' (Home Team) and calculate the total profit for each home team
+        home_team_total_profit = filtered_home_profit.groupby('Home')['profit_home_acumulado'].last()
+
+        # Sort the home_team_total_profit DataFrame in descending order of profit
+        home_team_total_profit_sorted = home_team_total_profit.sort_values(ascending=False)
+
+        # Display the table with total profit by home team in descending order
+        st.subheader("Top Back Casa")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
+        st.dataframe(home_team_total_profit_sorted)
+
 
     with tab3:
         st.write("dados")
