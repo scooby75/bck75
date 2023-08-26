@@ -265,8 +265,8 @@ def bck_home_page():
         df_back_casa_ft = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
 
         # Calculate the number of "Win" and "Loss" occurrences
-        num_win = len(filtered_df[filtered_df["Resultado FT"] == "H"])
-        num_loss = len(filtered_df[filtered_df["Resultado FT"].isin(["A", "D"])])
+        num_win = len(filtered_df[filtered_df["Resultado_FT"] == "H"])
+        num_loss = len(filtered_df[filtered_df["Resultado_FT"].isin(["A", "D"])])
         total_games = num_win + num_loss
 
         # Check if total_games is not zero before performing division
