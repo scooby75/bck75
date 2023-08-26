@@ -327,6 +327,40 @@ def bck_home_page():
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
         st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_FT', use_container_width=True)
 
+    ##### Calculo Win/Loss Over Back Casa HT ####
+
+        # Create a new DataFrame for the "Back Casa HT" table
+        df_back_casa_ht = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Calculate the number of "Win" and "Loss" occurrences
+        num_win = len(filtered_df[filtered_df["Resultado_HT"] == "H"])
+        num_loss = len(filtered_df[filtered_df["Resultado_HT"].isin(["A", "D"])])
+        total_games = num_win + num_loss
+
+        # Check if total_games is not zero before performing division
+        if total_games != 0:
+        # Calculate win and loss percentages
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+        # Handle the case when total_games is zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calculate the fair odds with 2 decimal places
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+        # Handle the case when win_percentage is zero
+            fair_odd = 0
+
+        #### Add the data to the "Back Casa FT" table ####
+        df_back_casa_ht.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Display the "Back Casa HT" table
+        st.subheader("Back Casa HT")
+        st.dataframe(df_back_casa_ht)
+   
 
 # Execute the function to create the page
 bck_home_page()
