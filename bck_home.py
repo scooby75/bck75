@@ -180,6 +180,77 @@ def bck_home_page():
         st.subheader("Top Back Casa")
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
         st.dataframe(home_team_total_profit_sorted)
+
+    #### TOP Equipes HT - Casa ####
+
+        # Função para formatar os valores da média de gols com duas casas decimais
+        def format_decimal(value):
+            return "{:.2f}".format(value)
+
+        # Agrupando por Temporada (Season), Liga (League) e Equipe (Home) e calculando a média de gols e o total de jogos
+        grouped_data = filtered_df.groupby(['Season', 'League', 'Home']).agg(
+            Total_Goals=pd.NamedAgg(column='HT_Goals_H', aggfunc='sum'),
+            Total_Matches=pd.NamedAgg(column='Home', aggfunc='size')
+        )
+
+        # Filtrando as equipes que tiveram pelo menos 5 jogos na mesma Season e mesma League
+        grouped_data = grouped_data[grouped_data['Total_Matches'] >= 5]
+
+        # Resetando o índice para criar um novo DataFrame
+        top_over_05HT_casa = grouped_data.reset_index()
+
+        # Calculando a média de gols por jogo para cada equipe, considerando todas as partidas Home
+        top_over_05HT_casa['Média Gols HT'] = top_over_05HT_casa['Total_Goals'] / top_over_05HT_casa['Total_Matches']
+
+        # Formatando a coluna de média de gols com duas casas decimais e tratando possíveis erros
+        try:
+            top_over_05HT_casa['Média Gols HT'] = top_over_05HT_casa['Média Gols HT'].apply(format_decimal)
+        except Exception as e:
+        # Em caso de erro, preencher a coluna com valor vazio
+            top_over_05HT_casa['Média Gols HT'] = ''
+
+        # Renomeando as colunas
+        top_over_05HT_casa = top_over_05HT_casa.rename(columns={
+            'Season': 'Temporada',
+            'League': 'Liga',
+            'Total_Goals': 'Total Gols HT',
+            'Total_Matches': 'Total de Partidas',
+            'Média Gols HT': 'Média Gols HT'
+        })
+
+        # Ordenando a tabela pela coluna 'Média Gols HT' em ordem decrescente
+        top_over_05HT_casa = top_over_05HT_casa.sort_values(by='Média Gols HT', ascending=False)
+
+        # Verificar se a equipe selecionada está disponível na lista de opções de equipes
+        if 'selected_team' not in st.session_state or not st.session_state.selected_team:
+            selected_team = "All"
+        else:
+            selected_team = st.session_state.selected_team
+
+        if 'selected_seasons' not in st.session_state or not st.session_state.selected_seasons:
+            selected_seasons = "All"
+        else:
+            selected_seasons = st.session_state.selected_seasons
+
+        if selected_team != "All" and selected_team not in team_options:
+            st.error("Equipe selecionada não está disponível.")
+        elif selected_seasons != "All" and selected_seasons not in top_over_05HT_casa['Temporada'].unique():
+            st.error("Temporada selecionada não está disponível.")
+        else:
+        # Filtrar o DataFrame original para a equipe selecionada, se aplicável
+            if selected_team != "All":
+                filtered_df_over_05HT = filtered_df_over_05HT[filtered_df_over_05HT['Home'] == selected_team]
+
+        # Filtrar o DataFrame original para a temporada selecionada, se aplicável
+            if selected_seasons != "All":
+                top_over_05HT_casa = top_over_05HT_casa[top_over_05HT_casa['Temporada'] == selected_seasons]
+
+        # Selecionando as 10 equipes com maior média de gols
+            top_10_teams = top_over_05HT_casa.head(10)
+
+        # Exibindo a nova tabela "Top Over 05HT - Casa" com Streamlit e ajustando o tamanho da fonte
+            st.subheader("Top Over 05HT - Casa")
+            st.dataframe(top_10_teams)
         
         
     with tab2:
