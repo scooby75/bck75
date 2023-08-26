@@ -3,18 +3,18 @@ import pandas as pd
 
 def bck_home_page():
     ##### PÁGINA BCK HOME ######
-    tab0, tab1, tab2, tab3, = st.tabs(["Partidas Filtradas", "Home", "Away", "League"])
+    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Home", "Away", "League"])
 
     with tab0:
         # Carregar os dados
-        @st.cache_data(ttl=86400.0)  # 24 horas em segundos
+        @st.cache(ttl=86400.0)  # 24 horas em segundos
         def load_base():
             url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
             df = pd.read_csv(url)
             return df
         
         # Chamar a função para carregar os dados
-            bck_home_df = load_base()
+        bck_home_df = load_base()
 
         # Filtros interativos
         st.header("Filtros")
@@ -84,9 +84,16 @@ def bck_home_page():
             "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "HT_Odd_Over05", "FT_Odd_Over25", "Odd_BTTS_Yes", "Placar_HT", "Placar_FT"
         ]
         st.dataframe(filtered_df[selected_columns])
+
     with tab1:
+        st.write("dados")
+        
     with tab2:
+        st.write("dados")
+
     with tab3:
+        st.write("dados")
 
 # Execute the function to create the page
 bck_home_page()
+
