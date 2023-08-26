@@ -142,6 +142,28 @@ def bck_home_page():
         # Exibindo o resultado do desempenho da equipe FT
         st.subheader('Desempenho da Equipe FT')
         st.dataframe(df_resultado_ft)
+
+    ##### Top Back Casa ####
+
+    # Group the filtered DataFrame by 'Home' (Home Team) and calculate the cumulative sum of 'Profit'
+        df_home_profit = filtered_df.groupby('Home')['profit_home'].cumsum()
+
+    # Add the 'Profit_acumulado' column to the filtered DataFrame
+        filtered_df['profit_home_acumulado'] = df_home_profit
+
+    # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
+        filtered_home_profit = filtered_df[filtered_df['profit_home_acumulado'] >= 3]
+
+    # Group the filtered DataFrame by 'Home' (Home Team) and calculate the total profit for each home team
+        home_team_total_profit = filtered_home_profit.groupby('Home')['profit_home_acumulado'].last()
+
+    # Sort the home_team_total_profit DataFrame in descending order of profit
+        home_team_total_profit_sorted = home_team_total_profit.sort_values(ascending=False)
+
+    # Display the table with total profit by home team in descending order
+        st.subheader("Top Back Casa")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
+        st.dataframe(home_team_total_profit_sorted)
         
         
     with tab2:
