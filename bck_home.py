@@ -3,7 +3,7 @@ import pandas as pd
 
 def bck_home_page():
     ##### PÁGINA BCK HOME ######
-    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Home", "Away", "League"])
+    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Desempenho", "Away", "League"])
 
     with tab0:
         # Carregar os dados
@@ -113,6 +113,35 @@ def bck_home_page():
         # Exibindo o resultado
         st.subheader('Desempenho da Equipe HT')
         st.dataframe(df_resultado_ht)
+
+    ##### Desempenho da Equipe FT ######
+
+        # Calculando a quantidade de vezes que "Home" ganhou no intervalo FT
+        quantidade_vitorias_home_ft = len(filtered_df[filtered_df['Resultado_FT'] == 'H'])
+
+        # Calculando o total de jogos no intervalo FT
+        total_jogos_home_ft = len(filtered_df)
+
+        # Calculando a performance de "Home" no intervalo FT
+        if total_jogos_home_ft > 0:
+            performance_home_ft = (quantidade_vitorias_home_ft / total_jogos_home_ft) * 100
+        else:
+            performance_home_ft = 0
+
+        # Arredondando a performance para 2 casas decimais e garantindo que não seja maior que 100%
+        performance_home_ft = min(performance_home_ft, 100)
+        performance_home_ft = round(performance_home_ft, 2)
+
+        # Calculando o tamanho da amostra
+        tamanho_amostra_ft = total_jogos_home_ft
+
+        # Criando o novo DataFrame para o desempenho da equipe FT
+        data_ft = {'Performance': [f"{performance_home_ft:.2f}%"], 'Amostra': [tamanho_amostra_ft]}
+        df_resultado_ft = pd.DataFrame(data_ft)
+
+        # Exibindo o resultado do desempenho da equipe FT
+        st.subheader('Desempenho da Equipe FT')
+        st.dataframe(df_resultado_ft)
         
         
     with tab2:
