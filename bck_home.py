@@ -293,17 +293,22 @@ def bck_home_page():
         st.subheader("Back Casa FT")
         st.dataframe(df_back_casa_ft)
 
-        # Check if df_filtrado is empty before calculating profit and ROI
-        if not filtered_df.empty:
-            profit = round(filtered_df.profit_home.tail(1).item(), 2)
-            ROI = round((filtered_df.profit_home.tail(1) / len(filtered_df) * 100).item(), 2)
-        else:
-            profit = 0
-            ROI = 0
+    # Somar os valores da coluna 'profit_home' para obter o lucro total
+        lucro_total = filtered_df['profit_home'].sum()
 
-        # Display the profit/loss and ROI for the filtered data in the Streamlit interface
-        st.write("Lucro/Prejuizo:", profit, "stakes em", len(filtered_df), "jogos")
-        st.write("Yield:", ROI, "%")
+    # Calcular o ROI
+        total_de_jogos = len(filtered_df)
+        roi = (lucro_total / total_de_jogos) * 100
+    
+    # Arredondar os valores para duas casas decimais
+        lucro_total = round(lucro_total, 2)
+        roi = round(roi, 2)
+    else:
+        lucro_total = 0
+        roi = 0
+
+    print("Lucro Total:", lucro_total)
+    print("ROI (%):", roi)
 
 # Execute the function to create the page
 bck_home_page()
