@@ -84,6 +84,9 @@ def bck_home_page():
             "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "HT_Odd_Over05", "FT_Odd_Over25", "Odd_BTTS_Yes", "Placar_HT", "Placar_FT"
         ]
         st.dataframe(filtered_df[selected_columns])
+    with tab1:
+    with tab2:
+    with tab3:
 
 # Execute the function to create the page
 bck_home_page()
