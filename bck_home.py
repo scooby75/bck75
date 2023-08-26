@@ -7,7 +7,7 @@ def bck_home_page():
 
     with tab0:
         # Carregar os dados
-        @st.cache(ttl=86400.0)  # 24 horas em segundos
+        @st.cache_data(ttl=28800.0)  # 24 horas em segundos
         def load_base():
             url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
             df = pd.read_csv(url)
@@ -86,7 +86,34 @@ def bck_home_page():
         st.dataframe(filtered_df[selected_columns])
 
     with tab1:
-        st.write("dados")
+        
+        # Calculando a quantidade de vezes que "Home" ganhou
+        quantidade_vitorias_home_ht = len(filtered_df[filtered_df['Resultado_HT'] == 'H'])
+
+        # Calculando o total de jogos no intervalo HT
+        total_jogos_home_ht = len(filtered_df)
+
+        # Calculando a performance de "Home"
+        if total_jogos_home_ht > 0:
+            performance_home_ht = (quantidade_vitorias_home_ht / total_jogos_home_ht) * 100
+        else:
+            performance_home_ht = 0
+
+        # Arredondando a performance para 2 casas decimais e garantindo que não seja maior que 100%
+        performance_home_ht = min(performance_home_ht, 100)
+        performance_home_ht = round(performance_home_ht, 2)
+
+        # Calculando o tamanho da amostra
+        tamanho_amostra_ht = total_jogos_home_ht
+
+        # Criando o novo DataFrame
+        data_ht = {'Performance': [f"{performance_home_ht:.2f}%"], 'Amostra': [tamanho_amostra_ht]}
+        df_resultado_ht = pd.DataFrame(data_ht)
+
+        # Exibindo o resultado
+        st.subheader('Desempenho da Equipe HT')
+        st.dataframe(df_resultado_ht)
+        
         
     with tab2:
         st.write("dados")
