@@ -6,7 +6,7 @@ def ha_025_page():
     ##### HA -0.25 ######
 
     # Load the data
-    @st.cache_data(ttl=86400.0)  # 24 hours in seconds
+    #@st.cache_data(ttl=86400.0)  # 24 hours in seconds
     def load_base():
         url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
         
