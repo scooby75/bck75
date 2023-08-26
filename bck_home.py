@@ -292,7 +292,8 @@ def bck_home_page():
         # Display the "Back Casa FT" table
         st.subheader("Back Casa FT")
         st.dataframe(df_back_casa_ft)
-
+    with tab3:
+    
     # Verificar se o DataFrame não está vazio
     if not filtered_df.empty:
     # Somar os valores da coluna 'profit_home' para obter o lucro total
@@ -312,6 +313,20 @@ def bck_home_page():
     else:
     # Exibir mensagem de DataFrame vazio
         st.write("Nenhum dado disponível. O DataFrame está vazio.")
+
+###### ADD Gráfico com Resultado Back FT #####
+
+    #st.subheader("Desempenho Geral do Filtro")
+
+    # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df.sort_values(by='Date', inplace=True)
+
+    # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df['Lucro_Acumulado_FT'] = filtered_df['profit_home'].cumsum()
+
+    # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_FT', use_container_width=True)
+
 
 # Execute the function to create the page
 bck_home_page()
