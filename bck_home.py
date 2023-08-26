@@ -396,32 +396,32 @@ def bck_home_page():
 
     ##### Calculo Win/Loss Lay Zebra HT ####
 
-        # Create a new DataFrame for the "Lay Zebra HT" table
-            df_lay_zebra_ht = pd.DataFrame(columns=["Win", "Loss", "Odd Lay"])
-    
+           # Create a new DataFrame for the "Lay Zebra HT" table
+        df_lay_zebra_ht = pd.DataFrame(columns=["Win", "Loss", "Odd Lay"])
+
         # Calculate the number of "Win" and "Loss" occurrences
-            num_win = len(filtered_df[filtered_df["Resultado_HT"] != "A"])
-            num_loss = len(filtered_df[filtered_df["Resultado_HT"] == "A"])
+        num_win = len(filtered_df[filtered_df["Resultado_HT"] != "A"])
+        num_loss = len(filtered_df[filtered_df["Resultado_HT"] == "A"])
 
         # Calculate win and loss percentages
-            total_games = num_win + num_loss
+        total_games = num_win + num_loss
 
-            if total_games == 0:
+        if total_games == 0:
+        # Handle the case when there are no games in the dataset
             win_percentage = 0
             loss_percentage = 0
         else:
             win_percentage = (num_win / total_games) * 100
             loss_percentage = (num_loss / total_games) * 100
 
-        # Check if win_percentage is 100% to avoid division by zero
+        # Calculate the fair odds with 2 decimal places
         if win_percentage == 100:
-            fair_odd = float('inf')  # Set fair_odd to infinity for 100% win percentage
+            fair_odd = 0.00  # Since all games are wins, fair odds cannot be calculated
         else:
             fair_odd = round(win_percentage / 100 / (1 - win_percentage / 100), 2)
 
         # Add the data to the "Lay Zebra HT" table
             df_lay_zebra_ht.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
-
 
         # Display the "Lay Zebra HT" table
             st.subheader("Lay Zebra HT")
