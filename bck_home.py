@@ -308,7 +308,7 @@ def bck_home_page():
             roi = round(roi, 2)
     
     # Exibir os resultados usando st.write()
-            st.write(f"Lucro/Prejuízo: R$ {lucro_total} em {total_de_jogos} jogos")
+            st.write(f"Lucro/Prejuízo: {lucro_total} em {total_de_jogos} jogos")
             st.write(f"Yield: {roi}%")
         else:
     # Exibir mensagem de DataFrame vazio
@@ -465,6 +465,28 @@ def bck_home_page():
         # Display the "Over 05HT" table
         st.subheader("Over 05HT")
         st.dataframe(df_over05ht)
+
+       ###### Calculo Lucro/Prejuízo ####
+
+    # Verificar se o DataFrame não está vazio
+        if not filtered_df.empty:
+    # Somar os valores da coluna 'profit_home' para obter o lucro total
+            lucro_total = filtered_df['profit_over05HT'].sum()
+            
+    # Calcular o ROI
+            total_de_jogos = len(filtered_df)
+            roi = (lucro_total / total_de_jogos) * 100
+    
+    # Arredondar os valores para duas casas decimais
+            lucro_total = round(lucro_total, 2)
+            roi = round(roi, 2)
+    
+    # Exibir os resultados usando st.write()
+            st.write(f"Lucro/Prejuízo: {lucro_total} em {total_de_jogos} jogos")
+            st.write(f"Yield: {roi}%")
+        else:
+    # Exibir mensagem de DataFrame vazio
+            st.write("Nenhum dado disponível. O DataFrame está vazio.")
 
        ###### ADD Gráfico Over 05HT #####   
 
