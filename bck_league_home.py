@@ -280,9 +280,6 @@ def bck_league_home_page():
         
     with tab2:
         
-        # Filtra o DataFrame original para incluir apenas as ligas e temporadas relevantes
-        filtered_df = original_df[(original_df['profit_home'] >= 2)]
-
         # Calcula o lucro total das apostas em casa agrupadas por liga e temporada
         profit_home_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_home'].sum()
 
@@ -298,6 +295,9 @@ def bck_league_home_page():
         # Exibe a tabela dinâmica usando o Streamlit
         st.subheader("Top Back Casa")
         st.dataframe(pivot_table)
+
+
+
         
     with tab3:
 
