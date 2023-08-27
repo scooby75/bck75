@@ -51,14 +51,15 @@ def bck_league_home_page():
 
         # Filter for Over_05HT (HT_Odd_Over05) range and Over_25FT (FT_Odd_Over25)
         with col3:
-            over_05ht_min = st.number_input("Over_05HT Mínimo", value=0.0)
-            over_05ht_max = st.number_input("Over_05HT Máximo", value=10.0)
+            
+            over_05ht_min = st.number_input("Over_05HT Mínimo", value=0.0, key="over_05ht_min")
+            over_05ht_max = st.number_input("Over_05HT Máximo", value=10.0, key="over_05ht_max")
 
-            over_25ft_min = st.number_input("Over_25FT Mínimo", value=0.0)
-            over_25ft_max = st.number_input("Over_25FT Máximo", value=10.0)
-        
-            btts_yes_min = st.number_input("BTTS_Yes Mínimo", value=0.0)
-            btts_yes_max = st.number_input("BTTS_Yes Máximo", value=10.0)
+            over_25ft_min = st.number_input("Over_25FT Mínimo", value=0.0, key="over_25ft_min")
+            over_25ft_max = st.number_input("Over_25FT Máximo", value=10.0, key="over_25ft_max")
+
+            btts_yes_min = st.number_input("BTTS_Yes Mínimo", value=0.0, key="btts_yes_min")
+            btts_yes_max = st.number_input("BTTS_Yes Máximo", value=10.0, key="btts_yes_max")
 
         # Apply filters
         filtered_df = bck_home_df[
