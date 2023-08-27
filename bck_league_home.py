@@ -40,14 +40,14 @@ def bck_league_home_page():
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
-            odd_h_min = st.number_input("Odd_Home Mínimo", value=0.0)
-            odd_h_max = st.number_input("Odd_Home Máximo", value=10.0)
+            odd_h_min = st.number_input("Odd_Home Mínimo", value=0.0, key="odd_h_min")
+            odd_h_max = st.number_input("Odd_Home Máximo", value=10.0, key="odd_h_max")
 
-            odd_a_min = st.number_input("Odd_Away Mínimo", value=0.0)
-            odd_a_max = st.number_input("Odd_Away Máximo", value=10.0)
-        
-            odd_draw_min = st.number_input("Odd_Empate Mínimo", value=0.0)
-            odd_draw_max = st.number_input("Odd_Empate Máximo", value=10.0)
+            odd_a_min = st.number_input("Odd_Away Mínimo", value=0.0, key="odd_a_min")
+            odd_a_max = st.number_input("Odd_Away Máximo", value=10.0, key="odd_a_max")
+    
+            odd_draw_min = st.number_input("Odd_Empate Mínimo", value=0.0, key="odd_draw_min")
+            odd_draw_max = st.number_input("Odd_Empate Máximo", value=10.0, key="odd_draw_max")
 
         # Filter for Over_05HT (HT_Odd_Over05) range and Over_25FT (FT_Odd_Over25)
         with col3:
