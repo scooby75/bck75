@@ -511,6 +511,17 @@ def bck_home_page():
         st.subheader("Under 05HT")
         st.dataframe(df_under05ht)
 
+    ###### ADD Gráfico Under 05HT #####   
+
+    # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df.sort_values(by='Date', inplace=True)
+
+    # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df['Lucro_Acumulado_U05HT'] = filtered_df['profit_under05HT'].cumsum()
+
+    # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_U05HT', use_container_width=True)
+
 
 ##### Calculo Win/Loss Over 15FT ####
 
@@ -546,6 +557,17 @@ def bck_home_page():
         st.subheader("Over 15FT")
         st.dataframe(df_over15ft)
 
+          ###### ADD Gráfico Over 15FT #####   
+
+    # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df.sort_values(by='Date', inplace=True)
+
+    # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df['Lucro_Acumulado_O15FT'] = filtered_df['profit_over15'].cumsum()
+
+    # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_O15FT', use_container_width=True)
+
 ##### Calculo Win/Loss Under 15FT ####
 
         # Create a new DataFrame for the "Under 15FT" table
@@ -579,6 +601,17 @@ def bck_home_page():
         # Display the "Under 15FT" table
         st.subheader("Under 15FT")
         st.dataframe(df_under15ft)
+
+        ###### ADD Gráfico Under 15FT #####   
+
+    # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df.sort_values(by='Date', inplace=True)
+
+    # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df['Lucro_Acumulado_U15FT'] = filtered_df['profit_under15'].cumsum()
+
+    # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_U15FT', use_container_width=True)
 
 ##### Calculo Win/Loss Over 25FT ####
 
@@ -614,6 +647,17 @@ def bck_home_page():
         st.subheader("Over 25FT")
         st.dataframe(df_over25ft)
 
+    ###### ADD Gráfico Over 25FT #####   
+
+    # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df.sort_values(by='Date', inplace=True)
+
+    # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df['Lucro_Acumulado_O25FT'] = filtered_df['profit_over25'].cumsum()
+
+    # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_O25FT', use_container_width=True)
+
 ##### Calculo Win/Loss Under 25FT ####
 
         # Create a new DataFrame for the "Under 25FT" table
@@ -647,6 +691,17 @@ def bck_home_page():
         # Display the "Under 25FT" table
         st.subheader("Under 25FT")
         st.dataframe(df_under25ft)
+
+   ###### ADD Gráfico Under 25FT #####   
+
+    # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df.sort_values(by='Date', inplace=True)
+
+    # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df['Lucro_Acumulado_U25FT'] = filtered_df['profit_under25'].cumsum()
+
+    # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_U25FT', use_container_width=True)
    
 
    
