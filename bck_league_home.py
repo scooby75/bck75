@@ -25,17 +25,18 @@ def bck_league_home_page():
 
         # Filter by League, Season, Round, Home
         with col1:
+            
             all_leagues = "Todos"
-            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_home_df['League'].unique()))
+            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_home_df['League'].unique()), key="selected_leagues")
 
             all_rounds = "Todos"
-            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique()))
+            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique()), key="selected_rounds")
 
             all_seasons = "Todos"
-            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_home_df['Season'].unique()))
-        
+            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_home_df['Season'].unique()), key="selected_seasons")
+
             home_teams = bck_home_df['Home'].unique()  # Get unique teams from 'Home' column
-            selected_home = st.multiselect("Selecionar Mandante", home_teams)
+            selected_home = st.multiselect("Selecionar Mandante", home_teams, key="selected_home")
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
@@ -79,7 +80,6 @@ def bck_league_home_page():
             (bck_home_df['Odd_BTTS_Yes'] <= btts_yes_max)
         ]
 
-        # Display selected columns from the filtered data
         selected_columns = [
             "Date", "League", "Season", "Round", "Home", "Away",
             "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "HT_Odd_Over05", "FT_Odd_Over25", "Odd_BTTS_Yes", "Placar_HT", "Placar_FT"
@@ -402,6 +402,24 @@ def bck_league_home_page():
 
         # Exibe a tabela dinâmica usando o Streamlit
         st.subheader("Top Under 15FT")
+        st.dataframe(pivot_table)
+
+    #####################################################
+            
+        # Calcula o lucro total das apostas em casa agrupadas por liga e temporada
+        profit_lay01_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_Lay_0x1'].sum()
+
+        # Filtra as ligas que lucraram pelo menos 1 unidade em todas as temporadas
+        profitable_leagues = profit_lay01_by_league_season.groupby('League').filter(lambda x: (x >= 2).all())
+
+        # Converte o resultado filtrado em um DataFrame
+        filtered_df = profitable_leagues.reset_index()
+
+        # Cria uma tabela dinâmica para organizar os dados
+        pivot_table = filtered_df.pivot_table(index='League', columns='Season', values='profit_Lay_0x1', aggfunc='sum')
+
+        # Exibe a tabela dinâmica usando o Streamlit
+        st.subheader("Top Lay 0x1")
         st.dataframe(pivot_table)
 
 
