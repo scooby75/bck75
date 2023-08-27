@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 
-def bck_home_page():
-    ##### PÁGINA BCK HOME ######
+def bck_away_page():
+    ##### PÁGINA BCK AWAY ######
     tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado"])
 
     with tab0:
@@ -1393,5 +1393,5 @@ def bck_home_page():
    
 
 # Execute the function to create the page
-bck_home_page()
+bck_away_page()
 
