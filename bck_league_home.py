@@ -87,15 +87,17 @@ def bck_league_home_page():
         st.dataframe(filtered_df[selected_columns])
 
     with tab1:
-        
-        # Calculate the "Resultado FT" based on the conditions: "H" for home win, "A" for away win, and "D" for draw.
-                
-        # Group by Season, League, and sum up profit_home
+
+####################################################        
+        # back casa agrupado por liga
         profit_home_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_home'].sum()
 
-        # Display profit/loss by Season and League
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_home_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_home', aggfunc='sum')
+
+        # Display profit/loss by Season and League with Season as columns and League as rows
         st.write("Back Casa - Desempenho por Liga")
-        st.dataframe(profit_home_by_season_league)
+        st.dataframe(pivot_table)
 
         
         
