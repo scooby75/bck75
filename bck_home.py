@@ -1137,13 +1137,13 @@ def bck_home_page():
             loss_percentage = 0
 
         # Calculate the fair odds with 2 decimal places
-        if win_percentage != 0:
-            fair_odd = round(100 / win_percentage, 2)
+        if loss_percentage != 0:
+            fair_odd = round(100 / loss_percentage, 2)
         else:
-        # Handle the case when win_percentage is zero
+        # Handle the case when loss_percentage is zero
             fair_odd = 0
 
-        #### Add the data to the "Over 45FT" table ####
+        #### Add the data to the "Lay 0x1" table ####
         df_lay_01.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
 
         # Display the "Lay 0x1" table
