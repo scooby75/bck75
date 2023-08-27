@@ -14,7 +14,7 @@ def bck_away_page():
             return df
         
         # Chamar a função para carregar os dados
-        bck_home_df = load_base()
+        bck_away_df = load_base()
 
         # Filtros interativos
         st.header("Filtros")
@@ -25,15 +25,15 @@ def bck_away_page():
         # Filter by League, Season, Round, Home
         with col1:
             all_leagues = "Todos"
-            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_home_df['League'].unique()))
+            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_away_df['League'].unique()))
 
             all_rounds = "Todos"
-            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique()))
+            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_away_df['Round'].unique()))
 
             all_seasons = "Todos"
-            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_home_df['Season'].unique()))
+            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_away_df['Season'].unique()))
         
-            home_teams = bck_home_df['Home'].unique()  # Get unique teams from 'Home' column
+            home_teams = bck_away_df['Home'].unique()  # Get unique teams from 'Home' column
             selected_home = st.multiselect("Selecionar Mandante", home_teams)
 
         # Filter for Odd_Home and Odd_Away range
@@ -59,23 +59,23 @@ def bck_away_page():
             btts_yes_max = st.number_input("BTTS_Yes Máximo", value=10.0)
 
         # Apply filters
-        filtered_df = bck_home_df[
-            (bck_home_df['League'].isin(selected_leagues) if all_leagues not in selected_leagues else True) &
-            (bck_home_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
-            (bck_home_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
-            (bck_home_df['Home'].isin(selected_home) if selected_home else True) &
-            (bck_home_df['FT_Odd_H'] >= odd_h_min) &
-            (bck_home_df['FT_Odd_H'] <= odd_h_max) &
-            (bck_home_df['FT_Odd_A'] >= odd_a_min) &
-            (bck_home_df['FT_Odd_A'] <= odd_a_max) &
-            (bck_home_df['FT_Odd_D'] >= odd_draw_min) &
-            (bck_home_df['FT_Odd_D'] <= odd_draw_max) &
-            (bck_home_df['HT_Odd_Over05'] >= over_05ht_min) &
-            (bck_home_df['HT_Odd_Over05'] <= over_05ht_max) &
-            (bck_home_df['FT_Odd_Over25'] >= over_25ft_min) &
-            (bck_home_df['FT_Odd_Over25'] <= over_25ft_max) &
-            (bck_home_df['Odd_BTTS_Yes'] >= btts_yes_min) &
-            (bck_home_df['Odd_BTTS_Yes'] <= btts_yes_max)
+        filtered_df = bck_away_df[
+            (bck_away_df['League'].isin(selected_leagues) if all_leagues not in selected_leagues else True) &
+            (bck_away_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
+            (bck_away_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
+            (bck_away_df['Home'].isin(selected_home) if selected_home else True) &
+            (bck_away_df['FT_Odd_H'] >= odd_h_min) &
+            (bck_away_df['FT_Odd_H'] <= odd_h_max) &
+            (bck_away_df['FT_Odd_A'] >= odd_a_min) &
+            (bck_away_df['FT_Odd_A'] <= odd_a_max) &
+            (bck_away_df['FT_Odd_D'] >= odd_draw_min) &
+            (bck_away_df['FT_Odd_D'] <= odd_draw_max) &
+            (bck_away_df['HT_Odd_Over05'] >= over_05ht_min) &
+            (bck_away_df['HT_Odd_Over05'] <= over_05ht_max) &
+            (bck_away_df['FT_Odd_Over25'] >= over_25ft_min) &
+            (bck_away_df['FT_Odd_Over25'] <= over_25ft_max) &
+            (bck_away_df['Odd_BTTS_Yes'] >= btts_yes_min) &
+            (bck_away_df['Odd_BTTS_Yes'] <= btts_yes_max)
         ]
 
         # Display selected columns from the filtered data
@@ -87,27 +87,27 @@ def bck_away_page():
 
     with tab1:
         
-        # Calculando a quantidade de vezes que "Home" ganhou
-        quantidade_vitorias_home_ht = len(filtered_df[filtered_df['Resultado_HT'] == 'H'])
+        # Calculando a quantidade de vezes que "Away" ganhou
+        quantidade_vitorias_away_ht = len(filtered_df[filtered_df['Resultado_HT'] == 'A'])
 
         # Calculando o total de jogos no intervalo HT
-        total_jogos_home_ht = len(filtered_df)
+        total_jogos_away_ht = len(filtered_df)
 
         # Calculando a performance de "Home"
-        if total_jogos_home_ht > 0:
-            performance_home_ht = (quantidade_vitorias_home_ht / total_jogos_home_ht) * 100
+        if total_jogos_away_ht > 0:
+            performance_away_ht = (quantidade_vitorias_away_ht / total_jogos_away_ht) * 100
         else:
-            performance_home_ht = 0
+            performance_away_ht = 0
 
         # Arredondando a performance para 2 casas decimais e garantindo que não seja maior que 100%
-        performance_home_ht = min(performance_home_ht, 100)
-        performance_home_ht = round(performance_home_ht, 2)
+        performance_away_ht = min(performance_away_ht, 100)
+        performance_away_ht = round(performance_away_ht, 2)
 
         # Calculando o tamanho da amostra
-        tamanho_amostra_ht = total_jogos_home_ht
+        tamanho_amostra_ht = total_jogos_away_ht
 
         # Criando o novo DataFrame
-        data_ht = {'Winrate': [f"{performance_home_ht:.2f}%"], 'Amostra': [tamanho_amostra_ht]}
+        data_ht = {'Winrate': [f"{performance_away_ht:.2f}%"], 'Amostra': [tamanho_amostra_ht]}
         df_resultado_ht = pd.DataFrame(data_ht)
 
         # Exibindo o resultado
@@ -115,36 +115,36 @@ def bck_away_page():
         st.dataframe(df_resultado_ht)        
 
   
-    #### TOP Equipes HT - Casa ####
+    #### TOP Equipes HT - Visitante ####
 
         # Função para formatar os valores da média de gols com duas casas decimais
         def format_decimal(value):
             return "{:.2f}".format(value)
 
-        # Agrupando por Temporada (Season), Liga (League) e Equipe (Home) e calculando a média de gols e o total de jogos
-        grouped_data = filtered_df.groupby(['Season', 'League', 'Home']).agg(
+        # Agrupando por Temporada (Season), Liga (League) e Equipe (Away) e calculando a média de gols e o total de jogos
+        grouped_data = filtered_df.groupby(['Season', 'League', 'Away']).agg(
             Total_Goals=pd.NamedAgg(column='HT_Goals_H', aggfunc='sum'),
-            Total_Matches=pd.NamedAgg(column='Home', aggfunc='size')
+            Total_Matches=pd.NamedAgg(column='Away', aggfunc='size')
         )
 
         # Filtrando as equipes que tiveram pelo menos 5 jogos na mesma Season e mesma League
         grouped_data = grouped_data[grouped_data['Total_Matches'] >= 5]
 
         # Resetando o índice para criar um novo DataFrame
-        top_over_05HT_casa = grouped_data.reset_index()
+        top_over_05HT_away = grouped_data.reset_index()
 
-        # Calculando a média de gols por jogo para cada equipe, considerando todas as partidas Home
-        top_over_05HT_casa['Média Gols HT'] = top_over_05HT_casa['Total_Goals'] / top_over_05HT_casa['Total_Matches']
+        # Calculando a média de gols por jogo para cada equipe, considerando todas as partidas Away
+        top_over_05HT_away['Média Gols HT'] = top_over_05HT_away['Total_Goals'] / top_over_05HT_away['Total_Matches']
 
         # Formatando a coluna de média de gols com duas casas decimais e tratando possíveis erros
         try:
-            top_over_05HT_casa['Média Gols HT'] = top_over_05HT_casa['Média Gols HT'].apply(format_decimal)
+            top_over_05HT_away['Média Gols HT'] = top_over_05HT_away['Média Gols HT'].apply(format_decimal)
         except Exception as e:
         # Em caso de erro, preencher a coluna com valor vazio
-            top_over_05HT_casa['Média Gols HT'] = ''
+            top_over_05HT_away['Média Gols HT'] = ''
 
         # Renomeando as colunas
-        top_over_05HT_casa = top_over_05HT_casa.rename(columns={
+        top_over_05HT_away = top_over_05HT_away.rename(columns={
             'Season': 'Temporada',
             'League': 'Liga',
             'Total_Goals': 'Total Gols HT',
@@ -153,7 +153,7 @@ def bck_away_page():
         })
 
         # Ordenando a tabela pela coluna 'Média Gols HT' em ordem decrescente
-        top_over_05HT_casa = top_over_05HT_casa.sort_values(by='Média Gols HT', ascending=False)
+        top_over_05HT_away = top_over_05HT_away.sort_values(by='Média Gols HT', ascending=False)
 
         # Verificar se a equipe selecionada está disponível na lista de opções de equipes
         if 'selected_team' not in st.session_state or not st.session_state.selected_team:
@@ -168,22 +168,22 @@ def bck_away_page():
 
         if selected_team != "All" and selected_team not in team_options:
             st.error("Equipe selecionada não está disponível.")
-        elif selected_seasons != "All" and selected_seasons not in top_over_05HT_casa['Temporada'].unique():
+        elif selected_seasons != "All" and selected_seasons not in top_over_05HT_away['Temporada'].unique():
             st.error("Temporada selecionada não está disponível.")
         else:
         # Filtrar o DataFrame original para a equipe selecionada, se aplicável
             if selected_team != "All":
-                filtered_df_over_05HT = filtered_df_over_05HT[filtered_df_over_05HT['Home'] == selected_team]
+                filtered_df_over_05HT = filtered_df_over_05HT[filtered_df_over_05HT['Away'] == selected_team]
 
         # Filtrar o DataFrame original para a temporada selecionada, se aplicável
             if selected_seasons != "All":
-                top_over_05HT_casa = top_over_05HT_casa[top_over_05HT_casa['Temporada'] == selected_seasons]
+                top_over_05HT_away = top_over_05HT_away[top_over_05HT_away['Temporada'] == selected_seasons]
 
         # Selecionando as 10 equipes com maior média de gols
-            top_10_teams = top_over_05HT_casa.head(10)
+            top_10_teams = top_over_05HT_away.head(10)
 
-        # Exibindo a nova tabela "Top Over 05HT - Casa" com Streamlit e ajustando o tamanho da fonte
-            st.subheader("Top Over 05HT - Casa")
+        # Exibindo a nova tabela "Top Over 05HT - Away" com Streamlit e ajustando o tamanho da fonte
+            st.subheader("Top Over 05HT - Visitante")
             st.dataframe(top_10_teams)
         
         
@@ -191,83 +191,83 @@ def bck_away_page():
           ##### Desempenho da Equipe FT ######
 
         # Calculando a quantidade de vezes que "Home" ganhou no intervalo FT
-        quantidade_vitorias_home_ft = len(filtered_df[filtered_df['Resultado_FT'] == 'H'])
+        quantidade_vitorias_away_ft = len(filtered_df[filtered_df['Resultado_FT'] == 'A'])
 
         # Calculando o total de jogos no intervalo FT
-        total_jogos_home_ft = len(filtered_df)
+        total_jogos_away_ft = len(filtered_df)
 
-        # Calculando a performance de "Home" no intervalo FT
-        if total_jogos_home_ft > 0:
-            performance_home_ft = (quantidade_vitorias_home_ft / total_jogos_home_ft) * 100
+        # Calculando a performance de "Away" no intervalo FT
+        if total_jogos_away_ft > 0:
+            performance_away_ft = (quantidade_vitorias_away_ft / total_jogos_away_ft) * 100
         else:
-            performance_home_ft = 0
+            performance_away_ft = 0
 
         # Arredondando a performance para 2 casas decimais e garantindo que não seja maior que 100%
-        performance_home_ft = min(performance_home_ft, 100)
-        performance_home_ft = round(performance_home_ft, 2)
+        performance_away_ft = min(performance_away_ft, 100)
+        performance_away_ft = round(performance_away_ft, 2)
 
         # Calculando o tamanho da amostra
-        tamanho_amostra_ft = total_jogos_home_ft
+        tamanho_amostra_ft = total_jogos_away_ft
 
         # Criando o novo DataFrame para o desempenho da equipe FT
-        data_ft = {'Winrate': [f"{performance_home_ft:.2f}%"], 'Amostra': [tamanho_amostra_ft]}
+        data_ft = {'Winrate': [f"{performance_away_ft:.2f}%"], 'Amostra': [tamanho_amostra_ft]}
         df_resultado_ft = pd.DataFrame(data_ft)
 
         # Exibindo o resultado do desempenho da equipe FT
         st.subheader('Desempenho da Equipe FT')
         st.dataframe(df_resultado_ft)
 
-     ##### Desempenho Geral - Casa ####
+     ##### Desempenho Geral - Visitante ####
 
-        # Group the filtered dataframe by home team (equipe da casa) and calculate cumulative sum of 'Profit'
-        df_home_profit = filtered_df.groupby('Home')['profit_home'].sum().reset_index()
+        # Group the filtered dataframe by away team (equipe da casa) and calculate cumulative sum of 'Profit'
+        df_away_profit = filtered_df.groupby('Away')['profit_away'].sum().reset_index()
 
-        # Group the filtered dataframe by home team (equipe da casa) and calculate cumulative sum of 'Profit'
-        df_home_profit = filtered_df.groupby(['Season', 'Home'])['profit_home'].sum().reset_index()
+        # Group the filtered dataframe by away team (equipe da casa) and calculate cumulative sum of 'Profit'
+        df_away_profit = filtered_df.groupby(['Season', 'Away'])['profit_away'].sum().reset_index()
 
-        # Create a pivot table of profit/loss by home team for the selected season
-        home_team_profit_loss_pivot = df_home_profit.pivot_table(index="Home", columns="Season", values="profit_home")
+        # Create a pivot table of profit/loss by away team for the selected season
+        away_team_profit_loss_pivot = df_away_profit.pivot_table(index="Away", columns="Season", values="profit_away")
 
-        # Display the table with profit/loss by home team (pivot table)
-        st.subheader("Desempenho Geral - Equipe da Casa")
+        # Display the table with profit/loss by away team (pivot table)
+        st.subheader("Desempenho Geral - Equipe Visitante")
         st.text("Serão exibidas todas as Equipes que se enquadraram no(s) filtro(s) de Odd")
         st.dataframe(home_team_profit_loss_pivot)
 
-    ##### Top Back Casa ####
+    ##### Top Back Visitante ####
 
-        # Group the filtered DataFrame by 'Home' (Home Team) and calculate the cumulative sum of 'Profit'
-        df_home_profit = filtered_df.groupby('Home')['profit_home'].cumsum()
+        # Group the filtered DataFrame by 'Away' (Away Team) and calculate the cumulative sum of 'Profit'
+        df_away_profit = filtered_df.groupby('AWay')['profit_away'].cumsum()
 
         # Add the 'Profit_acumulado' column to the filtered DataFrame
-        filtered_df['profit_home_acumulado'] = df_home_profit
+        filtered_df['profit_away_acumulado'] = df_away_profit
 
         # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
-        filtered_home_profit = filtered_df[filtered_df['profit_home_acumulado'] >= 3]
+        filtered_away_profit = filtered_df[filtered_df['profit_away_acumulado'] >= 3]
 
-        # Group the filtered DataFrame by 'Home' (Home Team) and calculate the total profit for each home team
-        home_team_total_profit = filtered_home_profit.groupby('Home')['profit_home_acumulado'].last()
+        # Group the filtered DataFrame by 'Away' (Away Team) and calculate the total profit for each home team
+        away_team_total_profit = filtered_away_profit.groupby('Away')['profit_away_acumulado'].last()
 
         # Sort the home_team_total_profit DataFrame in descending order of profit
-        home_team_total_profit_sorted = home_team_total_profit.sort_values(ascending=False)
+        away_team_total_profit_sorted = away_team_total_profit.sort_values(ascending=False)
 
         # Display the table with total profit by home team in descending order
-        st.subheader("Top Back Casa")
+        st.subheader("Top Back Visitante")
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
-        st.dataframe(home_team_total_profit_sorted)
+        st.dataframe(away_team_total_profit_sorted)
 
 
     with tab3:
 
 ################################################################################3        
 
-    ##### Calculo Win/Loss Over Back Casa FT ####
+    ##### Calculo Win/Loss Over Back Visitante FT ####
 
-        # Create a new DataFrame for the "Back Casa FT" table
-        df_back_casa_ft = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+        # Create a new DataFrame for the "Back Away FT" table
+        df_back_away_ft = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
 
         # Calculate the number of "Win" and "Loss" occurrences
-        num_win = len(filtered_df[filtered_df["Resultado_FT"] == "H"])
-        num_loss = len(filtered_df[filtered_df["Resultado_FT"].isin(["A", "D"])])
+        num_win = len(filtered_df[filtered_df["Resultado_FT"] == "A"])
+        num_loss = len(filtered_df[filtered_df["Resultado_FT"].isin(["H", "D"])])
         total_games = num_win + num_loss
 
         # Check if total_games is not zero before performing division
@@ -287,18 +287,19 @@ def bck_away_page():
         # Handle the case when win_percentage is zero
             fair_odd = 0
 
-        #### Add the data to the "Back Casa FT" table ####
-        df_back_casa_ft.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+        #### Add the data to the "Back Away FT" table ####
+        df_back_away_ft.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
 
-        # Display the "Back Casa FT" table
-        st.subheader("Back Casa FT")
-        st.dataframe(df_back_casa_ft)
+        # Display the "Back AWay FT" table
+        st.subheader("Back Visitante FT")
+        st.dataframe(df_back_away_ft)
+    
     with tab3:
     
     # Verificar se o DataFrame não está vazio
         if not filtered_df.empty:
     # Somar os valores da coluna 'profit_home' para obter o lucro total
-            lucro_total = filtered_df['profit_home'].sum()
+            lucro_total = filtered_df['profit_away'].sum()
 
     # Calcular o ROI
             total_de_jogos = len(filtered_df)
@@ -323,21 +324,21 @@ def bck_away_page():
         filtered_df.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_FT'] = filtered_df['profit_home'].cumsum()
+        filtered_df['Lucro_Acumulado_FT'] = filtered_df['profit_away'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
         st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_FT', use_container_width=True)
 
 ###########################################################################################        
 
-    ##### Calculo Win/Loss Over Back Casa HT ####
+    ##### Calculo Win/Loss Over Back Visitante HT ####
 
-        # Create a new DataFrame for the "Back Casa HT" table
-        df_back_casa_ht = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+        # Create a new DataFrame for the "Back Visitante HT" table
+        df_back_away_ht = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
 
         # Calculate the number of "Win" and "Loss" occurrences
-        num_win = len(filtered_df[filtered_df["Resultado_HT"] == "H"])
-        num_loss = len(filtered_df[filtered_df["Resultado_HT"].isin(["A", "D"])])
+        num_win = len(filtered_df[filtered_df["Resultado_HT"] == "A"])
+        num_loss = len(filtered_df[filtered_df["Resultado_HT"].isin(["H", "D"])])
         total_games = num_win + num_loss
 
         # Check if total_games is not zero before performing division
@@ -357,12 +358,12 @@ def bck_away_page():
         # Handle the case when win_percentage is zero
             fair_odd = 0
 
-        #### Add the data to the "Back Casa FT" table ####
-        df_back_casa_ht.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+        #### Add the data to the "Back Away FT" table ####
+        df_back_away_ht.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
 
-        # Display the "Back Casa HT" table
-        st.subheader("Back Casa HT")
-        st.dataframe(df_back_casa_ht)
+        # Display the "Back Away HT" table
+        st.subheader("Back Away HT")
+        st.dataframe(df_back_away_ht)
 
 ###################################################################################################33        
 
