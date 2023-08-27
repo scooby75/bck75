@@ -373,8 +373,8 @@ def bck_away_page():
         df_lay_zebra_ft = pd.DataFrame(columns=["Win", "Loss", "Odd Lay"])
 
         # Calculate the number of "Win" and "Loss" occurrences
-        num_win = len(filtered_df[filtered_df["Resultado_FT"] != "A"])
-        num_loss = len(filtered_df[filtered_df["Resultado_FT"] == "A"])
+        num_win = len(filtered_df[filtered_df["Resultado_FT"] != "H"])
+        num_loss = len(filtered_df[filtered_df["Resultado_FT"] == "H"])
 
        # Calculate win and loss percentages
         total_games = num_win + num_loss
@@ -408,8 +408,8 @@ def bck_away_page():
         df_lay_zebra_ht = pd.DataFrame(columns=["Win", "Loss", "Odd Lay"])
 
         # Calculate the number of "Win" and "Loss" occurrences
-        num_win = len(filtered_df[filtered_df["Resultado_HT"] != "A"])
-        num_loss = len(filtered_df[filtered_df["Resultado_HT"] == "A"])
+        num_win = len(filtered_df[filtered_df["Resultado_HT"] != "H"])
+        num_loss = len(filtered_df[filtered_df["Resultado_HT"] == "H"])
 
        # Calculate win and loss percentages
         total_games = num_win + num_loss
