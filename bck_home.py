@@ -370,7 +370,7 @@ def bck_home_page():
         num_win = len(filtered_df[filtered_df["Resultado_FT"] != "A"])
         num_loss = len(filtered_df[filtered_df["Resultado_FT"] == "A"])
 
-        # Calculate win and loss percentages
+       # Calculate win and loss percentages
         total_games = num_win + num_loss
 
         if total_games == 0:
@@ -382,16 +382,11 @@ def bck_home_page():
             loss_percentage = (num_loss / total_games) * 100
 
         # Calculate the fair odds with 2 decimal places
-        if loss_percentage == 100:
-            fair_odd = 0.00  # Since all games are wins, fair odds cannot be calculated
+        if loss_percentage == 0:
+            fair_odd = 0  # Since all games are wins, fair odds cannot be calculated
         else:
             fair_odd = round(100 / loss_percentage, 2)
-
-        if loss_percentage != 0:
-            fair_odd = round(100 / loss_percentage, 2)
-        else:
-            fair_odd = 0 
-
+            
         # Add the data to the "Lay Zebra FT" table
             df_lay_zebra_ft.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
 
