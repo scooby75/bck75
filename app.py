@@ -33,7 +33,7 @@ def main():
             logout()
 
          # Caixa de seleção para diferentes páginas
-        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "BCK Home", "BCK Away", "BCK League Home", "Dutching", "HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict", "Scalping"])
+        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Análise Home", "Análise Away", "Análise Liga - Home", "Dutching CS", "HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict", "Scalping"])
 
         # Exibe o conteúdo da página selecionada, considerando as permissões do perfil
         user_profile = session_state.user_profile  # Use session_state here
@@ -41,13 +41,13 @@ def main():
         if selected_tab == "Jogos do Dia":
             jogos_do_dia_page()
 
-        elif selected_tab == "BCK Home":
+        elif selected_tab == "Análise Home":
             bck_home_page()
-        elif selected_tab == "BCK Away":
+        elif selected_tab == "Análise Away":
             bck_away_page()
-        elif selected_tab == "BCK League Home":
+        elif selected_tab == "Análise Liga - Home":
             bck_league_home_page()
-        elif selected_tab == "Dutching":
+        elif selected_tab == "Dutching CS":
             cs_page()
         elif selected_tab == "HA" and user_profile >= 2:
             ha_025_page()
