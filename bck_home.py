@@ -429,7 +429,7 @@ def bck_home_page():
 
 ##### Calculo Win/Loss Over 05HT ####
 
-        # Create a new DataFrame for the "Back Casa HT" table
+        # Create a new DataFrame for the "Over 05HT" table
         df_over05ht = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
 
         # Calculate the number of "Win" and "Loss" occurrences
@@ -454,12 +454,185 @@ def bck_home_page():
         # Handle the case when win_percentage is zero
             fair_odd = 0
 
-        #### Add the data to the "Back Casa FT" table ####
+        #### Add the data to the "Over 05HT" table ####
         df_over05ht.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
 
-        # Display the "Back Casa HT" table
+        # Display the "Over 05HT" table
         st.subheader("Over 05HT")
         st.dataframe(df_over05ht)
+
+##### Calculo Win/Loss Under 05HT ####
+
+        # Create a new DataFrame for the "Under 05HT" table
+        df_under05ht = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Calculate the number of "Win" and "Loss" occurrences
+        num_win = len(filtered_df[(filtered_df["HT_Goals_H"] + filtered_df["HT_Goals_A"]) == 0])
+        num_loss = len(filtered_df[(filtered_df["HT_Goals_H"] + filtered_df["HT_Goals_A"]) >= 1])
+        total_games = num_win + num_loss
+
+        # Check if total_games is not zero before performing division
+        if total_games != 0:
+        # Calculate win and loss percentages
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+        # Handle the case when total_games is zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calculate the fair odds with 2 decimal places
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+        # Handle the case when win_percentage is zero
+            fair_odd = 0
+
+        #### Add the data to the "Under 05HT" table ####
+        df_under05ht.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Display the "Under 05HT" table
+        st.subheader("Under 05HT")
+        st.dataframe(df_under05ht)
+
+
+##### Calculo Win/Loss Over 15FT ####
+
+        # Create a new DataFrame for the "Over 15FT" table
+        df_over15ft = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Calculate the number of "Win" and "Loss" occurrences
+        num_win = len(filtered_df[(filtered_df["FT_Goals_H"] + filtered_df["FT_Goals_A"]) > 1])
+        num_loss = len(filtered_df[(filtered_df["FT_Goals_H"] + filtered_df["FT_Goals_A"]) <= 1])
+        total_games = num_win + num_loss
+
+        # Check if total_games is not zero before performing division
+        if total_games != 0:
+        # Calculate win and loss percentages
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+        # Handle the case when total_games is zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calculate the fair odds with 2 decimal places
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+        # Handle the case when win_percentage is zero
+            fair_odd = 0
+
+        #### Add the data to the "Over 15FT" table ####
+        df_over15ft.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Display the "Over 15FT" table
+        st.subheader("Over 15FT")
+        st.dataframe(df_over15ft)
+
+##### Calculo Win/Loss Under 15FT ####
+
+        # Create a new DataFrame for the "Under 15FT" table
+        df_under15ft = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Calculate the number of "Win" and "Loss" occurrences
+        num_win = len(filtered_df[(filtered_df["FT_Goals_H"] + filtered_df["FT_Goals_A"]) <= 1])
+        num_loss = len(filtered_df[(filtered_df["FT_Goals_H"] + filtered_df["FT_Goals_A"]) > 1])
+        total_games = num_win + num_loss
+
+        # Check if total_games is not zero before performing division
+        if total_games != 0:
+        # Calculate win and loss percentages
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+        # Handle the case when total_games is zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calculate the fair odds with 2 decimal places
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+        # Handle the case when win_percentage is zero
+            fair_odd = 0
+
+        #### Add the data to the "Under 15FT" table ####
+        df_under15ft.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Display the "Under 15FT" table
+        st.subheader("Under 15FT")
+        st.dataframe(df_under15ft)
+
+##### Calculo Win/Loss Over 25FT ####
+
+        # Create a new DataFrame for the "Over 25FT" table
+        df_over25ft = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Calculate the number of "Win" and "Loss" occurrences
+        num_win = len(filtered_df[(filtered_df["FT_Goals_H"] + filtered_df["FT_Goals_A"]) > 2])
+        num_loss = len(filtered_df[(filtered_df["FT_Goals_H"] + filtered_df["FT_Goals_A"]) <= 2])
+        total_games = num_win + num_loss
+
+        # Check if total_games is not zero before performing division
+        if total_games != 0:
+        # Calculate win and loss percentages
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+        # Handle the case when total_games is zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calculate the fair odds with 2 decimal places
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+        # Handle the case when win_percentage is zero
+            fair_odd = 0
+
+        #### Add the data to the "Over 25FT" table ####
+        df_over25ft.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Display the "Over 25FT" table
+        st.subheader("Over 25FT")
+        st.dataframe(df_over25ft)
+
+##### Calculo Win/Loss Under 25FT ####
+
+        # Create a new DataFrame for the "Under 25FT" table
+        df_under25ft = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Calculate the number of "Win" and "Loss" occurrences
+        num_win = len(filtered_df[(filtered_df["FT_Goals_H"] + filtered_df["FT_Goals_A"]) <= 2])
+        num_loss = len(filtered_df[(filtered_df["FT_Goals_H"] + filtered_df["FT_Goals_A"]) > 2])
+        total_games = num_win + num_loss
+
+        # Check if total_games is not zero before performing division
+        if total_games != 0:
+        # Calculate win and loss percentages
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+        # Handle the case when total_games is zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calculate the fair odds with 2 decimal places
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+        # Handle the case when win_percentage is zero
+            fair_odd = 0
+
+        #### Add the data to the "Under 25FT" table ####
+        df_under25ft.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Display the "Under 25FT" table
+        st.subheader("Under 25FT")
+        st.dataframe(df_under25ft)
+   
+
    
 
 # Execute the function to create the page
