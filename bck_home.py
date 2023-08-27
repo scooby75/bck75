@@ -385,7 +385,7 @@ def bck_home_page():
         if win_percentage == 100:
             fair_odd = 0.00  # Since all games are wins, fair odds cannot be calculated
         else:
-            fair_odd = round(win_percentage / 100 / (1 - win_percentage / 100), 2)
+            fair_odd = round(100 / loss_percentage, 2)
 
         # Add the data to the "Lay Zebra FT" table
             df_lay_zebra_ft.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
@@ -415,10 +415,10 @@ def bck_home_page():
             loss_percentage = (num_loss / total_games) * 100
 
         # Calculate the fair odds with 2 decimal places
-        if win_percentage == 100:
+        if loss_percentage == 100:
             fair_odd = 0.00  # Since all games are wins, fair odds cannot be calculated
         else:
-            fair_odd = round(win_percentage / 100 / (1 - win_percentage / 100), 2)
+            fair_odd = round(100 / loss_percentage, 2)
 
         # Add the data to the "Lay Zebra HT" table
             df_lay_zebra_ht.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
