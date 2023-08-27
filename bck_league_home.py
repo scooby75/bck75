@@ -4,7 +4,7 @@ import pandas as pd
 def bck_league_home_page():
     ##### PÁGINA BCK LEAGUE HOME ######
 
-    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado"])
+    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Análise Geral", "Top Ligas", "Backtesting Mercado"])
 
     with tab0:
         # Carregar os dados
@@ -279,8 +279,25 @@ def bck_league_home_page():
         
         
     with tab2:
-          ##### Desempenho da Equipe FT ######
-        st.write("Profit/Loss for Home Team (grouped by League)")
+        
+        # Filtra o DataFrame original para incluir apenas as ligas e temporadas relevantes
+        filtered_df = original_df[(original_df['profit_home'] >= 2)]
+
+        # Calcula o lucro total das apostas em casa agrupadas por liga e temporada
+        profit_home_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_home'].sum()
+
+        # Filtra as ligas que lucraram pelo menos 1 unidade em todas as temporadas
+        profitable_leagues = profit_home_by_league_season.groupby('League').filter(lambda x: (x >= 2).all())
+
+        # Converte o resultado filtrado em um DataFrame
+        filtered_df = profitable_leagues.reset_index()
+
+        # Cria uma tabela dinâmica para organizar os dados
+        pivot_table = filtered_df.pivot_table(index='League', columns='Season', values='profit_home', aggfunc='sum')
+
+        # Exibe a tabela dinâmica usando o Streamlit
+        st.subheader("Top Back Casa")
+        st.dataframe(pivot_table)
         
     with tab3:
 
