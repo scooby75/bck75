@@ -426,6 +426,40 @@ def bck_home_page():
         # Display the "Lay Zebra HT" table
             st.subheader("Lay Zebra HT")
             st.dataframe(df_lay_zebra_ht)
+
+##### Calculo Win/Loss Over 05HT ####
+
+        # Create a new DataFrame for the "Back Casa HT" table
+        df_over05ht = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Calculate the number of "Win" and "Loss" occurrences
+        num_win = len(filtered_df[(filtered_df["HT_Goals_H"] + filtered_df["HT_Goals_A"]) >= 1])
+        num_loss = len(filtered_df[(filtered_df["HT_Goals_H"] + filtered_df["HT_Goals_A"]) == 0])
+        total_games = num_win + num_loss
+
+        # Check if total_games is not zero before performing division
+        if total_games != 0:
+        # Calculate win and loss percentages
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+        # Handle the case when total_games is zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calculate the fair odds with 2 decimal places
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+        # Handle the case when win_percentage is zero
+            fair_odd = 0
+
+        #### Add the data to the "Back Casa FT" table ####
+        df_over05ht.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Display the "Back Casa HT" table
+        st.subheader("Over 05HT")
+        st.dataframe(df_over05ht)
    
 
 # Execute the function to create the page
