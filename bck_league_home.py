@@ -15,7 +15,7 @@ def bck_league_home_page():
             return df
         
         # Chamar a função para carregar os dados
-        bck_home_df = load_base()
+        bck_league_home_df = load_base()
 
         # Filtros interativos
         st.header("Filtros")
@@ -27,15 +27,15 @@ def bck_league_home_page():
         with col1:
             
             all_leagues = "Todos"
-            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_home_df['League'].unique()), key="selected_leagues")
+            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_league_home_df['League'].unique()), key="selected_leagues")
 
             all_rounds = "Todos"
-            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique()), key="selected_rounds")
+            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_league_home_df['Round'].unique()), key="selected_rounds")
 
             all_seasons = "Todos"
-            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_home_df['Season'].unique()), key="selected_seasons")
+            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_league_home_df['Season'].unique()), key="selected_seasons")
 
-            home_teams = bck_home_df['Home'].unique()  # Get unique teams from 'Home' column
+            home_teams = bck_league_home_df['Home'].unique()  # Get unique teams from 'Home' column
             selected_home = st.multiselect("Selecionar Mandante", home_teams, key="selected_home")
 
         # Filter for Odd_Home and Odd_Away range
@@ -62,23 +62,23 @@ def bck_league_home_page():
             btts_yes_max = st.number_input("BTTS_Yes Máximo", value=10.0, key="btts_yes_max")
 
         # Apply filters
-        filtered_df = bck_home_df[
-            (bck_home_df['League'].isin(selected_leagues) if all_leagues not in selected_leagues else True) &
-            (bck_home_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
-            (bck_home_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
-            (bck_home_df['Home'].isin(selected_home) if selected_home else True) &
-            (bck_home_df['FT_Odd_H'] >= odd_h_min) &
-            (bck_home_df['FT_Odd_H'] <= odd_h_max) &
-            (bck_home_df['FT_Odd_A'] >= odd_a_min) &
-            (bck_home_df['FT_Odd_A'] <= odd_a_max) &
-            (bck_home_df['FT_Odd_D'] >= odd_draw_min) &
-            (bck_home_df['FT_Odd_D'] <= odd_draw_max) &
-            (bck_home_df['HT_Odd_Over05'] >= over_05ht_min) &
-            (bck_home_df['HT_Odd_Over05'] <= over_05ht_max) &
-            (bck_home_df['FT_Odd_Over25'] >= over_25ft_min) &
-            (bck_home_df['FT_Odd_Over25'] <= over_25ft_max) &
-            (bck_home_df['Odd_BTTS_Yes'] >= btts_yes_min) &
-            (bck_home_df['Odd_BTTS_Yes'] <= btts_yes_max)
+        filtered_df = bck_league_home_df[
+            (bck_league_home_df['League'].isin(selected_leagues) if all_leagues not in selected_leagues else True) &
+            (bck_league_home_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
+            (bck_league_home_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
+            (bck_league_home_df['Home'].isin(selected_home) if selected_home else True) &
+            (bck_league_home_df['FT_Odd_H'] >= odd_h_min) &
+            (bck_league_home_df['FT_Odd_H'] <= odd_h_max) &
+            (bck_league_home_df['FT_Odd_A'] >= odd_a_min) &
+            (bck_league_home_df['FT_Odd_A'] <= odd_a_max) &
+            (bck_league_home_df['FT_Odd_D'] >= odd_draw_min) &
+            (bck_league_home_df['FT_Odd_D'] <= odd_draw_max) &
+            (bck_league_home_df['HT_Odd_Over05'] >= over_05ht_min) &
+            (bck_league_home_df['HT_Odd_Over05'] <= over_05ht_max) &
+            (bck_league_home_df['FT_Odd_Over25'] >= over_25ft_min) &
+            (bck_league_home_df['FT_Odd_Over25'] <= over_25ft_max) &
+            (bck_league_home_df['Odd_BTTS_Yes'] >= btts_yes_min) &
+            (bck_league_home_df['Odd_BTTS_Yes'] <= btts_yes_max)
         ]
 
         selected_columns = [
@@ -300,16 +300,16 @@ def bck_league_home_page():
     #####################################################
             
         # Calcula o lucro total das apostas em casa agrupadas por liga e temporada
-        profit_away_by_league_season = bck_home_df.groupby(['League', 'Season'])['profit_away'].sum()
+        profit_away_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_away'].sum()
 
         # Filtra as ligas que lucraram pelo menos 1 unidade em todas as temporadas
         profitable_leagues = profit_away_by_league_season.groupby('League').filter(lambda x: (x >= 2).all())
 
         # Converte o resultado filtrado em um DataFrame
-        bck_home_df = profitable_leagues.reset_index()
+        filtered_df = profitable_leagues.reset_index()
 
         # Cria uma tabela dinâmica para organizar os dados
-        pivot_table = bck_home_df.pivot_table(index='League', columns='Season', values='profit_away', aggfunc='sum')
+        pivot_table = filtered_df.pivot_table(index='League', columns='Season', values='profit_away', aggfunc='sum')
 
         # Exibe a tabela dinâmica usando o Streamlit
         st.subheader("Top Back Visitante")
