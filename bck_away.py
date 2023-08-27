@@ -231,7 +231,7 @@ def bck_away_page():
         # Display the table with profit/loss by away team (pivot table)
         st.subheader("Desempenho Geral - Equipe Visitante")
         st.text("Serão exibidas todas as Equipes que se enquadraram no(s) filtro(s) de Odd")
-        st.dataframe(home_team_profit_loss_pivot)
+        st.dataframe(away_team_profit_loss_pivot)
 
     ##### Top Back Visitante ####
 
