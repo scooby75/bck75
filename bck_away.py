@@ -34,7 +34,7 @@ def bck_away_page():
             selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_away_df['Season'].unique()))
         
             home_teams = bck_away_df['Home'].unique()  # Get unique teams from 'Home' column
-            selected_home = st.multiselect("Selecionar Mandante", home_teams)
+            selected_home = st.multiselect("Selecionar Mandante", away_teams)
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
