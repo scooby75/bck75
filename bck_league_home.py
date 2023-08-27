@@ -88,104 +88,54 @@ def bck_league_home_page():
 
     with tab1:
         
-        # Calculando a quantidade de vezes que "Home" ganhou
-        quantidade_vitorias_home_ht = len(filtered_df[filtered_df['Resultado_HT'] == 'H'])
-
-        # Calculando o total de jogos no intervalo HT
-        total_jogos_home_ht = len(filtered_df)
-
-        # Calculando a performance de "Home"
-        if total_jogos_home_ht > 0:
-            performance_home_ht = (quantidade_vitorias_home_ht / total_jogos_home_ht) * 100
-        else:
-            performance_home_ht = 0
-
-        # Arredondando a performance para 2 casas decimais e garantindo que não seja maior que 100%
-        performance_home_ht = min(performance_home_ht, 100)
-        performance_home_ht = round(performance_home_ht, 2)
-
-        # Calculando o tamanho da amostra
-        tamanho_amostra_ht = total_jogos_home_ht
-
-        # Criando o novo DataFrame
-        data_ht = {'Winrate': [f"{performance_home_ht:.2f}%"], 'Amostra': [tamanho_amostra_ht]}
-        df_resultado_ht = pd.DataFrame(data_ht)
-
-        # Exibindo o resultado
-        st.subheader('Desempenho da Equipe HT')
-        st.dataframe(df_resultado_ht)        
-
-  
-    #### TOP Equipes HT - Casa ####
-
-        # Função para formatar os valores da média de gols com duas casas decimais
-        def format_decimal(value):
-            return "{:.2f}".format(value)
-
-        # Agrupando por Temporada (Season), Liga (League) e Equipe (Home) e calculando a média de gols e o total de jogos
-        grouped_data = filtered_df.groupby(['Season', 'League', 'Home']).agg(
-            Total_Goals=pd.NamedAgg(column='HT_Goals_H', aggfunc='sum'),
-            Total_Matches=pd.NamedAgg(column='Home', aggfunc='size')
+        # Calculate the "Resultado FT" based on the conditions: "H" for home win, "A" for away win, and "D" for draw.
+        filtered_df['Resultado_FT'] = filtered_df.apply(
+            lambda row: 'H' if row['FT_Goals_H'] > row['FT_Goals_A'] else ('A' if row['FT_Goals_H'] < row['FT_Goals_A'] else 'D'),
+            axis=1
         )
 
-        # Filtrando as equipes que tiveram pelo menos 5 jogos na mesma Season e mesma League
-        grouped_data = grouped_data[grouped_data['Total_Matches'] >= 5]
+        # Calculate the "Resultado HT" based on the conditions: "H" for home win, "A" for away win, and "D" for draw.
+        filtered_df['Resultado HT'] = filtered_df.apply(
+            lambda row: 'H' if row['HT_Goals_H'] > row['HT_Goals_A'] else ('A' if row['HT_Goals_H'] < row['HT_Goals_A'] else 'D'),
+            axis=1
+        )
 
-        # Resetando o índice para criar um novo DataFrame
-        top_over_05HT_casa = grouped_data.reset_index()
+        ##### Desempenho Geral da Liga ###########
 
-        # Calculando a média de gols por jogo para cada equipe, considerando todas as partidas Home
-        top_over_05HT_casa['Média Gols HT'] = top_over_05HT_casa['Total_Goals'] / top_over_05HT_casa['Total_Matches']
+        # Group the filtered dataframe by 'Season', 'League', and calculate cumulative sum of 'Profit'
+        df_league_profit = filtered_df.groupby(['Season', 'League'])['Profit'].sum().reset_index()
 
-        # Formatando a coluna de média de gols com duas casas decimais e tratando possíveis erros
-        try:
-            top_over_05HT_casa['Média Gols HT'] = top_over_05HT_casa['Média Gols HT'].apply(format_decimal)
-        except Exception as e:
-        # Em caso de erro, preencher a coluna com valor vazio
-            top_over_05HT_casa['Média Gols HT'] = ''
+        # Create a pivot table of profit/loss by league for the selected season
+        league_profit_loss_pivot = df_league_profit.pivot_table(index="League", columns="Season", values="Profit")
 
-        # Renomeando as colunas
-        top_over_05HT_casa = top_over_05HT_casa.rename(columns={
-            'Season': 'Temporada',
-            'League': 'Liga',
-            'Total_Goals': 'Total Gols HT',
-            'Total_Matches': 'Total de Partidas',
-            'Média Gols HT': 'Média Gols HT'
-        })
 
-        # Ordenando a tabela pela coluna 'Média Gols HT' em ordem decrescente
-        top_over_05HT_casa = top_over_05HT_casa.sort_values(by='Média Gols HT', ascending=False)
+        # Display the table with profit/loss by league (pivot table)
+        st.subheader("Desempenho Geral - Liga")
+        st.text("Serão exibidas todas as Ligas que se enquadraram no(s) filtro(s)")
+        st.dataframe(league_profit_loss_pivot)
 
-        # Verificar se a equipe selecionada está disponível na lista de opções de equipes
-        if 'selected_team' not in st.session_state or not st.session_state.selected_team:
-            selected_team = "All"
-        else:
-            selected_team = st.session_state.selected_team
+        ##### Top Ligas Lucrativas ####
 
-        if 'selected_seasons' not in st.session_state or not st.session_state.selected_seasons:
-            selected_seasons = "All"
-        else:
-            selected_seasons = st.session_state.selected_seasons
+        # Group the filtered DataFrame by 'League' and calculate the cumulative sum of 'Profit'
+        df_league_profit = filtered_df.groupby('League')['Profit'].cumsum()
 
-        if selected_team != "All" and selected_team not in team_options:
-            st.error("Equipe selecionada não está disponível.")
-        elif selected_seasons != "All" and selected_seasons not in top_over_05HT_casa['Temporada'].unique():
-            st.error("Temporada selecionada não está disponível.")
-        else:
-        # Filtrar o DataFrame original para a equipe selecionada, se aplicável
-            if selected_team != "All":
-                filtered_df_over_05HT = filtered_df_over_05HT[filtered_df_over_05HT['Home'] == selected_team]
+        # Add the 'Profit_acumulado' column to the filtered DataFrame
+        filtered_df['Profit_acumulado'] = df_league_profit
 
-        # Filtrar o DataFrame original para a temporada selecionada, se aplicável
-            if selected_seasons != "All":
-                top_over_05HT_casa = top_over_05HT_casa[top_over_05HT_casa['Temporada'] == selected_seasons]
+        # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
+        filtered_league_profit = filtered_df[filtered_df['Profit_acumulado'] >= 4]
 
-        # Selecionando as 10 equipes com maior média de gols
-            top_10_teams = top_over_05HT_casa.head(10)
+        # Group the filtered DataFrame by 'League' and calculate the total profit for each league
+        league_total_profit = filtered_league_profit.groupby('League')['Profit_acumulado'].last()
+    
+        # Sort the league_total_profit DataFrame in descending order of profit
+        league_total_profit_sorted = league_total_profit.sort_values(ascending=False)
 
-        # Exibindo a nova tabela "Top Over 05HT - Casa" com Streamlit e ajustando o tamanho da fonte
-            st.subheader("Top Over 05HT - Casa")
-            st.dataframe(top_10_teams)
+        # Display the table with total profit by league in descending order
+        st.subheader("Top Ligas Lucrativas")
+        st.text("Serão exibidas apenas as Ligas que acumulam pelo menos 4und de lucro")
+        st.dataframe(league_total_profit_sorted)
+
         
         
     with tab2:
