@@ -300,16 +300,16 @@ def bck_league_home_page():
     #####################################################
             
         # Calcula o lucro total das apostas em casa agrupadas por liga e temporada
-        profit_away_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_away'].sum()
+        profit_away_by_league_season = bck_home_df.groupby(['League', 'Season'])['profit_away'].sum()
 
         # Filtra as ligas que lucraram pelo menos 1 unidade em todas as temporadas
         profitable_leagues = profit_away_by_league_season.groupby('League').filter(lambda x: (x >= 2).all())
 
         # Converte o resultado filtrado em um DataFrame
-        filtered_df = profitable_leagues.reset_index()
+        bck_home_df = profitable_leagues.reset_index()
 
         # Cria uma tabela dinâmica para organizar os dados
-        pivot_table = filtered_df.pivot_table(index='League', columns='Season', values='profit_away', aggfunc='sum')
+        pivot_table = bck_home_df.pivot_table(index='League', columns='Season', values='profit_away', aggfunc='sum')
 
         # Exibe a tabela dinâmica usando o Streamlit
         st.subheader("Top Back Visitante")
