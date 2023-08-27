@@ -390,7 +390,7 @@ def bck_home_page():
         if loss_percentage != 0:
             fair_odd = round(100 / loss_percentage, 2)
         else:
-            fair_odd = float('inf')
+            fair_odd = 0 
 
         # Add the data to the "Lay Zebra FT" table
             df_lay_zebra_ft.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
