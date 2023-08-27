@@ -34,6 +34,11 @@ def scalping_page():
             (jogos_filtrados['0_15_mar_away'] == 0) & (jogos_filtrados['0_15_sofri_away'] == 0)
         ]
 
+        # Filtrar jogos com critérios específicos
+        filtered_games = jogos_filtrados[
+            (jogos_filtrados['FT_Odd_H'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25'] >= 2.02) 
+        ]
+
         # Selecionar colunas relevantes e renomear
         result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home']]
         result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
