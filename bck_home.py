@@ -382,7 +382,7 @@ def bck_home_page():
             loss_percentage = (num_loss / total_games) * 100
 
         # Calculate the fair odds with 2 decimal places
-        if win_percentage == 100:
+        if loss_percentage == 100:
             fair_odd = 0.00  # Since all games are wins, fair odds cannot be calculated
         else:
             fair_odd = round(100 / loss_percentage, 2)
@@ -460,6 +460,17 @@ def bck_home_page():
         # Display the "Over 05HT" table
         st.subheader("Over 05HT")
         st.dataframe(df_over05ht)
+
+       ###### ADD Gráfico Over 05HT #####   
+
+    # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df.sort_values(by='Date', inplace=True)
+
+    # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df['Lucro_Acumulado_OV05HT'] = filtered_df['profit_over05HT'].cumsum()
+
+    # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_OV05HT', use_container_width=True)
 
 ##### Calculo Win/Loss Under 05HT ####
 
