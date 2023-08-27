@@ -96,7 +96,106 @@ def bck_league_home_page():
         pivot_table = profit_home_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_home', aggfunc='sum')
 
         # Display profit/loss by Season and League with Season as columns and League as rows
-        st.write("Back Casa - Desempenho por Liga")
+        st.subheader("Back Casa - Desempenho por Liga")
+        st.dataframe(pivot_table)
+
+        ####################################################        
+        # back visitante agrupado por liga
+        profit_away_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_away'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_away_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_away', aggfunc='sum')
+
+        # Display profit/loss by Season and League with Season as columns and League as rows
+        st.subheader("Back Visitante - Desempenho por Liga")
+        st.dataframe(pivot_table)
+
+    ####################################################        
+        # back empate agrupado por liga
+        profit_draw_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_draw'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_draw_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_draw', aggfunc='sum')
+
+        # Display profit/loss by Season and League with Season as columns and League as rows
+        st.subheader("Back Empate - Desempenho por Liga")
+        st.dataframe(pivot_table)
+
+    ####################################################        
+        # Over 05HT agrupado por liga
+        profit_ov05ht_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_over05HT'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_ov05ht_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over05HT', aggfunc='sum')
+
+        # Display profit/loss by Season and League with Season as columns and League as rows
+        st.subheader("Over 05HT - Desempenho por Liga")
+        st.dataframe(pivot_table)
+
+    ####################################################        
+        # Over U5HT agrupado por liga
+        profit_u05ht_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_under05HT'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_u05ht_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_under05HT', aggfunc='sum')
+
+        # Display profit/loss by Season and League with Season as columns and League as rows
+        st.subheader("Under 05HT - Desempenho por Liga")
+        st.dataframe(pivot_table)
+
+     ####################################################        
+        # Over 15FT agrupado por liga
+        profit_ov15ft_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_over15'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_ov15ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over15', aggfunc='sum')
+
+        # Display profit/loss by Season and League with Season as columns and League as rows
+        st.subheader("Over 15FT - Desempenho por Liga")
+        st.dataframe(pivot_table)
+
+    ##################################################        
+        # Under 15FT agrupado por liga
+        profit_u15ft_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_under15'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_u15ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_under15', aggfunc='sum')
+
+        # Display profit/loss by Season and League with Season as columns and League as rows
+        st.subheader("Under 15FT - Desempenho por Liga")
+        st.dataframe(pivot_table)
+
+    ##################################################        
+        # Over 25FT agrupado por liga
+        profit_ov25ft_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_over25'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_ov25ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over25', aggfunc='sum')
+
+        # Display profit/loss by Season and League with Season as columns and League as rows
+        st.subheader("Over 25FT - Desempenho por Liga")
+        st.dataframe(pivot_table)
+
+    ##################################################        
+        # Under 25FT agrupado por liga
+        profit_u25ft_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_under25'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_u25ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_under25', aggfunc='sum')
+
+        # Display profit/loss by Season and League with Season as columns and League as rows
+        st.subheader("Under 25FT - Desempenho por Liga")
+        st.dataframe(pivot_table)
+
+    ##################################################        
+        # Lay 0x1 agrupado por liga
+        profit_lay01_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_Lay_0x1'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_lay01_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_0x1', aggfunc='sum')
+
+        # Display profit/loss by Season and League with Season as columns and League as rows
+        st.subheader("Lay 0x1 - Desempenho por Liga")
         st.dataframe(pivot_table)
 
         
