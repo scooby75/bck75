@@ -36,7 +36,7 @@ def scalping_page():
 
         # Filtrar jogos com critérios específicos
         filtered_games = jogos_filtrados[
-            (jogos_filtrados['FT_Odd_H'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25'] >= 2.02) 
+            (jogos_filtrados['FT_Odd_H_home'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25_home'] >= 2.02) 
         ]
 
         # Selecionar colunas relevantes e renomear
