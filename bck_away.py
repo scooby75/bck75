@@ -236,7 +236,7 @@ def bck_away_page():
     ##### Top Back Visitante ####
 
         # Group the filtered DataFrame by 'Away' (Away Team) and calculate the cumulative sum of 'Profit'
-        df_away_profit = filtered_df.groupby('AWay')['profit_away'].cumsum()
+        df_away_profit = filtered_df.groupby('Away')['profit_away'].cumsum()
 
         # Add the 'Profit_acumulado' column to the filtered DataFrame
         filtered_df['profit_away_acumulado'] = df_away_profit
