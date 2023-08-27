@@ -89,52 +89,15 @@ def bck_league_home_page():
     with tab1:
         
         # Calculate the "Resultado FT" based on the conditions: "H" for home win, "A" for away win, and "D" for draw.
-        filtered_df['Resultado_FT'] = filtered_df.apply(
-            lambda row: 'H' if row['FT_Goals_H'] > row['FT_Goals_A'] else ('A' if row['FT_Goals_H'] < row['FT_Goals_A'] else 'D'),
-            axis=1
-        )
+        # Calculate profit/loss for each match
+        filtered_df['profit_home'] = filtered_df.apply(calculate_profit, axis=1)
 
-        # Calculate the "Resultado HT" based on the conditions: "H" for home win, "A" for away win, and "D" for draw.
-        filtered_df['Resultado HT'] = filtered_df.apply(
-            lambda row: 'H' if row['HT_Goals_H'] > row['HT_Goals_A'] else ('A' if row['HT_Goals_H'] < row['HT_Goals_A'] else 'D'),
-            axis=1
-        )
+        # Group by League and sum up profits/losses
+        profit_home_by_league = filtered_df.groupby('League')['profit_home'].sum()
 
-        ##### Desempenho Geral da Liga ###########
-
-        # Group the filtered dataframe by 'Season', 'League', and calculate cumulative sum of 'Profit'
-        df_league_profit = filtered_df.groupby(['Season', 'League'])['Profit'].sum().reset_index()
-
-        # Create a pivot table of profit/loss by league for the selected season
-        league_profit_loss_pivot = df_league_profit.pivot_table(index="League", columns="Season", values="Profit")
-
-
-        # Display the table with profit/loss by league (pivot table)
-        st.subheader("Desempenho Geral - Liga")
-        st.text("Serão exibidas todas as Ligas que se enquadraram no(s) filtro(s)")
-        st.dataframe(league_profit_loss_pivot)
-
-        ##### Top Ligas Lucrativas ####
-
-        # Group the filtered DataFrame by 'League' and calculate the cumulative sum of 'Profit'
-        df_league_profit = filtered_df.groupby('League')['Profit'].cumsum()
-
-        # Add the 'Profit_acumulado' column to the filtered DataFrame
-        filtered_df['Profit_acumulado'] = df_league_profit
-
-        # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
-        filtered_league_profit = filtered_df[filtered_df['Profit_acumulado'] >= 4]
-
-        # Group the filtered DataFrame by 'League' and calculate the total profit for each league
-        league_total_profit = filtered_league_profit.groupby('League')['Profit_acumulado'].last()
-    
-        # Sort the league_total_profit DataFrame in descending order of profit
-        league_total_profit_sorted = league_total_profit.sort_values(ascending=False)
-
-        # Display the table with total profit by league in descending order
-        st.subheader("Top Ligas Lucrativas")
-        st.text("Serão exibidas apenas as Ligas que acumulam pelo menos 4und de lucro")
-        st.dataframe(league_total_profit_sorted)
+        # Display profit/loss by League
+        st.write("Profit/Loss for Home Team (grouped by League)")
+        st.dataframe(profit_home_by_league)
 
         
         
