@@ -63,7 +63,7 @@ def bck_away_page():
             (bck_away_df['League'].isin(selected_leagues) if all_leagues not in selected_leagues else True) &
             (bck_away_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
             (bck_away_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
-            (bck_away_df['Home'].isin(selected_home) if selected_home else True) &
+            (bck_away_df['Home'].isin(selected_home) if selected_away else True) &
             (bck_away_df['FT_Odd_H'] >= odd_h_min) &
             (bck_away_df['FT_Odd_H'] <= odd_h_max) &
             (bck_away_df['FT_Odd_A'] >= odd_a_min) &
