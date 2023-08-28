@@ -83,7 +83,7 @@ def bck_league_home_page():
 
         selected_columns = [
             "Date", "League", "Season", "Round", "Home", "Away",
-            "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "HT_Odd_Over05", "FT_Odd_Over25", "Odd_BTTS_Yes", "Placar_HT", "Placar_FT",
+            "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "HT_Odd_Over05", "FT_Odd_Over25", "Odd_BTTS_Yes", "Placar_HT", "Placar_FT", "profit_Lay_0x1",
         ]
         st.dataframe(filtered_df[selected_columns])
 
@@ -300,10 +300,10 @@ def bck_league_home_page():
     #########################################
       
        # Calcula o lucro total das apostas em casa agrupadas por liga e temporada
-        profit_home_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_Lay_0x1'].sum()
+        profit_lay0x1_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_Lay_0x1'].sum()
 
         # Filtra as ligas que lucraram pelo menos 1 unidade em todas as temporadas
-        profitable_leagues = profit_home_by_league_season.groupby('League').filter(lambda x: (x >= 2).all())
+        profitable_leagues = profit_lay0x1_by_league_season.groupby('League').filter(lambda x: (x >= 2).all())
 
         # Converte o resultado filtrado em um DataFrame
         filtered_df = profitable_leagues.reset_index()
