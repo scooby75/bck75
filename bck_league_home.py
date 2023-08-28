@@ -244,7 +244,7 @@ def bck_league_home_page():
         pivot_table = profit_lay01_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_0x1', aggfunc='sum')
 
         # Filtrar as ligas que lucraram >= 2 em todas as temporadas
-        profit_threshold => 1
+        profit_threshold = 1
         profit_ligas = pivot_table[(pivot_table >= profit_threshold).all(axis=1)]
 
         # Exibir as ligas que atendem ao critério de lucro em todas as temporadas
