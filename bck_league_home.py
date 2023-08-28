@@ -83,7 +83,7 @@ def bck_league_home_page():
 
         selected_columns = [
             "Date", "League", "Season", "Round", "Home", "Away",
-            "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "HT_Odd_Over05", "FT_Odd_Over25", "Odd_BTTS_Yes", "Placar_HT", "Placar_FT"
+            "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "HT_Odd_Over05", "FT_Odd_Over25", "Odd_BTTS_Yes", "Placar_HT", "Placar_FT", "profit_Lay_0x1",
         ]
         st.dataframe(filtered_df[selected_columns])
 
