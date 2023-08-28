@@ -4,7 +4,7 @@ import pandas as pd
 def bck_league_home_page():
     ##### PÁGINA BCK LEAGUE HOME ######
 
-    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Análise Geral", "Top Ligas", "Backtesting Mercado"])
+    tab0, tab1 = st.tabs(["Partidas Filtradas", "Análise Geral"])
 
     with tab0:
         # Carregar os dados
@@ -318,21 +318,6 @@ def bck_league_home_page():
 
 
         
-        
-    with tab2:
-
-        
-    
-        
-
-        
-    with tab3:
-
-################################################################################3        
-
-    ##### Calculo Win/Loss Over Back Casa FT ####
-
-         st.write("Profit/Loss for Home Team")
         
 # Execute the function to create the page
 bck_league_home_page()
