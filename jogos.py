@@ -13,8 +13,8 @@ def jogos_do_dia_page():
         data_jogos = pd.read_csv(url)
 
         # Converter a coluna 'Hora' para um objeto de data e hora
-        data_jogos['Hora'] = pd.to_datetime(data_jogos['Hora'])
-        data_jogos['Hora'] = data_jogos['Hora'] - pd.to_timedelta('3 horas')
+        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'])
+        data_jogos['Time'] = data_jogos['Time'] - pd.to_timedelta('3 horas')
 
         # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
