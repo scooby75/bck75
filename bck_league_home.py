@@ -103,22 +103,6 @@ def bck_league_home_page():
         st.subheader("Back Casa - Desempenho por Liga")
         st.dataframe(pivot_table)
 
-####################################################        
-        # Top back casa agrupado por liga
-        profit_home_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_home'].sum()
-
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_home_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_home', aggfunc='sum')
-
-        # Filtrar as ligas que tiveram lucro em todas as temporadas
-        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
-
-        # Calcular o lucro acumulado nas temporadas lucrativas
-        cumulative_profit = profitable_leagues.cumsum()
-
-        # Exibir o lucro acumulado por liga nas temporadas lucrativas
-        st.subheader("Top Back Casa - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
 
         ####################################################        
         # back visitante agrupado por liga
@@ -131,22 +115,7 @@ def bck_league_home_page():
         st.subheader("Back Visitante - Desempenho por Liga")
         st.dataframe(pivot_table)
 
-        ####################################################        
-        # Top back visitante agrupado por liga
-        profit_away_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_away'].sum()
-
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_away_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_away', aggfunc='sum')
-
-        # Filtrar as ligas que tiveram lucro em todas as temporadas
-        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
-
-        # Calcular o lucro acumulado nas temporadas lucrativas
-        cumulative_profit = profitable_leagues.cumsum()
-
-        # Exibir o lucro acumulado por liga nas temporadas lucrativas
-        st.subheader("Top Back Visitante - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        
 
     ####################################################        
         # back empate agrupado por liga
@@ -159,22 +128,7 @@ def bck_league_home_page():
         st.subheader("Back Empate - Desempenho por Liga")
         st.dataframe(pivot_table)
 
-        ####################################################        
-        # Top back empate agrupado por liga
-        profit_draw_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_draw'].sum()
-
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_draw_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_draw', aggfunc='sum')
-
-        # Filtrar as ligas que tiveram lucro em todas as temporadas
-        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
-
-        # Calcular o lucro acumulado nas temporadas lucrativas
-        cumulative_profit = profitable_leagues.cumsum()
-
-        # Exibir o lucro acumulado por liga nas temporadas lucrativas
-        st.subheader("Top Back Empate - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+    
 
     ####################################################        
         # Over 05HT agrupado por liga
@@ -187,22 +141,7 @@ def bck_league_home_page():
         st.subheader("Over 05HT - Desempenho por Liga")
         st.dataframe(pivot_table)
 
-    ####################################################        
-        # Top Over 05HT agrupado por liga
-        profit_ov05ht_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_over05HT'].sum()
-
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_ov05ht_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over05HT', aggfunc='sum')
-
-        # Filtrar as ligas que tiveram lucro em todas as temporadas
-        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
-
-        # Calcular o lucro acumulado nas temporadas lucrativas
-        cumulative_profit = profitable_leagues.cumsum()
-
-        # Exibir o lucro acumulado por liga nas temporadas lucrativas
-        st.subheader("Top Over 05HT - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+   
 
     ####################################################        
         # Over U5HT agrupado por liga
@@ -216,23 +155,6 @@ def bck_league_home_page():
         st.dataframe(pivot_table)
 
     ####################################################        
-        # Top Over 05HT agrupado por liga
-        profit_u05ht_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_under05HT'].sum()
-
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_u05ht_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_under05HT', aggfunc='sum')
-
-        # Filtrar as ligas que tiveram lucro em todas as temporadas
-        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
-
-        # Calcular o lucro acumulado nas temporadas lucrativas
-        cumulative_profit = profitable_leagues.cumsum()
-
-        # Exibir o lucro acumulado por liga nas temporadas lucrativas
-        st.subheader("Top Under 05HT - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
-
-     ####################################################        
         # Over 15FT agrupado por liga
         profit_ov15ft_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_over15'].sum()
 
@@ -366,6 +288,91 @@ def bck_league_home_page():
         st.dataframe(pivot_table)
     
     with tab2:
+
+        ####################################################        
+        # Top back casa agrupado por liga
+        profit_home_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_home'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_home_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_home', aggfunc='sum')
+
+        # Filtrar as ligas que tiveram lucro em todas as temporadas
+        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
+
+        # Calcular o lucro acumulado nas temporadas lucrativas
+        cumulative_profit = profitable_leagues.cumsum()
+
+        # Exibir o lucro acumulado por liga nas temporadas lucrativas
+        st.subheader("Top Back Casa - Desempenho por Liga")
+        st.dataframe(cumulative_profit)
+
+        ####################################################        
+        # Top back visitante agrupado por liga
+        profit_away_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_away'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_away_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_away', aggfunc='sum')
+
+        # Filtrar as ligas que tiveram lucro em todas as temporadas
+        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
+
+        # Calcular o lucro acumulado nas temporadas lucrativas
+        cumulative_profit = profitable_leagues.cumsum()
+
+        # Exibir o lucro acumulado por liga nas temporadas lucrativas
+        st.subheader("Top Back Visitante - Desempenho por Liga")
+        st.dataframe(cumulative_profit)
+
+        ####################################################        
+        # Top back empate agrupado por liga
+        profit_draw_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_draw'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_draw_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_draw', aggfunc='sum')
+
+        # Filtrar as ligas que tiveram lucro em todas as temporadas
+        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
+
+        # Calcular o lucro acumulado nas temporadas lucrativas
+        cumulative_profit = profitable_leagues.cumsum()
+
+        # Exibir o lucro acumulado por liga nas temporadas lucrativas
+        st.subheader("Top Back Empate - Desempenho por Liga")
+        st.dataframe(cumulative_profit)
+
+        ####################################################        
+        # Top Over 05HT agrupado por liga
+        profit_ov05ht_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_over05HT'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_ov05ht_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over05HT', aggfunc='sum')
+
+        # Filtrar as ligas que tiveram lucro em todas as temporadas
+        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
+
+        # Calcular o lucro acumulado nas temporadas lucrativas
+        cumulative_profit = profitable_leagues.cumsum()
+
+        # Exibir o lucro acumulado por liga nas temporadas lucrativas
+        st.subheader("Top Over 05HT - Desempenho por Liga")
+        st.dataframe(cumulative_profit)
+
+        ####################################################        
+        # Top Under 05HT agrupado por liga
+        profit_u05ht_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_under05HT'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_u05ht_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_under05HT', aggfunc='sum')
+
+        # Filtrar as ligas que tiveram lucro em todas as temporadas
+        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
+
+        # Calcular o lucro acumulado nas temporadas lucrativas
+        cumulative_profit = profitable_leagues.cumsum()
+
+        # Exibir o lucro acumulado por liga nas temporadas lucrativas
+        st.subheader("Top Under 05HT - Desempenho por Liga")
+        st.dataframe(cumulative_profit)
 
         ####################################################        
         # Top Over 15FT agrupado por liga
