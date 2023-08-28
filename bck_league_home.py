@@ -4,7 +4,7 @@ import pandas as pd
 def bck_league_home_page():
     ##### PÁGINA BCK LEAGUE HOME ######
 
-    tab0, tab1 = st.tabs(["Partidas Filtradas", "Análise Geral"])
+    tab0, tab1, tab2 = st.tabs(["Partidas Filtradas", "Análise Geral", "Top Ligas"])
 
     with tab0:
         # Carregar os dados
@@ -278,9 +278,11 @@ def bck_league_home_page():
         st.subheader("Lay 2x1 - Desempenho por Liga")
         st.dataframe(pivot_table)
 
+    with tab2:
     ########################## top ligas ##############################
 
-        ###########################################################3
+    
+        ###########################################################
         # Calcula o lucro total das apostas em casa agrupadas por liga e temporada
         profit_home_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_home'].sum()
 
