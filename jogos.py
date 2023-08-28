@@ -13,13 +13,12 @@ def jogos_do_dia_page():
         url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
         
         data_jogos = pd.read_csv(url)
-    
-    # Convert the 'Hora' column to a datetime object
-        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'])
-    
-    # Convert the game times to the local time zone (subtracting 3 hours)
-        data_jogos['Time'] = data_jogos['Time'] - pd.to_timedelta('3 hours')
-        
+
+    # Converter a coluna 'Hora' para um objeto de data e hora
+    data_jogos['Hora'] = pd.to_datetime(data_jogos['Hora'])
+    data_jogos['Hora'] = data_jogos['Hora'] - pd.to_timedelta('3 horas')
+      
+           
         # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
             'FT_Odds_H': 'FT_Odd_H',
