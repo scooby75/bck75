@@ -113,9 +113,12 @@ def bck_league_home_page():
         # Filtrar as ligas que tiveram lucro em todas as temporadas
         profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
 
-        # Display profit/loss by Season and League with Season as columns and League as rows
-        st.subheader("Top Back Casa - Desempenho por Liga")
-        st.dataframe(profitable_leagues.index.to_frame(index=False))
+        # Calcular o lucro acumulado nas temporadas lucrativas
+        cumulative_profit = profitable_leagues.cumsum()
+
+        # Exibir o lucro acumulado por liga nas temporadas lucrativas
+        st.subheader("Top Back Casa - Liga")
+        st.dataframe(cumulative_profit)
 
         ####################################################        
         # back visitante agrupado por liga
