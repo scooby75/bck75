@@ -300,39 +300,39 @@ def bck_league_home_page():
         with col1:
             
             all_leagues = "Todos"
-            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_league_home_df['League'].unique()), key="selected_leagues")
+            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_league_home_df['League'].unique()), key="selected_leagues_top")
 
             all_rounds = "Todos"
-            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_league_home_df['Round'].unique()), key="selected_rounds")
+            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_league_home_df['Round'].unique()), key="selected_rounds_top")
 
             all_seasons = "Todos"
-            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_league_home_df['Season'].unique()), key="selected_seasons")
+            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_league_home_df['Season'].unique()), key="selected_seasons_top")
 
             home_teams = bck_league_home_df['Home'].unique()  # Get unique teams from 'Home' column
-            selected_home = st.multiselect("Selecionar Mandante", home_teams, key="selected_home")
+            selected_home = st.multiselect("Selecionar Mandante", home_teams, key="selected_home_top")
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
-            odd_h_min = st.number_input("Odd_Home Mínimo", value=0.0, key="odd_h_min")
-            odd_h_max = st.number_input("Odd_Home Máximo", value=10.0, key="odd_h_max")
+            odd_h_min = st.number_input("Odd_Home Mínimo", value=0.0, key="odd_h_min_top")
+            odd_h_max = st.number_input("Odd_Home Máximo", value=10.0, key="odd_h_max_top")
 
-            odd_a_min = st.number_input("Odd_Away Mínimo", value=0.0, key="odd_a_min")
-            odd_a_max = st.number_input("Odd_Away Máximo", value=10.0, key="odd_a_max")
+            odd_a_min = st.number_input("Odd_Away Mínimo", value=0.0, key="odd_a_min_top")
+            odd_a_max = st.number_input("Odd_Away Máximo", value=10.0, key="odd_a_max_top")
     
-            odd_draw_min = st.number_input("Odd_Empate Mínimo", value=0.0, key="odd_draw_min")
-            odd_draw_max = st.number_input("Odd_Empate Máximo", value=10.0, key="odd_draw_max")
+            odd_draw_min = st.number_input("Odd_Empate Mínimo", value=0.0, key="odd_draw_min_top")
+            odd_draw_max = st.number_input("Odd_Empate Máximo", value=10.0, key="odd_draw_max_top")
 
         # Filter for Over_05HT (HT_Odd_Over05) range and Over_25FT (FT_Odd_Over25)
         with col3:
             
-            over_05ht_min = st.number_input("Over_05HT Mínimo", value=0.0, key="over_05ht_min")
-            over_05ht_max = st.number_input("Over_05HT Máximo", value=10.0, key="over_05ht_max")
+            over_05ht_min = st.number_input("Over_05HT Mínimo", value=0.0, key="over_05ht_min_top")
+            over_05ht_max = st.number_input("Over_05HT Máximo", value=10.0, key="over_05ht_max_top")
 
-            over_25ft_min = st.number_input("Over_25FT Mínimo", value=0.0, key="over_25ft_min")
-            over_25ft_max = st.number_input("Over_25FT Máximo", value=10.0, key="over_25ft_max")
+            over_25ft_min = st.number_input("Over_25FT Mínimo", value=0.0, key="over_25ft_min_top")
+            over_25ft_max = st.number_input("Over_25FT Máximo", value=10.0, key="over_25ft_max_top")
 
-            btts_yes_min = st.number_input("BTTS_Yes Mínimo", value=0.0, key="btts_yes_min")
-            btts_yes_max = st.number_input("BTTS_Yes Máximo", value=10.0, key="btts_yes_max")
+            btts_yes_min = st.number_input("BTTS_Yes Mínimo", value=0.0, key="btts_yes_min_top")
+            btts_yes_max = st.number_input("BTTS_Yes Máximo", value=10.0, key="btts_yes_max_top")
 
         # Apply filters
         filtered_df = bck_league_home_df[
