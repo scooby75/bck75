@@ -300,6 +300,16 @@ def bck_league_home_page():
 
     #########################################
 
+         # Carregar os dados
+        @st.cache_data(ttl=28800.0)  # 24 horas em segundos
+        def load_base():
+            url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
+            df = pd.read_csv(url)
+            return df
+        
+        # Chamar a função para carregar os dados
+        filtered_df = load_base()
+
     # Calcula o lucro total das apostas em visitantes agrupadas por liga e temporada
         profit_away_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_away'].sum()
 
