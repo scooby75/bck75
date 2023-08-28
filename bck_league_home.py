@@ -87,7 +87,7 @@ def bck_league_home_page():
         ]
         st.dataframe(filtered_df[selected_columns])
 
-        st.write("Colunas disponíveis:", filtered_df.columns.tolist())
+        st.dataframe(filtered_df[selected_columns])
 
     with tab1:
 
