@@ -4,37 +4,6 @@ import re
 
 from session_state import SessionState
 
-def goleada_page():
-    # Inicializa o estado da sessão
-    session_state = SessionState(user_profile=3)
-
-    # Verifica se o usuário tem permissão para acessar a página
-    if session_state.user_profile < 3:
-        st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
-        return   
-
-    # Load the data
-    df = load_base()
-
-    # Filtrando os jogos com valores de "FT_Odd_H" entre 1.40 e 2.0 e "Rodada_Num" maior ou igual a 10
-    eventos_raros_df = df[(df["FT_Odd_H"] >= 1.71) & (df["FT_Odd_H"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
-
-    # Exibir o dataframe "Eventos Raros"
-    st.subheader("Lay Goleada Casa")
-    st.text("Apostar em Lay Goleada Casa, Odd máxima 30")
-    display_columns = ["Date", "Time", "League", "Home", "Away"]  # Columns to display
-    st.dataframe(eventos_raros_df[display_columns])
-
-    # Filtrando os jogos com valores de "FT_Odd_A" entre 1.40 e 2.0 e "Rodada_Num" maior ou igual a 10
-    eventos_raros2_df = df[(df["FT_Odd_A"] >= 1.71) & (df["FT_Odd_A"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
-    
-
-    # Exibir o dataframe "Eventos Raros"
-    st.subheader("Lay Goleada Visitante")
-    st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
-    display_columns = ["Date", "Time", "League", "Home", "Away"]  # Columns to display
-    st.dataframe(eventos_raros2_df[display_columns])
-
 # Função para extrair o número do texto "ROUND N"
 def extrair_numero_rodada(text):
     if isinstance(text, int):
@@ -74,9 +43,37 @@ def load_base():
 
     return df
 
+def goleada_page():
+    # Inicializa o estado da sessão
+    session_state = SessionState(user_profile=3)
+
+    # Verifica se o usuário tem permissão para acessar a página
+    if session_state.user_profile < 3:
+        st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
+        return   
+
+    # Load the data
+    df = load_base()
+
+    # Filtrando os jogos com valores de "FT_Odd_H" entre 1.40 e 2.0 e "Rodada_Num" maior ou igual a 10
+    eventos_raros_df = df[(df["FT_Odd_H"] >= 1.71) & (df["FT_Odd_H"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
+
+    # Exibir o dataframe "Eventos Raros"
+    st.subheader("Lay Goleada Casa")
+    st.text("Apostar em Lay Goleada Casa, Odd máxima 30")
+    display_columns = ["Date", "Hora", "League", "Home", "Away"]  # Columns to display
+    st.dataframe(eventos_raros_df[display_columns])
+
+    # Filtrando os jogos com valores de "FT_Odd_A" entre 1.40 e 2.0 e "Rodada_Num" maior ou igual a 10
+    eventos_raros2_df = df[(df["FT_Odd_A"] >= 1.71) & (df["FT_Odd_A"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
+    
+    # Exibir o dataframe "Eventos Raros"
+    st.subheader("Lay Goleada Visitante")
+    st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
+    st.dataframe(eventos_raros2_df[display_columns])
+
 # Chamar a função para iniciar o aplicativo
 goleada_page()
-
 
 
     
