@@ -4,7 +4,7 @@ import pandas as pd
 def bck_league_home_page():
     ##### PÁGINA BCK LEAGUE HOME ######
 
-    tab0, tab1, tab2 = st.tabs(["Partidas Filtradas", "Análise Geral", "Top Ligas"])
+    tab0, tab1 = st.tabs(["Partidas Filtradas", "Análise Geral"])
 
     with tab0:
         # Carregar os dados
@@ -314,48 +314,7 @@ def bck_league_home_page():
         st.subheader("Lay 2x1 - Desempenho por Liga")
         st.dataframe(pivot_table)
 
-    with tab2:
-    ########################## top ligas ##############################
-
-    
-        ###########################################################
-        # Calcula o lucro total das apostas em casa agrupadas por liga e temporada
-        profit_home_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_home'].sum()
-
-        # Filtra as ligas que lucraram pelo menos 1 unidade em todas as temporadas
-        profitable_leagues = profit_home_by_league_season.groupby('League').filter(lambda x: (x >= 2).all())
-
-        # Converte o resultado filtrado em um DataFrame
-        filtered_df = profitable_leagues.reset_index()
-
-        # Cria uma tabela dinâmica para organizar os dados
-        pivot_table = filtered_df.pivot_table(index='League', columns='Season', values='profit_home', aggfunc='sum')
-
-        # Exibe a tabela dinâmica usando o Streamlit
-        st.subheader("Top Back Casa")
-        st.dataframe(pivot_table)
-
-       ####################################################        
-        # Top back visitante agrupado por liga
-        profit_away_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_away'].sum()
-
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_away_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_away', aggfunc='sum')
-
-        # Filtrar as ligas que tiveram lucro em todas as temporadas
-        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
-
-        # Calcular o lucro acumulado nas temporadas lucrativas
-        cumulative_profit = profitable_leagues.cumsum()
-
-        # Exibir o lucro acumulado por liga nas temporadas lucrativas
-        st.subheader("Top Back Visitante - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
-
-
   
-
-
         
         
 # Execute the function to create the page
