@@ -12,9 +12,16 @@ def jogos_do_dia_page():
         url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
         data_jogos = pd.read_csv(url)
 
-        # Converter a coluna 'Hora' para um objeto de data e hora
+        # Convert the 'Hora' column to a datetime object
         data_jogos['Time'] = pd.to_datetime(data_jogos['Time'])
-        data_jogos['Time'] = pd.to_datetime(data_jogos['Time']) - pd.to_timedelta('3 hours')
+        data_jogos['Time'] = data_jogos['Time'].dt.strftime('%H:%M') 
+    
+     # Criar um intervalo de tempo de 3 horas
+        offset_tempo = pd.Timedelta(hours=3)
+    
+    # Subtrair o intervalo de tempo da coluna 'Time'
+        data_jogos['Time'] = pd.to_datetime(data_jogos['Time']) - offset_tempo
+        data_jogos['Time'] = data_jogos['Time'].dt.strftime('%H:%M')
 
         # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
