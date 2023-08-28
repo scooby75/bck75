@@ -7,18 +7,15 @@ def jogos_do_dia_page():
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
     # Load the data
-    #@st.cache_data(ttl=86400.0)  # 24 hours in seconds
     @st.cache_data(ttl=23200.0)  # 24 hours in seconds
     def load_base():
         url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
-        
         data_jogos = pd.read_csv(url)
 
-    # Converter a coluna 'Hora' para um objeto de data e hora
-    data_jogos['Hora'] = pd.to_datetime(data_jogos['Hora'])
-    data_jogos['Hora'] = data_jogos['Hora'] - pd.to_timedelta('3 horas')
-      
-           
+        # Converter a coluna 'Hora' para um objeto de data e hora
+        data_jogos['Hora'] = pd.to_datetime(data_jogos['Hora'])
+        data_jogos['Hora'] = data_jogos['Hora'] - pd.to_timedelta('3 horas')
+
         # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
             'FT_Odds_H': 'FT_Odd_H',
@@ -81,7 +78,6 @@ def jogos_do_dia_page():
         selected_rodada_min = st.number_input("Rodada (min)", min_value=0.0, max_value=50.0, step=1.0, value=5.0)
         selected_rodada_max = st.number_input("Rodada (max)", min_value=selected_rodada_min, max_value=50.0, step=1.0, value=50.0)
 
-
     # Convert 'Rodada' column to integers
     df2['Rodada'] = pd.to_numeric(df2['Rodada'], errors='coerce')
 
@@ -111,4 +107,3 @@ def jogos_do_dia_page():
 
 # Chamar a função para exibir a aplicação web
 jogos_do_dia_page()
-
