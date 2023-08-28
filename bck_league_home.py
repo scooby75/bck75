@@ -103,6 +103,20 @@ def bck_league_home_page():
         st.subheader("Back Casa - Desempenho por Liga")
         st.dataframe(pivot_table)
 
+####################################################        
+        # Top back casa agrupado por liga
+        profit_home_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_home'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_home_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_home', aggfunc='sum')
+
+        # Filtrar as ligas que tiveram lucro em todas as temporadas
+        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
+
+        # Display profit/loss by Season and League with Season as columns and League as rows
+        st.subheader("Top Back Casa - Desempenho por Liga")
+        st.write(profitable_leagues.index.tolist())
+
         ####################################################        
         # back visitante agrupado por liga
         profit_away_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_away'].sum()
