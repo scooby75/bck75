@@ -234,16 +234,22 @@ def bck_league_home_page():
         st.dataframe(pivot_table)
         
 
-    ##################################################        
+    ##################################################   
+
         # Lay 0x1 agrupado por liga
         profit_lay01_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_Lay_0x1'].sum()
 
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_lay01_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_0x1', aggfunc='sum')
 
-        # Display profit/loss by Season and League with Season as columns and League as rows
-        st.subheader("Lay 0x1 - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        # Filtrar as ligas que lucraram >= 2 em todas as temporadas
+        profit_threshold = 2
+        profit_ligas = pivot_table[(pivot_table >= profit_threshold).all(axis=1)]
+
+        # Exibir as ligas que atendem ao critério de lucro em todas as temporadas
+        st.subheader(f"Ligas com lucro >= {profit_threshold} em todas as temporadas")
+        st.dataframe(profit_ligas)
+                
 
      ##################################################        
         # Lay 1x0 agrupado por liga
@@ -307,13 +313,9 @@ def bck_league_home_page():
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_lay01_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_0x1', aggfunc='sum')
 
-        # Filtrar as ligas que lucraram >= 2 em todas as temporadas
-        profit_threshold = 2
-        profit_ligas = pivot_table[(pivot_table >= profit_threshold).all(axis=1)]
-
-        # Exibir as ligas que atendem ao critério de lucro em todas as temporadas
-        st.subheader(f"Ligas com lucro >= {profit_threshold} em todas as temporadas")
-        st.dataframe(profit_ligas)
+        # Display profit/loss by Season and League with Season as columns and League as rows
+        st.subheader("Lay 0x1 - Desempenho por Liga")
+        st.dataframe(pivot_table)
       
 
        
