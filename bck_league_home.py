@@ -278,9 +278,10 @@ def bck_league_home_page():
         st.subheader("Lay 2x1 - Desempenho por Liga")
         st.dataframe(pivot_table)
 
-    ################## TOP LIGAS #############################
+    ########################## top ligas ############################## 
 
-            ###########################################################
+    with tab2:    
+   
         # Calcula o lucro total das apostas em casa agrupadas por liga e temporada
         profit_home_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_home'].sum()
 
@@ -296,30 +297,6 @@ def bck_league_home_page():
         # Exibe a tabela dinâmica usando o Streamlit
         st.subheader("Top Back Casa")
         st.dataframe(pivot_table)
-
-    #########################################
-      
-       # Calcula o lucro total das apostas em casa agrupadas por liga e temporada
-        profit_lay0x1_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_Lay_0x1'].sum()
-
-        # Filtra as ligas que lucraram pelo menos 1 unidade em todas as temporadas
-        profitable_leagues = profit_lay0x1_by_league_season.groupby('League').filter(lambda x: (x >= 2).all())
-
-        # Converte o resultado filtrado em um DataFrame
-        filtered_df = profitable_leagues.reset_index()
-
-        # Cria uma tabela dinâmica para organizar os dados
-        pivot_table = filtered_df.pivot_table(index='League', columns='Season', values='profit_Lay_0x1', aggfunc='sum')
-
-        # Exibe a tabela dinâmica usando o Streamlit
-        st.subheader("Top Lay 0x1")
-        st.dataframe(pivot_table)
-
-    with tab2:
-    ########################## top ligas ##############################
-   
-        # Exibe a tabela dinâmica usando o Streamlit
-        st.subheader("Top Back Casa")
    
 
     #########################################
