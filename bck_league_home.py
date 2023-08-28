@@ -4,7 +4,7 @@ import pandas as pd
 def bck_league_home_page():
     ##### PÁGINA BCK LEAGUE HOME ######
 
-    tab0, tab1 = st.tabs(["Partidas Filtradas", "Análise Geral"])
+    tab0, tab1, tab2 = st.tabs(["Partidas Filtradas", "Análise Geral", "Top Ligas"])
 
     with tab0:
         # Carregar os dados
@@ -364,6 +364,27 @@ def bck_league_home_page():
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Lay 2x1 - Desempenho por Liga")
         st.dataframe(pivot_table)
+    
+    with tab2:
+
+        ####################################################        
+        # Top Over 15FT agrupado por liga
+        profit_ov15ft_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_over15'].sum()
+
+        # Use a função pivot_table para reorganizar os dados
+        pivot_table = profit_ov15ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over15', aggfunc='sum')
+
+        # Filtrar as ligas que tiveram lucro em todas as temporadas
+        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
+
+        # Calcular o lucro acumulado nas temporadas lucrativas
+        cumulative_profit = profitable_leagues.cumsum()
+
+        # Exibir o lucro acumulado por liga nas temporadas lucrativas
+        st.subheader("Top Over 15FT - Desempenho por Liga")
+        st.dataframe(cumulative_profit)
+
+        
 
   
         
