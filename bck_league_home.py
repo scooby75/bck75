@@ -298,7 +298,7 @@ def bck_league_home_page():
         st.dataframe(pivot_table)
 
         # Calculate profit/loss for Lay 0x1 strategy grouped by league and season
-        profit_lay01_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_Lay_0x1'].sum()
+        profit_lay01_by_league_season = selected_columns.groupby(['League', 'Season'])['profit_Lay_0x1'].sum()
 
         # Filter out leagues that haven't made a profit in all seasons
         profitable_leagues_lay01 = profit_lay01_by_league_season.groupby('League').filter(lambda x: (x >= 2).all())
