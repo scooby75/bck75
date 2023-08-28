@@ -55,7 +55,7 @@ def load_base():
     df['Time'] = df['Time'] - pd.to_timedelta('3 hours')
     
     # Converter a coluna 'Date' para o tipo datetime
-    df['Date'] = pd.to_datetime(filtered_df['Date'])
+    df['Date'] = pd.to_datetime(df['Date'])
 
     # Rename the columns
     df.rename(columns={
