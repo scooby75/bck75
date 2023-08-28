@@ -322,7 +322,7 @@ def bck_league_home_page():
 
     ##### Calculo Win/Loss Over Back Casa FT ####
 
-         st.write("Profit/Loss for Home Team (grouped by League)")
+         st.write("Profit/Loss for Home Team")
         
 # Execute the function to create the page
 bck_league_home_page()
