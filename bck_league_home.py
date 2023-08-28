@@ -237,10 +237,10 @@ def bck_league_home_page():
     ##################################################   
 
         # Lay 0x1 agrupado por liga
-        profit_lay01_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_Lay_0x1'].sum()
+        profit_lay01_league_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_lay_cs_01_league'].sum()
 
         # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_lay01_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_0x1', aggfunc='sum')
+        pivot_table = profit_lay01_league_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_lay_cs_01_league', aggfunc='sum')
 
         # Filtrar as ligas que lucraram >= 2 em todas as temporadas
         profit_threshold = 2
