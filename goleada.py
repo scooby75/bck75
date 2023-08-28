@@ -19,12 +19,14 @@ def load_base():
     
     # Convert the 'Hora' column to a datetime object
     df['Time'] = pd.to_datetime(df['Time'])
+    df['Time'] = df['Time'].dt.strftime('%H:%M') 
     
     # Convert the game times to the local time zone (subtracting 3 hours)
     df['Time'] = df['Time'] - pd.to_timedelta('3 hours')
     
     # Converter a coluna 'Date' para o tipo datetime
     df['Date'] = pd.to_datetime(df['Date'])
+    df['Date'] = df['Date'].dt.strftime('%d/%m/%Y')
 
     # Rename the columns
     df.rename(columns={
