@@ -192,7 +192,7 @@ def bck_league_home_page():
         profit_ov05ht_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_over05HT'].sum()
 
         # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_0v05ht_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over05HT', aggfunc='sum')
+        pivot_table = profit_ov05ht_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over05HT', aggfunc='sum')
 
         # Filtrar as ligas que tiveram lucro em todas as temporadas
         profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
