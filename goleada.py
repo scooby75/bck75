@@ -27,6 +27,7 @@ def goleada_page():
 
     # Filtrando os jogos com valores de "FT_Odd_A" entre 1.40 e 2.0 e "Rodada_Num" maior ou igual a 10
     eventos_raros2_df = df[(df["FT_Odd_A"] >= 1.71) & (df["FT_Odd_A"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
+    
 
     # Exibir o dataframe "Eventos Raros"
     st.subheader("Lay Goleada Visitante")
@@ -52,6 +53,9 @@ def load_base():
     
     # Convert the game times to the local time zone (subtracting 3 hours)
     df['Time'] = df['Time'] - pd.to_timedelta('3 hours')
+    
+    # Converter a coluna 'Date' para o tipo datetime
+    df['Date'] = pd.to_datetime(filtered_df['Date'])
 
     # Rename the columns
     df.rename(columns={
