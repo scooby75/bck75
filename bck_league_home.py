@@ -115,7 +115,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Top Back Casa - Desempenho por Liga")
-        st.write(profitable_leagues.index.tolist())
+        st.dataframe(profitable_leagues.index.to_frame(index=False))
 
         ####################################################        
         # back visitante agrupado por liga
