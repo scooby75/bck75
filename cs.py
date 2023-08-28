@@ -9,7 +9,7 @@ def cs_page():
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
     
     # Carregar os dados CSV a partir das URLs para DataFrames
-    url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv.csv?raw=true"
+    url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
     bdgeral = pd.read_csv(url)
 
     # Excluir jogos com palavras-chave "U19", "U20", "U21" e "U23"
