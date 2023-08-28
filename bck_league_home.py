@@ -234,22 +234,20 @@ def bck_league_home_page():
         st.dataframe(pivot_table)
         
 
-    ##################################################   
-
+    ##################################################        
         # Lay 0x1 agrupado por liga
-        profit_lay01_league_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_lay_cs_01_league'].sum()
+        profit_lay01_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_Lay_0x1'].sum()
 
         # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_lay01_league_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_lay_cs_01_league', aggfunc='sum')
+        pivot_table = profit_lay01_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_0x1', aggfunc='sum')
 
         # Filtrar as ligas que lucraram >= 2 em todas as temporadas
-        profit_threshold = 2
+        profit_threshold => 1
         profit_ligas = pivot_table[(pivot_table >= profit_threshold).all(axis=1)]
 
         # Exibir as ligas que atendem ao critério de lucro em todas as temporadas
         st.subheader(f"Ligas com lucro >= {profit_threshold} em todas as temporadas")
         st.dataframe(profit_ligas)
-                
 
      ##################################################        
         # Lay 1x0 agrupado por liga
@@ -284,10 +282,11 @@ def bck_league_home_page():
         st.subheader("Lay 2x1 - Desempenho por Liga")
         st.dataframe(pivot_table)
 
-    ########################## top ligas ############################## 
+    with tab2:
+    ########################## top ligas ##############################
 
-    with tab2:    
-   
+    
+        ###########################################################
         # Calcula o lucro total das apostas em casa agrupadas por liga e temporada
         profit_home_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_home'].sum()
 
@@ -303,23 +302,16 @@ def bck_league_home_page():
         # Exibe a tabela dinâmica usando o Streamlit
         st.subheader("Top Back Casa")
         st.dataframe(pivot_table)
-   
 
     #########################################
 
-       # Lay 0x1 agrupado por liga
-        profit_lay01_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_Lay_0x1'].sum()
 
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_lay01_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_0x1', aggfunc='sum')
+  
 
-        # Display profit/loss by Season and League with Season as columns and League as rows
-        st.subheader("Lay 0x1 - Desempenho por Liga")
-        st.dataframe(pivot_table)
-      
 
-       
+        
         
 # Execute the function to create the page
 bck_league_home_page()
+
 
