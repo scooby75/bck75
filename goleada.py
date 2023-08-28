@@ -21,12 +21,12 @@ def load_base():
     df['Time'] = pd.to_datetime(df['Time'])
     df['Time'] = df['Time'].dt.strftime('%H:%M') 
     
-    # Convert the game times to the local time zone (subtracting 3 hours)
-    df['Time'] = df['Time'] - pd.to_timedelta('3 hours')
+     # Criar um intervalo de tempo de 3 horas
+    offset_tempo = pd.Timedelta(hours=3)
     
-    # Converter a coluna 'Date' para o tipo datetime
-    df['Date'] = pd.to_datetime(df['Date'])
-    df['Date'] = df['Date'].dt.strftime('%d/%m/%Y')
+    # Subtrair o intervalo de tempo da coluna 'Time'
+    df['Time'] = pd.to_datetime(df['Time']) - offset_tempo
+    df['Time'] = df['Time'].dt.strftime('%H:%M')
 
     # Rename the columns
     df.rename(columns={
