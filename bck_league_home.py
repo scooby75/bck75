@@ -297,6 +297,22 @@ def bck_league_home_page():
         st.subheader("Top Back Casa")
         st.dataframe(pivot_table)
 
+        # Calculate profit/loss for Lay 0x1 strategy grouped by league and season
+        profit_lay01_by_league_season = filtered_df.groupby(['League', 'Season'])['profit_Lay_0x1'].sum()
+
+        # Filter out leagues that haven't made a profit in all seasons
+        profitable_leagues_lay01 = profit_lay01_by_league_season.groupby('League').filter(lambda x: (x >= 2).all())
+
+        # Convert the filtered result into a DataFrame
+        filtered_df_lay01 = profitable_leagues_lay01.reset_index()
+
+        # Create a pivot table to organize the data
+        pivot_table_lay01 = filtered_df_lay01.pivot_table(index='League', columns='Season', values='profit_Lay_0x1', aggfunc='sum')
+
+        # Display the pivot table using Streamlit
+        st.subheader("Top Lay 0x1")
+        st.dataframe(pivot_table_lay01)
+
  
 
         
