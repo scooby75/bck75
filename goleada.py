@@ -22,7 +22,8 @@ def goleada_page():
     # Exibir o dataframe "Eventos Raros"
     st.subheader("Lay Goleada Casa")
     st.text("Apostar em Lay Goleada Casa, Odd máxima 30")
-    st.dataframe(eventos_raros_df)
+    display_columns = ["Date", "Time", "League", "Home", "Away"]  # Columns to display
+    st.dataframe(eventos_raros_df[display_columns])
 
     # Filtrando os jogos com valores de "FT_Odd_A" entre 1.40 e 2.0 e "Rodada_Num" maior ou igual a 10
     eventos_raros2_df = df[(df["FT_Odd_A"] >= 1.71) & (df["FT_Odd_A"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
@@ -30,7 +31,8 @@ def goleada_page():
     # Exibir o dataframe "Eventos Raros"
     st.subheader("Lay Goleada Visitante")
     st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
-    st.dataframe(eventos_raros2_df)
+    display_columns = ["Date", "Time", "League", "Home", "Away"]  # Columns to display
+    st.dataframe(eventos_raros2_df[display_columns])
 
 # Função para extrair o número do texto "ROUND N"
 def extrair_numero_rodada(text):
