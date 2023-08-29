@@ -1397,8 +1397,8 @@ def bck_home_page():
     with tab4:
 
     # Calcular a diferença de gols no intervalo e no final
-        filtered_df['Gols_Casa_HT'], filtered_df['Gols_Visitante_HT'] = filtered_df['Placar_HT'].str.split('x').str
-        filtered_df['Gols_Casa_FT'], filtered_df['Gols_Visitante_FT'] = filtered_df['Placar_FT'].str.split('x').str
+        filtered_df[['Gols_Casa_HT', 'Gols_Visitante_HT']] = filtered_df['Placar_HT'].str.split('x', expand=True)
+        filtered_df[['Gols_Casa_FT', 'Gols_Visitante_FT']] = filtered_df['Placar_FT'].str.split('x', expand=True)
 
         # Converter valores de gols para inteiros
         filtered_df['Gols_Casa_HT'] = filtered_df['Gols_Casa_HT'].astype(int)
