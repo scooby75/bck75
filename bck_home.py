@@ -1430,15 +1430,31 @@ def bck_home_page():
         contagem_categorias = filtered_df['Categoria'].value_counts()
 
 # Calcular as contagens dos placares específicos
-        contagem_placares_especificos = filtered_df[filtered_df['Categoria'] == 'Resultado Específico']['Placar_FT'].value_counts()
+        contagem_placares_especificos = filtered_df[filtered_df['Categoria'] == 'Placar Comum']['Placar_FT'].value_counts()
 
 # Exibir os resultados de placar mais comuns
-        st.subheader("Placar Mais Comuns no FT")
+        st.subheader("Placares Mais Comuns no FT")
         #st.write("Categorizados:")
         st.write(contagem_categorias)
         #st.write("Placares Específicos:")
         st.write(contagem_placares_especificos)
 
+        # Exibir os resultados de placar mais comuns por temporada
+        st.subheader("Placares Mais Comuns no FT por Temporada")
+
+        # Supondo que 'Temporada' seja a coluna que contém o ano da temporada
+        temporadas = filtered_df['Temporada'].unique()
+
+        for temporada in temporadas:
+            st.write(f"Temporada {temporada}:")
+    
+        # Filtrar o DataFrame para a temporada atual
+            filtered_temporada = filtered_df[filtered_df['Temporada'] == temporada]
+    
+        # Calcular as contagens dos placares específicos para a temporada atual
+            contagem_placares_temporada = filtered_temporada[filtered_temporada['Categoria'] == 'Resultado Específico']['Placar_FT'].value_counts()
+    
+            st.write(contagem_placares_temporada)
 
 # Execute a função para criar a página
 bck_home_page()
