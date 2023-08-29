@@ -1423,15 +1423,21 @@ def bck_home_page():
             else:
                 return "Outros"
 
-        # Aplicar a função ao DataFrame
+       # Supondo que filtered_df seja o DataFrame que você possui
         filtered_df['Categoria'] = filtered_df['Placar_FT'].apply(categorize_result)
 
         # Calcular as contagens das categorias
         contagem_categorias = filtered_df['Categoria'].value_counts()
 
+        # Calcular as contagens dos placares específicos
+        contagem_placares_especificos = filtered_df[filtered_df['Categoria'] == 'Resultado Específico']['Placar_FT'].value_counts()
+
         # Exibir os resultados de placar mais comuns
         st.subheader("Resultados de Placar Mais Comuns no FT")
+        st.write("Categorizados:")
         st.write(contagem_categorias)
+        st.write("Placares Específicos:")
+        st.write(contagem_placares_especificos)
 
 # Execute a função para criar a página
 bck_home_page()
