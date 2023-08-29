@@ -1461,10 +1461,10 @@ def bck_home_page():
         df = pd.DataFrame(contagem_placares_por_temporada)
 
         # Configurar o Streamlit para exibir os dados
-        st.title("Placares Mais Comuns por Temporada")
+        st.subheader("Placares Mais Comuns por Temporada")
 
         # Exibir o DataFrame usando st.dataframe
-        st.dataframe(df)
+        st.dataframe(df, width=400)
 
 # Execute a função para criar a página
 bck_home_page()
