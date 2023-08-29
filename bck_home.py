@@ -1397,15 +1397,15 @@ def bck_home_page():
     with tab4:
 
     # Calcular a diferença de gols no intervalo e no final
-        filtered_df[['Gols_Casa_HT', 'Gols_Visitante_HT']] = filtered_df['Placar_HT'].str.split('x', expand=True)
-        filtered_df[['Gols_Casa_FT', 'Gols_Visitante_FT']] = filtered_df['Placar_FT'].str.split('x', expand=True)
+        gols_split_HT = filtered_df['Placar_HT'].str.split('x', expand=True)
+        gols_split_FT = filtered_df['Placar_FT'].str.split('x', expand=True)
 
         # Converter valores de gols para inteiros
-        filtered_df['Gols_Casa_HT'] = filtered_df['Gols_Casa_HT'].astype(int)
-        filtered_df['Gols_Visitante_HT'] = filtered_df['Gols_Visitante_HT'].astype(int)
-        filtered_df['Gols_Casa_FT'] = filtered_df['Gols_Casa_FT'].astype(int)
-        filtered_df['Gols_Visitante_FT'] = filtered_df['Gols_Visitante_FT'].astype(int)
-
+        filtered_df['Gols_Casa_HT'] = gols_split_HT[0].astype(int)
+        filtered_df['Gols_Visitante_HT'] = gols_split_HT[1].astype(int)
+        filtered_df['Gols_Casa_FT'] = gols_split_FT[0].astype(int)
+        filtered_df['Gols_Visitante_FT'] = gols_split_FT[1].astype(int)
+        
         # Categorizar partidas como 'goleada casa', 'goleada visitante' ou 'outros'
         def categorizar_partida(linha):
             if linha['Gols_Casa_HT'] >= 4:
