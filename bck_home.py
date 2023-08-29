@@ -1394,35 +1394,41 @@ def bck_home_page():
         st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_Lay_21', use_container_width=True)
 
 ################ Placar ##########################
+    
     with tab4:
-
-    # Calcular a diferença de gols no intervalo e no final
-        gols_split_HT = filtered_df['Placar_HT'].str.split('x', expand=True)
-        gols_split_FT = filtered_df['Placar_FT'].str.split('x', expand=True)
-
-        # Converter valores de gols para inteiros
-        filtered_df['Gols_Casa_HT'] = gols_split_HT[0].astype(int)
-        filtered_df['Gols_Visitante_HT'] = gols_split_HT[1].astype(int)
-        filtered_df['Gols_Casa_FT'] = gols_split_FT[0].astype(int)
-        filtered_df['Gols_Visitante_FT'] = gols_split_FT[1].astype(int)
+        # Agrupe os placares em categorias
+        placares_especificados = ['0 x 0', '0 x 1', '0 x 2', '0 x 3', 
+                                  '1 x 0', '2 x 0', '3 x 0', 
+                                  '1 x 1', '1 x 2', '1 x 3', 
+                                  '2 x 1', '2 x 2', '2 x 3', 
+                                  '3 x 1', '3 x 2', '3 x 3']
         
-        # Categorizar partidas como 'goleada casa', 'goleada visitante' ou 'outros'
-        def categorizar_partida(linha):
-            if linha['Gols_Casa_HT'] >= 4:
-                return 'goleada casa'
-            elif linha['Gols_Visitante_HT'] >= 4:
-                return 'goleada visitante'
+        goleada_casa = ['4 x 0', '4 x 1', '4 x 2', '4 x 3', '5 x 0', '5 x 1', '5 x 2', '5 x 3', '5 x 4',
+                        '6 x 0', '6 x 1', '6 x 2', '6 x 3', '6 x 4', '6 x 5',
+                        '7 x 0', '7 x 1', '7 x 2', '7 x 3', '7 x 4', '7 x 5', '7 x 6']
+
+        goleada_visitante = ['0 x 4', '1 x 4', '2 x 4', '3 x 4',
+                             '0 x 5', '1 x 5', '2 x 5', '3 x 5', '4 x 5',
+                             '0 x 6', '1 x 6', '2 x 6', '3 x 6', '4 x 6', '5 x 6',
+                             '0 x 7', '1 x 7', '2 x 7', '3 x 7', '4 x 7', '5 x 7', '6 x 7']
+
+        # Função para categorizar os resultados
+        def categorize_result(result):
+            if result in placares_especificados:
+                return "Resultado Específico"
+            elif result in goleada_casa:
+                return "Goleada Casa"
+            elif result in goleada_visitante:
+                return "Goleada Visitante"
             else:
-                return 'outros'
+                return "Outros"
 
-        filtered_df['Categoria_Partida'] = filtered_df.apply(categorizar_partida, axis=1)
-
-        # Contar ocorrências de cada categoria
-        contagem_categorias = filtered_df['Categoria_Partida'].value_counts()
+        # Supondo que filtered_df seja o DataFrame que você possui
+        filtered_df['Categoria'] = filtered_df['Placar_FT'].apply(categorize_result)
 
         # Exibir os resultados de placar mais comuns
-        st.subheader("Resultados de Placar Mais Comuns")
+        st.subheader("Resultados de Placar Mais Comuns no FT")
         st.write(contagem_categorias)
 
-# Execute the function to create the page
+# Execute a função para criar a página
 bck_home_page()
