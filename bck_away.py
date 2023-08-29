@@ -25,13 +25,13 @@ def bck_away_page():
         # Filter by League, Season, Round, Home
         with col1:
             all_leagues = "Todos"
-            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_away_df['League'].unique()))
+            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_away_df['League'].unique()), key="leagues")
 
             all_rounds = "Todos"
-            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_away_df['Round'].unique()))
+            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_away_df['Round'].unique()), key="rounds")
 
             all_seasons = "Todos"
-            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_away_df['Season'].unique()))
+            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_away_df['Season'].unique()), key="seasons")
         
             away_teams = bck_away_df['Away'].unique()  # Get unique teams from 'Away' column
             selected_away = st.multiselect("Selecionar Visitante", away_teams)
