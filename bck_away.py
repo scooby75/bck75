@@ -38,25 +38,25 @@ def bck_away_page():
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
-            odd_h_min = st.number_input("Odd_Home Mínimo", value=0.0)
-            odd_h_max = st.number_input("Odd_Home Máximo", value=10.0)
+            odd_h_min = st.number_input("Odd_Home Mínimo", value=0.0, key="odd_h_min")
+            odd_h_max = st.number_input("Odd_Home Máximo", value=10.0, key="odd_h_max")
 
-            odd_a_min = st.number_input("Odd_Away Mínimo", value=0.0)
-            odd_a_max = st.number_input("Odd_Away Máximo", value=10.0)
-        
-            odd_draw_min = st.number_input("Odd_Empate Mínimo", value=0.0)
-            odd_draw_max = st.number_input("Odd_Empate Máximo", value=10.0)
+            odd_a_min = st.number_input("Odd_Away Mínimo", value=0.0, key="odd_a_min")
+            odd_a_max = st.number_input("Odd_Away Máximo", value=10.0, key="odd_a_max")
+
+            odd_draw_min = st.number_input("Odd_Empate Mínimo", value=0.0, key="odd_draw_min")
+            odd_draw_max = st.number_input("Odd_Empate Máximo", value=10.0, key="odd_draw_max")
 
         # Filter for Over_05HT (HT_Odd_Over05) range and Over_25FT (FT_Odd_Over25)
         with col3:
-            over_05ht_min = st.number_input("Over_05HT Mínimo", value=0.0)
-            over_05ht_max = st.number_input("Over_05HT Máximo", value=10.0)
+            over_05ht_min = st.number_input("Over_05HT Mínimo", value=0.0, key="over_05ht_min")
+            over_05ht_max = st.number_input("Over_05HT Máximo", value=10.0, key="over_05ht_max")
 
-            over_25ft_min = st.number_input("Over_25FT Mínimo", value=0.0)
-            over_25ft_max = st.number_input("Over_25FT Máximo", value=10.0)
+            over_25ft_min = st.number_input("Over_25FT Mínimo", value=0.0, key="over_25ft_min")
+            over_25ft_max = st.number_input("Over_25FT Máximo", value=10.0, key="over_25ft_max")
         
-            btts_yes_min = st.number_input("BTTS_Yes Mínimo", value=0.0)
-            btts_yes_max = st.number_input("BTTS_Yes Máximo", value=10.0)
+            btts_yes_min = st.number_input("BTTS_Yes Mínimo", value=0.0, key="btts_yes_min")
+            btts_yes_max = st.number_input("BTTS_Yes Máximo", value=10.0, key="btts_yes_max")
 
         # Apply filters
         filtered_df = bck_away_df[
