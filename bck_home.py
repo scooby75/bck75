@@ -1443,13 +1443,13 @@ def bck_home_page():
         st.subheader("Placares Mais Comuns no FT por Temporada")
 
         # Supondo que 'Temporada' seja a coluna que contém o ano da temporada
-        temporadas = filtered_df['Temporada'].unique()
+        temporadas = filtered_df['Season'].unique()
 
         for temporada in temporadas:
             st.write(f"Temporada {temporada}:")
     
         # Filtrar o DataFrame para a temporada atual
-            filtered_temporada = filtered_df[filtered_df['Temporada'] == temporada]
+            filtered_temporada = filtered_df[filtered_df['Season'] == temporada]
     
         # Calcular as contagens dos placares específicos para a temporada atual
             contagem_placares_temporada = filtered_temporada[filtered_temporada['Categoria'] == 'Placar Comum']['Placar_FT'].value_counts()
