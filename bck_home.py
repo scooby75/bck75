@@ -1444,7 +1444,6 @@ def bck_home_page():
         # Supondo que 'Temporada' seja a coluna que contém o ano da temporada
         temporadas = filtered_df['Season'].unique()
 
-        # Criar um dicionário para armazenar as contagens de placares por temporada
         contagem_placares_por_temporada = {}
 
         for temporada in temporadas:
@@ -1458,8 +1457,15 @@ def bck_home_page():
             contagem_placares_por_temporada[temporada] = contagem_placares_temporada
 
         # Criar um DataFrame a partir do dicionário
-            df = pd.DataFrame(contagem_placares_por_temporada)
-            st.dataframe(contagem_placares_temporada.rename_axis('Placar').reset_index(name='Total'), width=400)
+        df = pd.DataFrame(contagem_placares_por_temporada)
+
+       # Configurar o Streamlit para exibir os dados
+        st.title("Placares Mais Comuns por Temporada")
+
+        # Exibir o DataFrame de forma mais organizada
+        st.write("Placar", *temporadas)
+        for placar in df.index:
+            st.write(placar, *df.loc[placar])
 
 # Execute a função para criar a página
 bck_home_page()
