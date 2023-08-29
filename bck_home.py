@@ -1415,7 +1415,7 @@ def bck_home_page():
         # Função para categorizar os resultados
         def categorize_result(result):
             if result in placares_especificados:
-                return "Resultado Específico"
+                return "Placar Comum"
             elif result in goleada_casa:
                 return "Goleada Casa"
             elif result in goleada_visitante:
@@ -1452,7 +1452,7 @@ def bck_home_page():
             filtered_temporada = filtered_df[filtered_df['Temporada'] == temporada]
     
         # Calcular as contagens dos placares específicos para a temporada atual
-            contagem_placares_temporada = filtered_temporada[filtered_temporada['Categoria'] == 'Resultado Específico']['Placar_FT'].value_counts()
+            contagem_placares_temporada = filtered_temporada[filtered_temporada['Categoria'] == 'Placar Comum']['Placar_FT'].value_counts()
     
             st.write(contagem_placares_temporada)
 
