@@ -318,9 +318,9 @@ def bck_home_page():
 ###### ADD Gráfico com Resultado Back FT #####
 
     #st.subheader("Desempenho Geral do Filtro")
-
-        # Converter a coluna 'Date' para o tipo datetime
-        #filtered_df['Date'] = pd.to_datetime(filtered_df['Date'])
+        
+        # Converter a coluna 'Date' para o tipo datetime e formatar como "DD/MM/YYYY"
+        filtered_df['Date'] = pd.to_datetime(filtered_df['Date'], format='%d/%m/%Y')
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
         filtered_df.sort_values(by='Date', inplace=True)
