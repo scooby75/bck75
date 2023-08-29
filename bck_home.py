@@ -1435,10 +1435,10 @@ def bck_home_page():
         # Exibir os resultados de placar mais comuns
         st.subheader("Placar Mais Comuns no FT")
         #st.write("Categorizados:")
-        contagem_categorias.rename(columns={'count': 'Total'}, inplace=True)  # Renomear a coluna 'count' para 'Total'
+        contagem_categorias.rename({'count': 'Total'}, axis=1, inplace=True)
         st.write(contagem_categorias)
         #st.write("Placares Comuns:")
-        contagem_placares_comuns.rename(columns={'count': 'Total'}, inplace=True)  # Renomear a coluna 'count' para 'Total'
+        contagem_placares_comuns.rename({'count': 'Total'}, axis=1, inplace=True)
         st.write(contagem_placares_comuns)
 
 # Execute a função para criar a página
