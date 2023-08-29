@@ -1432,14 +1432,21 @@ def bck_home_page():
         # Calcular as contagens dos placares específicos
         contagem_placares_comuns = filtered_df[filtered_df['Categoria'] == 'Placares Comuns']['Placar_FT'].value_counts()
 
+        # Renomear as colunas
+        contagem_categorias_df = contagem_categorias.reset_index()
+        contagem_categorias_df.rename(columns={'index': 'Categoria', 'Categoria': 'Total'}, inplace=True)
+        contagem_categorias_df.set_index('Categoria', inplace=True)
+
+        contagem_placares_comuns_df = contagem_placares_comuns.reset_index()
+        contagem_placares_comuns_df.rename(columns={'index': 'Placar_FT', 'Placar_FT': 'Total'}, inplace=True)
+        contagem_placares_comuns_df.set_index('Placar_FT', inplace=True)
+
         # Exibir os resultados de placar mais comuns
         st.subheader("Placar Mais Comuns no FT")
-        #st.write("Categorizados:")
-        contagem_categorias.rename({'count': 'Total'}, axis=1, inplace=True)
-        st.write(contagem_categorias)
-        #st.write("Placares Comuns:")
-        contagem_placares_comuns.rename({'count': 'Total'}, axis=1, inplace=True)
-        st.write(contagem_placares_comuns)
+        st.write("Categorizados:")
+        st.write(contagem_categorias_df)
+        st.write("Placares Comuns:")
+        st.write(contagem_placares_comuns_df)
 
 # Execute a função para criar a página
 bck_home_page()
