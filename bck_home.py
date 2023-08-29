@@ -1436,24 +1436,30 @@ def bck_home_page():
         
         st.subheader("Placares Mais Comuns no FT")
         st.dataframe(contagem_categorias.rename_axis('Categoria').reset_index(name='Contagem de Categorias'), width=400)
-        st.dataframe(contagem_placares_especificos.rename_axis('Placar').reset_index(name='Contagem de Placares Específicos'), width=400)
+        st.dataframe(contagem_placares_especificos.rename_axis('Placar').reset_index(name='Total'), width=400)
 
         # Exibir os resultados de placar mais comuns por temporada
         st.subheader("Placares Mais Comuns no FT por Temporada")
 
         # Supondo que 'Temporada' seja a coluna que contém o ano da temporada
         temporadas = filtered_df['Season'].unique()
-    
+
+        # Criar um dicionário para armazenar as contagens de placares por temporada
+        contagem_placares_por_temporada = {}
+
         for temporada in temporadas:
-            st.write(f"Temporada {temporada}:")
-    
         # Filtrar o DataFrame para a temporada atual
             filtered_temporada = filtered_df[filtered_df['Season'] == temporada]
     
         # Calcular as contagens dos placares específicos para a temporada atual
             contagem_placares_temporada = filtered_temporada[filtered_temporada['Categoria'] == 'Placar Comum']['Placar_FT'].value_counts()
     
-            st.dataframe(contagem_placares_temporada.rename_axis('Placar').reset_index(name='Contagem de Placares Específicos'), width=400)
+        # Adicionar as contagens ao dicionário, usando a temporada como chave
+            contagem_placares_por_temporada[temporada] = contagem_placares_temporada
+
+        # Criar um DataFrame a partir do dicionário
+            df = pd.DataFrame(contagem_placares_por_temporada)
+            st.dataframe(contagem_placares_temporada.rename_axis('Placar').reset_index(name='Total'), width=400)
 
 # Execute a função para criar a página
 bck_home_page()
