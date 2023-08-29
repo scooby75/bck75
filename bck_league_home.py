@@ -66,7 +66,7 @@ def bck_league_home_page():
             (bck_league_home_df['League'].isin(selected_leagues) if all_leagues not in selected_leagues else True) &
             (bck_league_home_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
             (bck_league_home_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
-            (bck_league_home_df['Home'].isin(selected_home) if selected_home else True) &
+            #(bck_league_home_df['Home'].isin(selected_home) if selected_home else True) &
             (bck_league_home_df['FT_Odd_H'] >= odd_h_min) &
             (bck_league_home_df['FT_Odd_H'] <= odd_h_max) &
             (bck_league_home_df['FT_Odd_A'] >= odd_a_min) &
