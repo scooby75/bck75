@@ -1438,9 +1438,7 @@ def bck_home_page():
         st.dataframe(contagem_categorias.rename_axis('Categoria').reset_index(name='Contagem de Categorias'), width=400)
         st.dataframe(contagem_placares_especificos.rename_axis('Placar').reset_index(name='Total'), width=400)
 
-        # Exibir os resultados de placar mais comuns por temporada
-        st.subheader("Placares Mais Comuns no FT por Temporada")
-
+        
         # Supondo que 'Temporada' seja a coluna que contém o ano da temporada
         temporadas = filtered_df['Season'].unique()
 
