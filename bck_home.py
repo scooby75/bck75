@@ -1423,8 +1423,11 @@ def bck_home_page():
             else:
                 return "Outros"
 
-        # Supondo que filtered_df seja o DataFrame que você possui
+        # Aplicar a função ao DataFrame
         filtered_df['Categoria'] = filtered_df['Placar_FT'].apply(categorize_result)
+
+        # Calcular as contagens das categorias
+        contagem_categorias = filtered_df['Categoria'].value_counts()
 
         # Exibir os resultados de placar mais comuns
         st.subheader("Resultados de Placar Mais Comuns no FT")
