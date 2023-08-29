@@ -4,7 +4,7 @@ import pandas as pd
 def bck_league_home_page():
     ##### PÁGINA BCK LEAGUE HOME ######
 
-    tab0, tab1, tab2 = st.tabs(["Partidas Filtradas", "Análise Geral", "Top Ligas"])
+    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Análise Geral", "Top Ligas", "Placar"])
 
     with tab0:
         # Carregar os dados
@@ -578,8 +578,75 @@ def bck_league_home_page():
         st.subheader("Top Lay 2x1 - Desempenho por Liga")
         st.dataframe(cumulative_profit)
 
+################ Placar ##########################
+    
+    with tab3:
+        # Agrupe os placares em categorias
+        placares_especificados = ['0 x 0', '0 x 1', '0 x 2', '0 x 3', 
+                                  '1 x 0', '2 x 0', '3 x 0', 
+                                  '1 x 1', '1 x 2', '1 x 3', 
+                                  '2 x 1', '2 x 2', '2 x 3', 
+                                  '3 x 1', '3 x 2', '3 x 3']
+        
+        goleada_casa = ['4 x 0', '4 x 1', '4 x 2', '4 x 3', '5 x 0', '5 x 1', '5 x 2', '5 x 3', '5 x 4',
+                        '6 x 0', '6 x 1', '6 x 2', '6 x 3', '6 x 4', '6 x 5',
+                        '7 x 0', '7 x 1', '7 x 2', '7 x 3', '7 x 4', '7 x 5', '7 x 6']
+
+        goleada_visitante = ['0 x 4', '1 x 4', '2 x 4', '3 x 4',
+                             '0 x 5', '1 x 5', '2 x 5', '3 x 5', '4 x 5',
+                             '0 x 6', '1 x 6', '2 x 6', '3 x 6', '4 x 6', '5 x 6',
+                             '0 x 7', '1 x 7', '2 x 7', '3 x 7', '4 x 7', '5 x 7', '6 x 7']
+
+        # Função para categorizar os resultados
+        def categorize_result(result):
+            if result in placares_especificados:
+                return "Placar Comum"
+            elif result in goleada_casa:
+                return "Goleada Casa"
+            elif result in goleada_visitante:
+                return "Goleada Visitante"
+            else:
+                return "Outros"
+
+        # Supondo que filtered_df seja o DataFrame que você possui
+        filtered_df['Categoria'] = filtered_df['Placar_FT'].apply(categorize_result)
+
+        # Calcular as contagens das categorias
+        contagem_categorias = filtered_df['Categoria'].value_counts()
+
+        # Calcular as contagens dos placares específicos
+        contagem_placares_especificos = filtered_df[filtered_df['Categoria'] == 'Placar Comum']['Placar_FT'].value_counts()
+
+        # Exibir os resultados de placar mais comuns
+        
+        st.subheader("Placares Mais Comuns no FT")
+        st.dataframe(contagem_categorias.rename_axis('Categoria').reset_index(name='Contagem de Categorias'), width=400)
+        st.dataframe(contagem_placares_especificos.rename_axis('Placar').reset_index(name='Total'), width=400)
 
         
+        # Supondo que 'Temporada' seja a coluna que contém o ano da temporada
+        temporadas = filtered_df['Season'].unique()
+        
+        contagem_placares_por_temporada = {}
+
+        for temporada in temporadas:
+        # Filtrar o DataFrame para a temporada atual
+            filtered_temporada = filtered_df[filtered_df['Season'] == temporada]
+    
+       # Calcular as contagens dos placares específicos para a temporada atual
+            contagem_placares_temporada = filtered_temporada[filtered_temporada['Categoria'] == 'Placar Comum']['Placar_FT'].value_counts()
+    
+        # Adicionar as contagens ao dicionário, usando a temporada como chave
+            contagem_placares_por_temporada[temporada] = contagem_placares_temporada
+
+        # Criar um DataFrame a partir do dicionário
+        df = pd.DataFrame(contagem_placares_por_temporada)
+
+        # Configurar o Streamlit para exibir os dados
+        st.subheader("Placares Mais Comuns por Temporada")
+
+        # Exibir o DataFrame usando st.dataframe
+        st.dataframe(df, width=400)   
 
   
         
