@@ -1397,7 +1397,7 @@ def bck_home_page():
     
     with tab4:
         # Agrupe os placares em categorias
-        placares_especificados = ['0 x 0', '0 x 1', '0 x 2', '0 x 3', 
+        placares_comuns = ['0 x 0', '0 x 1', '0 x 2', '0 x 3', 
                                   '1 x 0', '2 x 0', '3 x 0', 
                                   '1 x 1', '1 x 2', '1 x 3', 
                                   '2 x 1', '2 x 2', '2 x 3', 
@@ -1414,8 +1414,8 @@ def bck_home_page():
 
         # Função para categorizar os resultados
         def categorize_result(result):
-            if result in placares_especificados:
-                return "Resultado Específico"
+            if result in placares_comuns:
+                return "Placar Comum"
             elif result in goleada_casa:
                 return "Goleada Casa"
             elif result in goleada_visitante:
@@ -1430,14 +1430,16 @@ def bck_home_page():
         contagem_categorias = filtered_df['Categoria'].value_counts()
 
         # Calcular as contagens dos placares específicos
-        contagem_placares_especificos = filtered_df[filtered_df['Categoria'] == 'Resultado Específico']['Placar_FT'].value_counts()
+        contagem_placares_comuns = filtered_df[filtered_df['Categoria'] == 'Placares Comuns']['Placar_FT'].value_counts()
 
         # Exibir os resultados de placar mais comuns
-        st.subheader("Resultados de Placar Mais Comuns no FT")
-        st.write("Categorizados:")
+        st.subheader("Placar Mais Comuns no FT")
+        #st.write("Categorizados:")
+        contagem_categorias.rename(columns={'count': 'Total'}, inplace=True)  # Renomear a coluna 'count' para 'Total'
         st.write(contagem_categorias)
-        st.write("Placares Específicos:")
-        st.write(contagem_placares_especificos)
+        #st.write("Placares Comuns:")
+        contagem_placares_comuns.rename(columns={'count': 'Total'}, inplace=True)  # Renomear a coluna 'count' para 'Total'
+        st.write(contagem_placares_comuns)
 
 # Execute a função para criar a página
 bck_home_page()
