@@ -3,7 +3,7 @@ import pandas as pd
 
 def bck_home_page():
     ##### PÁGINA BCK HOME ######
-    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado"])
+    tab0, tab1, tab2, tab3, tab4 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar"])
 
     with tab0:
         # Carregar os dados
@@ -1393,8 +1393,36 @@ def bck_home_page():
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
         st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_Lay_21', use_container_width=True)
 
-   
+################ Placar ##########################
+with tab4:
+
+ # Calcular a diferença de gols no intervalo e no final
+    filtered_df['Gols_Casa_HT'], filtered_df['Gols_Visitante_HT'] = filtered_df['Placar_HT'].str.split('x').str
+    filtered_df['Gols_Casa_FT'], filtered_df['Gols_Visitante_FT'] = filtered_df['Placar_FT'].str.split('x').str
+
+    # Converter valores de gols para inteiros
+    filtered_df['Gols_Casa_HT'] = filtered_df['Gols_Casa_HT'].astype(int)
+    filtered_df['Gols_Visitante_HT'] = filtered_df['Gols_Visitante_HT'].astype(int)
+    filtered_df['Gols_Casa_FT'] = filtered_df['Gols_Casa_FT'].astype(int)
+    filtered_df['Gols_Visitante_FT'] = filtered_df['Gols_Visitante_FT'].astype(int)
+
+    # Categorizar partidas como 'goleada casa', 'goleada visitante' ou 'outros'
+    def categorizar_partida(linha):
+        if linha['Gols_Casa_HT'] >= 4:
+            return 'goleada casa'
+        elif linha['Gols_Visitante_HT'] >= 4:
+            return 'goleada visitante'
+        else:
+            return 'outros'
+
+    filtered_df['Categoria_Partida'] = filtered_df.apply(categorizar_partida, axis=1)
+
+    # Contar ocorrências de cada categoria
+    contagem_categorias = filtered_df['Categoria_Partida'].value_counts()
+
+    # Exibir os resultados de placar mais comuns
+    st.subheader("Resultados de Placar Mais Comuns")
+    st.write(contagem_categorias)
 
 # Execute the function to create the page
 bck_home_page()
-
