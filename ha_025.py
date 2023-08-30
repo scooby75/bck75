@@ -3,6 +3,13 @@ import pandas as pd
 import re
 
 def ha_025_page():
+    # Inicializa o estado da sessão
+    session_state = SessionState(user_profile=2)
+
+    # Verifica se o usuário tem permissão para acessar a página
+    if session_state.user_profile < 2:
+        st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
+        return
     ##### HA -0.25 ######
 
     # Load the data
