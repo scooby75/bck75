@@ -13,7 +13,7 @@ def h2h_page():
         return
 
     # Carregar o arquivo CSV
-    data = pd.read_csv('https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true')
+    data = pd.read_csv('https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true')
 
     # Solicitar ao usuário as equipes "Home" e "Away" usando selectbox
     home_teams = data['Home'].unique()
