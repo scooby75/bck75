@@ -15,6 +15,18 @@ from h2h import h2h_page
 
 from login import login_page as login_func, logout as logout_func
 
+from streamlit.report_thread import get_report_ctx
+
+class SessionState:
+    def __init__(self, session):
+        self.__dict__.update(session)
+
+def get_or_create_session_state():
+    session = get_report_ctx().session
+    if not hasattr(session, "_custom_session_state"):
+        session._custom_session_state = SessionState(session)
+    return session._custom_session_state
+
 # Função para obter ou criar o estado da sessão
 def main():
     # Obtém ou cria o estado da sessão
