@@ -17,9 +17,11 @@ from session_state import get_or_create_session_state
 
 # Função para obter ou criar o estado da sessão
 def get_or_create_session_state():
-    if not hasattr(st, '_session_state'):
-        st._session_state = Namespace(logged_in=False, user_profile=1)  # Inicializa user_profile aqui
-    return st._session_state
+    session = st.session_state
+    if not hasattr(session, 'logged_in'):
+        session.logged_in = False
+    if not hasattr(session, 'user_profile'):
+        session.user_profile = 1  # Define o perfil do usuário como um valor padrão
 
 def main():
     # Obtém ou cria o estado da sessão
