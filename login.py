@@ -71,8 +71,8 @@ def check_session_timeout():
 
 # Call this function periodically, e.g., every minute
 check_session_timeout()
-    session_state = get_or_create_session_state()
-    session_state.logged_in = False
-    session_state.pop("username", None)
-    session_state.pop("login_time", None)
-    session_state.pop("user_profile", None)  # Clear user profile on logout
+session_state = get_or_create_session_state()
+session_state.logged_in = False
+session_state.pop("username", None)
+session_state.pop("login_time", None)
+session_state.pop("user_profile", None)  # Clear user profile on logout
