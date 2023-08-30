@@ -1,10 +1,9 @@
-class SessionState:
-    def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
-        
+     
 import streamlit as st
 import pandas as pd
 import datetime as dt
+
+from session_state import SessionState
 
 def jogos_do_dia_page():
     # Inicializa o estado da sessão
