@@ -1522,14 +1522,14 @@ def bck_home_page():
         temporadas = filtered_df['Season'].unique()
 
         
-        contagem_placares_por_temporada = {}
+        contagem_placares_por_temporada_ht = {}
 
         for temporada in temporadas:
         # Filtrar o DataFrame para a temporada atual
             filtered_temporada_ht = filtered_df[filtered_df['Season'] == temporada]
     
-       # Calcular as contagens dos placares específicos para a temporada atual
-            contagem_placares_temporada_ht = filtered_temporada[filtered_temporada_ht['Categoria'] == 'Placar Comum']['Placar_HT'].value_counts()
+        # Calcular as contagens dos placares específicos para a temporada atual
+            contagem_placares_temporada_ht = filtered_temporada_ht[filtered_temporada_ht['Categoria'] == 'Placar Comum']['Placar_HT'].value_counts()
     
         # Adicionar as contagens ao dicionário, usando a temporada como chave
             contagem_placares_por_temporada_ht[temporada] = contagem_placares_temporada_ht
