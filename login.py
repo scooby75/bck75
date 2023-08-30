@@ -1,9 +1,8 @@
 # login.py
 import streamlit as st
 import datetime
-from session_state import get_or_create_session_state
 
-# Dictionary to track active users and their session IDs
+# Dictionary to track active users and their last activity time
 active_users = {}
 
 # Session timeout in seconds (30 minutes)
@@ -32,30 +31,19 @@ def login_page():
                 st.error("Esse usuário já está logado em outro dispositivo.")
                 return
 
-            session_state = get_or_create_session_state()
-            session_state.logged_in = True
-            session_state.username = username
-            session_state.login_time = datetime.datetime.now()
-            session_state.user_profile = valid_users[username]["profile"]
-
-            # Store user's session ID
-            active_users[username] = session_state.session_id
+            # Store user's session ID and last activity time
+            active_users[username] = datetime.datetime.now()
+            user_profile = valid_users[username]["profile"]
+            st.session_state.logged_in = True
+            st.session_state.username = username
+            st.session_state.user_profile = user_profile
         else:
             st.error("Credenciais inválidas.")
 
 def logout():
-    session_state = get_or_create_session_state()
-    username = session_state.username
-
-    # Remove user from active_users dictionary
-    if username in active_users:
-        active_users.pop(username)
-
-    # Clear session state
-    session_state.logged_in = False
-    session_state.pop("username", None)
-    session_state.pop("login_time", None)
-    session_state.pop("user_profile", None)
+    st.session_state.logged_in = False
+    st.session_state.pop("username", None)
+    st.session_state.pop("user_profile", None)
 
 # Check for session timeouts and remove inactive users
 def check_session_timeout():
@@ -71,8 +59,3 @@ def check_session_timeout():
 
 # Call this function periodically, e.g., every minute
 check_session_timeout()
-session_state = get_or_create_session_state()
-session_state.logged_in = False
-session_state.pop("username", None)
-session_state.pop("login_time", None)
-session_state.pop("user_profile", None)  # Clear user profile on logout
