@@ -12,7 +12,14 @@ from bck_away import bck_away_page
 from bck_league_home import bck_league_home_page
 from goleada import goleada_page
 from h2h import h2h_page
+
 from session_state import get_or_create_session_state
+
+# Função para obter ou criar o estado da sessão
+def get_or_create_session_state():
+    if not hasattr(st, '_session_state'):
+        st._session_state = Namespace(logged_in=False, user_profile=1)  # Inicializa user_profile aqui
+    return st._session_state
 
 def main():
     # Obtém ou cria o estado da sessão
