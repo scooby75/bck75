@@ -17,22 +17,17 @@ from session_state import get_or_create_session_state
 
 # Função para obter ou criar o estado da sessão
 def get_or_create_session_state():
-    session = st.session_state
-    if not hasattr(session, 'logged_in'):
-        session.logged_in = False
-    if not hasattr(session, 'user_profile'):
-        session.user_profile = 1  # Define o perfil do usuário como um valor padrão
+    if not hasattr(st, '_session_state'):
+        st._session_state = SessionState(logged_in=False, user_profile=1)  # Inicializa com os valores padrão
+    return st._session_state
 
 def main():
     # Obtém ou cria o estado da sessão
     session_state = get_or_create_session_state()
 
-    if not hasattr(session_state, 'logged_in'):
-        session_state.logged_in = False
-        session_state.user_profile = 1  # Define o perfil do usuário como um valor padrão
-
     if not session_state.logged_in:
         login_page()
+ 
     else:
         # Barra lateral com imagem e informações
         st.sidebar.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
