@@ -56,3 +56,12 @@ def check_session_timeout():
 
     for username in users_to_remove:
         active_users.pop(username)
+
+def main():
+    # Chama a função check_session_timeout a cada 1 minuto
+    st.timer(interval=60, key="session_timeout_check")
+    
+    login_page()
+
+if __name__ == "__main__":
+    main()
