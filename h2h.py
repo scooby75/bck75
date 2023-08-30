@@ -44,8 +44,12 @@ def h2h_page():
     st.dataframe(result_data)
 
     # Encontrar o placar mais comum (Placar_FT) apenas para as equipes selecionadas
-    most_common_score = data[(data['Home'] == home_team) & (data['Away'] == away_team)]['Placar_FT'].value_counts().idxmax()
-    st.write(f'Placar mais comum: {most_common_score}')
+    filtered_data = data[(data['Home'] == home_team) & (data['Away'] == away_team)]
+    if not filtered_data.empty:
+        most_common_score = filtered_data['Placar_FT'].value_counts().idxmax()
+        st.write(f'Placar mais comum: {most_common_score}')
+    else:
+        st.write("Nenhum jogo correspondente encontrado.")
 
     # Agrupar por intervalo de Odd e encontrar o placar mais comum em cada intervalo
     for lower_bound, upper_bound in odd_intervals:
@@ -56,15 +60,16 @@ def h2h_page():
             st.write(f'Intervalo de Odd: [{lower_bound:.2f}, {upper_bound:.2f}): Placar mais comum: {most_common_score_in_group}')
         else:
             st.write(f'Intervalo de Odd: [{lower_bound:.2f}, {upper_bound:.2f}): Nenhum dado disponível')
-
+    
     # Filtrar os jogos correspondentes às equipes selecionadas
     matching_games = data[(data['Home'] == home_team) & (data['Away'] == away_team)]
 
     if not matching_games.empty:
         st.write("Jogos correspondentes:")
-        st.dataframe(matching_games[['Date', 'Season', 'League','Home', 'Away', 'Resultado_FT', 'Placar_FT', 'FT_Odd_H']])
+        st.dataframe(matching_games[['Date', 'Season', 'League', 'Home', 'Away', 'Resultado_FT', 'Placar_FT', 'FT_Odd_H']])
     else:
         st.write("Nenhum jogo correspondente encontrado.")
 
 # Chamar a função para iniciar o aplicativo
 h2h_page()
+
