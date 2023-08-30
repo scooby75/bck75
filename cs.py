@@ -36,16 +36,21 @@ def cs_page():
     jogosdodia['ROUND'] = pd.to_numeric(jogosdodia['ROUND'])
     jogos_filtrados = jogosdodia[jogosdodia['ROUND'] >= 10]
 
+    # Filtrar jogos com FT_Odd_H e FT_Odd_A >= 1.80
+    jogos_filtrados_odds = jogos_filtrados_round[
+        (jogos_filtrados_round['FT_Odd_H'] >= 1.80) & (jogos_filtrados_round['FT_Odd_A'] >= 1.80)
+    ]
+
     # Combinar os jogos filtrados com os dados de média de gols calculados
-    jogos_filtrados = jogos_filtrados.merge(df_media_gols_casa, left_on='Home', right_on='Home')
-    jogos_filtrados = jogos_filtrados.merge(df_media_gols_fora, left_on='Away', right_on='Away')
+    jogos_filtrados_round = jogos_filtrados_round.merge(df_media_gols_casa, left_on='Home', right_on='Home')
+    jogos_filtrados_round = jogos_filtrados_round.merge(df_media_gols_fora, left_on='Away', right_on='Away')
 
     # Função para calcular a probabilidade de um certo número de gols usando a distribuição de Poisson
     def poisson_prob(media, k):
         return (np.exp(-media) * media ** k) / np.math.factorial(k)
 
     # Loop para prever os 6 placares mais prováveis para cada jogo
-    for index, row in jogos_filtrados.iterrows():
+    for index, row in jogos_filtrados_round.iterrows():
         time_casa = row['Home']
         time_visitante = row['Away']
         data_jogo = row['Date']
