@@ -36,6 +36,10 @@ def bck_home_page():
             home_teams = bck_home_df['Home'].unique()  # Get unique teams from 'Home' column
             selected_home = st.multiselect("Selecionar Mandante", home_teams)
 
+            # PPG_Home filter
+            min_ppg_home = st.number_input("PPG_Home Mínimo", min_value=0.0)
+            max_ppg_home = st.number_input("PPG_Home Máximo", min_value=0.0, value=3.0)
+
         # Filter for Odd_Home and Odd_Away range
         with col2:
             odd_h_min = st.number_input("Odd_Home Mínimo", value=0.0)
@@ -64,6 +68,8 @@ def bck_home_page():
             (bck_home_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
             (bck_home_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
             (bck_home_df['Home'].isin(selected_home) if selected_home else True) &
+            (bck_home_df['PPG_Home'] >= min_ppg_home) & 
+            (bck_home_df['PPG_Home'] <= max_ppg_home) & 
             (bck_home_df['FT_Odd_H'] >= odd_h_min) &
             (bck_home_df['FT_Odd_H'] <= odd_h_max) &
             (bck_home_df['FT_Odd_A'] >= odd_a_min) &
