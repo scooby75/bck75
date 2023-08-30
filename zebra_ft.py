@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import re
 
+from session_state import SessionState
+
 def zebra_ft_page():
     # Inicializa o estado da sessão
     session_state = SessionState(user_profile=2)
