@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 
+from session_state import SessionState
+
 def bck_league_home_page():
     # Inicializa o estado da sessão
     session_state = SessionState(user_profile=3)
