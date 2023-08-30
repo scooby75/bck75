@@ -15,6 +15,8 @@ def h2h_page():
     # Carregar o arquivo CSV
     data = pd.read_csv('https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true')
 
+    st.subheader("Análise h2h")
+
     # Solicitar ao usuário as equipes "Home" e "Away" usando selectbox
     home_teams = data['Home'].unique()
     away_teams = data['Away'].unique()
@@ -23,7 +25,7 @@ def h2h_page():
     away_team = st.selectbox("Selecione a equipe Away:", away_teams)
 
     # Definir os intervalos de Odd
-    odd_intervals = [(1.01, 1.30), (1.31, 1.50), (1.51, 1.70), (1.71, 1.90), (1.91, 2.1), (2.11, 2.3), (2.31, 2.5), (2.51, 2.7), (2.71, 3), (3.01, 3.5), (3.51, 4), (4.01, 4.50), (4.51, 5.5)]
+    odd_intervals = [(1.01, 1.30), (1.31, 1.50), (1.51, 1.70), (1.71, 1.90), (1.91, 2.1), (2.11, 2.3), (2.31, 2.5), (2.51, 2.7), (2.71, 3), (3.01, 3.5), (3.51, 4), (4.01, 4.50), (4.51, 5.5), (5.51, 6.5), (6.51, 7.5)]
 
     # Filtrar os resultados para as equipes selecionadas
     home_team_wins = data[(data['Resultado_FT'] == 'H') & (data['Home'] == home_team) & (data['Away'] == away_team)]
