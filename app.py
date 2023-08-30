@@ -20,6 +20,7 @@ def main():
 
     if not hasattr(session_state, 'logged_in'):
         session_state.logged_in = False
+        session_state.user_profile = 1  # Define o perfil do usuário como um valor padrão
 
     if not session_state.logged_in:
         login_page()
