@@ -59,11 +59,26 @@ def login_page():
             st.error("Credenciais inválidas.")
 
 def logout(username):
-    # Restante do seu código para a função logout
+    if username in active_users:
+        del active_users[username]
+        st.session_state.logged_in = False
+        st.session_state.username = None
+        st.session_state.user_profile = None
+    else:
+        st.error("Esse usuário não está atualmente logado.")
 
 def check_session_timeout():
-    # Restante do seu código para verificar o timeout da sessão
+    current_time = datetime.datetime.now()
+    users_to_logout = []
+
+    for username, last_activity in active_users.items():
+        if (current_time - last_activity).seconds > SESSION_TIMEOUT:
+            users_to_logout.append(username)
+
+    for username in users_to_logout:
+        logout(username)
+        st.warning(f"A sessão do usuário {username} expirou devido a inatividade.")
 
 if __name__ == "__main__":
     initialize_database()
-    st.timer(interval=60, key="session_timeout_check")
+    st.timer(interval=60, key="session_timeout_check", on_action=check_session_timeout)
