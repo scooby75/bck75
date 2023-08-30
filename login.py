@@ -51,11 +51,8 @@ def check_session_timeout():
     users_to_remove = []
 
     for username, last_activity in active_users.items():
-        if (current_time - last_activity).seconds > SESSION_TIMEOUT:
+        if (current_time - last_activity).total_seconds() > SESSION_TIMEOUT:
             users_to_remove.append(username)
 
     for username in users_to_remove:
         active_users.pop(username)
-
-# Call this function periodically, e.g., every minute
-check_session_timeout()
