@@ -34,26 +34,36 @@ def register_user(username, password):
     conn.commit()
     conn.close()
 
-def login(username):
-    conn = sqlite3.connect(DATABASE_FILE)
-    cursor = conn.cursor()
-    cursor.execute("INSERT OR REPLACE INTO active_users (username, last_activity) VALUES (?, datetime('now'))", (username,))
-    conn.commit()
-    conn.close()
+def login_page():
+    st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
+    st.title("Football Data Analysis")
+    username = st.text_input("Usuário")
+    password = st.text_input("Senha", type="password")
+
+    login_button = st.button("Entrar")
+
+    if login_button:
+        if username in valid_users and valid_users[username]["password"] == password:
+            # Check if user is already logged in
+            if username in active_users:
+                st.error("Esse usuário já está logado em outro dispositivo.")
+                return
+
+            # Store user's session ID and last activity time
+            active_users[username] = datetime.datetime.now()
+            user_profile = valid_users[username]["profile"]
+            st.session_state.logged_in = True
+            st.session_state.username = username
+            st.session_state.user_profile = user_profile
+        else:
+            st.error("Credenciais inválidas.")
 
 def logout(username):
-    conn = sqlite3.connect(DATABASE_FILE)
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM active_users WHERE username = ?", (username,))
-    conn.commit()
-    conn.close()
+    # Restante do seu código para a função logout
 
 def check_session_timeout():
-    conn = sqlite3.connect(DATABASE_FILE)
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM active_users WHERE strftime('%s', datetime('now')) - strftime('%s', last_activity) > ?", (SESSION_TIMEOUT,))
-    conn.commit()
-    conn.close()
+    # Restante do seu código para verificar o timeout da sessão
 
 if __name__ == "__main__":
     initialize_database()
+    st.timer(interval=60, key="session_timeout_check")
