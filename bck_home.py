@@ -62,6 +62,9 @@ def bck_home_page():
             btts_yes_min = st.number_input("BTTS_Yes Mínimo", value=0.0)
             btts_yes_max = st.number_input("BTTS_Yes Máximo", value=10.0)
 
+        # Remover espaços em branco dos nomes das colunas
+        bck_home_df.columns = bck_home_df.columns.str.strip()
+
         # Apply filters
         filtered_df = bck_home_df[
             (bck_home_df['League'].isin(selected_leagues) if all_leagues not in selected_leagues else True) &
