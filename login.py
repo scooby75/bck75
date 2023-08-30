@@ -6,7 +6,7 @@ import datetime
 active_users = {}
 
 # Session timeout in seconds (30 minutes)
-SESSION_TIMEOUT = 5 * 60
+SESSION_TIMEOUT = 2 * 60
 
 valid_users = {
     "lsilveira": {"password": "senha123", "profile": 3},
