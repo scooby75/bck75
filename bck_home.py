@@ -1441,11 +1441,17 @@ def bck_home_page():
 # Calcular as contagens dos placares específicos
         contagem_placares_especificos = filtered_df[filtered_df['Categoria'] == 'Placar Comum']['Placar_FT'].value_counts()
 
-# Exibir os resultados de placar mais comuns
-        
+        # Calcula a contagem total de placares
+        total_placares = sum(contagem_placares_especificos.values)
+
+# Adiciona uma nova coluna com as porcentagens calculadas
+        contagem_placares_especificos['Porcentagem (%)'] = (contagem_placares_especificos / total_placares) * 100
+        contagem_placares_especificos = contagem_placares_especificos.round(2)  # Arredonda para 2 casas decimais
+
+# Exibe os resultados de placares mais comuns
         st.subheader("Placares Mais Comuns no FT")
         st.dataframe(contagem_categorias.rename_axis('Categoria').reset_index(name='Contagem de Categorias'), width=400)
-        st.dataframe(contagem_placares_especificos.rename_axis('Placar').reset_index(name='Total'), width=400)
+        st.dataframe(contagem_placares_especificos.rename_axis('Placar').reset_index(), width=400)
 
         
         # Supondo que 'Temporada' seja a coluna que contém o ano da temporada
@@ -1511,11 +1517,17 @@ def bck_home_page():
 # Calcular as contagens dos placares específicos
         contagem_placares_especificos_ht = filtered_df[filtered_df['Categoria'] == 'Placar Comum']['Placar_HT'].value_counts()
 
-# Exibir os resultados de placar mais comuns
-        
+# Calcula a contagem total de placares
+        total_placares = sum(contagem_placares_especificos_ht.values)
+
+# Adiciona uma nova coluna com as porcentagens calculadas
+        contagem_placares_especificos_ht['Porcentagem (%)'] = (contagem_placares_especificos_ht / total_placares) * 100
+        contagem_placares_especificos_ht = contagem_placares_especificos_ht.round(2)  # Arredonda para 2 casas decimais
+
+# Exibe os resultados de placares mais comuns
         st.subheader("Placares Mais Comuns no HT")
         st.dataframe(contagem_categorias_ht.rename_axis('Categoria').reset_index(name='Contagem de Categorias'), width=400)
-        st.dataframe(contagem_placares_especificos_ht.rename_axis('Placar').reset_index(name='Total'), width=400)
+        st.dataframe(contagem_placares_especificos_ht.rename_axis('Placar').reset_index(), width=400)
 
         
         # Supondo que 'Temporada' seja a coluna que contém o ano da temporada
