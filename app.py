@@ -43,13 +43,13 @@ def main():
         if selected_tab == "Jogos do Dia":
             jogos_do_dia_page()
 
-        elif selected_tab == "Análise Home":
+        elif selected_tab == "Análise Home" and user_profile >= 3:
             bck_home_page()
-        elif selected_tab == "Análise Away":
+        elif selected_tab == "Análise Away" and user_profile >= 3:
             bck_away_page()
-        elif selected_tab == "Análise Liga":
+        elif selected_tab == "Análise Liga" and user_profile >= 3:
             bck_league_home_page()
-        elif selected_tab == "Dutching CS":
+        elif selected_tab == "Dutching CS" and user_profile >= 2:
             cs_page()
         elif selected_tab == "HA" and user_profile >= 2:
             ha_025_page()
