@@ -2,6 +2,13 @@ import streamlit as st
 import pandas as pd
 
 def bck_home_page():
+    # Inicializa o estado da sessão
+    session_state = SessionState(user_profile=3)
+
+    # Verifica se o usuário tem permissão para acessar a página
+    if session_state.user_profile < 3:
+        st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
+        return
     ##### PÁGINA BCK HOME ######
     tab0, tab1, tab2, tab3, tab4 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar"])
 
