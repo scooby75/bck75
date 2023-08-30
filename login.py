@@ -57,4 +57,3 @@ def check_session_timeout():
 
 if __name__ == "__main__":
     initialize_database()
-    st.timer(interval=60, key="session_timeout_check")
