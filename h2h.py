@@ -58,8 +58,7 @@ def h2h_page():
         if not odd_group.empty:
             most_common_score_in_group = odd_group['Placar_FT'].value_counts().idxmax()
             st.write(f'Intervalo de Odd: [{lower_bound:.2f}, {upper_bound:.2f}): Placar mais comum: {most_common_score_in_group}')
-        else:
-            st.write(f'Intervalo de Odd: [{lower_bound:.2f}, {upper_bound:.2f}): Nenhum dado disponível')
+        
     
     # Filtrar os jogos correspondentes às equipes selecionadas
     matching_games = data[(data['Home'] == home_team) & (data['Away'] == away_team)]
