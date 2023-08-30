@@ -3,6 +3,8 @@ import numpy as np
 import streamlit as st
 from datetime import datetime, timedelta  
 
+from session_state import SessionState
+
 def cs_page():
     # Inicializa o estado da sessão
     session_state = SessionState(user_profile=2)
