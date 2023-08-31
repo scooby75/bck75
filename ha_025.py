@@ -5,7 +5,11 @@ from session_state import get_or_create_session_state
 
 def ha_025_page():
     # Obtém ou cria o estado da sessão
-    session_state = get_or_create_session_state(user_profile=2)
+    session_state = get_or_create_session_state()
+
+    # Inicializa a variável user_profile no estado da sessão, se ainda não estiver definida
+    if not hasattr(session_state, "user_profile"):
+        session_state.user_profile = 2
 
     # Verifica se o usuário tem permissão para acessar a página
     if session_state.user_profile < 2:
