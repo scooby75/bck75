@@ -1,7 +1,8 @@
-# login.py
 import streamlit as st
 import datetime
-from session_state import SessionState
+
+# Variável global para armazenar as informações de login
+logged_in_user = None
 
 valid_users = {
     "lsilveira": {"password": "senha123", "profile": 3},
@@ -14,6 +15,7 @@ valid_users = {
 def login_page():
     st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", width=240)
     st.title("Football Data Analysis")
+    global logged_in_user
     username = st.text_input("Usuário")
     password = st.text_input("Senha", type="password")
 
@@ -21,17 +23,10 @@ def login_page():
 
     if login_button:
         if username in valid_users and valid_users[username]["password"] == password:
-            session_state = SessionState()
-            session_state.logged_in = True
-            session_state.username = username
-            session_state.login_time = datetime.datetime.now()
-            session_state.user_profile = valid_users[username]["profile"]  # Store user profile
+            logged_in_user = username  # Armazena o usuário logado na variável global
         else:
             st.error("Credenciais inválidas.")
 
 def logout():
-    session_state = SessionState()
-    session_state.logged_in = False
-    session_state.username = None
-    session_state.login_time = None
-    session_state.user_profile = None  # Clear user profile on logout
+    global logged_in_user
+    logged_in_user = None  # Limpa o usuário logado
