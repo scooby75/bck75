@@ -13,35 +13,23 @@ from bck_league_home import bck_league_home_page
 from goleada import goleada_page
 from h2h import h2h_page
 
-from streamlit.report_thread import get_report_ctx
 
-
-def get_or_create_session_state():
-    session = get_report_ctx().session
-    if not hasattr(session, "_custom_session_state"):
-        session._custom_session_state = SessionState(session)
-    return session._custom_session_state
-
-# Import login functions
-from login import login_page as login_func, logout as logout_func
-
-# Define a simple session state class
+# Define a custom session state manager
 class SessionState:
     def __init__(self):
         self.logged_in = False
         self.username = None
         self.user_profile = None
 
-# Initialize the session state
-session_state = SessionState()
-
-# Função para obter ou criar o estado da sessão
 def main():
-    # Obtém ou cria o estado da sessão
-    session_state = get_or_create_session_state()
+    # Create or get the session state
+    if 'session_state' not in st.session_state:
+        st.session_state.session_state = SessionState()
+
+    session_state = st.session_state.session_state
 
     if not session_state.logged_in:
-        login_func()  # Chama a função de login
+        login_page()  # Call the login function
         
     else:
         # Barra lateral com imagem e informações
