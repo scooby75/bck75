@@ -1,7 +1,17 @@
 # login.py
 import streamlit as st
 import datetime
-from session_state import SessionState
+
+# Define the SessionState class
+class SessionState:
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
+
+# Define the get_or_create_session_state function
+def get_or_create_session_state():
+    if 'session_state' not in st.session_state:
+        st.session_state.session_state = SessionState()
+    return st.session_state.session_state
 
 valid_users = {
     "lsilveira": {"password": "senha123", "profile": 3},
@@ -35,3 +45,4 @@ def logout():
     session_state.pop("username", None)
     session_state.pop("login_time", None)
     session_state.pop("user_profile", None)  # Clear user profile on logout
+
