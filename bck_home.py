@@ -25,6 +25,8 @@ def bck_home_page():
         # Chamar a função para carregar os dados
         bck_home_df = load_base()
 
+        print("Nomes das Colunas:", bck_home_df.columns)
+
         # Filtros interativos
         st.header("Filtros")
 
@@ -80,8 +82,8 @@ def bck_home_page():
             (bck_home_df['Season'].isin(selected_seasons) | (all_seasons in selected_seasons)) &
             ((bck_home_df['Round'].isin(selected_rounds)) if all_rounds not in selected_rounds else True) &
             ((bck_home_df['Home'].isin(selected_home)) if selected_home else True) &
-            (bck_home_df['Rank_Home_x'] >= min_rank_home) & 
-            (bck_home_df['Rank_Home_x'] <= max_rank_home) & 
+            (bck_home_df['Rank_Home'] >= min_rank_home) & 
+            (bck_home_df['Rank_Home'] <= max_rank_home) & 
             (bck_home_df['FT_Odd_H'] >= odd_h_min) &
             (bck_home_df['FT_Odd_H'] <= odd_h_max) &
             (bck_home_df['FT_Odd_A'] >= odd_a_min) &
