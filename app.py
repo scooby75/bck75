@@ -12,17 +12,16 @@ from bck_away import bck_away_page
 from bck_league_home import bck_league_home_page
 from goleada import goleada_page
 from h2h import h2h_page
-from session_state import get_or_create_session_state
+
+from session_state import SessionState
 
 def main():
-    # Obtém ou cria o estado da sessão
-    session_state = get_or_create_session_state()
-
-    if not hasattr(session_state, 'logged_in'):
-        session_state.logged_in = False
+    # Criação de uma instância de SessionState para gerenciar o estado da sessão
+    session_state = SessionState(logged_in=False, user_profile=1)
 
     if not session_state.logged_in:
         login_page()
+    
     else:
         # Initialize user_profile attribute if not present
         if not hasattr(session_state, 'user_profile'):
