@@ -18,7 +18,7 @@ def bck_home_page():
         # Carregar os dados
         @st.cache_data(ttl=28800.0)  # 24 horas em segundos
         def load_base():
-            url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral_Rank.csv?raw=true"
+            url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
             df = pd.read_csv(url)
             return df
         
@@ -75,13 +75,13 @@ def bck_home_page():
         bck_home_df.columns = bck_home_df.columns.str.strip()
 
         # Apply filters
-        filtered_df = bck_home_df[
-            (bck_home_df['League'].isin(selected_leagues) if all_leagues not in selected_leagues else True) &
-            (bck_home_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
-            (bck_home_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
-            (bck_home_df['Home'].isin(selected_home) if selected_home else True) &
-            (bck_home_df['PPG_Home_y'] >= min_rank_home) & 
-            (bck_home_df['PPG_Home_y'] <= max_rank_home) & 
+        filtered_df = bck_home_df[     
+            (bck_home_df['League'].isin(selected_leagues) | (all_leagues in selected_leagues)) &
+            (bck_home_df['Season'].isin(selected_seasons) | (all_seasons in selected_seasons)) &
+            ((bck_home_df['Round'].isin(selected_rounds)) if all_rounds not in selected_rounds else True) &
+            ((bck_home_df['Home'].isin(selected_home)) if selected_home else True) &
+            (bck_home_df['Rank_Home'] >= min_rank_home) & 
+            (bck_home_df['Rank_Home'] <= max_rank_home) & 
             (bck_home_df['FT_Odd_H'] >= odd_h_min) &
             (bck_home_df['FT_Odd_H'] <= odd_h_max) &
             (bck_home_df['FT_Odd_A'] >= odd_a_min) &
@@ -98,7 +98,7 @@ def bck_home_page():
 
         # Display selected columns from the filtered data
         selected_columns = [
-            "Date", "League", "Season", "Round", 'PPG_Home_y', "Home", "Away",
+            "Date", "League", "Season", "Round", 'Rank_Home', "Home", "Away",
             "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "HT_Odd_Over05", "FT_Odd_Over25", "Odd_BTTS_Yes", "Placar_HT", "Placar_FT"
         ]
         st.dataframe(filtered_df[selected_columns])
