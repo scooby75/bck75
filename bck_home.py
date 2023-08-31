@@ -25,6 +25,13 @@ def bck_home_page():
         # Chamar a função para carregar os dados
         bck_home_df = load_base()
 
+        def carregar_dados_adicionais():
+            url_adicional = "https://github.com/scooby75/bdfootball/blob/main/tabela_home_ppg.csv?raw=true"
+            dados_adicionais = pd.read_csv(url_adicional)
+            return dados_adicionais
+
+        dados_adicionais = carregar_dados_adicionais()
+
         # Filtros interativos
         st.header("Filtros")
 
@@ -45,9 +52,9 @@ def bck_home_page():
             home_teams = bck_home_df['Home'].unique()  # Get unique teams from 'Home' column
             selected_home = st.multiselect("Selecionar Mandante", home_teams)
 
-            # PPG_Home filter
-            #min_ppg_home = st.number_input("PPG_Home Mínimo", min_value=0.0)
-            #max_ppg_home = st.number_input("PPG_Home Máximo", min_value=0.0, value=3.0)
+            # Ranking_Home filter
+            min_ranking_home = st.number_input("Ranking_Home Mínimo", min_value=1.0)
+            max_ranking_home = st.number_input("Ranking_Home Máximo", min_value=1.0, value=50.0)
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
@@ -80,8 +87,8 @@ def bck_home_page():
             (bck_home_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
             (bck_home_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
             (bck_home_df['Home'].isin(selected_home) if selected_home else True) &
-            #(bck_home_df['PPG_Home'] >= min_ppg_home) & 
-            #(bck_home_df['PPG_Home'] <= max_ppg_home) & 
+            (bck_home_df['PPG_Home'] >= min_ranking_home) & 
+            (bck_home_df['PPG_Home'] <= max_ranking_home) & 
             (bck_home_df['FT_Odd_H'] >= odd_h_min) &
             (bck_home_df['FT_Odd_H'] <= odd_h_max) &
             (bck_home_df['FT_Odd_A'] >= odd_a_min) &
