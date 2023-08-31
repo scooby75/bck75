@@ -1,3 +1,19 @@
+import streamlit as st
+from login import login_page, logout
+from jogos import jogos_do_dia_page
+from cs import cs_page
+from predict import predict_page
+from ha_025 import ha_025_page
+from lay_zebra import lay_zebra_page
+from zebra_ft import zebra_ft_page
+from scalping import scalping_page
+from bck_home import bck_home_page
+from bck_away import bck_away_page
+from bck_league_home import bck_league_home_page
+from goleada import goleada_page
+from h2h import h2h_page
+from session_state import get_or_create_session_state
+
 def main():
     # Obtém ou cria o estado da sessão
     session_state = get_or_create_session_state()
