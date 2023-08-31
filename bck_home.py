@@ -47,7 +47,7 @@ def bck_home_page():
 
             # PPG_Home filter
             min_rank_home = st.number_input("Rank Mínimo", min_value=1.0)
-            max_rank_home = st.number_input("Rank Máximo", min_value=50.0)
+            max_rank_home = st.number_input("Rank Máximo", max_value=50.0)
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
