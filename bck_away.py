@@ -92,8 +92,7 @@ def bck_away_page():
             (bck_away_df['Odd_BTTS_Yes'] >= btts_yes_min) &
             (bck_away_df['Odd_BTTS_Yes'] <= btts_yes_max)
         ]
-        ]
-
+        
         # Display selected columns from the filtered data
         selected_columns = [
             "Date", "League", "Season", "Round", "Rank_Away", "Home", "Away",
