@@ -45,6 +45,10 @@ def bck_away_page():
             away_teams = bck_away_df['Away'].unique()  # Get unique teams from 'Away' column
             selected_away = st.multiselect("Selecionar Visitante", away_teams)
 
+            # PPG_Away filter
+            min_rank_away = st.number_input("Rank Mínimo", min_value=1.0)
+            max_rank_away = st.number_input("Rank Máximo", max_value=50.0)
+
         # Filter for Odd_Home and Odd_Away range
         with col2:
             odd_h_min = st.number_input("Odd_Home Mínimo", value=0.0, key="odd_h_min")
@@ -69,10 +73,12 @@ def bck_away_page():
 
         # Apply filters
         filtered_df = bck_away_df[
-            (bck_away_df['League'].isin(selected_leagues) if all_leagues not in selected_leagues else True) &
-            (bck_away_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
-            (bck_away_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
-            (bck_away_df['Away'].isin(selected_away) if selected_away else True) &
+            (bck_away_df['League'].isin(selected_leagues) | (all_leagues in selected_leagues)) &
+            (bck_away_df['Season'].isin(selected_seasons) | (all_seasons in selected_seasons)) &
+            ((bck_away_df['Round'].isin(selected_rounds)) if all_rounds not in selected_rounds else True) &
+            ((bck_away_df['Away'].isin(selected_home)) if selected_home else True) &
+            (bck_away_df['Rank_Away'] >= min_rank_home) & 
+            (bck_away_df['Rank_Away'] <= max_rank_home) & 
             (bck_away_df['FT_Odd_H'] >= odd_h_min) &
             (bck_away_df['FT_Odd_H'] <= odd_h_max) &
             (bck_away_df['FT_Odd_A'] >= odd_a_min) &
@@ -86,10 +92,11 @@ def bck_away_page():
             (bck_away_df['Odd_BTTS_Yes'] >= btts_yes_min) &
             (bck_away_df['Odd_BTTS_Yes'] <= btts_yes_max)
         ]
+        ]
 
         # Display selected columns from the filtered data
         selected_columns = [
-            "Date", "League", "Season", "Round", "Home", "Away",
+            "Date", "League", "Season", "Round", "Rank_Away", "Home", "Away",
             "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "HT_Odd_Over05", "FT_Odd_Over25", "Odd_BTTS_Yes", "Placar_HT", "Placar_FT"
         ]
         st.dataframe(filtered_df[selected_columns])
