@@ -18,7 +18,7 @@ def bck_home_page():
         # Carregar os dados
         @st.cache_data(ttl=28800.0)  # 24 horas em segundos
         def load_base():
-            url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
+            url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral_Rank.csv?raw=true"
             df = pd.read_csv(url)
             return df
         
@@ -46,8 +46,8 @@ def bck_home_page():
             selected_home = st.multiselect("Selecionar Mandante", home_teams)
 
             # PPG_Home filter
-            #min_ppg_home = st.number_input("PPG_Home Mínimo", min_value=0.0)
-            #max_ppg_home = st.number_input("PPG_Home Máximo", min_value=0.0, value=3.0)
+            min_rank_home = st.number_input("Rank Mínimo", min_value=1.0)
+            max_rank_home = st.number_input("Rank Máximo", min_value=50.0)
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
@@ -80,8 +80,8 @@ def bck_home_page():
             (bck_home_df['Season'].isin(selected_seasons) if all_seasons not in selected_seasons else True) &
             (bck_home_df['Round'].isin(selected_rounds) if all_rounds not in selected_rounds else True) &
             (bck_home_df['Home'].isin(selected_home) if selected_home else True) &
-            #(bck_home_df['PPG_Home'] >= min_ppg_home) & 
-            #(bck_home_df['PPG_Home'] <= max_ppg_home) & 
+            (bck_home_df['PPG_Home_y'] >= min_rank_home) & 
+            (bck_home_df['PPG_Home_y'] <= max_rank_home) & 
             (bck_home_df['FT_Odd_H'] >= odd_h_min) &
             (bck_home_df['FT_Odd_H'] <= odd_h_max) &
             (bck_home_df['FT_Odd_A'] >= odd_a_min) &
@@ -98,7 +98,7 @@ def bck_home_page():
 
         # Display selected columns from the filtered data
         selected_columns = [
-            "Date", "League", "Season", "Round", "Home", "Away",
+            "Date", "League", "Season", "Round", 'PPG_Home_y', "Home", "Away",
             "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "HT_Odd_Over05", "FT_Odd_Over25", "Odd_BTTS_Yes", "Placar_HT", "Placar_FT"
         ]
         st.dataframe(filtered_df[selected_columns])
