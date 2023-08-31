@@ -1,19 +1,3 @@
-import streamlit as st
-from login import login_page, logout
-from jogos import jogos_do_dia_page
-from cs import cs_page
-from predict import predict_page
-from ha_025 import ha_025_page
-from lay_zebra import lay_zebra_page
-from zebra_ft import zebra_ft_page
-from scalping import scalping_page
-from bck_home import bck_home_page
-from bck_away import bck_away_page
-from bck_league_home import bck_league_home_page
-from goleada import goleada_page
-from h2h import h2h_page
-from session_state import get_or_create_session_state
-
 def main():
     # Obtém ou cria o estado da sessão
     session_state = get_or_create_session_state()
@@ -24,6 +8,10 @@ def main():
     if not session_state.logged_in:
         login_page()
     else:
+        # Initialize user_profile attribute if not present
+        if not hasattr(session_state, 'user_profile'):
+            session_state.user_profile = 1  # Initialize with a default value           
+
         # Barra lateral com imagem e informações
         st.sidebar.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
         st.sidebar.header("Football Data Analysis")
