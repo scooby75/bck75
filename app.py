@@ -11,29 +11,28 @@ from bck_home import bck_home_page
 from bck_away import bck_away_page
 from bck_league_home import bck_league_home_page
 from goleada import goleada_page
-from h2h import h2h_page
-from session_state import SessionState
+from session_state import get_or_create_session_state
 
 def main():
-    # Verifica se o estado de sessão "logged_in" já existe
-    
-    if not hasattr(st.session_state, "logged_in"):
-        st.session_state.logged_in = False
+    # Obtém ou cria o estado da sessão
+    session_state = get_or_create_session_state()
 
-    # Verifica se o usuário está logado ou não
-    if not st.session_state.logged_in:
+    if not hasattr(session_state, 'logged_in'):
+        session_state.logged_in = False
+
+    if not session_state.logged_in:
         login_page()
     else:
         # Barra lateral com imagem e informações
         st.sidebar.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
         st.sidebar.header("Football Data Analysis")
-
+        
         # Mostra informações do usuário e botão de logout na barra lateral
-        st.sidebar.write(f"Logado como: {st.session_state.username}")
+        st.sidebar.write(f"Logado como: {session_state.username}")
         if st.sidebar.button("Logout", key="logout_button"):
             logout()
-            
-         # Caixa de seleção para diferentes páginas
+        
+        # Caixa de seleção para diferentes páginas
         selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Análise Home", "Análise Away", "Análise Liga", "Dutching CS", "HA", "H2H", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict", "Scalping"])
 
         # Exibe o conteúdo da página selecionada, considerando as permissões do perfil
