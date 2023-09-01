@@ -17,10 +17,13 @@ def load_base():
     url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
     df = pd.read_csv(url, delimiter='\t')  # Carregar os dados do CSV com delimitador de tabulação
     
-    # Converter a coluna 'Date' e 'Time' para um objeto de data e hora
-    df['Time'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d.%m.%Y %H:%M', dayfirst=True)  # Use dayfirst=True para formatos "dd/mm/yyyy"
+    # Converter a coluna 'Date' para um objeto de data
+    df['Date'] = pd.to_datetime(df['Date'], format='%d.%m.%Y')
     
-    # Subtrair 3 horas
+    # Converter a coluna 'Time' para um objeto de hora
+    df['Time'] = pd.to_datetime(df['Time'], format='%H:%M')
+    
+    # Subtrair 3 horas da coluna 'Time'
     df['Time'] = df['Time'] - pd.DateOffset(hours=3)
     
     # Formatar a coluna 'Time' no formato HH:MM
