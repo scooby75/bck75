@@ -1,4 +1,3 @@
-     
 import streamlit as st
 import pandas as pd
 import datetime as dt
@@ -17,7 +16,7 @@ def jogos_do_dia_page():
     if session_state.user_profile < 1:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
-         
+
     st.subheader("Jogos do Dia")
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
 
@@ -27,15 +26,18 @@ def jogos_do_dia_page():
         url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
         data_jogos = pd.read_csv(url)
 
+        # Especifique o formato das datas como DD/MM/AAAA
+        formato_data = "%d/%m/%Y"
+
         # Convert the 'Hora' column to a datetime object
-        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'])
-        data_jogos['Time'] = data_jogos['Time'].dt.strftime('%H:%M') 
-    
-     # Criar um intervalo de tempo de 3 horas
+        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'], format=formato_data)
+        data_jogos['Time'] = data_jogos['Time'].dt.strftime('%H:%M')
+
+        # Criar um intervalo de tempo de 3 horas
         offset_tempo = pd.Timedelta(hours=3)
-    
-    # Subtrair o intervalo de tempo da coluna 'Time'
-        data_jogos['Time'] = pd.to_datetime(data_jogos['Time']) - offset_tempo
+
+        # Subtrair o intervalo de tempo da coluna 'Time'
+        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'], format='%H:%M') - offset_tempo
         data_jogos['Time'] = data_jogos['Time'].dt.strftime('%H:%M')
 
         # Rename the columns and process 'Rodada'
@@ -60,7 +62,7 @@ def jogos_do_dia_page():
     df2 = load_base()
 
     # Define columns to display
-    columns_to_display = [
+    columns_to display = [
         'Date', 'Hora', 'Liga', 'Home', 'Away', 'Rodada',
         'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
         'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes'
