@@ -15,15 +15,12 @@ valid_users = {
 }
 
 def perform_login(username, password):
-    session_state = get_or_create_session_state()
-    
     if username in valid_users and valid_users[username]["password"] == password:
-        session_state.login_successful = True
-        session_state.username = username  # Use o valor do dicionário valid_users
-        session_state.login_time = datetime.datetime.now()
-        session_state.user_profile = valid_users[username]["profile"]
-        return True
-    return False
+    session_state.login_successful = True
+    session_state.username = username
+    session_state.login_time = datetime.datetime.now()
+    session_state.user_profile = valid_users[username]["profile"]  # Inicialize user_profile aqui
+    return True
 
 def perform_logout():  # Manter o nome da função como "perform_logout"
     session_state = get_or_create_session_state()
