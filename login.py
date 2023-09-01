@@ -1,5 +1,4 @@
 # login.py
-
 import streamlit as st
 import datetime
 from session_state import get_or_create_session_state
@@ -46,4 +45,3 @@ def login_page():
             if login_button:
                 if perform_login(username, password, session_state):
                     st.success(f"Bem-vindo, {username}!")
-
