@@ -19,7 +19,7 @@ def perform_login(username, password):
     
     if username in valid_users and valid_users[username]["password"] == password:
         session_state.login_successful = True
-        session_state.username = username
+        session_state.username = username  # Defina o valor de username aqui
         session_state.login_time = datetime.datetime.now()
         session_state.user_profile = valid_users[username]["profile"]
         return True
