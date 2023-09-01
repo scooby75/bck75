@@ -1,3 +1,7 @@
+# Inicialize session_state se ele não existir
+if 'login_successful' not in st.session_state:
+    st.session_state.login_successful = False
+    
 import streamlit as st
 from login import login_page, perform_logout
 from jogos import jogos_do_dia_page
