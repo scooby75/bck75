@@ -1,5 +1,5 @@
 import streamlit as st
-from login import login_page, logout
+from login import login_page, logout  # Adicione esta linha
 from jogos import jogos_do_dia_page
 from cs import cs_page
 from predict import predict_page
