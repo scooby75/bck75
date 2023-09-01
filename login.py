@@ -12,19 +12,16 @@ valid_users = {
     "user3": {"password": "password3", "profile": 3}
 }
 
-def perform_login(username, password):
-    session_state = get_or_create_session_state()
-    
+def perform_login(username, password, session_state):
     if username in valid_users and valid_users[username]["password"] == password:
         session_state.logged_in = True
-        session_state.username = username  # Defina o username na sessão antes de criar o widget
+        session_state.username = username
         session_state.login_time = datetime.datetime.now()
         session_state.user_profile = valid_users[username]["profile"]
         return True
     return False
 
-def perform_logout():
-    session_state = get_or_create_session_state()
+def perform_logout(session_state):
     session_state.logged_in = False
     session_state.username = None
     session_state.login_time = None
@@ -39,7 +36,7 @@ def login_page():
         st.success(f"Você está logado como {session_state.username} | Perfil: {session_state.user_profile}")
         logout_button = st.button("Sair")
         if logout_button:
-            perform_logout()
+            perform_logout(session_state)
     else:
         with st.form("login_form"):
             username = st.text_input("Usuário", key="username", help="Digite seu nome de usuário", **{"autocomplete": "username"})
@@ -47,6 +44,6 @@ def login_page():
             login_button = st.form_submit_button("Entrar")
 
             if login_button:
-                if perform_login(username, password):
+                if perform_login(username, password, session_state):
                     st.success(f"Bem-vindo, {username}!")
 
