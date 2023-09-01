@@ -2,23 +2,15 @@
 import streamlit as st
 import jwt
 import datetime
-import requests
 
-# URL do arquivo secreto no GitHub
-SECRET_KEY_URL = "https://raw.githubusercontent.com/scooby75/bck75/main/secret_key.txt"
-
-# Faça uma solicitação HTTP para obter a chave secreta
-response = requests.get(SECRET_KEY_URL)
-
-if response.status_code == 200:
-    SECRET_KEY = response.text.strip()  # Lê o conteúdo da resposta
-else:
-    st.error("Erro ao obter a chave secreta do GitHub")
+# Leitura da chave secreta a partir do arquivo
+with open("https://raw.githubusercontent.com/scooby75/bck75/main/secret_key.txt", "r") as key_file:
+    SECRET_KEY = key_file.read().strip()
 
 # Dicionário de usuários (substitua por um banco de dados em produção)
 users = {
-    "lsilveira": "senha123",
-    "usuario3": "senha3"
+    "lsilveira": {"password": "senha123", "profile": 3},
+    "usuario3": {"password": "senha3", "profile": 1}
 }
 
 def create_token(username):
@@ -32,8 +24,9 @@ def create_token(username):
 
 def verify_credentials(username, password):
     # Verifique se o nome de usuário e a senha correspondem aos registros (substitua por um banco de dados em produção)
-    stored_password = users.get(username)
-    return stored_password == password
+    if username in users and users[username]["password"] == password:
+        return True
+    return False
 
 def login_page():
     st.title("Login Simples")
@@ -48,9 +41,7 @@ def login_page():
             token = create_token(username)
             st.success("Login bem-sucedido!")
 
-            # Guarde o token em algum lugar seguro (por exemplo, em um cookie ou em uma variável de sessão)
-            st.write(f"Token JWT: {token}")
-
-# Main application
-if __name__ == "__main__":
-    login_page()
+            # Guarde o token em algum lugar seguro (por exemplo, em um cookie ou variável global)
+            return token  # Retorna o token JWT
+        else:
+            st.error("Credenciais inválidas. Faça login novamente.")
