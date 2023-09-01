@@ -19,7 +19,10 @@ def perform_login(username, password):
         session_state.login_successful = True
         session_state.username = username
         session_state.login_time = datetime.datetime.now()
+        
+        # Defina o perfil do usuário no estado da sessão
         session_state.user_profile = valid_users[username]["profile"]
+        
         return True
     else:
         return False
