@@ -1,16 +1,17 @@
 import streamlit as st
 import pandas as pd
 
-from session_state import SessionState
+from session_state import get_or_create_session_state
 
 def bck_away_page():
-    # Inicializa o estado da sessão
-    session_state = SessionState(user_profile=3)
+    # Obtém ou cria o estado da sessão
+    session_state = get_or_create_session_state(user_profile=3)
 
     # Verifica se o usuário tem permissão para acessar a página
     if session_state.user_profile < 3:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
+        
     ##### PÁGINA BCK AWAY ######
     tab0, tab1, tab2, tab3, tab4 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar"])
 
