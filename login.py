@@ -1,60 +1,55 @@
 # login.py
 import streamlit as st
+import jwt
 import datetime
-from session_state import get_or_create_session_state
+import requests
 
-# Initialize session state
-session_state = get_or_create_session_state()
+# URL do arquivo secreto no GitHub
+SECRET_KEY_URL = "https://raw.githubusercontent.com/scooby75/bck75/main/secret_key.txt"
 
-valid_users = {
-    "lsilveira": {"password": "senha123", "profile": 3},
-    "lamaral": {"password": "lamaral23", "profile": 1},
-    "blamim": {"password": "lamim23", "profile": 3},
-    "mrodrigues": {"password": "mrodrigues23", "profile": 3},
-    "user3": {"password": "password3", "profile": 3}
+# Faça uma solicitação HTTP para obter a chave secreta
+response = requests.get(SECRET_KEY_URL)
+
+if response.status_code == 200:
+    SECRET_KEY = response.text.strip()  # Lê o conteúdo da resposta
+else:
+    st.error("Erro ao obter a chave secreta do GitHub")
+
+# Dicionário de usuários (substitua por um banco de dados em produção)
+users = {
+    "lsilveira": "senha123",
+    "usuario3": "senha3"
 }
 
-def perform_login(username, password):
-    if username in valid_users and valid_users[username]["password"] == password:
-        session_state.login_successful = True
-        session_state.username = username
-        session_state.login_time = datetime.datetime.now()
-        session_state.user_profile = valid_users[username]["profile"]
-        return True
-    else:
-        return False
+def create_token(username):
+    # Crie um token JWT com o nome de usuário e uma data de expiração
+    payload = {
+        "username": username,
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1)  # Token expira em 1 hora
+    }
+    token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+    return token
 
-def perform_logout():
-    session_state.login_successful = False
-    session_state.username = None
-    session_state.login_time = None
-    session_state.user_profile = None
+def verify_credentials(username, password):
+    # Verifique se o nome de usuário e a senha correspondem aos registros (substitua por um banco de dados em produção)
+    stored_password = users.get(username)
+    return stored_password == password
 
 def login_page():
-    st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
-    st.title("Análise de Dados de Futebol")
+    st.title("Login Simples")
 
-    if session_state.login_successful:
-        st.success(f"Bem-vindo, {session_state.username}! | Perfil: {session_state.user_profile}")
-        logout_button = st.button("Sair")
-        if logout_button:
-            perform_logout()
-    else:
-        with st.form("formulario_login"):
-            # Mova a criação do widget 'username' para cima da atribuição do 'username'
-            username = st.text_input("Usuário", key="username", help="Digite seu nome de usuário", **{"autocomplete": "username"})
-            password = st.text_input("Senha", type="password", key="password", help="Digite sua senha", **{"autocomplete": "current-password"})
-            
-            # Agora, você pode atribuir 'username' a 'session_state' antes do widget ser criado
-            session_state.username = username
+    if st.button("Login"):
+        username = st.text_input("Nome de Usuário")
+        password = st.text_input("Senha", type="password")
 
-            login_button = st.form_submit_button("Entrar")
+        # Verifique as credenciais do usuário
+        if verify_credentials(username, password):
+            # Se as credenciais estiverem corretas, crie um token JWT
+            token = create_token(username)
+            st.success("Login bem-sucedido!")
 
-            if login_button:
-                if perform_login(username, password):
-                    st.success(f"Bem-vindo, {username}!")
-                else:
-                    st.error("Falha ao fazer login. Verifique seu nome de usuário e senha.")
+            # Guarde o token em algum lugar seguro (por exemplo, em um cookie ou em uma variável de sessão)
+            st.write(f"Token JWT: {token}")
 
 # Main application
 if __name__ == "__main__":
