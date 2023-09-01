@@ -31,7 +31,7 @@ def perform_logout():
     session_state.user_profile = None
 
 def login_page():
-    st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", width=240)
+    st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
     st.title("Análise de Dados de Futebol")
 
     if session_state.login_successful:
@@ -41,8 +41,13 @@ def login_page():
             perform_logout()
     else:
         with st.form("formulario_login"):
+            # Mova a criação do widget 'username' para cima da atribuição do 'username'
             username = st.text_input("Usuário", key="username", help="Digite seu nome de usuário", **{"autocomplete": "username"})
             password = st.text_input("Senha", type="password", key="password", help="Digite sua senha", **{"autocomplete": "current-password"})
+            
+            # Agora, você pode atribuir 'username' a 'session_state' antes do widget ser criado
+            session_state.username = username
+
             login_button = st.form_submit_button("Entrar")
 
             if login_button:
@@ -54,4 +59,3 @@ def login_page():
 # Main application
 if __name__ == "__main__":
     login_page()
-
