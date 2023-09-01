@@ -6,4 +6,4 @@ openpyxl
 bcrypt
 psycopg2
 numpy
-vega-lite==5.9.3
+vega-lite
