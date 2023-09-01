@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import re
 
-from session_state import SessionState
+from session_state import get_or_create_session_state
 
 # Função para extrair o número do texto "ROUND N"
 def extrair_numero_rodada(text):
@@ -48,7 +48,7 @@ def load_base():
 
 def goleada_page():
     # Inicializa o estado da sessão
-    session_state = SessionState(user_profile=3)
+    session_state = get_or_create_session_state(user_profile=3)
 
     # Verifica se o usuário tem permissão para acessar a página
     if session_state.user_profile < 3:
