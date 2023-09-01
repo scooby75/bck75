@@ -13,7 +13,7 @@ valid_users = {
 
 def perform_login(username, password, session_state):
     if username in valid_users and valid_users[username]["password"] == password:
-        session_state.logged_in = True
+        session_state.login_successful = True
         session_state.username = username
         session_state.login_time = datetime.datetime.now()
         session_state.user_profile = valid_users[username]["profile"]
@@ -21,7 +21,7 @@ def perform_login(username, password, session_state):
     return False
 
 def perform_logout(session_state):
-    session_state.logged_in = False
+    session_state.login_successful = False
     session_state.username = None
     session_state.login_time = None
     session_state.user_profile = None
@@ -31,8 +31,8 @@ def login_page():
     st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", width=240)
     st.title("Football Data Analysis")
 
-    if session_state.logged_in:
-        st.success(f"Você está logado como {session_state.username} | Perfil: {session_state.user_profile}")
+    if hasattr(session_state, "login_successful") and session_state.login_successful:
+        st.success(f"Bem-vindo, {session_state.username}! | Perfil: {session_state.user_profile}")
         logout_button = st.button("Sair")
         if logout_button:
             perform_logout(session_state)
@@ -45,3 +45,5 @@ def login_page():
             if login_button:
                 if perform_login(username, password, session_state):
                     st.success(f"Bem-vindo, {username}!")
+                else:
+                    st.error("Falha ao fazer login. Verifique seu nome de usuário e senha.")
