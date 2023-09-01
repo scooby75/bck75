@@ -31,7 +31,7 @@ def jogos_do_dia_page():
 
         # Convert the 'Hora' column to a datetime object
         data_jogos['Time'] = pd.to_datetime(data_jogos['Time'], format=formato_data)
-        data_jogos['Time'] = data_jogos['Time'].dt.strftime('%H:%M')
+        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'], format='%H:%M')
 
         # Criar um intervalo de tempo de 3 horas
         offset_tempo = pd.Timedelta(hours=3)
