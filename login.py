@@ -14,10 +14,13 @@ valid_users = {
 def login_page():
     st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", width=240)
     st.title("Football Data Analysis")
-    username = st.text_input("Usuário")
-    password = st.text_input("Senha", type="password")
 
-    login_button = st.button("Entrar")
+    # Adicione um elemento de formulário HTML
+    with st.form("login_form"):
+        username = st.text_input("Usuário")
+        password = st.text_input("Senha", type="password")
+
+        login_button = st.form_submit_button("Entrar")
 
     if login_button:
         if username in valid_users and valid_users[username]["password"] == password:
@@ -35,3 +38,7 @@ def logout():
     session_state.pop("username", None)
     session_state.pop("login_time", None)
     session_state.pop("user_profile", None)  # Clear user profile on logout
+
+# Exemplo de uso da função de login
+if __name__ == "__main__":
+    login_page()
