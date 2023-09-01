@@ -30,10 +30,6 @@ def main():
     if not session_state.logged_in:
         login_page()
     else:
-        # Initialize user_profile attribute if not present
-        if not hasattr(session_state, 'user_profile'):
-            session_state.user_profile = 1  # Initialize with a default value
-
         # Barra lateral com imagem e informações
         st.sidebar.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
         st.sidebar.header("Football Data Analysis")
