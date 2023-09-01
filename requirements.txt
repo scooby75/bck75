@@ -6,4 +6,4 @@ openpyxl
 bcrypt
 psycopg2
 numpy
-vega-lite
+altair
