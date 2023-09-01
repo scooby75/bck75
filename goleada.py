@@ -18,7 +18,7 @@ def load_base():
     df = pd.read_csv(url, delimiter='\t')  # Carregar os dados do CSV com delimitador de tabulação
     
     # Converter a coluna 'Date' e 'Time' para um objeto de data e hora
-    df['Time'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d.%m.%Y %H:%M')
+    df['Time'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d.%m.%Y %H:%M', dayfirst=True)  # Use dayfirst=True para formatos "dd/mm/yyyy"
     
     # Subtrair 3 horas
     df['Time'] = df['Time'] - pd.DateOffset(hours=3)
