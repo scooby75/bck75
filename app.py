@@ -1,3 +1,4 @@
+# app.py
 import streamlit as st
 from login import login_page, perform_logout
 from jogos import jogos_do_dia_page
@@ -26,23 +27,23 @@ def main():
     else:
         # Initialize user_profile attribute if not present
         if not hasattr(session_state, 'user_profile'):
-            session_state.user_profile = 1  # Initialize with a default value           
+            session_state.user_profile = 1  # Initialize with a default value
 
         # Barra lateral com imagem e informações
         st.sidebar.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
         st.sidebar.header("Football Data Analysis")
-        
+
         # Mostra informações do usuário e botão de logout na barra lateral
         st.sidebar.write(f"Logado como: {session_state.username}")
         if st.sidebar.button("Logout", key="logout_button"):
-            perform_logout()  # Chame perform_logout em vez de logout
-        
+            perform_logout(session_state)  # Chame perform_logout em vez de logout
+
         # Caixa de seleção para diferentes páginas
         selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Análise Home", "Análise Away", "Análise Liga", "Dutching CS", "HA", "H2H", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict", "Scalping"])
 
         # Exibe o conteúdo da página selecionada, considerando as permissões do perfil
         user_profile = session_state.user_profile  # Use session_state here
-        
+
         if selected_tab == "Jogos do Dia" and user_profile is not None and user_profile >= 1:
             jogos_do_dia_page()
         elif selected_tab == "Análise Home" and user_profile >= 3:
