@@ -62,7 +62,7 @@ def jogos_do_dia_page():
     df2 = load_base()
 
     # Define columns to display
-    columns_to display = [
+    columns_to_display = [
         'Date', 'Hora', 'Liga', 'Home', 'Away', 'Rodada',
         'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
         'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes'
