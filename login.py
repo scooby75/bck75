@@ -1,4 +1,5 @@
 # login.py
+# login.py
 import streamlit as st
 import datetime
 from session_state import get_or_create_session_state
@@ -22,7 +23,7 @@ def perform_login(username, password):
         return True
     return False
 
-def perform_logout():
+def perform_logout():  # Manter o nome da função como "perform_logout"
     session_state = get_or_create_session_state()
     session_state.logged_in = False
     session_state.username = None
@@ -48,6 +49,3 @@ def login_page():
             if login_button:
                 if perform_login(username, password):
                     st.success(f"Bem-vindo, {username}!")
-
-if __name__ == "__main__":
-    login_page()
