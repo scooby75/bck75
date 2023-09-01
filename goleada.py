@@ -17,17 +17,13 @@ def load_base():
     url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
     df = pd.read_csv(url)  # Carregar os dados do CSV
     
-    # Convert the 'Hora' column to a datetime object
-    df['Time'] = pd.to_datetime(df['Time'])
-    df['Time'] = df['Time'].dt.strftime('%H:%M') 
+    # Converter a coluna 'Hora' para um objeto de data e hora
+    df['Time'] = pd.to_datetime(df['Time'], format='%d/%m/%Y')
+    df['Time'] = df['Time'] - pd.DateOffset(hours=3)  # Subtrair 3 horas
     
-     # Criar um intervalo de tempo de 3 horas
-    offset_tempo = pd.Timedelta(hours=3)
-    
-    # Subtrair o intervalo de tempo da coluna 'Time'
-    df['Time'] = pd.to_datetime(df['Time']) - offset_tempo
+    # Formatar a coluna 'Time' no formato HH:MM
     df['Time'] = df['Time'].dt.strftime('%H:%M')
-
+    
     # Rename the columns
     df.rename(columns={
         'FT_Odds_H': 'FT_Odd_H',
