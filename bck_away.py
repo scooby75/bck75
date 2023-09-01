@@ -4,11 +4,15 @@ import pandas as pd
 from session_state import get_or_create_session_state
 
 def bck_away_page():
-    # Obtém ou cria o estado da sessão
-    session_state = get_or_create_session_state(user_profile=3)
+       # Obtém ou cria o estado da sessão
+    session_state = get_or_create_session_state()
+
+    # Inicializa a variável user_profile no estado da sessão, se ainda não estiver definida
+    if not hasattr(session_state, "user_profile"):
+        session_state.user_profile = 3  # Define o valor de user_profile aqui
 
     # Verifica se o usuário tem permissão para acessar a página
-    if session_state.user_profile < 3:
+    if session_state.user_profile < 2:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
         
