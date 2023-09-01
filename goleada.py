@@ -15,7 +15,7 @@ def extrair_numero_rodada(text):
 
 def load_base():
     url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
-    df = pd.read_csv(url, delimiter='\t')  # Carregar os dados do CSV com delimitador de tabulação
+    df = pd.read_csv(url)  # Carregar os dados do CSV
     
     # Converter a coluna 'Date' para um objeto de data
     df['Date'] = pd.to_datetime(df['Date'], format='%d.%m.%Y')
