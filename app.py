@@ -22,6 +22,9 @@ def main():
     if not hasattr(session_state, 'login_successful'):
         session_state.login_successful = False  # Inicialize login_successful
 
+    if not hasattr(session_state, 'logged_in'):
+        session_state.logged_in = False  # Inicialize logged_in
+
     if not session_state.logged_in:
         login_page()
     else:
@@ -63,4 +66,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
