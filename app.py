@@ -1,5 +1,5 @@
 import streamlit as st
-from login import login_page, logout
+from login import login_page, perform_logout
 from jogos import jogos_do_dia_page
 from cs import cs_page
 from predict import predict_page
@@ -35,7 +35,7 @@ def main():
         # Mostra informações do usuário e botão de logout na barra lateral
         st.sidebar.write(f"Logado como: {session_state.username}")
         if st.sidebar.button("Logout", key="logout_button"):
-            logout()
+            perform_logout()  # Chame perform_logout em vez de logout
         
         # Caixa de seleção para diferentes páginas
         selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Análise Home", "Análise Away", "Análise Liga", "Dutching CS", "HA", "H2H", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict", "Scalping"])
