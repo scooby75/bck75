@@ -15,22 +15,24 @@ def extrair_numero_rodada(text):
 
 def load_base():
     url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
-    df = pd.read_csv(url)  # Carregar os dados do CSV
+    df = pd.read_csv(url, delimiter='\t')  # Carregar os dados do CSV com delimitador de tabulação
     
-    # Converter a coluna 'Hora' para um objeto de data e hora
-    df['Time'] = pd.to_datetime(df['Time'], format='%d/%m/%Y')
-    df['Time'] = df['Time'] - pd.DateOffset(hours=3)  # Subtrair 3 horas
+    # Converter a coluna 'Date' e 'Time' para um objeto de data e hora
+    df['Time'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d.%m.%Y %H:%M')
+    
+    # Subtrair 3 horas
+    df['Time'] = df['Time'] - pd.DateOffset(hours=3)
     
     # Formatar a coluna 'Time' no formato HH:MM
     df['Time'] = df['Time'].dt.strftime('%H:%M')
     
     # Rename the columns
     df.rename(columns={
-        'FT_Odds_H': 'FT_Odd_H',
-        'FT_Odds_D': 'FT_Odd_D',
-        'FT_Odds_A': 'FT_Odd_A',
-        'FT_Odds_Over25': 'FT_Odd_Over25',
-        'FT_Odds_Under25': 'FT_Odd_Under25',
+        'FT_Odd_H': 'FT_Odd_H',
+        'FT_Odd_D': 'FT_Odd_D',
+        'FT_Odd_A': 'FT_Odd_A',
+        'FT_Odd_Over25': 'FT_Odd_Over25',
+        'FT_Odd_Under25': 'FT_Odd_Under25',
         'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
         'ROUND': 'Rodada',
         'Time': 'Hora',
@@ -72,6 +74,3 @@ def goleada_page():
 
 # Chamar a função para iniciar o aplicativo
 goleada_page()
-
-
-    
