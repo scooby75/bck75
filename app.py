@@ -19,8 +19,8 @@ def main():
     # Obtém ou cria o estado da sessão
     session_state = get_or_create_session_state()
 
-    if not hasattr(session_state, 'logged_in'):
-        session_state.logged_in = False
+    if not hasattr(session_state, 'login_successful'):
+        session_state.login_successful = False  # Inicialize login_successful
 
     if not session_state.logged_in:
         login_page()
@@ -63,3 +63,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
