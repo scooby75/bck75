@@ -45,7 +45,7 @@ def main():
         # Exibe o conteúdo da página selecionada, considerando as permissões do perfil
         user_profile = session_state.user_profile  # Use session_state here
         
-        if selected_tab == "Jogos do Dia" and user_profile >= 1:
+        if selected_tab == "Jogos do Dia" and user_profile is not None and user_profile >= 1:
             jogos_do_dia_page()
         elif selected_tab == "Análise Home" and user_profile >= 3:
             bck_home_page()
