@@ -3,6 +3,9 @@ import streamlit as st
 import datetime
 from session_state import get_or_create_session_state
 
+# Initialize session state
+session_state = get_or_create_session_state()
+
 valid_users = {
     "lsilveira": {"password": "senha123", "profile": 3},
     "lamaral": {"password": "lamaral23", "profile": 1},
