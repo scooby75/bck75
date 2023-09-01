@@ -1,4 +1,3 @@
-# app.py
 import streamlit as st
 from login import login_page, perform_logout
 from jogos import jogos_do_dia_page
@@ -38,36 +37,32 @@ def main():
         if st.sidebar.button("Logout", key="logout_button"):
             perform_logout(session_state)  # Chame perform_logout em vez de logout
 
+        # Mapeia a seleção do usuário para as páginas
+        pages = {
+            "Jogos do Dia": (jogos_do_dia_page, 1),
+            "Análise Home": (bck_home_page, 3),
+            "Análise Away": (bck_away_page, 3),
+            "Análise Liga": (bck_league_home_page, 3),
+            "Dutching CS": (cs_page, 2),
+            "HA": (ha_025_page, 2),
+            "H2H": (h2h_page, 2),
+            "Lay Goleada": (goleada_page, 3),
+            "Lay Zebra HT": (lay_zebra_page, 2),
+            "Predict": (predict_page, 3),
+            "Lay Zebra FT": (zebra_ft_page, 2),
+            "Scalping": (scalping_page, 3)
+        }
+
         # Caixa de seleção para diferentes páginas
-        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Análise Home", "Análise Away", "Análise Liga", "Dutching CS", "HA", "H2H", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict", "Scalping"])
+        selected_tab = st.sidebar.selectbox("Selecione uma aba", list(pages.keys()))
 
         # Exibe o conteúdo da página selecionada, considerando as permissões do perfil
-        user_profile = session_state.user_profile  # Use session_state here
+        user_profile = session_state.user_profile
 
-        if selected_tab == "Jogos do Dia" and user_profile is not None and user_profile >= 1:
-            jogos_do_dia_page()
-        elif selected_tab == "Análise Home" and user_profile >= 3:
-            bck_home_page()
-        elif selected_tab == "Análise Away" and user_profile >= 3:
-            bck_away_page()
-        elif selected_tab == "Análise Liga" and user_profile >= 3:
-            bck_league_home_page()
-        elif selected_tab == "Dutching CS" and user_profile >= 2:
-            cs_page()
-        elif selected_tab == "HA" and user_profile >= 2:
-            ha_025_page()
-        elif selected_tab == "H2H" and user_profile >= 2:
-            h2h_page()
-        elif selected_tab == "Lay Goleada" and user_profile == 3:
-            goleada_page()
-        elif selected_tab == "Lay Zebra HT" and user_profile >= 2:
-            lay_zebra_page()
-        elif selected_tab == "Predict" and user_profile == 3:
-            predict_page()
-        elif selected_tab == "Lay Zebra FT" and user_profile >= 2:
-            zebra_ft_page()
-        elif selected_tab == "Scalping" and user_profile == 3:
-            scalping_page()
+        if selected_tab in pages:
+            page_function, required_profile = pages[selected_tab]
+            if user_profile is not None and user_profile >= required_profile:
+                page_function()
 
 if __name__ == "__main__":
     main()
