@@ -8,3 +8,4 @@ psycopg2
 numpy
 altair
 requests
+jwt
