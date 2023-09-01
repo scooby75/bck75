@@ -19,22 +19,18 @@ def perform_login(username, password):
         session_state.login_successful = True
         session_state.username = username
         session_state.login_time = datetime.datetime.now()
-        
-        # Defina o perfil do usuário no estado da sessão
         session_state.user_profile = valid_users[username]["profile"]
-        
         return True
     else:
         return False
 
-def perform_logout(session_state):
+def perform_logout():
     session_state.login_successful = False
     session_state.username = None
     session_state.login_time = None
     session_state.user_profile = None
 
 def login_page():
-    session_state = get_or_create_session_state()
     st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", width=240)
     st.title("Análise de Dados de Futebol")
 
@@ -58,3 +54,4 @@ def login_page():
 # Main application
 if __name__ == "__main__":
     login_page()
+
