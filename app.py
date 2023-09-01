@@ -1,10 +1,5 @@
-# App.py
+# app.py
 import streamlit as st
-
-# Inicialize session_state se ele não existir
-if 'login_successful' not in st.session_state:
-    st.session_state.login_successful = False
-
 from login import login_page, perform_logout
 from jogos import jogos_do_dia_page
 from cs import cs_page
@@ -37,7 +32,7 @@ def main():
         # Mostra informações do usuário e botão de logout na barra lateral
         st.sidebar.write(f"Logado como: {session_state.username}")
         if st.sidebar.button("Logout", key="logout_button"):
-            perform_logout(session_state)  # Chame perform_logout em vez de logout
+            perform_logout(session_state)
 
         # Mapeia a seleção do usuário para as páginas
         pages = {
