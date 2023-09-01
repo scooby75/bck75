@@ -2,14 +2,18 @@ import streamlit as st
 import pandas as pd
 import re
 import datetime as dt
-from session_state import SessionState
+
+from session_state import get_or_create_session_state
 
 def predict_page():
-    # Inicializa o estado da sessão
-    session_state = SessionState(user_profile=3)
+    session_state = get_or_create_session_state()
+
+    # Inicializa a variável user_profile no estado da sessão, se ainda não estiver definida
+    if not hasattr(session_state, "user_profile"):
+        session_state.user_profile = 3  # Define o valor de user_profile aqui
 
     # Verifica se o usuário tem permissão para acessar a página
-    if session_state.user_profile < 3:
+    if session_state.user_profile < 2:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
 
