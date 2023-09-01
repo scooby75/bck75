@@ -17,13 +17,13 @@ def perform_login(username, password):
     
     if username in valid_users and valid_users[username]["password"] == password:
         session_state.logged_in = True
-        session_state.username = username  # Define o username na sessão
+        session_state.username = username  # Defina o username na sessão antes de criar o widget
         session_state.login_time = datetime.datetime.now()
         session_state.user_profile = valid_users[username]["profile"]
         return True
     return False
 
-def perform_logout():  # Manter o nome da função como "perform_logout"
+def perform_logout():
     session_state = get_or_create_session_state()
     session_state.logged_in = False
     session_state.username = None
