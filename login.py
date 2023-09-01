@@ -47,6 +47,12 @@ def login_page():
             if login_button:
                 if perform_login(username, password):
                     st.success(f"Bem-vindo, {username}!")
+def logout():
+    session_state = get_or_create_session_state()
+    session_state.logged_in = False
+    session_state.username = None
+    session_state.login_time = None
+    session_state.user_profile = None
 
 if __name__ == "__main__":
     login_page()
