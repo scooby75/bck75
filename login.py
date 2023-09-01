@@ -1,47 +1,32 @@
-# login.py
 import streamlit as st
-import jwt
 import datetime
 
-# Leitura da chave secreta a partir do arquivo
-with open("https://raw.githubusercontent.com/scooby75/bck75/main/secret_key.txt", "r") as key_file:
-    SECRET_KEY = key_file.read().strip()
+# Variável global para armazenar as informações de login
+logged_in_user = None
 
-# Dicionário de usuários (substitua por um banco de dados em produção)
-users = {
+valid_users = {
     "lsilveira": {"password": "senha123", "profile": 3},
-    "usuario3": {"password": "senha3", "profile": 1}
+    "lamaral": {"password": "lamaral23", "profile": 1},
+    "blamim": {"password": "lamim23", "profile": 3},
+    "mrodrigues": {"password": "mrodrigues23", "profile": 3},
+    "user3": {"password": "password3", "profile": 3}
 }
 
-def create_token(username):
-    # Crie um token JWT com o nome de usuário e uma data de expiração
-    payload = {
-        "username": username,
-        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1)  # Token expira em 1 hora
-    }
-    token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-    return token
-
-def verify_credentials(username, password):
-    # Verifique se o nome de usuário e a senha correspondem aos registros (substitua por um banco de dados em produção)
-    if username in users and users[username]["password"] == password:
-        return True
-    return False
-
 def login_page():
-    st.title("Login Simples")
+    st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", width=240)
+    st.title("Football Data Analysis")
+    global logged_in_user
+    username = st.text_input("Usuário")
+    password = st.text_input("Senha", type="password")
 
-    if st.button("Login"):
-        username = st.text_input("Nome de Usuário")
-        password = st.text_input("Senha", type="password")
+    login_button = st.button("Entrar")
 
-        # Verifique as credenciais do usuário
-        if verify_credentials(username, password):
-            # Se as credenciais estiverem corretas, crie um token JWT
-            token = create_token(username)
-            st.success("Login bem-sucedido!")
-
-            # Guarde o token em algum lugar seguro (por exemplo, em um cookie ou variável global)
-            return token  # Retorna o token JWT
+    if login_button:
+        if username in valid_users and valid_users[username]["password"] == password:
+            logged_in_user = username  # Armazena o usuário logado na variável global
         else:
-            st.error("Credenciais inválidas. Faça login novamente.")
+            st.error("Credenciais inválidas.")
+
+def logout():
+    global logged_in_user
+    logged_in_user = None  # Limpa o usuário logado
