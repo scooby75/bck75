@@ -24,8 +24,7 @@ def perform_login(username, password):
     else:
         return False
 
-def perform_logout():
-    session_state = get_or_create_session_state()
+def perform_logout(session_state):
     session_state.login_successful = False
     session_state.username = None
     session_state.login_time = None
