@@ -1,5 +1,4 @@
 # login.py
-# login.py
 import streamlit as st
 import datetime
 from session_state import get_or_create_session_state
@@ -17,7 +16,7 @@ def perform_login(username, password):
     
     if username in valid_users and valid_users[username]["password"] == password:
         session_state.logged_in = True
-        session_state.username = username
+        session_state.username = username  # Define o username na sessão
         session_state.login_time = datetime.datetime.now()
         session_state.user_profile = valid_users[username]["profile"]
         return True
