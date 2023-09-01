@@ -22,22 +22,15 @@ def login_page():
 
         login_button = st.form_submit_button("Entrar")
 
-    if login_button:
-        if username in valid_users and valid_users[username]["password"] == password:
-            session_state = get_or_create_session_state()
-            session_state.logged_in = True
-            session_state.username = username
-            session_state.login_time = datetime.datetime.now()
-            session_state.user_profile = valid_users[username]["profile"]  # Store user profile
-        else:
-            st.error("Credenciais inválidas.")
-
-def logout():
-    session_state = get_or_create_session_state()
-    session_state.logged_in = False
-    session_state.pop("username", None)
-    session_state.pop("login_time", None)
-    session_state.pop("user_profile", None)  # Clear user profile on logout
+        if login_button:
+            if username in valid_users and valid_users[username]["password"] == password:
+                session_state = get_or_create_session_state()
+                session_state.logged_in = True
+                session_state.username = username
+                session_state.login_time = datetime.datetime.now()
+                session_state.user_profile = valid_users[username]["profile"]  # Store user profile
+            else:
+                st.error("Credenciais inválidas.")
 
 # Exemplo de uso da função de login
 if __name__ == "__main__":
