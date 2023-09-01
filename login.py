@@ -34,7 +34,7 @@ def perform_logout():
 def login_page():
     session_state = get_or_create_session_state()
     st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", width=240)
-    st.title("Football Data Analysis")
+    st.title("Análise de Dados de Futebol")
 
     if session_state.login_successful:
         st.success(f"Bem-vindo, {session_state.username}! | Perfil: {session_state.user_profile}")
@@ -42,7 +42,7 @@ def login_page():
         if logout_button:
             perform_logout()
     else:
-        with st.form("login_form"):
+        with st.form("formulario_login"):
             username = st.text_input("Usuário", key="username", help="Digite seu nome de usuário", **{"autocomplete": "username"})
             password = st.text_input("Senha", type="password", key="password", help="Digite sua senha", **{"autocomplete": "current-password"})
             login_button = st.form_submit_button("Entrar")
