@@ -8,13 +8,14 @@ import datetime as dt
 from session_state import SessionState
 
 def jogos_do_dia_page():
-    # Inicializa o estado da sessão
-    session_state = SessionState()
+    session_state = get_or_create_session_state()
 
-    # Defina o valor de user_profile após a criação da instância
-    session_state.user_profile = 1  # Ou qualquer outro valor desejado
+    # Verifica se o usuário está logado e tem permissão para acessar esta página
+    if not session_state.logged_in:
+        st.error("Você não tem permissão para acessar esta página. Faça login primeiro.")
+        return
 
-    # Verifica se o usuário tem permissão para acessar a página
+    # Verifique o nível de acesso do usuário (user_profile) para determinar as permissões
     if session_state.user_profile < 1:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
