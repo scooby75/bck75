@@ -275,7 +275,7 @@ def bck_home_page():
         filtered_home_profit = filtered_df[filtered_df['profit_home_acumulado'] >= 3]
 
         # Group the filtered DataFrame by 'Home' (Home Team) and calculate the total profit for each home team
-        home_team_total_profit = filtered_home_profit.groupby('Home')['profit_home_acumulado'].last()
+        home_team_total_profit = filtered_home_profit.groupby(['Home', 'League'])['profit_home_acumulado'].last().reset_index()
 
         # Sort the home_team_total_profit DataFrame in descending order of profit
         home_team_total_profit_sorted = home_team_total_profit.sort_values(ascending=False)
