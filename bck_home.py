@@ -301,7 +301,7 @@ def bck_home_page():
             return "Outras"
 
         # Adicione uma coluna "faixa_de_odd" ao seu DataFrame original (filtered_df)
-        filtered_df["faixa_de_odd"] = filtered_df["odd_home"].apply(encontrar_faixa)
+        filtered_df["faixa_de_odd"] = filtered_df["FT_Odd_H"].apply(encontrar_faixa)
 
         # Crie o DataFrame "Faixa De Odds Mais Lucrativas" agrupando e somando por faixa de odd
         faixa_de_odds_mais_lucrativas = filtered_df.groupby("faixa_de_odd")["profit_home"].sum().reset_index()
