@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 from session_state import SessionState
 
-def bck_legue_home_page():
+def bck_league_home_page():
     # Inicializa o estado da sessão
     session_state = SessionState()
 
