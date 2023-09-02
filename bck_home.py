@@ -287,11 +287,12 @@ def bck_home_page():
 
     ########## Faixa de Odd Mais Lucrativa
 
-        st.header("Faixa De Odds Mais Lucrativas")
+        st.subheader("Odds Mais Lucrativas")
 
         # Defina as faixas de odd
         faixas_de_odd = [(1.01, 1.20), (1.21, 1.40), (1.41, 1.60), (1.61, 1.80), (1.81, 2.00), 
-                         (2.01, 2.20), (2.21, 2.40), (2.41, 2.60), (2.61, 2.80), (2.81, 3.00)]
+                         (2.01, 2.20), (2.21, 2.40), (2.41, 2.60), (2.61, 2.80), (2.81, 3.00),
+                         (3.01, 3.20), (3.21, 3.40), (3.41, 3.60), (3.61, 3.80), (3.81, 4.00)]
 
         # Crie uma função para mapear a faixa de odd com base no valor da odd
         def encontrar_faixa(odd):
@@ -309,7 +310,7 @@ def bck_home_page():
         # Renomeie a coluna "profit_home" para algo mais descritivo, se desejar
         faixa_de_odds_mais_lucrativas = faixa_de_odds_mais_lucrativas.rename(columns={"profit_home": "Soma Profit Home"})
 
-        # Exiba o DataFrame "Faixa De Odds Mais Lucrativas"
+        # Exiba o DataFrame "Odds Mais Lucrativas"
         st.dataframe(faixa_de_odds_mais_lucrativas)
 
 
