@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit import SessionState
 from login import login_page, logout
 from jogos import jogos_do_dia_page
 from cs import cs_page
@@ -15,14 +14,17 @@ from goleada import goleada_page
 from h2h import h2h_page
 
 def main():
-    # Criar uma instância do SessionState
-    session_state = SessionState.get(user_profile=None)
+    # Inicialize o SessionState ou obtenha-o se já existir
+    session_state = st.session_state
 
     if not hasattr(session_state, 'logged_in'):
         session_state.logged_in = False
 
     if not hasattr(session_state, 'username'):
         session_state.username = None
+
+    if not hasattr(session_state, 'user_profile'):
+        session_state.user_profile = 1  # Inicialize com um valor padrão
 
     if not session_state.logged_in:
         login_page()
