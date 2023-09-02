@@ -13,10 +13,13 @@ from bck_league_home import bck_league_home_page
 from goleada import goleada_page
 from h2h import h2h_page
 
+from session_state import SessionState
+
 def main():
-    # Inicialize o SessionState ou obtenha-o se já existir
+    # Inicialize o estado da sessão (session_state) usando um dicionário
     session_state = st.session_state
 
+    # Defina os atributos iniciais do estado da sessão, se não existirem
     if not hasattr(session_state, 'logged_in'):
         session_state.logged_in = False
 
