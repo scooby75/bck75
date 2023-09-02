@@ -17,11 +17,10 @@ from h2h import h2h_page
 
 from session_state import get_or_create_session_state
 from session_state import SessionState
-import base64
 
 def main():
-    # Obtém ou cria o estado da sessão
-    session_state = get_or_create_session_state()
+    # Inicialize o estado da sessão (session_state) usando um dicionário
+    session_state = st.session_state
 
     # Defina os atributos iniciais do estado da sessão, se não existirem
     if not hasattr(session_state, 'logged_in'):
