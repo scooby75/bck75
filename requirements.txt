@@ -9,6 +9,6 @@ numpy
 altair
 requests
 secure
-streamlit.server
+streamlit==1.26.0
 
 
