@@ -22,22 +22,25 @@ def main():
     if not hasattr(session_state, 'logged_in'):
         session_state.logged_in = False
 
+    if not hasattr(session_state, 'username'):
+        session_state.username = None
+
     if not session_state.logged_in:
         login_page()
     else:
         # Initialize user_profile attribute if not present
         if not hasattr(session_state, 'user_profile'):
-            session_state.user_profile = 1  # Initialize with a default value           
+            session_state.user_profile = 1  # Initialize with a default value
 
         # Barra lateral com imagem e informações
         st.sidebar.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660")
         st.sidebar.header("Football Data Analysis")
-        
+
         # Mostra informações do usuário e botão de logout na barra lateral
         st.sidebar.write(f"Logado como: {session_state.username}")
         if st.sidebar.button("Logout", key="logout_button"):
             logout()
-        
+
         # Caixa de seleção para diferentes páginas
         selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Análise Home", "Análise Away", "Análise Liga", "Dutching CS", "HA", "H2H", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Predict", "Scalping"])
 
