@@ -7,7 +7,10 @@ from session_state import SessionState
 
 def cs_page():
     # Inicializa o estado da sessão
-    session_state = SessionState(user_profile=2)
+    session_state = SessionState()
+
+    # Defina o valor de user_profile após a criação da instância
+    session_state.user_profile = 2  # Ou qualquer outro valor desejado
 
     # Verifica se o usuário tem permissão para acessar a página
     if session_state.user_profile < 2:
