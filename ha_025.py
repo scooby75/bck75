@@ -1,20 +1,23 @@
+# ha_025.py
+
 import streamlit as st
 import pandas as pd
 import re
-from session_state import get_or_create_session_state
+
+from session_state import SessionState
 
 def ha_025_page():
-    # Obtém ou cria o estado da sessão
-    session_state = get_or_create_session_state()
+    # Inicializa o estado da sessão
+    session_state = SessionState()
 
-    # Inicializa a variável user_profile no estado da sessão, se ainda não estiver definida
-    if not hasattr(session_state, "user_profile"):
-        session_state.user_profile = 2
+    # Defina o valor de user_profile após a criação da instância
+    session_state.user_profile = 2  # Ou qualquer outro valor desejado
 
     # Verifica se o usuário tem permissão para acessar a página
     if session_state.user_profile < 2:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
+        
     ##### HA -0.25 ######
 
     # Load the data
