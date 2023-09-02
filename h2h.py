@@ -5,7 +5,7 @@ import pandas as pd
 
 from session_state import SessionState
 
-def bck_legue_home_page():
+def h2h_page():
     # Inicializa o estado da sessão
     session_state = SessionState()
 
