@@ -9,5 +9,6 @@ numpy
 altair
 requests
 secure
+streamlit.server
 
 
