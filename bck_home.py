@@ -16,8 +16,8 @@ def bck_home_page():
     if session_state.user_profile < 2:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
-    else:
-        st.write("Acesso concedido!")  # Debug
+    #else:
+        #st.write("Acesso concedido!")  # Debug
          
     ##### PÁGINA BCK HOME ######
     tab0, tab1, tab2, tab3, tab4 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar"])
