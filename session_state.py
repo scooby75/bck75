@@ -1,11 +1,12 @@
-import streamlit as st
+# session_state.py
 
 class SessionState:
-    def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
+    def __init__(self):
+        self.logged_in = False
+        self.username = None
+        self.user_profile = 1
 
-# Função para obter ou criar o estado da sessão
 def get_or_create_session_state():
-    if not hasattr(st, "session_state"):
+    if not hasattr(st, 'session_state'):
         st.session_state = SessionState()
     return st.session_state
