@@ -6,8 +6,12 @@ from datetime import datetime, timedelta
 from session_state import SessionState
 
 def cs_page():
+    
     # Inicializa o estado da sessão
     session_state = SessionState()
+
+    # Obtém ou cria o estado da sessão
+    session_state = get_or_create_session_state()
 
     # Defina o valor de user_profile após a criação da instância
     session_state.user_profile = 2  # Ou qualquer outro valor desejado
