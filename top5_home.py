@@ -23,8 +23,8 @@ def top5_home_page():
     # Renomear as colunas
     df = df.rename(columns={'Home': 'Equipe', 'League': 'Liga', 'Rank_Home': 'Posição Casa', 'Round': 'Rodada', 'profit_home': 'Lucro Acumulado'})
 
-    # Filtrar as equipes com Round >= 10
-    df = df[df['Rodada'] >= 10]
+    # Filtrar as equipes com Round >= 10 e Season é '2023' ou '2023/2024'
+    df = df[(df['Rodada'] >= 10) & (df['Season'].str.contains('2023|2023/2024'))]
 
     # Classificar o DataFrame por Posição Casa
     df.sort_values(by='Posição Casa', inplace=True)
@@ -50,3 +50,4 @@ def top5_home_page():
 
 # Chamar a função para exibir a aplicação web
 top5_home_page()
+
