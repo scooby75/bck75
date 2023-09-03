@@ -1598,7 +1598,7 @@ def bck_home_page():
         # Exibir o DataFrame usando st.dataframe
         st.dataframe(df, width=400)
 
-with tab5:
+    with tab5:
    
         # Carregar o arquivo CSV a partir da URL
         url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
