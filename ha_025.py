@@ -129,8 +129,8 @@ def ha_025_page():
         st.dataframe(ha_df_filtered)
 
 # Chamar a função para iniciar o aplicativo
-if __name__ == "__main__":
-    ha_025_page()
+#if __name__ == "__main__":
+ha_025_page()
 
 
     
