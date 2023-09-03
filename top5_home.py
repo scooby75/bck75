@@ -24,7 +24,7 @@ def top5_home_page():
     df = df.rename(columns={'Home': 'Equipe', 'League': 'Liga', 'Rank_Home': 'Posição Casa', 'Round': 'Rodada', 'profit_home': 'Lucro Acumulado'})
 
     # Filtrar as equipes com Round >= 10
-    df = df[df['Rodada'] >= 10]
+    df = df[df['Round'] >= 10]
 
     # Classificar o DataFrame por Posição Casa
     df.sort_values(by='Posição Casa', inplace=True)
