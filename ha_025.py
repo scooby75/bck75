@@ -2,7 +2,6 @@
 
 import streamlit as st
 import pandas as pd
-import re
 
 from session_state import SessionState
 
@@ -23,63 +22,113 @@ def ha_025_page():
     # Load the data
     #@st.cache_data(ttl=86400.0)  # 24 hours in seconds
     def load_base():
+        import pandas as pd
+
+        # Carregue os dados diretamente da URL
         url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
-        
-        df = pd.read_csv(url)
-        
-        # Convert the 'Hora' column to a datetime object
-        df['Time'] = pd.to_datetime(df['Time'])
-        
-        # Convert the game times to the local time zone (subtracting 3 hours)
-        df['Time'] = df['Time'] - pd.to_timedelta('3 hours')
+        ha_df = pd.read_csv(url)
 
-        # Rename the columns
-        df.rename(columns={
-            'FT_Odds_H': 'FT_Odd_H',
-            'FT_Odds_D': 'FT_Odd_D',
-            'FT_Odds_A': 'FT_Odd_A',
-            'FT_Odds_Over25': 'FT_Odd_Over25',
-            'FT_Odds_Under25': 'FT_Odd_Under25',
-            'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
-            'ROUND': 'Rodada',
-        }, inplace=True)
+        # Defina os critérios para HA -0.25 e HA +0.25
+        crit_ha_025 = (ha_df['FT_Odd_H'] >= 1.61) & (ha_df['FT_Odd_H'] <= 2.20)
+        crit_ha_plus_025 = (ha_df['FT_Odd_H'] >= 2.61) & (ha_df['FT_Odd_H'] <= 3.20)
 
-        # Apply the function to extract the round number and create a new column "Rodada_Num"
-        df["Rodada_Num"] = df["Rodada"].apply(extrair_numero_rodada)
+        # Defina os critérios para seleção de equipes e ligas
+        equipes_desejadas = [
+            "Ind. Rivadavia",
+            "Machida",
+            "Nagoya Grampus",
+            "Botafogo RJ",
+            "Stjarnan",
+            "Lanus",
+            "Vitoria",
+            "Start",
+            "2 de Mayo",
+            "Fernando de la Mora",
+            "Utsikten",
+            "Vega Real",
+            "FC Gomel",
+            "Deportivo Maipu",
+            "Viking",
+            "Jeonbuk",
+            "Agropecuario",
+            "San Marcos de Arica",
+            "Samgurali",
+            "Gremio",
+            "Cobreloa",
+            "Manta",
+            "Rosario Central",
+            "Recoleta",
+            "Hacken",
+            "Termez Surkhon",
+            "Macara",
+            "Cobh Ramblers",
+            "Ulsan Hyundai",
+            "Fredrikstad",
+            "Nacional Potosi",
+            "Bucheon FC 1995",
+            "FK Panevezys",
+            "Pohang"
+        ]
 
-        return df
 
-    # Função para extrair o número do texto "ROUND N"
-    def extrair_numero_rodada(text):
-        if isinstance(text, int):
-            return text
-        match = re.search(r'\d+', text)
-        if match:
-            return int(match.group())
-        return None
+        ligas_desejadas = [
+            "ARGENTINA - PRIMERA NACIONAL",
+            "JAPAN - J2 LEAGUE",
+            "BRAZIL - SERIE A",
+            "ICELAND - BESTA DEILD KARLA",
+            "ARGENTINA - LIGA PROFESIONAL",
+            "BRAZIL - SERIE B",
+            "NORWAY - OBOS-LIGAEN",
+            "PARAGUAY - DIVISION INTERMEDIA",
+            "PARAGUAY - DIVISION INTERMEDIA",
+            "SWEDEN - SUPERETTAN",
+            "DOMINICAN REPUBLIC - LDF",
+            "BELARUS - VYSSHAYA LIGA",
+            "ARGENTINA - PRIMERA NACIONAL",
+            "NORWAY - ELITESERIEN",
+            "SOUTH KOREA - K LEAGUE 1",
+            "ARGENTINA - PRIMERA NACIONAL",
+            "CHILE - PRIMERA B",
+            "GEORGIA - CRYSTALBET EROVNULI LIGA",
+            "BRAZIL - SERIE A",
+            "CHILE - PRIMERA B",
+            "ECUADOR - SERIE B",
+            "ARGENTINA - LIGA PROFESIONAL",
+            "PARAGUAY - DIVISION INTERMEDIA",
+            "SWEDEN - ALLSVENSKAN",
+            "UZBEKISTAN - SUPER LEAGUE",
+            "ECUADOR - SERIE B",
+            "IRELAND - DIVISION 1",
+            "SOUTH KOREA - K LEAGUE 1",
+            "NORWAY - OBOS-LIGAEN",
+            "BOLIVIA - DIVISION PROFESIONAL",
+            "SOUTH KOREA - K LEAGUE 2",
+            "LITHUANIA - A LYGA",
+            "SOUTH KOREA - K LEAGUE 1"
+        ]
 
-    # Call the load_base function to load the data
-    df = load_base()
+        # Aplique as regras corretas de acordo com os critérios
+        ha_df['Aposta'] = ''
 
-    # Filtrando os jogos 
-    ha_df = df[
-        (df["FT_Odd_H"] <= 1.90) &
-        (df["DC_1X"] <= 1.25) &
-        (df["HA"] <= 1.7) &
-        (df["Rodada_Num"] >= 10)
-    ]
+        # Para HA -0.25
+        ha_df.loc[crit_ha_025, 'Aposta'] = 'HA -0.25 casa, Odd minima 1.35'
 
-    # Selecionar apenas as colunas desejadas: Date, Time, League, Home e Away
-    colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
-    ha_df = ha_df[colunas_desejadas]
+        # Para HA +0.25
+        ha_df.loc[crit_ha_plus_025, 'Aposta'] = 'HA +0.25 casa, Odd minima 1.70'
 
-    # Exibir o dataframe "Eventos Raros"
-    st.subheader("HA -0.25")
-    st.text("Apostar em HA -0.25 casa, Odd minima 1.40")
-    st.dataframe(ha_df)
+        # Aplique os critérios de seleção para equipes e ligas
+        ha_df_filtered = ha_df[(ha_df['Home'].isin(equipes_desejadas)) & (ha_df['League'].isin(ligas_desejadas))]
 
-# Chamar a função para iniciar o aplicativo
-ha_025_page()
+        # Selecione apenas as colunas desejadas
+        colunas_desejadas = ["Date", "Time", "League", "Home", "Away", "Aposta"]
+        ha_df_filtered = ha_df_filtered[colunas_desejadas]
+
+        # Exiba o DataFrame resultante
+        st.subheader("Apostas em HA -0.25 e HA +0.25")
+        st.dataframe(ha_df_filtered)
+
+    # Chamar a função para iniciar o aplicativo
+    ha_025_page()
 
     
 
