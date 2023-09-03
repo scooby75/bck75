@@ -46,7 +46,7 @@ def top5_home_page():
     # Mostrar os resultados usando st.dataframe
     for league, top5_teams in top5_teams_by_league.items():
         st.subheader(f"Top 5 times da liga {league}")
-        st.dataframe(top5_teams[['Equipe', 'Liga', 'Posição Casa', 'Rodada', 'Lucro Acumulado']], index=False)
+        st.table(top5_teams[['Equipe', 'Liga', 'Posição Casa', 'Rodada', 'Lucro Acumulado']])
 
 # Chamar a função para exibir a aplicação web
 top5_home_page()
