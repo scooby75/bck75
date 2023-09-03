@@ -17,14 +17,14 @@ def top5_home_page():
 
     # Carrega o dado
     # Carregar o arquivo CSV a partir da URL
-    url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
+    url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
     df = pd.read_csv(url)
 
     # Renomear as colunas
     df = df.rename(columns={'Home': 'Equipe', 'League': 'Liga', 'Rank_Home': 'Posição Casa', 'Round': 'Rodada', 'profit_home': 'Lucro Acumulado'})
 
     # Filtrar as equipes com Round >= 10
-    df = df[df['Round'] >= 10]
+    df = df[df['Rodada'] >= 10]
 
     # Classificar o DataFrame por Posição Casa
     df.sort_values(by='Posição Casa', inplace=True)
