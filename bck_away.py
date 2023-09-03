@@ -269,7 +269,7 @@ def bck_away_page():
         away_team_total_profit = filtered_away_profit.groupby(['Away', 'League'])['profit_away_acumulado'].last().reset_index()
 
         # Sort the away_team_total_profit DataFrame in descending order of profit
-        away_team_total_profit_sorted = away_team_total_profit.sort_values(ascending=False)
+        away_team_total_profit_sorted = away_team_total_profit.sort_values(by='profit_away_acumulado', ascending=False)
 
         # Display the table with total profit by away team in descending order
         st.subheader("Top Back Visitante")
