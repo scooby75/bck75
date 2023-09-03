@@ -1599,8 +1599,8 @@ def bck_home_page():
         st.dataframe(df, width=400)
 
     with tab5:
-   
-  # Carregar o arquivo CSV a partir da URL
+       
+    # Carregar o arquivo CSV a partir da URL
         url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
         df = pd.read_csv(url)
 
@@ -1613,12 +1613,24 @@ def bck_home_page():
     # Classificar o DataFrame por Posição Casa em ordem decrescente
         df.sort_values(by='Posição Casa', ascending=False, inplace=True)
 
-    # Selecionar os 5 melhores times com base no Rank_Home
-        top5_teams = df[['Equipe', 'Liga', 'Posição Casa']].head(5)
+    # Criar um dicionário para armazenar os 5 melhores times de cada liga
+        top5_teams_by_league = {}
 
-    # Mostrar os 5 melhores times (home) no ranking
-        st.subheader("Top 5 times no ranking (home)")
-        st.table(top5_teams)
+    # Iterar pelas ligas únicas no DataFrame
+        for league in df['Liga'].unique():
+        # Filtrar o DataFrame para a liga específica
+            league_df = df[df['Liga'] == league]
+
+        # Obter os 5 primeiros times da liga com base no Rank_Home
+            top5_teams = league_df.head(5)
+
+        # Armazenar os resultados no dicionário
+            top5_teams_by_league[league] = top5_teams
+
+    # Mostrar os resultados usando st.dataframe
+        for league, top5_teams in top5_teams_by_league.items():
+            st.subheader(f"Top 5 times da liga {league}")
+            st.table(top5_teams[['Equipe', 'Liga', 'Posição Casa']])
 
 # Execute a função para criar a página
 bck_home_page()
