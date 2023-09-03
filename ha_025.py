@@ -70,7 +70,6 @@ def ha_025_page():
             "Pohang"
         ]
 
-
         ligas_desejadas = [
             "ARGENTINA - PRIMERA NACIONAL",
             "JAPAN - J2 LEAGUE",
@@ -127,8 +126,10 @@ def ha_025_page():
         st.subheader("Apostas em HA -0.25 e HA +0.25")
         st.dataframe(ha_df_filtered)
 
-    # Chamar a função para iniciar o aplicativo
+# Chamar a função para iniciar o aplicativo
+if __name__ == "__main__":
     ha_025_page()
+
 
     
 
