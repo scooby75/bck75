@@ -118,6 +118,8 @@ def ha_025_page():
         # Aplique os critérios de seleção para equipes e ligas
         ha_df_filtered = ha_df[(ha_df['Home'].isin(equipes_desejadas)) & (ha_df['League'].isin(ligas_desejadas))]
 
+        print(ha_df_filtered)
+        
         # Selecione apenas as colunas desejadas
         colunas_desejadas = ["Date", "Time", "League", "Home", "Away", "Aposta"]
         ha_df_filtered = ha_df_filtered[colunas_desejadas]
