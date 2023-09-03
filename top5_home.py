@@ -3,7 +3,7 @@ import pandas as pd
 import re
 from session_state import SessionState
 
-def top5_home():
+def top5_home_page():
     # Inicializa o estado da sessão
     session_state = SessionState()
 
@@ -49,4 +49,4 @@ def top5_home():
         st.dataframe(top5_teams[['Equipe', 'Liga', 'Posição Casa', 'Rodada', 'Lucro Acumulado']], index=False)
 
 # Chamar a função para exibir a aplicação web
-top5_home()
+top5_home_page()
