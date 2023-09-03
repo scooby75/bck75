@@ -84,7 +84,7 @@ def tips_page():
             st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
             eventos_raros2_df = df[(df["FT_Odd_A"] >= 1.71) & (df["FT_Odd_A"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
             eventos_raros2_df = eventos_raros2_df[colunas_desejadas]
-            st.dataframe(eventos_raros2_df)
+            st.dataframe(eventos_raros2_df,width=400)
 
         with tab2:
             # Use df aqui para a aba "Lay Zebra HT"
@@ -97,7 +97,7 @@ def tips_page():
             ]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             layzebraht_df = layzebraht_df[colunas_desejadas]
-            st.dataframe(layzebraht_df)
+            st.dataframe(layzebraht_df,width=400)
 
         with tab3:
             # Use df aqui para a aba "Lay Zebra FT"
@@ -110,7 +110,7 @@ def tips_page():
             ]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             layzebraft_df = layzebraft_df[colunas_desejadas]
-            st.dataframe(layzebraft_df)
+            st.dataframe(layzebraft_df,width=400)
 
         with tab4:
             # Definir URLs para os arquivos CSV
@@ -147,7 +147,7 @@ def tips_page():
                 # Streamlit App
                 st.subheader("Lay Over 25FT")
                 st.text("Apostar em Lay Over 25FT e fechar posição com 3% ou 5min de exposição.")
-                st.dataframe(result_df)
+                st.dataframe(result_df,width=400)
 
             except Exception as e:
                 st.error("Ocorreu um erro: " + str(e))
