@@ -1,5 +1,3 @@
-# bck_home.py
-
 import pandas as pd
 import numpy as np
 import streamlit as st
@@ -41,117 +39,118 @@ def extrair_numero_rodada(text):
         return int(match.group())
     return None
 
-# Inicializa o estado da sessão
-session_state = SessionState()
+# Função principal para criar a página de dicas
+def tips_page():
+    # Inicializa o estado da sessão
+    session_state = SessionState()
 
-# Defina o valor de user_profile após a criação da instância
-session_state.user_profile = 3  # Ou qualquer outro valor desejado
+    # Defina o valor de user_profile após a criação da instância
+    session_state.user_profile = 3  # Ou qualquer outro valor desejado
 
-# Verifica se o usuário tem permissão para acessar a página
-if session_state.user_profile < 2:
-    st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
-else:
-    # Carregar o DataFrame uma vez no início
-    df = load_base()
+    # Verifica se o usuário tem permissão para acessar a página
+    if session_state.user_profile < 2:
+        st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
+    else:
+        # Carregar o DataFrame uma vez no início
+        df = load_base()
 
-    # ##### PÁGINA BCK HOME ######
-    tab0, tab1, tab2, tab3, tab4 = st.tabs(["HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Scalping"])
+        # ##### PÁGINA BCK HOME ######
+        tab0, tab1, tab2, tab3, tab4 = st.tabs(["HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Scalping"])
 
-    with tab0:
-        # Use df aqui para a aba "HA"
-        st.subheader("HA -0.25")
-        st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
-        ha_df = df[
-            (df["FT_Odd_H"] <= 1.90) &
-            (df["DC_1X"] <= 1.25) &
-            (df["HA"] <= 1.7) &
-            (df["Rodada_Num"] >= 10)
-        ]
-        colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
-        ha_df = ha_df[colunas_desejadas]
-        st.dataframe(ha_df)
-
-    with tab1:
-        # Use df aqui para a aba "Lay Goleada"
-        st.subheader("Lay Goleada Casa")
-        st.text("Apostar em Lay Goleada Casa, Odd máxima 30")
-        eventos_raros_df = df[(df["FT_Odd_H"] >= 1.71) & (df["FT_Odd_H"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
-        colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
-        eventos_raros_df = eventos_raros_df[colunas_desejadas]
-        st.dataframe(eventos_raros_df)
-
-        st.subheader("Lay Goleada Visitante")
-        st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
-        eventos_raros2_df = df[(df["FT_Odd_A"] >= 1.71) & (df["FT_Odd_A"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
-        eventos_raros2_df = eventos_raros2_df[colunas_desejadas]
-        st.dataframe(eventos_raros2_df)
-
-    with tab2:
-        # Use df aqui para a aba "Lay Zebra HT"
-        st.subheader("Lay Zebra HT")
-        st.text("Apostar em Lay visitante, Odd máxima 6")
-        layzebraht_df = df[
-            (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
-            (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10) &
-            (df["Rodada_Num"] >= 10)
-        ]
-        colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
-        layzebraht_df = layzebraht_df[colunas_desejadas]
-        st.dataframe(layzebraht_df)
-
-    with tab3:
-        # Use df aqui para a aba "Lay Zebra FT"
-        st.subheader("Lay Zebra FT")
-        st.text("Apostar em Lay visitante, Odd máxima 6")
-        layzebraft_df = df[
-            (df["FT_Odd_H"] >= 1.4) & (df["FT_Odd_H"] <= 2.1) &
-            (df["FT_Odd_A"] >= 5) & (df["FT_Odd_A"] <= 10) &
-            (df["Rodada_Num"] >= 10)
-        ]
-        colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
-        layzebraft_df = layzebraft_df[colunas_desejadas]
-        st.dataframe(layzebraft_df)
-        
-    with tab4:
-
-        # Definir URLs para os arquivos CSV
-        url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
-        url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
-        url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
-
-        try:
-            # Carregar dados CSV
-            jogosdodia = pd.read_csv(url_jogosdodia)
-            momento_gol_home = pd.read_csv(url_momento_gol_home)
-            momento_gol_away = pd.read_csv(url_momento_gol_away)
-
-            # Lógica de mesclagem e filtragem de dados
-            jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home', right_on='Equipe')
-            jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away', right_on='Equipe')
-            jogos_filtrados = jogos_filtrados_home.merge(jogos_filtrados_away, on=['Date', 'Home', 'Away'], suffixes=('_home', '_away'))
-
-            # Filtrar jogos com critérios específicos
-            filtered_games = jogos_filtrados[
-                (jogos_filtrados['0_15_mar_home'] == 0) & (jogos_filtrados['0_15_sofri_home'] == 0) &
-                (jogos_filtrados['0_15_mar_away'] == 0) & (jogos_filtrados['0_15_sofri_away'] == 0)
+        with tab0:
+            # Use df aqui para a aba "HA"
+            st.subheader("HA -0.25")
+            st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
+            ha_df = df[
+                (df["FT_Odd_H"] <= 1.90) &
+                (df["DC_1X"] <= 1.25) &
+                (df["HA"] <= 1.7) &
+                (df["Rodada_Num"] >= 10)
             ]
+            colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
+            ha_df = ha_df[colunas_desejadas]
+            st.dataframe(ha_df)
 
-            # Filtrar jogos com critérios específicos
-            filtered_games = jogos_filtrados[
-                (jogos_filtrados['FT_Odd_H_home'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25_home'] >= 2.02) 
+        with tab1:
+            # Use df aqui para a aba "Lay Goleada"
+            st.subheader("Lay Goleada Casa")
+            st.text("Apostar em Lay Goleada Casa, Odd máxima 30")
+            eventos_raros_df = df[(df["FT_Odd_H"] >= 1.71) & (df["FT_Odd_H"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
+            colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
+            eventos_raros_df = eventos_raros_df[colunas_desejadas]
+            st.dataframe(eventos_raros_df)
+
+            st.subheader("Lay Goleada Visitante")
+            st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
+            eventos_raros2_df = df[(df["FT_Odd_A"] >= 1.71) & (df["FT_Odd_A"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
+            eventos_raros2_df = eventos_raros2_df[colunas_desejadas]
+            st.dataframe(eventos_raros2_df)
+
+        with tab2:
+            # Use df aqui para a aba "Lay Zebra HT"
+            st.subheader("Lay Zebra HT")
+            st.text("Apostar em Lay visitante, Odd máxima 6")
+            layzebraht_df = df[
+                (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
+                (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10) &
+                (df["Rodada_Num"] >= 10)
             ]
+            colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
+            layzebraht_df = layzebraht_df[colunas_desejadas]
+            st.dataframe(layzebraht_df)
 
-            # Selecionar colunas relevantes e renomear
-            result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home']]
-            result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
+        with tab3:
+            # Use df aqui para a aba "Lay Zebra FT"
+            st.subheader("Lay Zebra FT")
+            st.text("Apostar em Lay visitante, Odd máxima 6")
+            layzebraft_df = df[
+                (df["FT_Odd_H"] >= 1.4) & (df["FT_Odd_H"] <= 2.1) &
+                (df["FT_Odd_A"] >= 5) & (df["FT_Odd_A"] <= 10) &
+                (df["Rodada_Num"] >= 10)
+            ]
+            colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
+            layzebraft_df = layzebraft_df[colunas_desejadas]
+            st.dataframe(layzebraft_df)
 
-            # Streamlit App
-            st.subheader("Lay Over 25FT")
-            st.text("Apostar em Lay Over 25FT e fechar posição com 3% ou 5min de exposição.")
-            st.dataframe(result_df)
+        with tab4:
+            # Definir URLs para os arquivos CSV
+            url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
+            url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
+            url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
 
-        except Exception as e:
-            st.error("Ocorreu um erro: " + str(e))
+            try:
+                # Carregar dados CSV
+                jogosdodia = pd.read_csv(url_jogosdodia)
+                momento_gol_home = pd.read_csv(url_momento_gol_home)
+                momento_gol_away = pd.read_csv(url_momento_gol_away)
 
-# Execute a função para criar a página
+                # Lógica de mesclagem e filtragem de dados
+                jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home', right_on='Equipe')
+                jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away', right_on='Equipe')
+                jogos_filtrados = jogos_filtrados_home.merge(jogos_filtrados_away, on=['Date', 'Home', 'Away'], suffixes=('_home', '_away'))
+
+                # Filtrar jogos com critérios específicos
+                filtered_games = jogos_filtrados[
+                    (jogos_filtrados['0_15_mar_home'] == 0) & (jogos_filtrados['0_15_sofri_home'] == 0) &
+                    (jogos_filtrados['0_15_mar_away'] == 0) & (jogos_filtrados['0_15_sofri_away'] == 0)
+                ]
+
+                # Filtrar jogos com critérios específicos
+                filtered_games = jogos_filtrados[
+                    (jogos_filtrados['FT_Odd_H_home'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25_home'] >= 2.02) 
+                ]
+
+                # Selecionar colunas relevantes e renomear
+                result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home']]
+                result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
+
+                # Streamlit App
+                st.subheader("Lay Over 25FT")
+                st.text("Apostar em Lay Over 25FT e fechar posição com 3% ou 5min de exposição.")
+                st.dataframe(result_df)
+
+            except Exception as e:
+                st.error("Ocorreu um erro: " + str(e))
+
+# Chama a função tips_page() no início do código para criar a página
 tips_page()
