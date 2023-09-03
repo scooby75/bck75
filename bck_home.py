@@ -1600,7 +1600,7 @@ def bck_home_page():
 
     with tab5:
    
-      # Carregar o arquivo CSV a partir da URL
+    # Carregar o arquivo CSV a partir da URL
         url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
         df = pd.read_csv(url)
 
@@ -1611,26 +1611,29 @@ def bck_home_page():
         df = df[(df['Rodada'] >= 10) & (df['Season'].str.contains('2023|2023/2024'))]
 
     # Classificar o DataFrame por Pontos Acumulados (Rank_Home) em ordem decrescente
-        df.sort_values(by=['Liga', 'Posição Casa'], ascending=[True, False], inplace=True)
+        df.sort_values(by=['Liga', 'Posição Casa'], ascending=[True, True], inplace=True)
 
-    # Criar um dicionário para armazenar os 5 melhores times de cada liga
-        top5_teams_by_league = {}
+    # Criar um dicionário para armazenar as posições das equipes em cada liga
+        positions_by_league = {}
 
     # Iterar pelas ligas únicas no DataFrame
         for league in df['Liga'].unique():
         # Filtrar o DataFrame para a liga específica
             league_df = df[df['Liga'] == league]
 
-        # Obter os 5 primeiros times da liga com base na Posição Casa
-            top5_teams = league_df.head(5)
+        # Reiniciar a contagem das posições para cada liga
+            league_df['Posição'] = range(1, len(league_df) + 1)
 
-        # Armazenar os resultados no dicionário
-            top5_teams_by_league[league] = top5_teams
+        # Limitar até a 5ª posição
+            league_df = league_df[league_df['Posição'] <= 5]
+
+        # Armazenar as posições das equipes no dicionário
+            positions_by_league[league] = league_df
 
     # Mostrar os resultados usando st.dataframe
-        for league, top5_teams in top5_teams_by_league.items():
-            st.subheader(f"Top 5 times da liga {league}")
-            st.table(top5_teams[['Equipe', 'Liga', 'Posição Casa', 'Rodada', 'Lucro Acumulado']])
+        for league, positions in positions_by_league.items():
+            st.subheader(f"Posições das equipes da liga {league}")
+            st.table(positions[['Equipe', 'Liga', 'Posição', 'Posição Casa', 'Rodada', 'Lucro Acumulado']])
 
 
 # Execute a função para criar a página
