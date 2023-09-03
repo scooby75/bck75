@@ -1604,30 +1604,30 @@ def bck_home_page():
         url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
         df = pd.read_csv(url)
 
-        # Renomear as colunas
+    # Renomear as colunas
         df = df.rename(columns={'Home': 'Equipe', 'League': 'Liga', 'Rank_Home': 'Posição Casa', 'Round': 'Rodada', 'profit_home': 'Lucro Acumulado'})
 
-        # Filtrar as equipes com Round >= 10 e Season é '2023' ou '2023/2024'
+    # Filtrar as equipes com Round >= 10 e Season é '2023' ou '2023/2024'
         df = df[(df['Rodada'] >= 10) & (df['Season'].str.contains('2023|2023/2024'))]
 
-        # Classificar o DataFrame por Pontos Acumulados (em ordem decrescente)
-        df.sort_values(by='Posição Casa', ascending=False, inplace=True)
+    # Classificar o DataFrame por Pontos Acumulados (Rank_Home) em ordem decrescente
+        df.sort_values(by=['Liga', 'Posição Casa'], ascending=[True, False], inplace=True)
 
-        # Criar um dicionário para armazenar os 5 melhores times de cada liga
+    # Criar um dicionário para armazenar os 5 melhores times de cada liga
         top5_teams_by_league = {}
 
-        # Iterar pelas ligas únicas no DataFrame
+    # Iterar pelas ligas únicas no DataFrame
         for league in df['Liga'].unique():
-            # Filtrar o DataFrame para a liga específica
+        # Filtrar o DataFrame para a liga específica
             league_df = df[df['Liga'] == league]
 
-            # Obter os 5 primeiros times da liga com base na Posição Casa
+        # Obter os 5 primeiros times da liga com base na Posição Casa
             top5_teams = league_df.head(5)
 
-            # Armazenar os resultados no dicionário
+        # Armazenar os resultados no dicionário
             top5_teams_by_league[league] = top5_teams
 
-        # Mostrar os resultados usando st.dataframe
+    # Mostrar os resultados usando st.dataframe
         for league, top5_teams in top5_teams_by_league.items():
             st.subheader(f"Top 5 times da liga {league}")
             st.table(top5_teams[['Equipe', 'Liga', 'Posição Casa', 'Rodada', 'Lucro Acumulado']])
