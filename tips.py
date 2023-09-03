@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from session_state import SessionState
 
 # Função para carregar o CSV
-@st.cache(ttl=86400.0)  # 24 hours in seconds
+@st.cache_data(ttl=21600.0)  # 06 hours in seconds
 def load_base():
     url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
     df = pd.read_csv(url)
