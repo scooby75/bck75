@@ -23,7 +23,7 @@ def bck_home_page():
         #st.write("Acesso concedido!")  # Debug
          
     ##### PÁGINA BCK HOME ######
-    tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top 5"])
+    tab0, tab1, tab2, tab3, tab4 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar"])
 
     with tab0:
         # Carregar os dados
@@ -1598,56 +1598,6 @@ def bck_home_page():
         # Exibir o DataFrame usando st.dataframe
         st.dataframe(df, width=400)
 
-    with tab5:
-       
-# Baixe o arquivo CSV da URL (certifique-se de lidar com exceções)
-        url = "https://github.com/scooby75/bdfootball/raw/main/BD_Geral.csv"
-        try:
-            df = pd.read_csv(url)
-        except Exception as e:
-            st.error(f"Erro ao baixar o arquivo CSV: {str(e)}")
-            df = None
-
-        if df is not None:
-            st.subheader("Top 5 Times por Liga")
-
-    # Sidebar com opções de filtro
-            st.sidebar.header("Filtros")
-            selected_year = st.sidebar.selectbox("Selecione o ano da temporada", df['Season'].unique())
-            min_rounds = st.sidebar.slider("Número mínimo de rodadas", min_value=10, max_value=50, value=10)
-
-    # Aplicar filtros
-            filtered_df = df[(df['Season'] == selected_year) & (df['Round'] >= min_rounds)]
-
-    # Verifique se há dados após a aplicação dos filtros
-            if len(filtered_df) == 0:
-                st.warning("Nenhum dado corresponde aos filtros selecionados.")
-            else:
-        # Crie um dicionário de dataframes separados para cada liga
-                ligas = filtered_df['League'].unique()
-                dataframes_por_liga = {}
-
-                for liga in ligas:
-                    liga_df = filtered_df[filtered_df['League'] == liga]
-
-            # Calcular a média apenas nas colunas numéricas
-                    liga_df = liga_df.groupby('Home').mean(numeric_only=True).reset_index()
-
-            # Ordene os times com base na coluna 'Rank'
-                    liga_df = liga_df.sort_values(by='Rank').head(5)
-
-            # Converter a coluna 'PPG_Home_y' para inteiros e renomear
-                    liga_df['Pontuação'] = liga_df['PPG_Home_y'].astype(int)
-
-            # Selecione as colunas desejadas
-                    liga_df = liga_df[['Home', 'Pontuação']]
-
-                    dataframes_por_liga[liga] = liga_df
-
-        # Mostrar resultados
-                for liga, liga_df in dataframes_por_liga.items():
-                    st.subheader(f"Top 5 times na liga {liga}:")
-                    st.write(liga_df.to_string(index=False))  # Exibe o DataFrame na página
 
 # Execute a função para criar a página
 bck_home_page()
