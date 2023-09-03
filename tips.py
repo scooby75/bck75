@@ -1,4 +1,4 @@
-# bck_home.py
+# tips.py
 
 import pandas as pd
 import numpy as np
@@ -6,7 +6,7 @@ import streamlit as st
 import base64
 import re
 
-from datetime import datetime, timedelta  
+from datetime import datetime, timedelta
 from session_state import SessionState
 
 def tips_page():
@@ -40,7 +40,7 @@ def tips_page():
                 'FT_Odds_A': 'FT_Odd_A',
                 'FT_Odds_Over25': 'FT_Odd_Over25',
                 'FT_Odds_Under25': 'FT_Odd_Under25',
-                'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
+                'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
                 'ROUND': 'Rodada',
             }, inplace=True)
             # Apply the function to extract the round number and create a new column "Rodada_Num"
@@ -114,12 +114,12 @@ def tips_page():
 
             # Rename the columns
             df.rename(columns={
-                'FT_Odd_H': 'FT_Odd_H',
+                'FT_Odds_H': 'FT_Odd_H',
                 'FT_Odd_D': 'FT_Odd_D',
                 'FT_Odd_A': 'FT_Odd_A',
                 'FT_Odd_Over25': 'FT_Odd_Over25',
                 'FT_Odd_Under25': 'FT_Odd_Under25',
-                'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
+                'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
                 'ROUND': 'Rodada',
                 'Time': 'Hora',
             }, inplace=True)
@@ -176,7 +176,7 @@ def tips_page():
             'FT_Odds_A': 'FT_Odd_A',
             'FT_Odd_Over25': 'FT_Odd_Over25',
             'FT_Odd_Under25': 'FT_Odd_Under25',
-            'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
+            'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
             'ROUND': 'Rodada',
         }, inplace=True)
 
@@ -224,7 +224,7 @@ def tips_page():
                 'FT_Odds_A': 'FT_Odd_A',
                 'FT_Odd_Over25': 'FT_Odd_Over25',
                 'FT_Odd_Under25': 'FT_Odd_Under25',
-                'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
+                'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
                 'ROUND': 'Rodada',
             }, inplace=True)
             # Apply the function to extract the round number and create a new column "Rodada_Num"
@@ -258,6 +258,47 @@ def tips_page():
         st.subheader("Lay Zebra FT")
         st.text("Apostar em Lay visitante, Odd máxima 6")
         st.dataframe(layzebraft_df)
+
+    with tab4:
+
+        # Definir URLs para os arquivos CSV
+        url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
+        url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
+        url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
+
+        try:
+            # Carregar dados CSV
+            jogosdodia = pd.read_csv(url_jogosdodia)
+            momento_gol_home = pd.read_csv(url_momento_gol_home)
+            momento_gol_away = pd.read_csv(url_momento_gol_away)
+
+            # Lógica de mesclagem e filtragem de dados
+            jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home', right_on='Equipe')
+            jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away', right_on='Equipe')
+            jogos_filtrados = jogos_filtrados_home.merge(jogos_filtrados_away, on=['Date', 'Home', 'Away'], suffixes=('_home', '_away'))
+
+            # Filtrar jogos com critérios específicos
+            filtered_games = jogos_filtrados[
+                (jogos_filtrados['0_15_mar_home'] == 0) & (jogos_filtrados['0_15_sofri_home'] == 0) &
+                (jogos_filtrados['0_15_mar_away'] == 0) & (jogos_filtrados['0_15_sofri_away'] == 0)
+            ]
+
+            # Filtrar jogos com critérios específicos
+            filtered_games = jogos_filtrados[
+                (jogos_filtrados['FT_Odd_H_home'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25_home'] >= 2.02) 
+            ]
+
+            # Selecionar colunas relevantes e renomear
+            result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home']]
+            result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
+
+            # Streamlit App
+            st.subheader("Lay Over 25FT")
+            st.text("Apostar em Lay Over 25FT e fechar posição com 3% ou 5min de exposição.")
+            st.dataframe(result_df)
+
+        except Exception as e:
+            st.error("Ocorreu um erro: " + str(e))
 
 # Execute a função para criar a página
 tips_page()
