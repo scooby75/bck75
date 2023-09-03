@@ -118,18 +118,17 @@ def ha_025_page():
         # Aplique os critérios de seleção para equipes e ligas
         ha_df_filtered = ha_df[(ha_df['Home'].isin(equipes_desejadas)) & (ha_df['League'].isin(ligas_desejadas))]
 
-        print(ha_df_filtered)
-        
+                
         # Selecione apenas as colunas desejadas
         colunas_desejadas = ["Date", "Time", "League", "Home", "Away", "Aposta"]
         ha_df_filtered = ha_df_filtered[colunas_desejadas]
 
         # Exiba o DataFrame resultante
         st.subheader("Apostas em HA -0.25 e HA +0.25")
-        st.dataframe(ha_df_filtered)
+        #st.dataframe(ha_df_filtered)
+        st.write(ha_df_filtered)
 
 # Chamar a função para iniciar o aplicativo
-#if __name__ == "__main__":
 ha_025_page()
 
 
