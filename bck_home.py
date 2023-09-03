@@ -3,8 +3,9 @@
 import pandas as pd
 import numpy as np
 import streamlit as st
-from datetime import datetime, timedelta  
+import base64
 
+from datetime import datetime, timedelta  
 from session_state import SessionState
 
 def bck_home_page():
@@ -284,6 +285,11 @@ def bck_home_page():
         st.subheader("Top Back Casa")
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
         st.dataframe(home_team_total_profit_sorted)
+
+        # Download button for CSV
+        csv_file = home_team_total_profit_sorted.to_csv(index=False, encoding='utf-8-sig')
+        b64 = base64.b64encode(csv_file.encode()).decode()
+        st.markdown(f'<a href="data:file/csv;base64,{b64}" download="top_back_casa.csv">Download CSV</a>', unsafe_allow_html=True)
 
     ########## Faixa de Odd Mais Lucrativa
 
