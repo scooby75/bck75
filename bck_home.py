@@ -1621,7 +1621,7 @@ def bck_home_page():
         # Filtrar o DataFrame para a liga específica
             league_df = df[df['Liga'] == league]
 
-        # Obter os 5 primeiros times da liga com base na Posição Casa
+        # Obter os 5 primeiros times da liga com base no Posição Casa
             top5_teams = league_df.head(5)
 
         # Armazenar os resultados no dicionário
@@ -1630,11 +1630,7 @@ def bck_home_page():
     # Mostrar os resultados usando st.dataframe
         for league, top5_teams in top5_teams_by_league.items():
             st.subheader(f"Top 5 times da liga {league}")
-            st.table(top5_teams[['Equipe', 'Liga', 'Posição Casa', 'Rodada', 'Lucro Acumulado']])
-
-
-
-
+            st.table(top5_teams[['Equipe', 'Liga', 'Posição Casa']])
 
 # Execute a função para criar a página
 bck_home_page()
