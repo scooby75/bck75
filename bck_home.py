@@ -278,7 +278,7 @@ def bck_home_page():
         home_team_total_profit = filtered_home_profit.groupby(['Home', 'League'])['profit_home_acumulado'].last().reset_index()
 
         # Sort the home_team_total_profit DataFrame in descending order of profit
-        home_team_total_profit_sorted = home_team_total_profit.sort_values(ascending=False)
+        home_team_total_profit_sorted = home_team_total_profit.sort_values(by='profit_home_acumulado', ascending=False)
 
         # Display the table with total profit by home team in descending order
         st.subheader("Top Back Casa")
