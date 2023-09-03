@@ -1609,7 +1609,7 @@ def bck_home_page():
             df = None
 
         if df is not None:
-            st.subtitle("Top 5 Times por Liga")
+            st.subheader("Top 5 Times por Liga")
 
     # Sidebar com opções de filtro
             st.sidebar.header("Filtros")
