@@ -1610,30 +1610,30 @@ def bck_home_page():
     # Filtrar as equipes com Round >= 10 e Season é '2023' ou '2023/2024'
         df = df[(df['Rodada'] >= 10) & (df['Season'].str.contains('2023|2023/2024'))]
 
-    # Classificar o DataFrame por Pontos Acumulados (Rank_Home) em ordem decrescente
-        df.sort_values(by=['Liga', 'Posição Casa'], ascending=[True, True], inplace=True)
+    # Classificar o DataFrame por Posição Casa em ordem crescente
+        df.sort_values(by='Posição Casa', ascending=True, inplace=True)
 
-    # Criar um dicionário para armazenar as posições das equipes em cada liga
-        positions_by_league = {}
+    # Criar um dicionário para armazenar os 5 melhores times de cada liga
+        top5_teams_by_league = {}
 
     # Iterar pelas ligas únicas no DataFrame
         for league in df['Liga'].unique():
         # Filtrar o DataFrame para a liga específica
             league_df = df[df['Liga'] == league]
 
-        # Reiniciar a contagem das posições para cada liga
-            league_df['Posição'] = range(1, len(league_df) + 1)
+        # Obter os 5 primeiros times da liga com base na Posição Casa
+            top5_teams = league_df.head(5)
 
-        # Limitar até a 5ª posição
-            league_df = league_df[league_df['Posição'] <= 5]
-
-        # Armazenar as posições das equipes no dicionário
-            positions_by_league[league] = league_df
+        # Armazenar os resultados no dicionário
+            top5_teams_by_league[league] = top5_teams
 
     # Mostrar os resultados usando st.dataframe
-        for league, positions in positions_by_league.items():
-            st.subheader(f"Posições das equipes da liga {league}")
-            st.table(positions[['Equipe', 'Liga', 'Posição', 'Posição Casa', 'Rodada', 'Lucro Acumulado']])
+        for league, top5_teams in top5_teams_by_league.items():
+            st.subheader(f"Top 5 times da liga {league}")
+            st.table(top5_teams[['Equipe', 'Liga', 'Posição Casa', 'Rodada', 'Lucro Acumulado']])
+
+
+
 
 
 # Execute a função para criar a página
