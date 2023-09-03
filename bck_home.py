@@ -1600,7 +1600,7 @@ def bck_home_page():
 
     with tab5:
    
-        # Carregar o arquivo CSV a partir da URL
+      # Carregar o arquivo CSV a partir da URL
         url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
         df = pd.read_csv(url)
 
@@ -1610,8 +1610,8 @@ def bck_home_page():
         # Filtrar as equipes com Round >= 10 e Season é '2023' ou '2023/2024'
         df = df[(df['Rodada'] >= 10) & (df['Season'].str.contains('2023|2023/2024'))]
 
-        # Classificar o DataFrame por Posição Casa
-        df.sort_values(by='Posição Casa', inplace=True)
+        # Classificar o DataFrame por Pontos Acumulados (em ordem decrescente)
+        df.sort_values(by='Posição Casa', ascending=False, inplace=True)
 
         # Criar um dicionário para armazenar os 5 melhores times de cada liga
         top5_teams_by_league = {}
@@ -1626,7 +1626,7 @@ def bck_home_page():
 
             # Armazenar os resultados no dicionário
             top5_teams_by_league[league] = top5_teams
-    
+
         # Mostrar os resultados usando st.dataframe
         for league, top5_teams in top5_teams_by_league.items():
             st.subheader(f"Top 5 times da liga {league}")
