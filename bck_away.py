@@ -254,9 +254,9 @@ def bck_away_page():
         st.text("Serão exibidas todas as Equipes que se enquadraram no(s) filtro(s) de Odd")
         st.dataframe(away_team_profit_loss_pivot)
 
-    ##### Top Back Visitante ####
+    ##### Top Away Visitante ####
 
-        # Group the filtered DataFrame by 'Away' (Away Team) and calculate the cumulative sum of 'Profit'
+      # Group the filtered DataFrame by 'Away' (Away Team) and calculate the cumulative sum of 'Profit'
         df_away_profit = filtered_df.groupby('Away')['profit_away'].cumsum()
 
         # Add the 'Profit_acumulado' column to the filtered DataFrame
@@ -266,20 +266,48 @@ def bck_away_page():
         filtered_away_profit = filtered_df[filtered_df['profit_away_acumulado'] >= 3]
 
         # Group the filtered DataFrame by 'Away' (Away Team) and calculate the total profit for each home team
-        away_team_total_profit = filtered_away_profit.groupby('Away')['profit_away_acumulado'].last()
+        away_team_total_profit = filtered_away_profit.groupby(['Away', 'League'])['profit_away_acumulado'].last().reset_index()
 
-        # Sort the home_team_total_profit DataFrame in descending order of profit
+        # Sort the away_team_total_profit DataFrame in descending order of profit
         away_team_total_profit_sorted = away_team_total_profit.sort_values(ascending=False)
 
-        # Display the table with total profit by home team in descending order
+        # Display the table with total profit by away team in descending order
         st.subheader("Top Back Visitante")
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
         st.dataframe(away_team_total_profit_sorted)
 
+    ########## Faixa de Odd Mais Lucrativa
 
-    with tab3:
+        st.subheader("Odds Mais Lucrativas")
+
+        # Defina as faixas de odd
+        faixas_de_odd = [(1.01, 1.20), (1.21, 1.40), (1.41, 1.60), (1.61, 1.80), (1.81, 2.00), 
+                         (2.01, 2.20), (2.21, 2.40), (2.41, 2.60), (2.61, 2.80), (2.81, 3.00),
+                         (3.01, 3.20), (3.21, 3.40), (3.41, 3.60), (3.61, 3.80), (3.81, 4.00)]
+
+        # Crie uma função para mapear a faixa de odd com base no valor da odd
+        def encontrar_faixa(odd):
+            for faixa in faixas_de_odd:
+                if faixa[0] <= odd <= faixa[1]:
+                    return f"{faixa[0]:.2f} - {faixa[1]:.2f}"
+            return "Outras"
+
+        # Adicione uma coluna "faixa_de_odd" ao seu DataFrame original (filtered_df)
+        filtered_df["faixa_de_odd"] = filtered_df["FT_Odd_A"].apply(encontrar_faixa)
+
+        # Crie o DataFrame "Faixa De Odds Mais Lucrativas" agrupando e somando por faixa de odd
+        faixa_de_odds_mais_lucrativas = filtered_df.groupby("faixa_de_odd")["profit_away"].sum().reset_index()
+
+        # Renomeie a coluna "profit_away" para algo mais descritivo, se desejar
+        faixa_de_odds_mais_lucrativas = faixa_de_odds_mais_lucrativas.rename(columns={"profit_away": "Soma Profit Away"})
+
+        # Exiba o DataFrame "Odds Mais Lucrativas"
+        st.dataframe(faixa_de_odds_mais_lucrativas)
+
 
 ################################################################################3        
+    
+    with tab3:
 
     ##### Calculo Win/Loss Over Back Visitante FT ####
 
