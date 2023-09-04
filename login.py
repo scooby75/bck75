@@ -15,8 +15,8 @@ def login_page():
     st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", width=240)
     st.title("Football Data Analysis")
     
-    # Add information message with a clickable link and an icon
-    st.markdown("<i class='fas fa-info-circle'></i> [Informações sobre acesso, clique aqui](https://t.me/Lyssandro)", unsafe_allow_html=True)
+    # Add information message with a clickable link and "info-circle-fill" icon
+    st.markdown('<i class="bi bi-info-circle-fill"></i> Informações sobre acesso, [clique aqui](https://t.me/Lyssandro).', unsafe_allow_html=True)
     
     username = st.text_input("Usuário")
     password = st.text_input("Senha", type="password")
@@ -39,4 +39,7 @@ def logout():
     session_state.pop("username", None)
     session_state.pop("login_time", None)
     session_state.pop("user_profile", None)  # Clear user profile on logout
+
+# Add a Bootstrap icon to the login page
+login_page()
 
