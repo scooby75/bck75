@@ -82,18 +82,7 @@ def tips_page():
             eventos_raros_df = eventos_raros_df[colunas_desejadas]
             st.dataframe(eventos_raros_df,width=400)
 
-            # Create a function to download the DataFrame as CSV
-            def download_csv():
-                csv_file = df.to_csv(index=False, encoding='utf-8')
-                b64 = base64.b64encode(csv_file.encode()).decode()
-                href = f"data:file/csv;base64,{b64}"
-                return href
-
-            # Add a button to trigger the download
-            if st.button("Baixar"):
-                href = download_csv(eventos_raros_df)
-                st.markdown(f'<a href="{href}" download="Lay_Goleada_Casa.csv">Baixar CSV</a>', unsafe_allow_html=True)
-
+      
             st.subheader("Lay Goleada Visitante")
             st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
             eventos_raros2_df = df[(df["FT_Odd_A"] >= 1.71) & (df["FT_Odd_A"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
