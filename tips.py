@@ -74,7 +74,7 @@ def tips_page():
             st.dataframe(ha_df,width=600)
 
             # Criar um link para download do CSV
-            csv_link = eventos_raros_df.to_csv(index=False, encoding='utf-8-sig')
+            csv_link = ha_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
@@ -109,7 +109,7 @@ def tips_page():
             st.dataframe(eventos_raros2_df,width=600)
 
             # Criar um link para download do CSV
-            csv_link = eventos_raros_df.to_csv(index=False, encoding='utf-8-sig')
+            csv_link = eventos_raros_df2.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
@@ -132,7 +132,7 @@ def tips_page():
             st.dataframe(layzebraht_df,width=600)
 
             # Criar um link para download do CSV
-            csv_link = eventos_raros_df.to_csv(index=False, encoding='utf-8-sig')
+            csv_link = layzebraht_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
@@ -155,7 +155,7 @@ def tips_page():
             st.dataframe(layzebraft_df,width=600)
 
             # Criar um link para download do CSV
-            csv_link = eventos_raros_df.to_csv(index=False, encoding='utf-8-sig')
+            csv_link = layzebraft_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
@@ -202,7 +202,7 @@ def tips_page():
                 st.dataframe(result_df,width=600)
 
                 # Criar um link para download do CSV
-                csv_link = eventos_raros_df.to_csv(index=False, encoding='utf-8-sig')
+                csv_link = result_df.to_csv(index=False, encoding='utf-8-sig')
                 st.download_button(
                     label="Baixar CSV",
                     data=csv_link,
