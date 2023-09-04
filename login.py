@@ -11,22 +11,12 @@ valid_users = {
     "user3": {"password": "password3", "profile": 3}
 }
 
-# Include Font Awesome CSS
-st.markdown(
-    """
-    <style>
-    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
 def login_page():
     st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", width=240)
     st.title("Football Data Analysis")
     
     # Add information message with a clickable link and an icon
-    st.markdown('<i class="fas fa-info-circle"></i> [Informações sobre acesso, clique aqui](https://t.me/Lyssandro)', unsafe_allow_html=True)
+    st.markdown("<i class='fas fa-info-circle'></i> [Informações sobre acesso, clique aqui](https://t.me/Lyssandro)", unsafe_allow_html=True)
     
     username = st.text_input("Usuário")
     password = st.text_input("Senha", type="password")
