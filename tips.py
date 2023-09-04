@@ -4,6 +4,8 @@ import streamlit as st
 import base64
 import re
 
+from io import BytesIO
+
 from datetime import datetime, timedelta
 from session_state import SessionState
 
@@ -82,8 +84,8 @@ def tips_page():
 
             # Create a function to download the DataFrame as CSV
             def download_csv():
-                csv = eventos_raros_df.to_csv(index=False)
-                b64 = base64.b64encode(csv.encode()).decode()
+                csv = eventos_raros_df.to_csv(index=False).encode()
+                b64 = base64.b64encode(csv).decode()
                 href = f'data:file/csv;base64,{b64}'
                 st.markdown(f'<a href="{href}" download="Lay_Goleada_Casa.csv">Baixar CSV</a>', unsafe_allow_html=True)
 
