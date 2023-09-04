@@ -90,10 +90,7 @@ def tips_page():
                 st.download_button(label="Baixar CSV",
                                    data=stream,
                                    file_name="Lay_Goleada_Casa.csv")
-
-            # Adicione um botão para acionar o download
-            if st.button("Baixar"):
-                download_csv()
+            
 
             st.subheader("Lay Goleada Visitante")
             st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
