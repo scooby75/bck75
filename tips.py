@@ -89,13 +89,8 @@ def tips_page():
                 return b64
 
             # Add a button to trigger the download
-            if st.button("Baixar"):
-                b64 = download_csv(eventos_raros_df)
-                href = f"data:file/csv;base64,{b64}"
-                st.markdown(
-                    f'<a href="{href}" download="Lay_Goleada_Casa.csv">Baixar</a>',
-                    unsafe_allow_html=True
-                )
+            if st.download_button("Baixar", download_csv(eventos_raros_df), key='download_button'):
+                pass
 
             st.subheader("Lay Goleada Visitante")
             st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
