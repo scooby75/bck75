@@ -82,13 +82,13 @@ def tips_page():
 
             # Create a function to download the DataFrame as CSV
             def download_csv():
-            csv = eventos_raros_df.to_csv(index=False)
-            b64 = base64.b64encode(csv.encode()).decode()
-            href = f'<a href="data:file/csv;base64,{b64}" download="Lay_Goleada_Casa.csv">Baixar CSV</a>'
-            st.markdown(href, unsafe_allow_html=True)
+                csv = eventos_raros_df.to_csv(index=False)
+                b64 = base64.b64encode(csv.encode()).decode()
+                href = f'<a href="data:file/csv;base64,{b64}" download="Lay_Goleada_Casa.csv">Baixar CSV</a>'
+                st.markdown(href, unsafe_allow_html=True)
 
             # Add a button to trigger the download
-            st.button("Baixar", on_click=download_csv)
+                st.button("Baixar", on_click=download_csv)
 
             st.subheader("Lay Goleada Visitante")
             st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
