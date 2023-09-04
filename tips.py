@@ -82,6 +82,15 @@ def tips_page():
             eventos_raros_df = eventos_raros_df[colunas_desejadas]
             st.dataframe(eventos_raros_df,width=400)
 
+            # Criar um link para download do CSV
+            csv_link = eventos_raros_df.to_csv(index=False, encoding='utf-8-sig')
+            st.download_button(
+                label="Baixar CSV",
+                data=csv_link,
+                file_name="Lay_Goleada_Casa.csv",
+                key="lay_goleada_csv"
+            )
+
       
             st.subheader("Lay Goleada Visitante")
             st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
