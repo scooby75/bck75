@@ -71,7 +71,7 @@ def tips_page():
             ]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             ha_df = ha_df[colunas_desejadas]
-            st.dataframe(ha_df,width=600)
+            st.dataframe(ha_df,width=800)
 
             # Criar um link para download do CSV
             csv_link = ha_df.to_csv(index=False, encoding='utf-8-sig')
@@ -90,7 +90,7 @@ def tips_page():
             eventos_raros_df = df[(df["FT_Odd_H"] >= 1.71) & (df["FT_Odd_H"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             eventos_raros_df = eventos_raros_df[colunas_desejadas]
-            st.dataframe(eventos_raros_df,width=600)
+            st.dataframe(eventos_raros_df,width=800)
 
             # Criar um link para download do CSV
             csv_link = eventos_raros_df.to_csv(index=False, encoding='utf-8-sig')
@@ -106,10 +106,10 @@ def tips_page():
             st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
             eventos_raros2_df = df[(df["FT_Odd_A"] >= 1.71) & (df["FT_Odd_A"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
             eventos_raros2_df = eventos_raros2_df[colunas_desejadas]
-            st.dataframe(eventos_raros2_df,width=600)
+            st.dataframe(eventos_raros2_df,width=800)
 
             # Criar um link para download do CSV
-            csv_link = eventos_raros_df2.to_csv(index=False, encoding='utf-8-sig')
+            csv_link = eventos_raros2_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
@@ -129,7 +129,7 @@ def tips_page():
             ]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             layzebraht_df = layzebraht_df[colunas_desejadas]
-            st.dataframe(layzebraht_df,width=600)
+            st.dataframe(layzebraht_df,width=800)
 
             # Criar um link para download do CSV
             csv_link = layzebraht_df.to_csv(index=False, encoding='utf-8-sig')
@@ -152,7 +152,7 @@ def tips_page():
             ]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             layzebraft_df = layzebraft_df[colunas_desejadas]
-            st.dataframe(layzebraft_df,width=600)
+            st.dataframe(layzebraft_df,width=800)
 
             # Criar um link para download do CSV
             csv_link = layzebraft_df.to_csv(index=False, encoding='utf-8-sig')
@@ -199,7 +199,7 @@ def tips_page():
                 # Streamlit App
                 st.subheader("Lay Over 25FT")
                 st.text("Apostar em Lay Over 25FT e fechar posição com 3% ou 5min de exposição.")
-                st.dataframe(result_df,width=600)
+                st.dataframe(result_df,width=800)
 
                 # Criar um link para download do CSV
                 csv_link = result_df.to_csv(index=False, encoding='utf-8-sig')
