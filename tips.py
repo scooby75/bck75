@@ -88,7 +88,7 @@ def tips_page():
                 label="Baixar CSV",
                 data=csv_link,
                 file_name="Lay_Goleada_Casa.csv",
-                key="lay_goleada_csv"
+                key="lay_goleada_casa_csv"
             )
 
       
@@ -97,6 +97,16 @@ def tips_page():
             eventos_raros2_df = df[(df["FT_Odd_A"] >= 1.71) & (df["FT_Odd_A"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
             eventos_raros2_df = eventos_raros2_df[colunas_desejadas]
             st.dataframe(eventos_raros2_df,width=400)
+
+            # Criar um link para download do CSV
+            csv_link = eventos_raros_df.to_csv(index=False, encoding='utf-8-sig')
+            st.download_button(
+                label="Baixar CSV",
+                data=csv_link,
+                file_name="Lay_Goleada_Visitante.csv",
+                key="lay_goleada_visitante_csv"
+            )
+
 
         with tab2:
             # Use df aqui para a aba "Lay Zebra HT"
