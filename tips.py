@@ -88,7 +88,7 @@ def tips_page():
                 st.markdown(href, unsafe_allow_html=True)
 
             # Add a button to trigger the download
-                st.button("Baixar", on_click=download_csv)
+            st.button("Baixar", on_click=download_csv)
 
             st.subheader("Lay Goleada Visitante")
             st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
