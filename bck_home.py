@@ -403,7 +403,7 @@ def bck_home_page():
         df_lay_zebra_ft = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
 
         # Calculate the number of "Win" and "Loss" occurrences
-        num_win = len(filtered_df[filtered_df["Resultado_FT"] == "H", "D"])
+        num_win = len(filtered_df[(filtered_df["Resultado_FT"] == "H") & filtered_df["D"].notna()])
         num_loss = len(filtered_df[filtered_df["Resultado_FT"].isin(["A"])])
         total_games = num_win + num_loss
 
