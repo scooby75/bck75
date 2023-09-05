@@ -12,7 +12,8 @@ valid_users = {
     "Ellwanger": {"password": "21ellwanger", "profile": 3},
     "bulquinha": {"password": "evrr1111", "profile": 1},
     "rafaelmax": {"password": "19cYqCqu!OpO", "profile": 1},
-    "Eanes": {"password": "Eanes@Analysis", "profile": 2}
+    "Eanes": {"password": "Eanes@Analysis", "profile": 2},
+    "wagnercw": {"password": "G28M1V97@", "profile": 1}
 }
 
 def login_page():
