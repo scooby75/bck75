@@ -13,7 +13,7 @@ def bck_away_page():
     session_state.user_profile = 3  # Ou qualquer outro valor desejado
 
     # Verifica se o usuário tem permissão para acessar a página
-    if session_state.user_profile < 2:
+    if session_state.user_profile < 3:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
         
