@@ -395,6 +395,80 @@ def bck_home_page():
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
         st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_FT', use_container_width=True)
 
+##########################################################################################
+
+            ##### Calculo Win/Loss OverLay Zebra FT ####
+
+        # Create a new DataFrame for the "Lay Zebra FT" table
+        df_lay_zebra_ft = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Calculate the number of "Win" and "Loss" occurrences
+        num_win = len(filtered_df[filtered_df["Resultado_FT"] == "H", "D"])
+        num_loss = len(filtered_df[filtered_df["Resultado_FT"].isin(["A"])])
+        total_games = num_win + num_loss
+
+        # Check if total_games is not zero before performing division
+        if total_games != 0:
+        # Calculate win and loss percentages
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+        # Handle the case when total_games is zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calculate the fair odds with 2 decimal places
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+        # Handle the case when win_percentage is zero
+            fair_odd = 0
+
+        #### Add the data to the "Back Casa FT" table ####
+        df_lay_zebra_ft.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Display the "Back Casa FT" table
+        st.subheader("Lay Zebra FT")
+        st.dataframe(df_lay_zebra_ft)
+    with tab3:
+    
+    # Verificar se o DataFrame não está vazio
+        if not filtered_df.empty:
+    # Somar os valores da coluna 'profit_home' para obter o lucro total
+            lucro_total = filtered_df['profit_lay_away'].sum()
+
+    # Calcular o ROI
+            total_de_jogos = len(filtered_df)
+            roi = (lucro_total / total_de_jogos) * 100
+    
+    # Arredondar os valores para duas casas decimais
+            lucro_total = round(lucro_total, 2)
+            roi = round(roi, 2)
+    
+    # Exibir os resultados usando st.write()
+            st.write(f"Lucro/Prejuízo: {lucro_total} Und em {total_de_jogos} jogos")
+            st.write(f"Yield: {roi}%")
+        else:
+    # Exibir mensagem de DataFrame vazio
+            st.write("Nenhum dado disponível. O DataFrame está vazio.")
+
+###### ADD Gráfico com Resultado Lay Zebra FT #####
+
+    #st.subheader("Desempenho Geral do Filtro")
+        
+        # Converter a coluna 'Date' para o tipo datetime e formatar como "DD/MM/YYYY"
+        filtered_df['Date'] = pd.to_datetime(filtered_df['Date'], format='%d/%m/%Y')
+
+    # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df.sort_values(by='Date', inplace=True)
+
+    # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df['Lucro_Acumulado_Zebra'] = filtered_df['profit_lay_away'].cumsum()
+
+    # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_Zebra', use_container_width=True)
+        
+
 ###########################################################################################        
 
     ##### Calculo Win/Loss Over Back Casa HT ####
