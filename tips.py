@@ -47,10 +47,10 @@ def tips_page():
     session_state = SessionState()
 
     # Defina o valor de user_profile após a criação da instância
-    session_state.user_profile = 3  # Ou qualquer outro valor desejado
+    session_state.user_profile = 1  # Ou qualquer outro valor desejado
 
     # Verifica se o usuário tem permissão para acessar a página
-    if session_state.user_profile < 2:
+    if session_state.user_profile < 1:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
     else:
         # Carregar o DataFrame uma vez no início
