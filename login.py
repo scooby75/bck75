@@ -8,7 +8,7 @@ valid_users = {
     "lamaral": {"password": "lamaral23", "profile": 1},
     "blamim": {"password": "lamim23", "profile": 1},
     "mrodrigues": {"password": "mrodrigues23", "profile": 3},
-    "user3": {"password": "password3", "profile": 3}
+    "alexbadcarrel": {"password": "Badminton76", "profile": 3}
 }
 
 def login_page():
