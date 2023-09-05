@@ -52,8 +52,8 @@ def bck_away_page():
             selected_away = st.multiselect("Selecionar Visitante", away_teams)
 
             # PPG_Away filter
-            min_rank_away = st.number_input("Rank Mínimo (Away)", min_value=1.0, key="min_rank_away")
-            max_rank_away = st.number_input("Rank Máximo (Away)", max_value=50.0, key="max_rank_away")
+            min_rank_away = st.number_input("Rank Mínimo (Away)", min_value=1.0, max_value=50.0, value=1.0, key="min_rank_away")
+            max_rank_away = st.number_input("Rank Máximo (Away)", min_value=1.0, max_value=50.0, value=50.0, key="max_rank_away")
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
