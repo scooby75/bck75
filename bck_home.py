@@ -59,8 +59,9 @@ def bck_home_page():
             selected_home = st.multiselect("Selecionar Mandante", home_teams)
 
             # PPG_Home filter
-            min_rank_home = st.number_input("Rank Mínimo (Home)", min_value=1.0, key="min_rank_home")
-            max_rank_home = st.number_input("Rank Máximo (Home)", max_value=50.0, key="max_rank_home")
+            min_rank_home = st.number_input("Rank Mínimo (Home)", min_value=1.0, max_value=50.0, value=1.0, key="min_rank_home")
+            max_rank_home = st.number_input("Rank Máximo (Home)", min_value=1.0, max_value=50.0, value=50.0, key="max_rank_home")
+
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
