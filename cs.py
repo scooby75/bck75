@@ -42,13 +42,7 @@ def cs_page():
     url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
     jogosdodia = pd.read_csv(url)
 
-    # Remover linhas com valores NaN na coluna "ROUND"
-    jogosdodia = jogosdodia.dropna(subset=['ROUND'])
-
-    # Filtrar jogos com ROUND maior ou igual a 10
-    jogosdodia['ROUND'] = jogosdodia['ROUND'].str.extract('(\d+)')
-    jogosdodia['ROUND'] = pd.to_numeric(jogosdodia['ROUND'])
-    jogos_filtrados = jogosdodia[jogosdodia['ROUND'] >= 10]
+   
 
     # Combinar os jogos filtrados com os dados de média de gols calculados
     jogos_filtrados_round = jogos_filtrados.merge(df_media_gols_casa, left_on='Home', right_on='Home')
@@ -56,7 +50,9 @@ def cs_page():
 
     # Filtrar jogos com FT_Odd_H e FT_Odd_A >= 1.80
     jogos_filtrados_odds = jogos_filtrados_round[
-        (jogos_filtrados_round['FT_Odd_H'] >= 1.80) & (jogos_filtrados_round['FT_Odd_A'] >= 1.80)
+        (jogos_filtrados_round['FT_Odd_H'] >= 1.80) &
+        (jogos_filtrados_round['FT_Odd_A'] >= 1.80) &
+        (jogos_filtrados_round['Odd_Over25'] >= 2.10)
     ]
 
     # Função para calcular a probabilidade de um certo número de gols usando a distribuição de Poisson
