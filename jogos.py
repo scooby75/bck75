@@ -28,11 +28,9 @@ def jogos_do_dia_page():
         url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
         data_jogos = pd.read_csv(url)
 
-        # Especifique o formato das datas como DD/MM/AAAA
-        formato_data = "%d/%m/%Y"      
-
+        
         # Formate a coluna 'Date' para o formato "dd-mm-aaaa"
-        data_jogos['Date'] = pd.to_datetime(data_jogos['Date'], format=formato_data).dt.strftime('%d-%m-%Y')
+        data_jogos['Date'] = pd.to_datetime(data_jogos['Date']).dt.strftime('%d-%m-%Y')
 
         # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
