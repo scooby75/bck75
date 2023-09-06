@@ -1931,16 +1931,16 @@ def bck_home_page():
         ########### Top Lay 0x1 ###############
 
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
-        df_lay01_profit = filtered_df.groupby('Home')['profit_CS_0x1'].cumsum()
+        df_lay01_profit = filtered_df.groupby('Home')['profit_Lay_0x1'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
         filtered_df['profit_lay01_acumulado'] = df_lay01_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
-        filtered_lay01_profit = filtered_df[filtered_df['profit_CS_0x1_acumulado'] >= 1]
+        filtered_lay01_profit = filtered_df[filtered_df['profit_Lay_0x1_acumulado'] >= 1]
 
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
-        lay01_total_profit = filtered_lay01_profit.groupby(['Home', 'League'])['profit_CS_0x1_acumulado'].last().reset_index()
+        lay01_total_profit = filtered_lay01_profit.groupby(['Home', 'League'])['profit_Lay_0x1_acumulado'].last().reset_index()
 
         # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
         lay01_total_profit_sorted =lay01_total_profit.sort_values(by='profit_CS_0x1_acumulado', ascending=False)
