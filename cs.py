@@ -1,11 +1,14 @@
 # cs.py
-
 import pandas as pd
 import numpy as np
 import streamlit as st
-from datetime import datetime, timedelta  
+from datetime import datetime, timedelta
 
 from session_state import SessionState
+
+# Função para calcular a probabilidade de um certo número de gols usando a distribuição de Poisson
+def poisson_prob(media, k):
+    return (np.exp(-media) * media ** k) / np.math.factorial(k)
 
 def cs_page():
     # Inicializa o estado da sessão
@@ -23,8 +26,11 @@ def cs_page():
     st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
     
     # Carregar os dados CSV a partir das URLs para DataFrames
-    url = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
-    bdgeral = pd.read_csv(url)
+    url_bdgeral = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
+    url_jogosdodia = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
+
+    bdgeral = pd.read_csv(url_bdgeral)
+    jogosdodia = pd.read_csv(url_jogosdodia)
 
     # Excluir jogos com palavras-chave "U19", "U20", "U21" e "U23"
     keywords_to_exclude = ["U19", "U20", "U21", "U23"]
@@ -38,29 +44,19 @@ def cs_page():
     df_media_gols_fora = bdgeral.groupby('Away').agg({'FT_Goals_A': 'mean'}).reset_index()
     df_media_gols_fora.rename(columns={'FT_Goals_A': 'Media_Gols_For'}, inplace=True)
 
-    # Carregar os dados CSV de outra URL para um DataFrame
-    url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
-    jogosdodia = pd.read_csv(url)
-
-   
-
     # Combinar os jogos filtrados com os dados de média de gols calculados
-    jogos_filtrados_round = jogos_filtrados.merge(df_media_gols_casa, left_on='Home', right_on='Home')
-    jogos_filtrados_round = jogos_filtrados_round.merge(df_media_gols_fora, left_on='Away', right_on='Away')
+    jogosdodia = jogosdodia.merge(df_media_gols_casa, left_on='Home', right_on='Home')
+    jogosdodia = jogosdodia.merge(df_media_gols_fora, left_on='Away', right_on='Away')
 
-    # Filtrar jogos com FT_Odd_H e FT_Odd_A >= 1.80
-    jogos_filtrados_odds = jogos_filtrados_round[
-        (jogos_filtrados_round['FT_Odd_H'] >= 1.80) &
-        (jogos_filtrados_round['FT_Odd_A'] >= 1.80) &
-        (jogos_filtrados_round['Odd_Over25'] >= 2.10)
+    # Filtrar jogos com FT_Odd_H e FT_Odd_A >= 1.80 e Odd_Over25 >= 2.10
+    jogos_filtrados_odds = jogosdodia[
+        (jogosdodia['FT_Odd_H'] >= 1.80) &
+        (jogosdodia['FT_Odd_A'] >= 1.80) &
+        (jogosdodia['Odd_Over25'] >= 2.10)
     ]
 
-    # Função para calcular a probabilidade de um certo número de gols usando a distribuição de Poisson
-    def poisson_prob(media, k):
-        return (np.exp(-media) * media ** k) / np.math.factorial(k)
-
-    # Loop para prever os 6 placares mais prováveis para cada jogo
-    for index, row in jogos_filtrados_round.iterrows():
+    # Exibir os resultados para cada jogo usando o Streamlit
+    for index, row in jogos_filtrados_odds.iterrows():
         time_casa = row['Home']
         time_visitante = row['Away']
         data_jogo = row['Date']
@@ -93,7 +89,7 @@ def cs_page():
         for i in range(6):
             prob_porcentagem = f"{placares_previstos[i][2] * 100:.2f}%"
             resultados_jogo.append({'Placar': f"{placares_previstos[i][0]} - {placares_previstos[i][1]}",
-                                 'Probabilidade': prob_porcentagem})
+                                     'Probabilidade': prob_porcentagem})
         
         # Organizar os resultados em ordem decrescente de probabilidade
         resultados_jogo = sorted(resultados_jogo, key=lambda x: float(x['Probabilidade'][:-1]), reverse=True)
