@@ -63,12 +63,10 @@ def cs_page():
         hora_jogo = row['Time']
         media_gols_casa = row['Media_Gols_Casa']
         media_gols_fora = row['Media_Gols_For']
-
-        # Converter a hora do jogo em um objeto de hora
-        hora_jogo_obj = datetime.strptime(hora_jogo, '%H:%M').time()
-
-        # Subtrair 3 horas para ajustar para o horário local (time - 3)
-        hora_jogo_obj_local = (datetime.combine(datetime.today(), hora_jogo_obj) - timedelta(hours=3)).time()
+        
+        # Especifique o formato das datas como DD/MM/AAAA
+        formato_data = "%d/%m/%Y"     
+        
 
         placares_previstos = []
         for gols_casa in range(7):
