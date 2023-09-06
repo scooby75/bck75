@@ -1949,6 +1949,72 @@ def bck_home_page():
         st.subheader("Top Lay 0x1")
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
         st.dataframe(lay01_total_profit_sorted, width=800)
+
+         ########### Top Lay 1x0 ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_lay10_profit = filtered_df.groupby('Home')['profit_Lay_1x0'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_Lay_1x0_acumulado'] = df_lay10_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_lay10_profit = filtered_df[filtered_df['profit_Lay_1x0_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        lay10_total_profit = filtered_lay10_profit.groupby(['Home', 'League'])['profit_Lay_1x0_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        lay10_total_profit_sorted =lay10_total_profit.sort_values(by='profit_Lay_1x0_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top Lay 1x0")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(lay10_total_profit_sorted, width=800)
+
+         ########### Top Lay 2x1 ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_lay21_profit = filtered_df.groupby('Home')['profit_Lay_2x1'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_Lay_2x1_acumulado'] = df_lay21_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_lay21_profit = filtered_df[filtered_df['profit_Lay_2x1_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        lay21_total_profit = filtered_lay21_profit.groupby(['Home', 'League'])['profit_Lay_2x1_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        lay21_total_profit_sorted =lay21_total_profit.sort_values(by='profit_Lay_2x1_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top Lay 2x1")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(lay21_total_profit_sorted, width=800)
+
+      ########### Top Lay 1x2 ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_lay12_profit = filtered_df.groupby('Home')['profit_Lay_1x2'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_Lay_1x2_acumulado'] = df_lay12_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_lay12_profit = filtered_df[filtered_df['profit_Lay_1x2_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        lay12_total_profit = filtered_lay12_profit.groupby(['Home', 'League'])['profit_Lay_1x2_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        lay12_total_profit_sorted =lay12_total_profit.sort_values(by='profit_Lay_1x2_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top Lay 1x2")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(lay12_total_profit_sorted, width=800)
   
 
 
