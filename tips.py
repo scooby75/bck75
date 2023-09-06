@@ -3,6 +3,7 @@ import numpy as np
 import streamlit as st
 import base64
 import re
+import datetime as dt
 
 from io import BytesIO
 
@@ -15,8 +16,8 @@ def load_base():
     url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
     df = pd.read_csv(url)
 
-    # Especifique o formato das datas como DD/MM/AAAA
-    formato_data = "%d/%m/%Y"
+    # Formate a coluna 'Date' para o formato "dd-mm-aaaa"
+    data_jogos['Date'] = pd.to_datetime(data_jogos['Date']).dt.strftime('%d-%m-%Y')
    
     # Rename the columns
     df.rename(columns={
@@ -176,7 +177,7 @@ def tips_page():
 
                 # Filtrar jogos com critérios específicos
                 filtered_games = jogos_filtrados[
-                    (jogos_filtrados['FT_Odd_H_home'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25_home'] >= 2.02) 
+                    (jogos_filtrados['Odd_H_home'] >= 1.70) & (jogos_filtrados['Odd_Over25_home'] >= 2.02) 
                 ]
 
                 # Selecionar colunas relevantes e renomear
