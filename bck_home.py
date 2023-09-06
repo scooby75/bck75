@@ -1689,7 +1689,7 @@ def bck_home_page():
         ########### Top Lay Casa ###############
 
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
-        df_lay_hway_profit = filtered_df.groupby('Away')['profit_lay_home'].cumsum()
+        df_lay_home_profit = filtered_df.groupby('Away')['profit_lay_home'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
         filtered_df['profit_lay_home_acumulado'] = df_lay_home_profit
