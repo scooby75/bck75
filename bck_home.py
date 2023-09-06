@@ -1649,7 +1649,7 @@ def bck_home_page():
         top_20_home_profitable = filtered_df[filtered_df['Home'] == True].head(20)
     
         # Crie um novo DataFrame com os resultados.
-        result_df = top_20_home_profitable[['Team', 'profit_lay_away']]
+        result_df = top_20_home_profitable[['Home', 'profit_lay_away']]
 
         # Resetar o índice do novo DataFrame, se desejado.
         result_df.reset_index(drop=True, inplace=True)
