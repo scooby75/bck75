@@ -23,7 +23,7 @@ def bck_home_page():
         #st.write("Acesso concedido!")  # Debug
          
     ##### PÁGINA BCK HOME ######
-    tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top"])
+    tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top Equipes"])
 
     with tab0:
         # Carregar os dados
@@ -1661,7 +1661,7 @@ def bck_home_page():
 
         # Exibe a tabela com o lucro total por time da casa em ordem decrescente
         st.subheader("Top Back Casa")
-        # st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
         st.dataframe(back_home_team_total_profit_sorted, width=800)
 
         ########### Top Lay Visitante ###############
@@ -1683,7 +1683,7 @@ def bck_home_page():
 
         # Display the table with total profit by home team in descending order
         st.subheader("Top Lay Zebra - Visitante")
-        # st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
         st.dataframe(home_team_total_profit_sorted, width=800)
 
         ########### Top Lay Casa ###############
@@ -1697,7 +1697,7 @@ def bck_home_page():
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_lay_home_profit = filtered_df[filtered_df['profit_lay_home_acumulado'] >= 1]
 
-        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        # Agrupa o DataFrame filtrado pelo time da casa ('Away') e calcula o lucro total para cada time visitante
         away_team_total_profit = filtered_lay_home_profit.groupby(['Away', 'League'])['profit_lay_home_acumulado'].last().reset_index()
 
         # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
@@ -1705,7 +1705,7 @@ def bck_home_page():
 
         # Exibe a tabela com o lucro total por time da casa em ordem decrescente
         st.subheader("Top Lay Zebra - Casa")
-        # st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
         st.dataframe(away_team_total_profit_sorted, width=800)
 
         ########### Top Over 05HT ###############
@@ -1727,8 +1727,8 @@ def bck_home_page():
 
         # Exibe a tabela com o lucro total por time da casa em ordem decrescente
         st.subheader("Top Over 05HT")
-        # st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
-        st.dataframe(away_team_total_profit_sorted, width=800)
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(ov05ht_total_profit_sorted, width=800)
 
         ########### Top Under 05HT ###############
 
@@ -1749,8 +1749,52 @@ def bck_home_page():
 
         # Exibe a tabela com o lucro total por time da casa em ordem decrescente
         st.subheader("Top Under 05HT")
-        # st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
-        st.dataframe(away_team_total_profit_sorted, width=800)
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(u05ht_total_profit_sorted, width=800)
+
+         ########### Top Over 15FT ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_ov15_profit = filtered_df.groupby('Home')['profit_over15'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_over15_acumulado'] = df_ov15_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_ov15_profit = filtered_df[filtered_df['profit_over15_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        ov15_total_profit = filtered_ov15_profit.groupby(['Home', 'League'])['profit_over15_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        ov15_total_profit_sorted =ov15_total_profit.sort_values(by='profit_over15_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top Over 15FT")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(ov15_total_profit_sorted, width=800)
+
+        ########### Top Under 15FT ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_u15_profit = filtered_df.groupby('Home')['profit_under15'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_under15_acumulado'] = df_u15_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_u15_profit = filtered_df[filtered_df['profit_under15_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        u15_total_profit = filtered_u15_profit.groupby(['Home', 'League'])['profit_under15_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        u15_total_profit_sorted =u15_total_profit.sort_values(by='profit_under15_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top Under 15FT")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(u15_total_profit_sorted, width=800)
   
 
 
