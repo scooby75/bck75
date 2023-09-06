@@ -182,7 +182,7 @@ def tips_page():
 
                 # Selecionar colunas relevantes e renomear
                 result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home']]
-                result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
+                result_df.columns = ['Home', 'Away', 'Odd_H', 'Odd_A', 'Odd_Over25']
 
                 # Streamlit App
                 st.subheader("Lay Over 25FT")
