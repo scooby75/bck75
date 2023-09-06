@@ -29,18 +29,7 @@ def jogos_do_dia_page():
         data_jogos = pd.read_csv(url)
 
         # Especifique o formato das datas como DD/MM/AAAA
-        formato_data = "%d/%m/%Y"
-
-        # Convert the 'Hora' column to a datetime object
-        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'], format='%H:%M')
-       
-
-        # Criar um intervalo de tempo de 3 horas
-        offset_tempo = pd.Timedelta(hours=3)
-
-        # Subtrair o intervalo de tempo da coluna 'Time'
-        data_jogos['Time'] = pd.to_datetime(data_jogos['Time'], format='%H:%M') - offset_tempo
-        data_jogos['Time'] = data_jogos['Time'].dt.strftime('%H:%M')
+        formato_data = "%d/%m/%Y"      
 
         # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
