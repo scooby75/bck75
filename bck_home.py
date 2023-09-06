@@ -1795,6 +1795,160 @@ def bck_home_page():
         st.subheader("Top Under 15FT")
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
         st.dataframe(u15_total_profit_sorted, width=800)
+
+        ########### Top Over 25FT ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_ov25_profit = filtered_df.groupby('Home')['profit_over25'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_over25_acumulado'] = df_ov25_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_ov25_profit = filtered_df[filtered_df['profit_over25_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        ov25_total_profit = filtered_ov25_profit.groupby(['Home', 'League'])['profit_over25_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        ov25_total_profit_sorted =ov25_total_profit.sort_values(by='profit_over25_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top Over 25FT")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(ov25_total_profit_sorted, width=800)
+
+        ########### Top Under 25FT ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_u25_profit = filtered_df.groupby('Home')['profit_under25'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_under25_acumulado'] = df_u25_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_u25_profit = filtered_df[filtered_df['profit_under25_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        u25_total_profit = filtered_u25_profit.groupby(['Home', 'League'])['profit_under25_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        u25_total_profit_sorted =u25_total_profit.sort_values(by='profit_under25_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top Under 25FT")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(u25_total_profit_sorted, width=800)
+
+        ########### Top Over 35FT ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_ov35_profit = filtered_df.groupby('Home')['profit_over35'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_over35_acumulado'] = df_ov35_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_ov35_profit = filtered_df[filtered_df['profit_over35_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        ov35_total_profit = filtered_ov35_profit.groupby(['Home', 'League'])['profit_over35_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        ov35_total_profit_sorted =ov35_total_profit.sort_values(by='profit_over35_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top Over 35FT")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(ov35_total_profit_sorted, width=800)
+
+        ########### Top Under 35FT ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_u35_profit = filtered_df.groupby('Home')['profit_under35'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_under35_acumulado'] = df_u35_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_u35_profit = filtered_df[filtered_df['profit_under35_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        u35_total_profit = filtered_u35_profit.groupby(['Home', 'League'])['profit_under35_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        u35_total_profit_sorted =u35_total_profit.sort_values(by='profit_under35_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top Under 35FT")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(u35_total_profit_sorted, width=800)
+
+      ########### Top Over 45FT ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_ov45_profit = filtered_df.groupby('Home')['profit_over45'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_over45_acumulado'] = df_ov45_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_ov45_profit = filtered_df[filtered_df['profit_over45_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        ov45_total_profit = filtered_ov45_profit.groupby(['Home', 'League'])['profit_over45_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        ov45_total_profit_sorted =ov45_total_profit.sort_values(by='profit_over45_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top Over 45FT")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(ov45_total_profit_sorted, width=800)
+
+        ########### Top Under 45FT ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_u45_profit = filtered_df.groupby('Home')['profit_under45'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_under45_acumulado'] = df_u45_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_u45_profit = filtered_df[filtered_df['profit_under45_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        u45_total_profit = filtered_u45_profit.groupby(['Home', 'League'])['profit_under45_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        u45_total_profit_sorted =u45_total_profit.sort_values(by='profit_under45_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top Under 45FT")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(u45_total_profit_sorted, width=800)
+
+        ########### Top Lay 0x1 ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_lay01_profit = filtered_df.groupby('Home')['profit_CS_0x1'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_lay01_acumulado'] = df_lay01_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_lay01_profit = filtered_df[filtered_df['profit_CS_0x1_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        lay01_total_profit = filtered_lay01_profit.groupby(['Home', 'League'])['profit_CS_0x1_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        lay01_total_profit_sorted =lay01_total_profit.sort_values(by='profit_CS_0x1_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top Lay 0x1")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(lay01_total_profit_sorted, width=800)
   
 
 
