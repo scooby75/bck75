@@ -23,7 +23,7 @@ def bck_home_page():
         #st.write("Acesso concedido!")  # Debug
          
     ##### PÁGINA BCK HOME ######
-    tab0, tab1, tab2, tab3, tab4 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar"])
+    tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top"])
 
     with tab0:
         # Carregar os dados
@@ -1637,6 +1637,27 @@ def bck_home_page():
 
         # Exibir o DataFrame usando st.dataframe
         st.dataframe(df, width=400)
+
+################ Top Mercados ##########################
+    
+    with tab5:
+        
+        # Classifique o DataFrame 'filtered_df' com base na coluna 'Profit_Lay_Away' em ordem decrescente.
+        filtered_df.sort_values(by='Profit_Lay_Away', ascending=False, inplace=True)
+
+        # Selecione apenas as linhas onde a coluna 'Home' seja igual a 'True' (caso contrário, ajuste a condição conforme seus dados).
+        top_20_home_profitable = filtered_df[filtered_df['Home'] == True].head(20)
+    
+        # Crie um novo DataFrame com os resultados.
+        result_df = top_20_home_profitable[['Team', 'Profit_Lay_Away']]
+
+        # Resetar o índice do novo DataFrame, se desejado.
+        result_df.reset_index(drop=True, inplace=True)
+
+        # Exibindo o subcabeçalho
+        st.subheader('Top 20 equipes mais lucrativas - Lay Zebra Visitante')
+        st.dataframe(result_df, width=800)
+  
 
 
 # Execute a função para criar a página
