@@ -20,26 +20,16 @@ def load_base():
     df['Time'] = df['Time'] - pd.to_timedelta('3 hours')
     # Rename the columns
     df.rename(columns={
-        'FT_Odds_H': 'FT_Odd_H',
-        'FT_Odds_D': 'FT_Odd_D',
-        'FT_Odds_A': 'FT_Odd_A',
-        'FT_Odd_Over25': 'FT_Odd_Over25',
-        'FT_Odd_Under25': 'FT_Odd_Under25',
-        'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
-        'ROUND': 'Rodada',
+        'Odd_H': 'FT_Odd_H',
+        'Odd_D': 'FT_Odd_D',
+        'Odd_A': 'FT_Odd_A',
+        'Odd_Over25': 'FT_Odd_Over25',
+        'Odd_Under25': 'FT_Odd_Under25',
+        'Odd_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
     }, inplace=True)
-    # Apply the function to extract the round number and create a new column "Rodada_Num"
-    df["Rodada_Num"] = df["Rodada"].apply(extrair_numero_rodada)
+
     return df
 
-# Função para extrair o número do texto "ROUND N"
-def extrair_numero_rodada(text):
-    if isinstance(text, int):
-        return text
-    match = re.search(r'\d+', text)
-    if match:
-        return int(match.group())
-    return None
 
 # Função principal para criar a página de dicas
 def tips_page():
@@ -65,9 +55,8 @@ def tips_page():
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
             ha_df = df[
                 (df["FT_Odd_H"] <= 1.90) &
-                (df["DC_1X"] <= 1.25) &
-                (df["HA"] <= 1.7) &
-                (df["Rodada_Num"] >= 10)
+                (df["CS_0x1"] >= 19)
+                
             ]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             ha_df = ha_df[colunas_desejadas]
@@ -87,7 +76,7 @@ def tips_page():
             # Use df aqui para a aba "Lay Goleada"
             st.subheader("Lay Goleada Casa")
             st.text("Apostar em Lay Goleada Casa, Odd máxima 30")
-            eventos_raros_df = df[(df["FT_Odd_H"] >= 1.71) & (df["FT_Odd_H"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
+            eventos_raros_df = df[(df["FT_Odd_H"] >= 2) & (df["FT_Odd_H"] <= 5) & (df["FT_Odd_Over25"] >= 2.01) & (df["CS_Goleada_H"] >= 24)]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             eventos_raros_df = eventos_raros_df[colunas_desejadas]
             st.dataframe(eventos_raros_df,width=800)
@@ -104,7 +93,7 @@ def tips_page():
       
             st.subheader("Lay Goleada Visitante")
             st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
-            eventos_raros2_df = df[(df["FT_Odd_A"] >= 1.71) & (df["FT_Odd_A"] <= 2.4) & (df["FT_Odd_Over25"] >= 2.01) & (df["Rodada_Num"] >= 10)]
+            eventos_raros2_df = df[(df["FT_Odd_A"] >= 2) & (df["FT_Odd_A"] <= 5) & (df["FT_Odd_Over25"] >= 2.01) & (df["CS_Goleada_A"] >= 24)]
             eventos_raros2_df = eventos_raros2_df[colunas_desejadas]
             st.dataframe(eventos_raros2_df,width=800)
 
@@ -124,8 +113,7 @@ def tips_page():
             st.text("Apostar em Lay visitante, Odd máxima 6")
             layzebraht_df = df[
                 (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
-                (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10) &
-                (df["Rodada_Num"] >= 10)
+                (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10)            
             ]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             layzebraht_df = layzebraht_df[colunas_desejadas]
@@ -147,8 +135,7 @@ def tips_page():
             st.text("Apostar em Lay visitante, Odd máxima 6")
             layzebraft_df = df[
                 (df["FT_Odd_H"] >= 1.4) & (df["FT_Odd_H"] <= 2.1) &
-                (df["FT_Odd_A"] >= 5) & (df["FT_Odd_A"] <= 10) &
-                (df["Rodada_Num"] >= 10)
+                (df["FT_Odd_A"] >= 5) & (df["FT_Odd_A"] <= 10)
             ]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             layzebraft_df = layzebraft_df[colunas_desejadas]
