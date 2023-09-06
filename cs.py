@@ -80,7 +80,7 @@ def cs_page():
         placares_previstos.sort(key=lambda x: x[2], reverse=True)
 
         # Exibir os resultados para cada jogo usando o Streamlit
-        st.write(f"**{time_casa} vs {time_visitante} - {data_jogo} {hora_jogo_obj_local.strftime('%H:%M')} (Horário Local)**")
+        st.write(f"**{time_casa} vs {time_visitante})
         
         # Criar uma lista para os resultados do jogo
         resultados_jogo = []
