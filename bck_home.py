@@ -1643,13 +1643,13 @@ def bck_home_page():
     with tab5:
         
         # Classifique o DataFrame 'filtered_df' com base na coluna 'Profit_Lay_Away' em ordem decrescente.
-        filtered_df.sort_values(by='Profit_Lay_Away', ascending=False, inplace=True)
+        filtered_df.sort_values(by='profit_lay_away', ascending=False, inplace=True)
 
         # Selecione apenas as linhas onde a coluna 'Home' seja igual a 'True' (caso contrário, ajuste a condição conforme seus dados).
         top_20_home_profitable = filtered_df[filtered_df['Home'] == True].head(20)
     
         # Crie um novo DataFrame com os resultados.
-        result_df = top_20_home_profitable[['Team', 'Profit_Lay_Away']]
+        result_df = top_20_home_profitable[['Team', 'profit_lay_away']]
 
         # Resetar o índice do novo DataFrame, se desejado.
         result_df.reset_index(drop=True, inplace=True)
