@@ -14,10 +14,10 @@ from session_state import SessionState
 def load_base():
     url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
     df = pd.read_csv(url)
-    # Convert the 'Hora' column to a datetime object
-    df['Time'] = pd.to_datetime(df['Time'])
-    # Convert the game times to the local time zone (subtracting 3 hours)
-    df['Time'] = df['Time'] - pd.to_timedelta('3 hours')
+
+    # Especifique o formato das datas como DD/MM/AAAA
+    formato_data = "%d/%m/%Y"
+   
     # Rename the columns
     df.rename(columns={
         'Odd_H': 'FT_Odd_H',
