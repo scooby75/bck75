@@ -31,6 +31,9 @@ def jogos_do_dia_page():
         # Especifique o formato das datas como DD/MM/AAAA
         formato_data = "%d/%m/%Y"      
 
+        # Formate a coluna 'Date' para o formato "dd-mm-aaaa"
+        data_jogos['Date'] = pd.to_datetime(data_jogos['Date'], format=formato_data).dt.strftime('%d-%m-%Y')
+
         # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
             'Odd_H': 'FT_Odd_H',
