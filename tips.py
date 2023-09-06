@@ -17,7 +17,7 @@ def load_base():
     df = pd.read_csv(url)
 
     # Formate a coluna 'Date' para o formato "dd-mm-aaaa"
-    data_jogos['Date'] = pd.to_datetime(data_jogos['Date']).dt.strftime('%d-%m-%Y')
+    df['Date'] = pd.to_datetime(data_jogos['Date']).dt.strftime('%d-%m-%Y')
    
     # Rename the columns
     df.rename(columns={
