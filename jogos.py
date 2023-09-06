@@ -44,21 +44,19 @@ def jogos_do_dia_page():
 
         # Rename the columns and process 'Rodada'
         data_jogos.rename(columns={
-            'FT_Odds_H': 'FT_Odd_H',
-            'FT_Odds_D': 'FT_Odd_D',
-            'FT_Odds_A': 'FT_Odd_A',
-            'FT_Odds_Over25': 'FT_Odd_Over25',
-            'FT_Odds_Under25': 'FT_Odd_Under25',
-            'Odds_BTTS_Yes': 'FT_Odd_BTTS_Yes',
+            'Odd_H': 'FT_Odd_H',
+            'Odd_D': 'FT_Odd_D',
+            'Odd_A': 'FT_Odd_A',
+            'Odd_Over25': 'FT_Odd_Over25',
+            'Odd_Under25': 'FT_Odd_Under25',
+            'Odd_BTTS_Yes': 'FT_Odd_BTTS_Yes',
+            'CS_Goleada_H': 'Lay_Goleada_H',
+            'CS_Goleada_A': 'Lay_Goleada_A',
             'League': 'Liga',
-            'Time': 'Hora',
-            'ROUND': 'Rodada',
+            'Time': 'Hora',            
         }, inplace=True)
         
-        # Converter a coluna 'Rodada' para o formato de texto (string)
-        data_jogos['Rodada'] = data_jogos['Rodada'].astype(str)
-        data_jogos['Rodada'] = data_jogos['Rodada'].str.replace('ROUND', '').str.strip()
-
+        
         return data_jogos
 
     df2 = load_base()
@@ -67,7 +65,7 @@ def jogos_do_dia_page():
     columns_to_display = [
         'Date', 'Hora', 'Liga', 'Home', 'Away', 'Rodada',
         'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
-        'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes'
+        'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes', 'Lay_Goleada_H', 'Lay_Goleada_A'
     ]
 
     # Create filters for selected columns
@@ -79,33 +77,36 @@ def jogos_do_dia_page():
         ('FT Odds Over 2.5', 'selected_ft_odd_over25'),
         ('FT Odds Under 2.5', 'selected_ft_odd_under25'),
         ('FT Odds BTTS Yes', 'selected_ft_odd_btts_yes'),
-        ('Rodada', 'selected_rodada')
+        ('Lay Goleada Casa', 'selected_lay_goleada_h'),
+        ('Lay Goleada Visitante', 'selected_lay_goleada_a'),
+        
     ]
 
     # Create number inputs for filter conditions
     col1, col2, col3 = st.columns(3)
     with col1:
         selected_ft_odd_h_min = st.number_input("FT Odds Home (min)", 0.0, 10.0, 0.0)
-        selected_ft_odd_h_max = st.number_input("FT Odds Home (max)", selected_ft_odd_h_min, 10.0, 10.0)
+        selected_ft_odd_h_max = st.number_input("FT Odds Home (max)", selected_ft_odd_h_min, 15.0, 15.0)
         selected_ft_odd_d_min = st.number_input("FT Odds Draw (min)", 0.0, 10.0, 0.0)
-        selected_ft_odd_d_max = st.number_input("FT Odds Draw (max)", selected_ft_odd_d_min, 10.0, 10.0)
+        selected_ft_odd_d_max = st.number_input("FT Odds Draw (max)", selected_ft_odd_d_min, 15.0, 15.0)
         selected_ft_odd_a_min = st.number_input("FT Odds Away (min)", 0.0, 10.0, 0.0)
-        selected_ft_odd_a_max = st.number_input("FT Odds Away (max)", selected_ft_odd_a_min, 10.0, 10.0)
+        selected_ft_odd_a_max = st.number_input("FT Odds Away (max)", selected_ft_odd_a_min, 15.0, 15.0)
 
     with col2:
         selected_ft_odd_over25_min = st.number_input("FT Odds Over 2.5 (min)", 0.0, 10.0, 0.0)
         selected_ft_odd_over25_max = st.number_input("FT Odds Over 2.5 (max)", selected_ft_odd_over25_min, 10.0, 10.0)
         selected_ft_odd_under25_min = st.number_input("FT Odds Under 2.5 (min)", 0.0, 10.0, 0.0)
         selected_ft_odd_under25_max = st.number_input("FT Odds Under 2.5 (max)", selected_ft_odd_under25_min, 10.0, 10.0)
-
-    with col3:
         selected_ft_odd_btts_yes_min = st.number_input("FT Odds BTTS Yes (min)", 0.0, 10.0, 0.0)
         selected_ft_odd_btts_yes_max = st.number_input("FT Odds BTTS Yes (max)", selected_ft_odd_btts_yes_min, 10.0, 10.0)
-        selected_rodada_min = st.number_input("Rodada (min)", min_value=0.0, max_value=50.0, step=1.0, value=5.0)
-        selected_rodada_max = st.number_input("Rodada (max)", min_value=selected_rodada_min, max_value=50.0, step=1.0, value=50.0)
 
-    # Convert 'Rodada' column to integers
-    df2['Rodada'] = pd.to_numeric(df2['Rodada'], errors='coerce')
+    with col3:
+        selected_lay_goleada_h_min = st.number_input("Lay Goleada Casa (min)", 0.0, 50.0, 0.0)
+        selected_lay_goleada_h_max = st.number_input("Lay Goleada Casa (max)", 0.0, 50.0, 0.0)
+        selected_lay_goleada_a_min = st.number_input("Lay Goleada Visitante (min)", 0.0, 50.0, 0.0)
+        selected_lay_goleada_a_max = st.number_input("Lay Goleada Visitante (max)", 0.0, 50.0, 0.0)
+
+    
 
     # Apply filters to the DataFrame
     filtered_data = df2[
@@ -121,8 +122,10 @@ def jogos_do_dia_page():
         (df2['FT_Odd_Under25'] <= selected_ft_odd_under25_max) &
         (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_min) &
         (df2['FT_Odd_BTTS_Yes'] <= selected_ft_odd_btts_yes_max) &
-        (df2['Rodada'] >= selected_rodada_min) &
-        (df2['Rodada'] <= selected_rodada_max)
+        (df2['Lay_Goleada_H'] >= selected_lay_goleada_h_min) &
+        (df2['Lay_Goleada_H'] <= selected_lay_goleada_h_max) &
+        (df2['Lay_Goleada_A'] >= selected_lay_goleada_a_min) &
+        (df2['Lay_Goleada_A'] <= selected_lay_goleada_a_max) 
     ]
 
     if not filtered_data.empty:
