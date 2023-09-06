@@ -1640,23 +1640,28 @@ def bck_home_page():
 
 ################ Top Mercados ##########################
     
-    with tab5:
-        
-        # Classifique o DataFrame 'filtered_df' com base na coluna 'Profit_Lay_Away' em ordem decrescente.
-        filtered_df.sort_values(by='profit_lay_away', ascending=False, inplace=True)
+    with tab5:      
+       
 
-        # Selecione apenas as linhas onde a coluna 'Home' seja igual a 'True' (caso contrário, ajuste a condição conforme seus dados).
-        top_20_home_profitable = filtered_df[filtered_df['Home'] == True].head(20)
+        # Group the filtered DataFrame by 'Home' (Home Team) and calculate the cumulative sum of 'Profit'
+        df_lay_away_profit = filtered_df.groupby('Home')['profit_lay_away'].cumsum()
+
+        # Add the 'Profit_acumulado' column to the filtered DataFrame
+        filtered_df['profit_lay_away_acumulado'] = df_lay_away_profit
     
-        # Crie um novo DataFrame com os resultados.
-        result_df = top_20_home_profitable[['Home', 'profit_lay_away']]
+        # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
+        filtered_lay_away_profit = filtered_df[filtered_df['profit_lay_away_acumulado'] >= 1]
 
-        # Resetar o índice do novo DataFrame, se desejado.
-        result_df.reset_index(drop=True, inplace=True)
+        # Group the filtered DataFrame by 'Home' (Home Team) and calculate the total profit for each home team
+        home_team_total_profit = filtered_lay_away_profit.groupby(['Home', 'League'])['profit_lay_away_acumulado'].last().reset_index()
 
-        # Exibindo o subcabeçalho
-        st.subheader('Top 20 equipes mais lucrativas - Lay Zebra Visitante')
-        st.dataframe(result_df, width=800)
+        # Sort the home_team_total_profit DataFrame in descending order of profit
+        home_team_total_profit_sorted = home_team_total_profit.sort_values(by='profit_lay_away_acumulado', ascending=False)
+
+        # Display the table with total profit by home team in descending order
+        st.subheader("Top Lay Zebra - Visitante")
+        # st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
+        st.dataframe(home_team_total_profit_sorted, width=800)
   
 
 
