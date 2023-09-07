@@ -15,7 +15,7 @@ valid_users = {
     "Eanes": {"password": "Eanes@Analysis", "profile": 2},
     "wagnercw": {"password": "G28M1V97@", "profile": 1},
     "mmoren0": {"password": "mmoren23", "profile": 3}, #teste
-    "gblbet: {"password": "gblbet23", "profile": 2} #teste
+    "gblbet": {"password": "gblbet23", "profile": 2} #teste
 }
 
 def login_page():
