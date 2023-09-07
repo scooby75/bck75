@@ -28,8 +28,8 @@ def login_page():
     # Adicione uma mensagem de informação com um link clicável e ícone "info-circle-fill"
     st.markdown('<i class="bi bi-info-circle-fill"></i> Informações sobre acesso, [clique aqui](https://t.me/Lyssandro).', unsafe_allow_html=True)
     
-    username = st.text_input("Usuário", key="username_input")  # Chave única para o campo de entrada de usuário
-    password = st.text_input("Senha", type="password", key="password_input")  # Chave única para o campo de entrada de senha
+    username = st.text_input("Usuário")  # Sem chave personalizada
+    password = st.text_input("Senha", type="password")  # Sem chave personalizada
 
     login_button = st.button("Entrar")
 
