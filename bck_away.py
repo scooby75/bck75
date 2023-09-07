@@ -205,7 +205,7 @@ def bck_away_page():
 
         # Exibindo a nova tabela "Top Over 05HT - Away" com Streamlit e ajustando o tamanho da fonte
             st.subheader("Top Over 05HT - Visitante")
-            st.dataframe(top_10_teams)
+            st.dataframe(top_10_teams, width=800)
         
         
     with tab2:
@@ -252,7 +252,7 @@ def bck_away_page():
         # Display the table with profit/loss by away team (pivot table)
         st.subheader("Desempenho Geral - Equipe Visitante")
         st.text("Serão exibidas todas as Equipes que se enquadraram no(s) filtro(s) de Odd")
-        st.dataframe(away_team_profit_loss_pivot)
+        st.dataframe(away_team_profit_loss_pivot, width=800)
 
     ##### Top Away Visitante ####
 
@@ -274,7 +274,7 @@ def bck_away_page():
         # Display the table with total profit by away team in descending order
         st.subheader("Top Back Visitante")
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
-        st.dataframe(away_team_total_profit_sorted)
+        st.dataframe(away_team_total_profit_sorted, width=800)
 
     ########## Faixa de Odd Mais Lucrativa
 
@@ -1627,7 +1627,7 @@ def bck_away_page():
         away_team_total_profit_sorted = away_team_total_profit.sort_values(by='profit_lay_home_acumulado', ascending=False)
 
         # Display the table with total profit by home team in descending order
-        st.subheader("Top Lay Zebra - Casa")
+        st.subheader("Top Lay Zebra - Visitante")
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
         st.dataframe(away_team_total_profit_sorted, width=800)
 
