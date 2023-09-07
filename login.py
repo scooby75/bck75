@@ -8,12 +8,13 @@ valid_users = {
     "lamaral": {"password": "lamaral23", "profile": 1},
     "blamim": {"password": "lamim23", "profile": 1},
     "mrodrigues": {"password": "mrodrigues23", "profile": 3},
-    "alexbadcarrel": {"password": "Badminton76", "profile": 3},
-    "Ellwanger": {"password": "21ellwanger", "profile": 3},
-    "bulquinha": {"password": "evrr1111", "profile": 1},
-    "rafaelmax": {"password": "19cYqCqu!OpO", "profile": 1},
-    "Eanes": {"password": "Eanes@Analysis", "profile": 2},
-    "wagnercw": {"password": "G28M1V97@", "profile": 1},
+    "alexbadcarrel": {"password": "Badminton76", "profile": 3}, #05/09
+    "Ellwanger": {"password": "21ellwanger", "profile": 3}, #05/09
+    "bulquinha": {"password": "evrr1111", "profile": 1}, #05/09
+    "rafaelmax": {"password": "19cYqCqu!OpO", "profile": 1}, #05/09
+    "Eanes": {"password": "Eanes@Analysis", "profile": 2}, #05/09
+    "wagnercw": {"password": "G28M1V97@", "profile": 1}, #05/09
+    "bjales": {"password": "kisso1cc", "profile": 3}, #07/09
     "mmoren0": {"password": "mmoren23", "profile": 3}, #teste
     "gblbet": {"password": "gblbet23", "profile": 2} #teste
 }
