@@ -16,6 +16,7 @@ valid_users = {
     "Eanes": {"password": "Eanes@Analysis", "profile": 2}, 
     "wagnercw": {"password": "G28M1V97@", "profile": 1}, 
     "bjales": {"password": "kisso1cc", "profile": 3}, 
+    "DANIELSATOS": {"password": "140751@Ju", "profile": 3}, 
     "mmoren0": {"password": "mmoren23", "profile": 3}, 
     "gblbet": {"password": "gblbet23", "profile": 2} 
 }
@@ -51,4 +52,3 @@ def logout():
 
 # Execute a função para criar a página de login
 login_page()
-
