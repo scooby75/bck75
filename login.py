@@ -14,7 +14,7 @@ valid_users = {
     "rafaelmax": {"password": "19cYqCqu!OpO", "profile": 1},
     "Eanes": {"password": "Eanes@Analysis", "profile": 2},
     "wagnercw": {"password": "G28M1V97@", "profile": 1},
-    "mmoren0": {"password": "mmoren23", "profile": 3} #teste
+    "mmoren0": {"password": "mmoren23", "profile": 3}, #teste
     "gblbet: {"password": "gblbet23", "profile": 2} #teste
 }
 
