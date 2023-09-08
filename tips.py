@@ -55,7 +55,7 @@ def tips_page():
             st.subheader("HA -0.25")
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
             ha_df = df[
-                (df["FT_Odd_H"] <= 1.90) &
+                (df["FT_Odd_H"] <= 1.70) &
                 (df["CS_0x1"] >= 19)
                 
             ]
