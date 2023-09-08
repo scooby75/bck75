@@ -1722,28 +1722,29 @@ def bck_home_page():
 
         ########### Top Lay Visitante ###############
 
-        # Group the filtered DataFrame by 'Home' (Home Team) and calculate the cumulative sum of 'Profit'
-        df_lay_away_profit = filtered_df.groupby('Home')['profit_lay_away'].cumsum()
+        # Calcula a soma cumulativa do valor da coluna 'profit_home' para cada grupo de 'Home' no DataFrame 'filtered_df'
+        df_back_away_profit = filtered_df.groupby('Away')['profit_away'].cumsum()
+
+        # Adiciona a coluna 'profit_home_acumulado' ao DataFrame 'filtered_df'
+        filtered_df['profit_away_acumulado'] = df_back_away_profit
+
+        # Filtra o DataFrame para incluir apenas as linhas em que 'profit_home_acumulado' é maior ou igual a 1
+        filtered_back_away_profit = filtered_df[filtered_df['profit_away_acumulado'] >= 1]
+
+        if not filtered_back_away_profit.empty:
         
-        # Crie uma cópia do DataFrame filtrado
-        filtered_df_copy = filtered_df.copy()
+            back_away_team_total_profit = filtered_back_away_profit.groupby(['Away', 'League'])['profit_away_acumulado'].last().reset_index()
 
-        # Add the 'Profit_acumulado' column to the filtered DataFrame
-        filtered_df_copy['profit_lay_away_acumulado'] = df_lay_away_profit
-    
-        # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
-        filtered_lay_away_profit = filtered_df[filtered_df['profit_lay_away_acumulado'] >= 1]
+            # Classifica o DataFrame em ordem decrescente de lucro
+            back_away_team_total_profit_sorted = back_away_team_total_profit.sort_values(by='profit_away_acumulado', ascending=False)
 
-        # Group the filtered DataFrame by 'Home' (Home Team) and calculate the total profit for each home team
-        home_team_total_profit = filtered_lay_away_profit.groupby(['Home', 'League'])['profit_lay_away_acumulado'].last().reset_index()
-
-        # Sort the home_team_total_profit DataFrame in descending order of profit
-        home_team_total_profit_sorted = home_team_total_profit.sort_values(by='profit_lay_away_acumulado', ascending=False)
-
-        # Display the table with total profit by home team in descending order
-        st.subheader("Top Lay Zebra - Visitante")
-        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
-        st.dataframe(home_team_total_profit_sorted, width=800)
+            # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+            st.subheader("Top Back Visitante")
+            st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+            st.dataframe(back_away_team_total_profit_sorted, width=800)
+        else:
+            st.subheader("Top Back Visitante")
+            st.text("Nenhuma equipe atingiu pelo menos 1 unidade de lucro.")
 
         ########### Top Lay Casa ###############
 
