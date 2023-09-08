@@ -322,7 +322,7 @@ def bck_home_page():
 
     ############## Faixa de Ranking vs Odd ################3
 
-        st.subheader("Posição no Ranking mais Lucrativa po Faixa de Odd")
+        st.subheader("Posição no Ranking mais Lucrativo po Faixa de Odd")
 
         # Crie uma cópia do DataFrame original
         filtered_df_copy = filtered_df.copy()
@@ -334,9 +334,9 @@ def bck_home_page():
 
         # Crie uma função para mapear a faixa de odd com base na odd
         def encontrar_faixa(odd):
-            for i, faixa in enumerate(faixas_de_odd, start=1):
+            for faixa in faixas_de_odd:
                 if faixa[0] <= odd <= faixa[1]:
-                    return i
+                    return f"({faixa[0]}, {faixa[1]})"
             return "Outras"
 
         # Adicione uma coluna "faixa_de_odd" à cópia do DataFrame original
