@@ -2141,6 +2141,313 @@ def bck_home_page():
         st.subheader("Lay Zebra - Visitante")
         st.dataframe(top_20_lay_away, width=800)
 
+        ########### Top Over 05HT ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_ov05ht = filtered_df.groupby('League')['profit_over05HT'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_ov05ht = league_total_profit_ov05ht.rename(columns={'profit_over05HT': 'Total_profit_ov05ht_by_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_ov05ht = league_total_profit_ov05ht[league_total_profit_ov05ht['Total_profit_ov05ht_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_ov05ht = league_total_profit_ov05ht.sort_values(by='Total_profit_ov05ht_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_ov05ht = league_total_profit_ov05ht.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Over 05HT")
+        st.dataframe(top_20_ov05ht, width=800)
+
+        ########### Top Under 05HT ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_u05ht = filtered_df.groupby('League')['profit_under05HT'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_u05ht = league_total_profit_u05ht.rename(columns={'profit_under05HT': 'Total_profit_under_05ht_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_u05ht = league_total_profit_u05ht[league_total_profit_u05ht['Total_profit_u05ht_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_ov05ht = league_total_profit_ov05ht.sort_values(by='Total_profit_u05ht_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_u05ht = league_total_profit_u05ht.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Under 05HT")
+        st.dataframe(top_20_u05ht, width=800)
+
+        ########### Top Over 15FT ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_ov15ft = filtered_df.groupby('League')['profit_over15'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_ov15ft = league_total_profit_ov15ft.rename(columns={'profit_over15': 'Total_profit_ov15_by_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_ov15ft = league_total_profit_ov15ft[league_total_profit_ov15ft['Total_profit_ov15_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_ov15ft = league_total_profit_ov15ft.sort_values(by='Total_profit_ov15ft_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_ov15ft = league_total_profit_ov15ft.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Over 15FT")
+        st.dataframe(top_20_ov15ft, width=800)
+
+        ########### Top Under 15FT ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_u15ft = filtered_df.groupby('League')['profit_under15'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_u15ft = league_total_profit_u15ft.rename(columns={'profit_under15': 'Total_profit_u15ft_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_u15ft = league_total_profit_u15ft[league_total_profit_u15ft['Total_profit_u15ft_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_u15ft = league_total_profit_u15ft.sort_values(by='Total_profit_u15ft_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_u15ft = league_total_profit_u15ft.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Under 15FT")
+        st.dataframe(top_20_u15ft, width=800)
+
+        ########### Top Over 25FT ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_ov25ft = filtered_df.groupby('League')['profit_over25'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_ov25ft = league_total_profit_ov25ft.rename(columns={'profit_over25': 'Total_profit_ov25_by_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_ov25ft = league_total_profit_ov25ft[league_total_profit_ov25ft['Total_profit_ov25_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_ov25ft = league_total_profit_ov25ft.sort_values(by='Total_profit_ov25ft_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_ov25ft = league_total_profit_ov25ft.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Over 25FT")
+        st.dataframe(top_20_ov25ft, width=800)
+
+         ########### Top Under 25FT ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_u25ft = filtered_df.groupby('League')['profit_under25'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_u25ft = league_total_profit_u25ft.rename(columns={'profit_under25': 'Total_profit_u25ft_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_u25ft = league_total_profit_u25ft[league_total_profit_u25ft['Total_profit_u25ft_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_u25ft = league_total_profit_u25ft.sort_values(by='Total_profit_u25ft_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_u25ft = league_total_profit_u25ft.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Under 25FT")
+        st.dataframe(top_20_u25ft, width=800)
+
+        ########### Top Over 35FT ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_ov35ft = filtered_df.groupby('League')['profit_over35'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_ov35ft = league_total_profit_ov35ft.rename(columns={'profit_over35': 'Total_profit_ov35_by_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_ov35ft = league_total_profit_ov35ft[league_total_profit_ov35ft['Total_profit_ov35_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_ov35ft = league_total_profit_ov35ft.sort_values(by='Total_profit_ov35ft_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_ov35ft = league_total_profit_ov35ft.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Over 35FT")
+        st.dataframe(top_20_ov35ft, width=800)
+
+         ########### Top Under 35FT ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_u35ft = filtered_df.groupby('League')['profit_under35'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_u35ft = league_total_profit_u35ft.rename(columns={'profit_under35': 'Total_profit_u35ft_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_u35ft = league_total_profit_u35ft[league_total_profit_u35ft['Total_profit_u35ft_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_u35ft = league_total_profit_u35ft.sort_values(by='Total_profit_u35ft_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_u35ft = league_total_profit_u35ft.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Under 35FT")
+        st.dataframe(top_20_u35ft, width=800)
+
+        ########### Top Over 45FT ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_ov45ft = filtered_df.groupby('League')['profit_over45'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_ov45ft = league_total_profit_ov45ft.rename(columns={'profit_over45': 'Total_profit_ov45_by_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_ov45ft = league_total_profit_ov45ft[league_total_profit_ov45ft['Total_profit_ov45_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_ov45ft = league_total_profit_ov45ft.sort_values(by='Total_profit_ov45ft_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_ov45ft = league_total_profit_ov45ft.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Over 45FT")
+        st.dataframe(top_20_ov45ft, width=800)
+
+        ########### Top Under 45FT ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_u45ft = filtered_df.groupby('League')['profit_under45'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_u45ft = league_total_profit_u45ft.rename(columns={'profit_under45': 'Total_profit_u45ft_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_u45ft = league_total_profit_u45ft[league_total_profit_u45ft['Total_profit_u45ft_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_u45ft = league_total_profit_u45ft.sort_values(by='Total_profit_u45ft_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_u45ft = league_total_profit_u45ft.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Under 45FT")
+        st.dataframe(top_20_u45ft, width=800)
+
+        ########### Top Lay 0x1 ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_lay0x1 = filtered_df.groupby('League')['profit_Lay_0x1'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_lay0x1 = league_total_profit_lay0x1.rename(columns={'profit_Lay_0x1': 'Total_profit_lay_0x1_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_lay0x1 = league_total_profit_lay0x1[league_total_profit_lay0x1['Total_profit_lay0x1_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_lay0x1 = league_total_profit_lay0x1.sort_values(by='Total_profit_lay0x1_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_lay0x1 = league_total_profit_lay0x1.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Lay 0x1")
+        st.dataframe(top_20_lay0x1, width=800)
+
+        ########### Top Lay 1x0 ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_lay1x0 = filtered_df.groupby('League')['profit_Lay_1x0'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_lay1x0 = league_total_profit_lay1x0.rename(columns={'profit_Lay_1x0': 'Total_profit_lay_1x0_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_lay1x0 = league_total_profit_lay1x0[league_total_profit_lay1x0['Total_profit_lay1x0_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_lay1x0 = league_total_profit_lay1x0.sort_values(by='Total_profit_lay1x0_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_lay1x0 = league_total_profit_lay1x0.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Lay 1x0")
+        st.dataframe(top_20_lay1x0, width=800)
+
+        ########### Top Lay 2x1 ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_lay2x1 = filtered_df.groupby('League')['profit_Lay_2x1'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_lay2x1 = league_total_profit_lay2x1.rename(columns={'profit_Lay_2x1': 'Total_profit_lay_2x1_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_lay2x1 = league_total_profit_lay2x1[league_total_profit_lay2x1['Total_profit_lay2x1_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_lay2x1 = league_total_profit_lay2x1.sort_values(by='Total_profit_lay2x1_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_lay2x1 = league_total_profit_lay2x1.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Lay 2x1")
+        st.dataframe(top_20_lay2x1, width=800)
+
+        ########### Top Lay 1x2 ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_lay1x2 = filtered_df.groupby('League')['profit_Lay_1x2'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_lay1x2 = league_total_profit_lay1x2.rename(columns={'profit_Lay_1x2': 'Total_profit_lay_1x2_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_lay1x2 = league_total_profit_lay1x2[league_total_profit_lay1x2['Total_profit_lay1x2_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_lay1x2 = league_total_profit_lay1x2.sort_values(by='Total_profit_lay1x2_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_lay1x2 = league_total_profit_lay1x2.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Lay 1x2")
+        st.dataframe(top_20_lay1x2, width=800)
 
 
 # Execute a função para criar a página
