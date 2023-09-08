@@ -2064,7 +2064,7 @@ def bck_home_page():
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
         st.dataframe(lay12_total_profit_sorted, width=800)
 
- with tab6:      
+     with tab6:      
 
      ######################### TOP LIGAS ############################
 
