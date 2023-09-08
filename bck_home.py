@@ -383,18 +383,21 @@ def bck_home_page():
 ###### ADD Gráfico com Resultado Back FT #####
 
     #st.subheader("Desempenho Geral do Filtro")
+
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
         
-        # Converter a coluna 'Date' para o tipo datetime e formatar como "DD/MM/YYYY"
-        filtered_df['Date'] = pd.to_datetime(filtered_df['Date'], format='%d/%m/%Y')
+    # Converter a coluna 'Date' para o tipo datetime e formatar como "DD/MM/YYYY"
+        filtered_df_copy['Date'] = pd.to_datetime(filtered_df_copy['Date'], format='%d/%m/%Y')
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_FT'] = filtered_df['profit_home'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_FT'] = filtered_df_copy['profit_home'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_FT', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_FT', use_container_width=True)
 
 ##########################################################################################
 
@@ -456,18 +459,21 @@ def bck_home_page():
 ###### ADD Gráfico com Resultado Lay Zebra FT #####
 
     #st.subheader("Desempenho Geral do Filtro")
+
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
         
-        # Converter a coluna 'Date' para o tipo datetime e formatar como "DD/MM/YYYY"
-        filtered_df['Date'] = pd.to_datetime(filtered_df['Date'], format='%d/%m/%Y')
+    # Converter a coluna 'Date' para o tipo datetime e formatar como "DD/MM/YYYY"
+        filtered_df_copy['Date'] = pd.to_datetime(filtered_df_copy['Date'], format='%d/%m/%Y')
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_Zebra'] = filtered_df['profit_lay_away'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_Zebra'] = filtered_df_copy['profit_lay_away'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_Zebra', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_Zebra', use_container_width=True)
         
 
 ###########################################################################################        
@@ -601,14 +607,17 @@ def bck_home_page():
 
        ###### ADD Gráfico Over 05HT #####   
 
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_OV05HT'] = filtered_df['profit_over05HT'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_OV05HT'] = filtered_df_copy['profit_over05HT'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_OV05HT', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_OV05HT', use_container_width=True)
 
 ##### Calculo Win/Loss Under 05HT ####
 
@@ -666,16 +675,19 @@ def bck_home_page():
     # Exibir mensagem de DataFrame vazio
             st.write("Nenhum dado disponível. O DataFrame está vazio.")
 
-    ###### ADD Gráfico Under 05HT #####   
+    ###### ADD Gráfico Under 05HT #####  
+
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_U05HT'] = filtered_df['profit_under05HT'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_U05HT'] = filtered_df_copy['profit_under05HT'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_U05HT', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_U05HT', use_container_width=True)
 
 ########################################################################################        
 
@@ -737,14 +749,17 @@ def bck_home_page():
 
           ###### ADD Gráfico Over 15FT #####   
 
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_O15FT'] = filtered_df['profit_over15'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_O15FT'] = filtered_df_copy['profit_over15'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_O15FT', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_O15FT', use_container_width=True)
 
 ##### Calculo Win/Loss Under 15FT ####
 
@@ -802,16 +817,19 @@ def bck_home_page():
     # Exibir mensagem de DataFrame vazio
             st.write("Nenhum dado disponível. O DataFrame está vazio.")
 
-        ###### ADD Gráfico Under 15FT #####   
+        ###### ADD Gráfico Under 15FT #####  
+
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_U15FT'] = filtered_df['profit_under15'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_U15FT'] = filtered_df_copy['profit_under15'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_U15FT', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_U15FT', use_container_width=True)
 
 ###############################################################################3
         
@@ -873,14 +891,17 @@ def bck_home_page():
 
     ###### ADD Gráfico Over 25FT #####   
 
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_O25FT'] = filtered_df['profit_over25'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_O25FT'] = filtered_df_copy['profit_over25'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_O25FT', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_O25FT', use_container_width=True)
 
 ##### Calculo Win/Loss Under 25FT ####
 
@@ -938,16 +959,19 @@ def bck_home_page():
     # Exibir mensagem de DataFrame vazio
             st.write("Nenhum dado disponível. O DataFrame está vazio.")
 
-   ###### ADD Gráfico Under 25FT #####   
+   ###### ADD Gráfico Under 25FT ##### 
+
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_U25FT'] = filtered_df['profit_under25'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_U25FT'] = filtered_df_copy['profit_under25'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_U25FT', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_U25FT', use_container_width=True)
 
 ##########################################################################        
 
@@ -1007,16 +1031,19 @@ def bck_home_page():
     # Exibir mensagem de DataFrame vazio
             st.write("Nenhum dado disponível. O DataFrame está vazio.")
 
-    ###### ADD Gráfico Over 35FT #####   
+    ###### ADD Gráfico Over 35FT #####  
+
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_O35FT'] = filtered_df['profit_over35'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_O35FT'] = filtered_df_copy['profit_over35'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_O35FT', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_O35FT', use_container_width=True)
 
 ##### Calculo Win/Loss Under 35FT ####
 
@@ -1074,16 +1101,19 @@ def bck_home_page():
     # Exibir mensagem de DataFrame vazio
             st.write("Nenhum dado disponível. O DataFrame está vazio.")
 
-   ###### ADD Gráfico Under 35FT #####   
+   ###### ADD Gráfico Under 35FT ##### 
+
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_U35FT'] = filtered_df['profit_under35'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_U35FT'] = filtered_df_copy['profit_under35'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_U35FT', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_U35FT', use_container_width=True)
    
 #########################################################3
 
@@ -1145,14 +1175,17 @@ def bck_home_page():
 
     ###### ADD Gráfico Over 45FT #####   
 
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_O45FT'] = filtered_df['profit_over45'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_O45FT'] = filtered_df_copy['profit_over45'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_O45FT', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_O45FT', use_container_width=True)
 
 ##### Calculo Win/Loss Under 45FT ####
 
@@ -1210,16 +1243,19 @@ def bck_home_page():
     # Exibir mensagem de DataFrame vazio
             st.write("Nenhum dado disponível. O DataFrame está vazio.")
 
-   ###### ADD Gráfico Under 45FT #####   
+   ###### ADD Gráfico Under 45FT #####  
+
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_U45FT'] = filtered_df['profit_under45'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_U45FT'] = filtered_df_copy['profit_under45'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_U45FT', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_U45FT', use_container_width=True)
 
 #########################################################
 
@@ -1279,16 +1315,19 @@ def bck_home_page():
     # Exibir mensagem de DataFrame vazio
             st.write("Nenhum dado disponível. O DataFrame está vazio.")
 
-    ###### ADD Gráfico Lay 0x1 #####   
+    ###### ADD Gráfico Lay 0x1 #####
+
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_Lay_01'] = filtered_df['profit_Lay_0x1'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_Lay_01'] = filtered_df_copy['profit_Lay_0x1'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_Lay_01', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_Lay_01', use_container_width=True)
 
 #########################################################
 
@@ -1350,14 +1389,17 @@ def bck_home_page():
 
     ###### ADD Gráfico Lay 1x0 #####   
 
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_Lay_10'] = filtered_df['profit_Lay_1x0'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_Lay_10'] = filtered_df_copy['profit_Lay_1x0'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_Lay_10', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_Lay_10', use_container_width=True)
 
 #########################################################
 
@@ -1419,14 +1461,17 @@ def bck_home_page():
 
     ###### ADD Gráfico Lay 1x2 #####   
 
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_Lay_12'] = filtered_df['profit_Lay_1x2'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_Lay_12'] = filtered_df_copy['profit_Lay_1x2'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_Lay_12', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_Lay_12', use_container_width=True)
 
 #########################################################
 
@@ -1488,14 +1533,17 @@ def bck_home_page():
 
     ###### ADD Gráfico Lay 2x1 #####   
 
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df['Lucro_Acumulado_Lay_21'] = filtered_df['profit_Lay_2x1'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_Lay_21'] = filtered_df_copy['profit_Lay_2x1'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df, x='Date', y='Lucro_Acumulado_Lay_21', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_Lay_21', use_container_width=True)
 
 ################ Placar FT ##########################
     
