@@ -2064,30 +2064,33 @@ def bck_home_page():
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
         st.dataframe(lay12_total_profit_sorted, width=800)
 
-with tab6:
+    with tab6:      
 
-    ######################### TOP LIGAS ############################
+     ######################### TOP LIGAS ############################
 
-    ########### Back Casa ###############
+        ########### Back Casa ###############
 
-    # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
-    league_total_profit = filtered_df.groupby('League')['profit_home'].sum().reset_index()
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit = filtered_df.groupby('League')['profit_home'].sum().reset_index()
 
-    # Renomeie a coluna para refletir o lucro total da liga
-    league_total_profit = league_total_profit.rename(columns={'profit_home': 'Total_profit_home_by_league'})
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit = league_total_profit.rename(columns={'profit_home': 'Total_profit_home_by_league'})
 
-    # Filtre as ligas com lucro maior que 2
-    league_total_profit = league_total_profit[league_total_profit['Total_profit_home_by_league'] > 2]
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit = league_total_profit[league_total_profit['Total_profit_home_by_league'] > 2]
 
-    # Classifique o DataFrame em ordem decrescente de lucro
-    league_total_profit = league_total_profit.sort_values(by='Total_profit_home_by_league', ascending=False)
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit = league_total_profit.sort_values(by='Total_profit_home_by_league', ascending=False)
 
-    # Exiba apenas as 20 ligas mais lucrativas
-    top_20_lucrative_leagues = league_total_profit.head(20)
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_lucrative_leagues = league_total_profit.head(20)
 
-    # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
-    st.subheader("As 20 Ligas Mais Lucrativas")
-    st.dataframe(top_20_lucrative_leagues, width=800)
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("As 20 Ligas Mais Lucrativas")
+        st.dataframe(top_20_lucrative_leagues, width=800)
+
+
 
 # Execute a função para criar a página
 bck_home_page()
