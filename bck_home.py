@@ -322,8 +322,8 @@ def bck_home_page():
 
     ############## Faixa de Ranking vs Odd ################3
 
-        st.subheader("Posição no Ranking Mais Lucrativos")
-        
+        st.subheader("Posição no Ranking mais Lucrativa po Faixa de Odd")
+
         # Crie uma cópia do DataFrame original
         filtered_df_copy = filtered_df.copy()
 
@@ -340,14 +340,14 @@ def bck_home_page():
             return "Outras"
 
         # Adicione uma coluna "faixa_de_odd" à cópia do DataFrame original
-        filtered_df_copy["faixa_de_odd"] = filtered_df_copy["profit_home"].apply(encontrar_faixa)
+        filtered_df_copy["faixa_de_odd"] = filtered_df_copy["FT_Odd_H"].apply(encontrar_faixa)
 
-        # Encontre a odd mais lucrativa para cada posição no ranking
-        odd_mais_lucrativa_por_posicao = filtered_df_copy.groupby("Rank_Home")["profit_home"].idxmax()
-        odd_mais_lucrativa_por_posicao = filtered_df_copy.loc[odd_mais_lucrativa_por_posicao]
+        # Calcule a soma de profit_home para cada combinação de faixa de odd e posição no ranking
+        soma_profit_por_combinacao = filtered_df_copy.groupby(["Rank_Home", "faixa_de_odd"])["profit_home"].sum().reset_index()
+        soma_profit_por_combinacao = soma_profit_por_combinacao.rename(columns={"profit_home": "Soma Profit Home"})
 
-        # Exiba o DataFrame com as odds mais lucrativas para cada posição no ranking
-        st.dataframe(odd_mais_lucrativa_por_posicao[["Rank_Home", "profit_home"]])
+        # Exiba o DataFrame com a soma de profit_home por faixa de odd e posição no ranking
+        st.dataframe(soma_profit_por_combinacao)
 
 
     with tab3:
