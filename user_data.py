@@ -10,7 +10,8 @@ valid_users = {
     "Eanes": {"password": "Eanes@Analysis", "profile": 2}, 
     "wagnercw": {"password": "G28M1V97@", "profile": 1}, 
     "bjales": {"password": "kisso1cc", "profile": 3}, 
-    "DANIELSATOS": {"password": "140751@Ju", "profile": 3},
+    "DANIELSANTOS": {"password": "140751@Ju", "profile": 3},
+    "estevaobayerl": {"password": "Test2320", "profile": 3},
     "GustavoMartins": {"password": "1985", "profile": 2}, 
     "mmoren0": {"password": "mmoren23", "profile": 3}, 
     #"gblbet": {"password": "gblbet23", "profile": 2} 
