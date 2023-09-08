@@ -1723,27 +1723,27 @@ def bck_home_page():
         ########### Top Lay Visitante ###############
 
         # Calcula a soma cumulativa do valor da coluna 'profit_home' para cada grupo de 'Home' no DataFrame 'filtered_df'
-        df_back_away_profit = filtered_df.groupby('Away')['profit_away'].cumsum()
+        df_lay_away_profit = filtered_df.groupby('Home')['profit_lay_away'].cumsum()
 
         # Adiciona a coluna 'profit_home_acumulado' ao DataFrame 'filtered_df'
-        filtered_df['profit_away_acumulado'] = df_back_away_profit
+        filtered_df['profit_lay_away_acumulado'] = df_lay_away_profit
 
         # Filtra o DataFrame para incluir apenas as linhas em que 'profit_home_acumulado' é maior ou igual a 1
-        filtered_back_away_profit = filtered_df[filtered_df['profit_away_acumulado'] >= 1]
+        filtered_lay_away_profit = filtered_df[filtered_df['profit_lay_away_acumulado'] >= 1]
 
-        if not filtered_back_away_profit.empty:
+        if not filtered_lay_away_profit.empty:
         
-            back_away_team_total_profit = filtered_back_away_profit.groupby(['Away', 'League'])['profit_away_acumulado'].last().reset_index()
+            lay_away_team_total_profit = filtered_lay_away_profit.groupby(['Home', 'League'])['profit_lay_away_acumulado'].last().reset_index()
 
             # Classifica o DataFrame em ordem decrescente de lucro
-            back_away_team_total_profit_sorted = back_away_team_total_profit.sort_values(by='profit_away_acumulado', ascending=False)
+            lay_away_team_total_profit_sorted = lay_away_team_total_profit.sort_values(by='profit_lay_away_acumulado', ascending=False)
 
             # Exibe a tabela com o lucro total por time da casa em ordem decrescente
-            st.subheader("Top Back Visitante")
+            st.subheader("Top Lay Visitante")
             st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
-            st.dataframe(back_away_team_total_profit_sorted, width=800)
+            st.dataframe(lay_away_team_total_profit_sorted, width=800)
         else:
-            st.subheader("Top Back Visitante")
+            st.subheader("Top Lay Visitante")
             st.text("Nenhuma equipe atingiu pelo menos 1 unidade de lucro.")
 
         ########### Top Lay Casa ###############
