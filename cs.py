@@ -50,9 +50,9 @@ def cs_page():
 
     # Filtrar jogos com FT_Odd_H e FT_Odd_A >= 1.80 e Odd_Over25 >= 2.10
     jogos_filtrados_odds = jogosdodia[
-        (jogosdodia['Odd_H'] >= 1.80) &
-        (jogosdodia['Odd_A'] >= 1.80) &
-        (jogosdodia['Odd_Over25'] >= 2.10)
+        (jogosdodia['FT_Odd_H'] >= 1.80) &
+        (jogosdodia['FT_Odd_A'] >= 1.80) &
+        (jogosdodia['FT_Odd_Over25'] >= 2.10) 
     ]
 
     # Exibir os resultados para cada jogo usando o Streamlit
