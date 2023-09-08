@@ -111,7 +111,7 @@ def jogos_do_dia_page():
         (df2['FT_Odd_Under25'] >= selected_ft_odd_under25_min) &
         (df2['FT_Odd_Under25'] <= selected_ft_odd_under25_max) &
         (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_min) &
-        (df2['FT_Odd_BTTS_Yes'] <= selected_ft_odd_btts_yes_max) &
+        (df2['FT_Odd_BTTS_Yes'] <= selected_ft_odd_btts_yes_max) 
         #(df2['Lay_Goleada_H'] >= selected_lay_goleada_h_min) &
         #(df2['Lay_Goleada_H'] <= selected_lay_goleada_h_max) &
         #(df2['Lay_Goleada_A'] >= selected_lay_goleada_a_min) &
