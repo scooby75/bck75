@@ -55,7 +55,7 @@ def jogos_do_dia_page():
     columns_to_display = [
         'Date', 'Hora', 'Liga', 'Home', 'Away', 
         'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
-        'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes', 'Lay_Goleada_H', 'Lay_Goleada_A'
+        'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes'
     ]
 
     # Create filters for selected columns
