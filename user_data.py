@@ -1,7 +1,7 @@
 valid_users = {
     "lsilveira": {"password": "senha123", "profile": 3},
-    "lamaral": {"password": "lamaral23", "profile": 1},
-    "blamim": {"password": "lamim23", "profile": 1},
+    #"lamaral": {"password": "lamaral23", "profile": 1},
+    #"blamim": {"password": "lamim23", "profile": 1},
     "mrodrigues": {"password": "mrodrigues23", "profile": 3},
     "alexbadcarrel": {"password": "Badminton76", "profile": 3},
     "Ellwanger": {"password": "21ellwanger", "profile": 3}, 
@@ -13,5 +13,5 @@ valid_users = {
     "DANIELSATOS": {"password": "140751@Ju", "profile": 3},
     "GustavoMartins": {"password": "1985", "profile": 2}, 
     "mmoren0": {"password": "mmoren23", "profile": 3}, 
-    "gblbet": {"password": "gblbet23", "profile": 2} 
+    #"gblbet": {"password": "gblbet23", "profile": 2} 
 }
