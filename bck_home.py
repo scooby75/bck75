@@ -270,6 +270,9 @@ def bck_home_page():
         # Group the filtered DataFrame by 'Home' (Home Team) and calculate the cumulative sum of 'Profit'
         df_home_profit = filtered_df.groupby('Home')['profit_home'].cumsum()
 
+        # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+
         # Add the 'Profit_acumulado' column to the filtered DataFrame
         filtered_df_copy['profit_home_acumulado'] = df_home_profit
 
