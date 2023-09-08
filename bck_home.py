@@ -23,7 +23,7 @@ def bck_home_page():
         #st.write("Acesso concedido!")  # Debug
          
     ##### PÁGINA BCK HOME ######
-    tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top Equipes"])
+    tab0, tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top Equipes", "Top Ligas"])
 
     with tab0:
         # Carregar os dados
@@ -271,7 +271,7 @@ def bck_home_page():
         df_home_profit = filtered_df.groupby('Home')['profit_home'].cumsum()
 
         # Add the 'Profit_acumulado' column to the filtered DataFrame
-        filtered_df.loc[:, 'profit_home_acumulado'] = df_home_profit
+        filtered_df_copy['profit_home_acumulado'] = df_home_profit
 
         # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
         filtered_home_profit = filtered_df[filtered_df['profit_home_acumulado'] >= 3]
@@ -1695,8 +1695,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_back_home_profit = filtered_df.groupby('Home')['profit_home'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_home_acumulado'] = df_back_home_profit
+        filtered_df_copy['profit_home_acumulado'] = df_back_home_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_back_home_profit = filtered_df[filtered_df['profit_home_acumulado'] >= 1]
@@ -1716,9 +1719,12 @@ def bck_home_page():
 
         # Group the filtered DataFrame by 'Home' (Home Team) and calculate the cumulative sum of 'Profit'
         df_lay_away_profit = filtered_df.groupby('Home')['profit_lay_away'].cumsum()
+        
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
 
         # Add the 'Profit_acumulado' column to the filtered DataFrame
-        filtered_df.loc[:, 'profit_lay_away_acumulado'] = df_lay_away_profit
+        filtered_df_copy['profit_lay_away_acumulado'] = df_lay_away_profit
     
         # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
         filtered_lay_away_profit = filtered_df[filtered_df['profit_lay_away_acumulado'] >= 1]
@@ -1739,8 +1745,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_lay_home_profit = filtered_df.groupby('Away')['profit_lay_home'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_lay_home_acumulado'] = df_lay_home_profit
+        filtered_df_copy['profit_lay_home_acumulado'] = df_lay_home_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_lay_home_profit = filtered_df[filtered_df['profit_lay_home_acumulado'] >= 1]
@@ -1761,8 +1770,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_ov05ht_profit = filtered_df.groupby('Home')['profit_over05HT'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_over05HT_acumulado'] = df_ov05ht_profit
+        filtered_df_copy['profit_over05HT_acumulado'] = df_ov05ht_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_ov05ht_profit = filtered_df[filtered_df['profit_over05HT_acumulado'] >= 1]
@@ -1783,8 +1795,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_u05ht_profit = filtered_df.groupby('Home')['profit_under05HT'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_under05HT_acumulado'] = df_u05ht_profit
+        filtered_df_copy['profit_under05HT_acumulado'] = df_u05ht_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_u05ht_profit = filtered_df[filtered_df['profit_under05HT_acumulado'] >= 1]
@@ -1805,8 +1820,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_ov15_profit = filtered_df.groupby('Home')['profit_over15'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_over15_acumulado'] = df_ov15_profit
+        filtered_df_copy['profit_over15_acumulado'] = df_ov15_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_ov15_profit = filtered_df[filtered_df['profit_over15_acumulado'] >= 1]
@@ -1827,8 +1845,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_u15_profit = filtered_df.groupby('Home')['profit_under15'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_under15_acumulado'] = df_u15_profit
+        filtered_df_copy['profit_under15_acumulado'] = df_u15_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_u15_profit = filtered_df[filtered_df['profit_under15_acumulado'] >= 1]
@@ -1849,8 +1870,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_ov25_profit = filtered_df.groupby('Home')['profit_over25'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+        
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_over25_acumulado'] = df_ov25_profit
+        filtered_df_copy['profit_over25_acumulado'] = df_ov25_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_ov25_profit = filtered_df[filtered_df['profit_over25_acumulado'] >= 1]
@@ -1871,8 +1895,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_u25_profit = filtered_df.groupby('Home')['profit_under25'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+      
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_under25_acumulado'] = df_u25_profit
+        filtered_df_copy['profit_under25_acumulado'] = df_u25_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_u25_profit = filtered_df[filtered_df['profit_under25_acumulado'] >= 1]
@@ -1893,8 +1920,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_ov35_profit = filtered_df.groupby('Home')['profit_over35'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_over35_acumulado'] = df_ov35_profit
+        filtered_df_copy['profit_over35_acumulado'] = df_ov35_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_ov35_profit = filtered_df[filtered_df['profit_over35_acumulado'] >= 1]
@@ -1915,8 +1945,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_u35_profit = filtered_df.groupby('Home')['profit_under35'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_under35_acumulado'] = df_u35_profit
+        filtered_df_copy['profit_under35_acumulado'] = df_u35_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_u35_profit = filtered_df[filtered_df['profit_under35_acumulado'] >= 1]
@@ -1937,8 +1970,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_ov45_profit = filtered_df.groupby('Home')['profit_over45'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+        
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_over45_acumulado'] = df_ov45_profit
+        filtered_df_copy['profit_over45_acumulado'] = df_ov45_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_ov45_profit = filtered_df[filtered_df['profit_over45_acumulado'] >= 1]
@@ -1959,8 +1995,12 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_u45_profit = filtered_df.groupby('Home')['profit_under45'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+
+        
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_under45_acumulado'] = df_u45_profit
+        filtered_df_copy['profit_under45_acumulado'] = df_u45_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_u45_profit = filtered_df[filtered_df['profit_under45_acumulado'] >= 1]
@@ -1981,8 +2021,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_lay01_profit = filtered_df.groupby('Home')['profit_Lay_0x1'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_Lay_0x1_acumulado'] = df_lay01_profit
+        filtered_df_copy['profit_Lay_0x1_acumulado'] = df_lay01_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_lay01_profit = filtered_df[filtered_df['profit_Lay_0x1_acumulado'] >= 1]
@@ -2003,8 +2046,12 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_lay10_profit = filtered_df.groupby('Home')['profit_Lay_1x0'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+
+
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_Lay_1x0_acumulado'] = df_lay10_profit
+        filtered_df_copy['profit_Lay_1x0_acumulado'] = df_lay10_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_lay10_profit = filtered_df[filtered_df['profit_Lay_1x0_acumulado'] >= 1]
@@ -2025,8 +2072,12 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_lay21_profit = filtered_df.groupby('Home')['profit_Lay_2x1'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()
+     
+
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_Lay_2x1_acumulado'] = df_lay21_profit
+        filtered_df_copy['profit_Lay_2x1_acumulado'] = df_lay21_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_lay21_profit = filtered_df[filtered_df['profit_Lay_2x1_acumulado'] >= 1]
@@ -2047,8 +2098,11 @@ def bck_home_page():
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
         df_lay12_profit = filtered_df.groupby('Home')['profit_Lay_1x2'].cumsum()
 
+        # Crie uma cópia do DataFrame filtrado
+        filtered_df_copy = filtered_df.copy()       
+
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df.loc[:, 'profit_Lay_1x2_acumulado'] = df_lay12_profit
+        filtered_df_copy['profit_Lay_1x2_acumulado'] = df_lay12_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_lay12_profit = filtered_df[filtered_df['profit_Lay_1x2_acumulado'] >= 1]
@@ -2063,6 +2117,33 @@ def bck_home_page():
         st.subheader("Top Lay 1x2")
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
         st.dataframe(lay12_total_profit_sorted, width=800)
+
+############# Top Ligas ##########################
+    
+    with tab6:      
+
+        ########### Back Casa ###############
+        
+        
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit = filtered_df.groupby('League')['profit_home'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit = league_total_profit.rename(columns={'profit_home': 'Total_profit_home_by_league'})
+
+        # Filtre as ligas com lucro maior que 1
+        league_total_profit = league_total_profit[league_total_profit['Total_profit_home_by_league'] > 1]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit = league_total_profit.sort_values(by='Total_profit_home_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_lucrative_leagues = league_total_profit.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("As 20 Ligas Mais Lucrativas")
+        st.dataframe(top_20_lucrative_leagues, width=800)
+
   
 
 
