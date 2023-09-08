@@ -322,7 +322,7 @@ def bck_home_page():
 
     ############## Faixa de Ranking vs Odd ################3
 
-        st.subheader("Posição no Ranking mais Lucrativo po Faixa de Odd")
+        st.subheader("Posição no Ranking mais Lucrativo por Faixa de Odd")
 
         # Crie uma cópia do DataFrame original
         filtered_df_copy = filtered_df.copy()
@@ -2113,11 +2113,33 @@ def bck_home_page():
         league_total_profit = league_total_profit.sort_values(by='Total_profit_home_by_league', ascending=False)
 
         # Exiba apenas as 20 ligas mais lucrativas
-        top_20_lucrative_leagues = league_total_profit.head(20)
+        top_20_back_home = league_total_profit.head(20)
 
         # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
-        st.subheader("As 20 Ligas Mais Lucrativas")
-        st.dataframe(top_20_lucrative_leagues, width=800)
+        st.subheader("Back Casa")
+        st.dataframe(top_20_back_home, width=800)
+
+        ########### Lay Zebra Visitante ###############
+
+  
+        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
+        league_total_profit_lay_away = filtered_df.groupby('League')['profit_lay_away'].sum().reset_index()
+
+        # Renomeie a coluna para refletir o lucro total da liga
+        league_total_profit_lay_away = league_total_profit_lay_away.rename(columns={'profit_lay_away': 'Total_profit_lay_away_by_league'})
+
+        # Filtre as ligas com lucro maior que 2
+        league_total_profit_lay_away = league_total_profit_lay_away[league_total_profit_lay_away['Total_profit_lay_away_by_league'] > 2]
+
+        # Classifique o DataFrame em ordem decrescente de lucro
+        league_total_profit_lay_away = league_total_profit_lay_away.sort_values(by='Total_profit_lay_away_by_league', ascending=False)
+
+        # Exiba apenas as 20 ligas mais lucrativas
+        top_20_lay_away = league_total_profit_lay_away.head(20)
+
+        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
+        st.subheader("Lay Zebra - Visitante")
+        st.dataframe(top_20_lay_away, width=800)
 
 
 
