@@ -292,7 +292,7 @@ def bck_home_page():
         #b64 = base64.b64encode(csv_file.encode()).decode()
         #st.markdown(f'<a href="data:file/csv;base64,{b64}" download="top_back_casa.csv">Download CSV</a>', unsafe_allow_html=True)
 
-    ########## Faixa de Odd Mais Lucrativa
+    ########## Faixa de Odd Mais Lucrativa #########################
 
         st.subheader("Odds Mais Lucrativas")
 
@@ -319,6 +319,35 @@ def bck_home_page():
 
         # Exiba o DataFrame "Odds Mais Lucrativas"
         st.dataframe(faixa_de_odds_mais_lucrativas)
+
+    ############## Faixa de Ranking vs Odd ################3
+
+        st.subheader("Posição no Ranking Mais Lucrativos")
+        
+        # Crie uma cópia do DataFrame original
+        filtered_df_copy = filtered_df.copy()
+
+        # Defina as faixas de odds
+        faixas_de_odd = [(1.01, 1.20), (1.21, 1.40), (1.41, 1.60), (1.61, 1.80), (1.81, 2.00),
+                         (2.01, 2.20), (2.21, 2.40), (2.41, 2.60), (2.61, 2.80), (2.81, 3.00),
+                         (3.01, 3.20), (3.21, 3.40), (3.41, 3.60), (3.61, 3.80), (3.81, 4.00)]
+
+        # Crie uma função para mapear a faixa de odd com base na odd
+        def encontrar_faixa(odd):
+            for i, faixa in enumerate(faixas_de_odd, start=1):
+                if faixa[0] <= odd <= faixa[1]:
+                    return i
+            return "Outras"
+
+        # Adicione uma coluna "faixa_de_odd" à cópia do DataFrame original
+        filtered_df_copy["faixa_de_odd"] = filtered_df_copy["profit_home"].apply(encontrar_faixa)
+
+        # Encontre a odd mais lucrativa para cada posição no ranking
+        odd_mais_lucrativa_por_posicao = filtered_df_copy.groupby("Rank_Home")["profit_home"].idxmax()
+        odd_mais_lucrativa_por_posicao = filtered_df_copy.loc[odd_mais_lucrativa_por_posicao]
+
+        # Exiba o DataFrame com as odds mais lucrativas para cada posição no ranking
+        st.dataframe(odd_mais_lucrativa_por_posicao[["Rank_Home", "profit_home"]])
 
 
     with tab3:
