@@ -271,7 +271,7 @@ def bck_home_page():
         df_home_profit = filtered_df.groupby('Home')['profit_home'].cumsum()
 
         # Add the 'Profit_acumulado' column to the filtered DataFrame
-        filtered_df['profit_home_acumulado'] = df_home_profit
+        filtered_df.loc[:, 'profit_home_acumulado'] = df_home_profit
 
         # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
         filtered_home_profit = filtered_df[filtered_df['profit_home_acumulado'] >= 3]
@@ -1696,7 +1696,7 @@ def bck_home_page():
         df_back_home_profit = filtered_df.groupby('Home')['profit_home'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_home_acumulado'] = df_back_home_profit
+        filtered_df.loc[:, 'profit_home_acumulado'] = df_back_home_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_back_home_profit = filtered_df[filtered_df['profit_home_acumulado'] >= 1]
@@ -1718,7 +1718,7 @@ def bck_home_page():
         df_lay_away_profit = filtered_df.groupby('Home')['profit_lay_away'].cumsum()
 
         # Add the 'Profit_acumulado' column to the filtered DataFrame
-        filtered_df['profit_lay_away_acumulado'] = df_lay_away_profit
+        filtered_df.loc[:, 'profit_lay_away_acumulado'] = df_lay_away_profit
     
         # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
         filtered_lay_away_profit = filtered_df[filtered_df['profit_lay_away_acumulado'] >= 1]
@@ -1740,7 +1740,7 @@ def bck_home_page():
         df_lay_home_profit = filtered_df.groupby('Away')['profit_lay_home'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_lay_home_acumulado'] = df_lay_home_profit
+        filtered_df.loc[:, 'profit_lay_home_acumulado'] = df_lay_home_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_lay_home_profit = filtered_df[filtered_df['profit_lay_home_acumulado'] >= 1]
@@ -1762,7 +1762,7 @@ def bck_home_page():
         df_ov05ht_profit = filtered_df.groupby('Home')['profit_over05HT'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_over05HT_acumulado'] = df_ov05ht_profit
+        filtered_df.loc[:, 'profit_over05HT_acumulado'] = df_ov05ht_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_ov05ht_profit = filtered_df[filtered_df['profit_over05HT_acumulado'] >= 1]
@@ -1784,7 +1784,7 @@ def bck_home_page():
         df_u05ht_profit = filtered_df.groupby('Home')['profit_under05HT'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_under05HT_acumulado'] = df_u05ht_profit
+        filtered_df.loc[:, 'profit_under05HT_acumulado'] = df_u05ht_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_u05ht_profit = filtered_df[filtered_df['profit_under05HT_acumulado'] >= 1]
@@ -1806,7 +1806,7 @@ def bck_home_page():
         df_ov15_profit = filtered_df.groupby('Home')['profit_over15'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_over15_acumulado'] = df_ov15_profit
+        filtered_df.loc[:, 'profit_over15_acumulado'] = df_ov15_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_ov15_profit = filtered_df[filtered_df['profit_over15_acumulado'] >= 1]
@@ -1828,7 +1828,7 @@ def bck_home_page():
         df_u15_profit = filtered_df.groupby('Home')['profit_under15'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_under15_acumulado'] = df_u15_profit
+        filtered_df.loc[:, 'profit_under15_acumulado'] = df_u15_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_u15_profit = filtered_df[filtered_df['profit_under15_acumulado'] >= 1]
@@ -1850,7 +1850,7 @@ def bck_home_page():
         df_ov25_profit = filtered_df.groupby('Home')['profit_over25'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_over25_acumulado'] = df_ov25_profit
+        filtered_df.loc[:, 'profit_over25_acumulado'] = df_ov25_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_ov25_profit = filtered_df[filtered_df['profit_over25_acumulado'] >= 1]
@@ -1872,7 +1872,7 @@ def bck_home_page():
         df_u25_profit = filtered_df.groupby('Home')['profit_under25'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_under25_acumulado'] = df_u25_profit
+        filtered_df.loc[:, 'profit_under25_acumulado'] = df_u25_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_u25_profit = filtered_df[filtered_df['profit_under25_acumulado'] >= 1]
@@ -1894,7 +1894,7 @@ def bck_home_page():
         df_ov35_profit = filtered_df.groupby('Home')['profit_over35'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_over35_acumulado'] = df_ov35_profit
+        filtered_df.loc[:, 'profit_over35_acumulado'] = df_ov35_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_ov35_profit = filtered_df[filtered_df['profit_over35_acumulado'] >= 1]
@@ -1916,7 +1916,7 @@ def bck_home_page():
         df_u35_profit = filtered_df.groupby('Home')['profit_under35'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_under35_acumulado'] = df_u35_profit
+        filtered_df.loc[:, 'profit_under35_acumulado'] = df_u35_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_u35_profit = filtered_df[filtered_df['profit_under35_acumulado'] >= 1]
@@ -1938,7 +1938,7 @@ def bck_home_page():
         df_ov45_profit = filtered_df.groupby('Home')['profit_over45'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_over45_acumulado'] = df_ov45_profit
+        filtered_df.loc[:, 'profit_over45_acumulado'] = df_ov45_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_ov45_profit = filtered_df[filtered_df['profit_over45_acumulado'] >= 1]
@@ -1960,7 +1960,7 @@ def bck_home_page():
         df_u45_profit = filtered_df.groupby('Home')['profit_under45'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_under45_acumulado'] = df_u45_profit
+        filtered_df.loc[:, 'profit_under45_acumulado'] = df_u45_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_u45_profit = filtered_df[filtered_df['profit_under45_acumulado'] >= 1]
@@ -1982,7 +1982,7 @@ def bck_home_page():
         df_lay01_profit = filtered_df.groupby('Home')['profit_Lay_0x1'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_Lay_0x1_acumulado'] = df_lay01_profit
+        filtered_df.loc[:, 'profit_Lay_0x1_acumulado'] = df_lay01_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_lay01_profit = filtered_df[filtered_df['profit_Lay_0x1_acumulado'] >= 1]
@@ -2004,7 +2004,7 @@ def bck_home_page():
         df_lay10_profit = filtered_df.groupby('Home')['profit_Lay_1x0'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_Lay_1x0_acumulado'] = df_lay10_profit
+        filtered_df.loc[:, 'profit_Lay_1x0_acumulado'] = df_lay10_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_lay10_profit = filtered_df[filtered_df['profit_Lay_1x0_acumulado'] >= 1]
@@ -2026,7 +2026,7 @@ def bck_home_page():
         df_lay21_profit = filtered_df.groupby('Home')['profit_Lay_2x1'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_Lay_2x1_acumulado'] = df_lay21_profit
+        filtered_df.loc[:, 'profit_Lay_2x1_acumulado'] = df_lay21_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_lay21_profit = filtered_df[filtered_df['profit_Lay_2x1_acumulado'] >= 1]
@@ -2048,7 +2048,7 @@ def bck_home_page():
         df_lay12_profit = filtered_df.groupby('Home')['profit_Lay_1x2'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_Lay_1x2_acumulado'] = df_lay12_profit
+        filtered_df.loc[:, 'profit_Lay_1x2_acumulado'] = df_lay12_profit
     
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
         filtered_lay12_profit = filtered_df[filtered_df['profit_Lay_1x2_acumulado'] >= 1]
