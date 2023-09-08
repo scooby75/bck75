@@ -1703,9 +1703,9 @@ def bck_home_page():
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
         filtered_df_copy['profit_home_acumulado'] = df_back_home_profit
-    
+
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
-        filtered_back_home_profit = filtered_df[filtered_df['profit_home'] >= 1]
+        filtered_back_home_profit = filtered_df[filtered_df['profit_home_acumulado'] >= 1]
 
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
         back_home_team_total_profit = filtered_back_home_profit.groupby(['Home', 'League'])['profit_home_acumulado'].last().reset_index()
