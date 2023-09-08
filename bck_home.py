@@ -276,8 +276,8 @@ def bck_home_page():
         # Add the 'Profit_acumulado' column to the filtered DataFrame
         filtered_df_copy['profit_home_acumulado'] = df_home_profit
 
-        # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
-        filtered_home_profit = filtered_df[filtered_df['profit_home_acumulado'] >= 3]
+        # Filter the DataFrame to include only rows where 'Profit_home' is greater than or equal to 3
+        filtered_home_profit = filtered_df_copy[filtered_df_copy['profit_home'] >= 3]
 
         # Group the filtered DataFrame by 'Home' (Home Team) and calculate the total profit for each home team
         home_team_total_profit = filtered_home_profit.groupby(['Home', 'League'])['profit_home_acumulado'].last().reset_index()
