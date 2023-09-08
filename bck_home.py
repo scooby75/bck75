@@ -2166,17 +2166,17 @@ def bck_home_page():
         ########### Top Under 05HT ###############
 
   
-        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
-        league_total_profit_u05ht = filtered_df.groupby('League')['profit_under05HT'].sum().reset_index()
+        # Agrupe o DataFrame filtrado pela coluna 'League' e calcule a soma da coluna 'profit_home'
+        league_total_profit_u05ht = filtered_df.groupby('League')['profit_home'].sum().reset_index()
 
         # Renomeie a coluna para refletir o lucro total da liga
-        league_total_profit_u05ht = league_total_profit_u05ht.rename(columns={'profit_under05HT': 'Total_profit_under_05ht_league'})
+        league_total_profit_u05ht = league_total_profit_u05ht.rename(columns={'profit_home': 'Total_profit_under_05ht_league'})
 
         # Filtre as ligas com lucro maior que 2
-        league_total_profit_u05ht = league_total_profit_u05ht[league_total_profit_u05ht['Total_profit_u05ht_by_league'] > 2]
+        league_total_profit_u05ht = league_total_profit_u05ht[league_total_profit_u05ht['Total_profit_under_05ht_league'] > 2]
 
         # Classifique o DataFrame em ordem decrescente de lucro
-        league_total_profit_ov05ht = league_total_profit_ov05ht.sort_values(by='Total_profit_u05ht_by_league', ascending=False)
+        league_total_profit_u05ht = league_total_profit_u05ht.sort_values(by='Total_profit_under_05ht_league', ascending=False)
 
         # Exiba apenas as 20 ligas mais lucrativas
         top_20_u05ht = league_total_profit_u05ht.head(20)
@@ -2184,6 +2184,7 @@ def bck_home_page():
         # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
         st.subheader("Under 05HT")
         st.dataframe(top_20_u05ht, width=800)
+
 
         ########### Top Over 15FT ###############
 
