@@ -67,8 +67,8 @@ def jogos_do_dia_page():
         ('FT Odds Over 2.5', 'selected_ft_odd_over25'),
         ('FT Odds Under 2.5', 'selected_ft_odd_under25'),
         ('FT Odds BTTS Yes', 'selected_ft_odd_btts_yes'),
-        ('Lay Goleada Casa', 'selected_lay_goleada_h'),
-        ('Lay Goleada Visitante', 'selected_lay_goleada_a'),
+        #('Lay Goleada Casa', 'selected_lay_goleada_h'),
+        #('Lay Goleada Visitante', 'selected_lay_goleada_a'),
         
     ]
 
@@ -90,11 +90,11 @@ def jogos_do_dia_page():
         selected_ft_odd_btts_yes_min = st.number_input("FT Odds BTTS Yes (min)", 0.0, 10.0, 0.0)
         selected_ft_odd_btts_yes_max = st.number_input("FT Odds BTTS Yes (max)", selected_ft_odd_btts_yes_min, 10.0, 10.0)
 
-    with col3:
-        selected_lay_goleada_h_min = st.number_input("Lay Goleada Casa (min)", 0.0, 50.0, 0.0)
-        selected_lay_goleada_h_max = st.number_input("Lay Goleada Casa (max)", 0.0, 50.0, 50.0)
-        selected_lay_goleada_a_min = st.number_input("Lay Goleada Visitante (min)", 0.0, 50.0, 0.0)
-        selected_lay_goleada_a_max = st.number_input("Lay Goleada Visitante (max)", 0.0, 50.0, 50.0)
+    #with col3:
+        #selected_lay_goleada_h_min = st.number_input("Lay Goleada Casa (min)", 0.0, 50.0, 0.0)
+        #selected_lay_goleada_h_max = st.number_input("Lay Goleada Casa (max)", 0.0, 50.0, 50.0)
+        #selected_lay_goleada_a_min = st.number_input("Lay Goleada Visitante (min)", 0.0, 50.0, 0.0)
+        #selected_lay_goleada_a_max = st.number_input("Lay Goleada Visitante (max)", 0.0, 50.0, 50.0)
 
     
 
@@ -112,10 +112,10 @@ def jogos_do_dia_page():
         (df2['FT_Odd_Under25'] <= selected_ft_odd_under25_max) &
         (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_min) &
         (df2['FT_Odd_BTTS_Yes'] <= selected_ft_odd_btts_yes_max) &
-        (df2['Lay_Goleada_H'] >= selected_lay_goleada_h_min) &
-        (df2['Lay_Goleada_H'] <= selected_lay_goleada_h_max) &
-        (df2['Lay_Goleada_A'] >= selected_lay_goleada_a_min) &
-        (df2['Lay_Goleada_A'] <= selected_lay_goleada_a_max) 
+        #(df2['Lay_Goleada_H'] >= selected_lay_goleada_h_min) &
+        #(df2['Lay_Goleada_H'] <= selected_lay_goleada_h_max) &
+        #(df2['Lay_Goleada_A'] >= selected_lay_goleada_a_min) &
+        #(df2['Lay_Goleada_A'] <= selected_lay_goleada_a_max) 
     ]
 
     if not filtered_data.empty:
