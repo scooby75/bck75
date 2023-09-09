@@ -2096,50 +2096,26 @@ def bck_home_page():
     with tab6:      
 
      ######################### TOP LIGAS ############################
+       
 
-        ########### Back Casa ###############
+        def display_league_stats(metric_column, metric_name):
+            league_total_profit = filtered_df.groupby('League')[metric_column].sum().reset_index()
+            league_total_profit = league_total_profit.rename(columns={metric_column: f'Total_{metric_name}_by_league'})
+            league_total_profit = league_total_profit[league_total_profit[f'Total_{metric_name}_by_league'] > 2]
+            league_total_profit = league_total_profit.sort_values(by=f'Total_{metric_name}_by_league', ascending=False)
+            top_20_leagues = league_total_profit.head(20)
+            st.subheader(metric_name)
+            st.dataframe(top_20_leagues, width=800)
 
-  
-        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
-        league_total_profit = filtered_df.groupby('League')['profit_home'].sum().reset_index()
+        st.subheader("Top 20")
 
-        # Renomeie a coluna para refletir o lucro total da liga
-        league_total_profit = league_total_profit.rename(columns={'profit_home': 'Total_profit_home_by_league'})
-
-        # Filtre as ligas com lucro maior que 2
-        league_total_profit = league_total_profit[league_total_profit['Total_profit_home_by_league'] > 2]
-
-        # Classifique o DataFrame em ordem decrescente de lucro
-        league_total_profit = league_total_profit.sort_values(by='Total_profit_home_by_league', ascending=False)
-
-        # Exiba apenas as 20 ligas mais lucrativas
-        top_20_back_home = league_total_profit.head(20)
-
-        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
-        st.subheader("Back Casa")
-        st.dataframe(top_20_back_home, width=800)
-
-        ########### Lay Zebra Visitante ###############
-
-  
-        # Agrupe o DataFrame filtrado pela liga ('League') e calcule a soma do 'profit_home'
-        league_total_profit_lay_away = filtered_df.groupby('League')['profit_lay_away'].sum().reset_index()
-
-        # Renomeie a coluna para refletir o lucro total da liga
-        league_total_profit_lay_away = league_total_profit_lay_away.rename(columns={'profit_lay_away': 'Total_profit_lay_away_by_league'})
-
-        # Filtre as ligas com lucro maior que 2
-        league_total_profit_lay_away = league_total_profit_lay_away[league_total_profit_lay_away['Total_profit_lay_away_by_league'] > 2]
-
-        # Classifique o DataFrame em ordem decrescente de lucro
-        league_total_profit_lay_away = league_total_profit_lay_away.sort_values(by='Total_profit_lay_away_by_league', ascending=False)
-
-        # Exiba apenas as 20 ligas mais lucrativas
-        top_20_lay_away = league_total_profit_lay_away.head(20)
-
-        # Exiba a tabela com o lucro total por liga (das mais lucrativas para as menos lucrativas)
-        st.subheader("Lay Zebra - Visitante")
-        st.dataframe(top_20_lay_away, width=800)
+        # Display statistics for different metrics
+        display_league_stats('profit_home', 'Back Casa')
+        display_league_stats('profit_lay_away', 'Lay Zebra Visitante')
+        display_league_stats('profit_over05HT', 'Over 05HT')
+        display_league_stats('profit_under05HT', 'Under 05HT')
+        display_league_stats('profit_over15', 'Over 15FT')
+        display_league_stats('profit_under15', 'Under 15FT')
 
 
 
