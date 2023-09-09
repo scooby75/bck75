@@ -29,6 +29,20 @@ def load_base():
         'Odd_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
     }, inplace=True)
 
+    # Adjust the 'Time' column by subtracting 3 hours
+    df['Time'] = pd.to_datetime(df['Time']) - pd.to_timedelta(3, unit='h')
+
+    # Exclude rows where 'Home' or 'Away' contains specific substrings
+    substrings_to_exclude = ['U16', 'U17', 'U18', 'U19', 'U20', '21', 'U22', 'U23']
+    mask = ~df['Home'].str.contains('|'.join(substrings_to_exclude), case=False) & \
+           ~df['Away'].str.contains('|'.join(substrings_to_exclude), case=False)
+    df = df[mask]
+
+    # Exclude rows where 'League' contains 'WOMEN'
+    substring_to_exclude = 'WOMEN'
+    mask = ~df['League'].str.contains(substring_to_exclude, case=False)
+    df = df[mask]
+
     return df
 
 
