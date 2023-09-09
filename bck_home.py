@@ -2111,7 +2111,7 @@ def bck_home_page():
         st.text("Serão exibidas apenas as Ligas que acumulam pelo menos 3und de lucro")
 
         # Renomeie as colunas
-        league_total_profit_away.rename(columns={'Total_profit_home': 'Total', 'Total_profit_lay_away': 'Total', 'Total_profit_over05HT': 'Total', 'Total_profit_under05HT': 'Total', 'Total_profit_over15': 'Total', 'Total_profit_under15': 'Total', 'Total_profit_over25': 'Total', 'Total_profit_under25': 'Total', 'Total_profit_over35': 'Total', 'Total_profit_under35': 'Total', 'Total_profit_over45': 'Total', 'Total_profit_under45': 'Total', 'Total_profit_Lay_0x1': 'Total', 'Total_profit_Lay_1x0': 'Total', 'Total_profit_Lay_2x1': 'Total', 'Total_profit_Lay_1x2': 'Total'}, inplace=True)
+        league_total_profit.rename(columns={'Total_profit_home': 'Total', 'Total_profit_lay_away': 'Total', 'Total_profit_over05HT': 'Total', 'Total_profit_under05HT': 'Total', 'Total_profit_over15': 'Total', 'Total_profit_under15': 'Total', 'Total_profit_over25': 'Total', 'Total_profit_under25': 'Total', 'Total_profit_over35': 'Total', 'Total_profit_under35': 'Total', 'Total_profit_over45': 'Total', 'Total_profit_under45': 'Total', 'Total_profit_Lay_0x1': 'Total', 'Total_profit_Lay_1x0': 'Total', 'Total_profit_Lay_2x1': 'Total', 'Total_profit_Lay_1x2': 'Total'}, inplace=True)
 
         # Display statistics for different metrics
         display_league_stats('profit_home', 'Back Casa')
