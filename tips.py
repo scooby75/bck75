@@ -45,6 +45,9 @@ def load_base():
     # Aplicar a função à coluna "Rodada" do DataFrame
     df['Rodada'] = df['Rodada'].apply(extrair_numero_rodada)
 
+     # Convert the "Rodada" column to numerical values
+    df['Rodada'] = pd.to_numeric(df['Rodada'], errors='coerce')
+
     return df
     
     # Adjust the 'Time' column by subtracting 3 hours
