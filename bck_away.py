@@ -18,7 +18,7 @@ def bck_away_page():
         return
         
     ##### PÁGINA BCK AWAY ######
-    tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top Equipes"])
+    tab0, tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top Equipes", "Top Ligas"])
 
     with tab0:
         # Carregar os dados
@@ -2005,6 +2005,41 @@ def bck_away_page():
         st.subheader("Top Lay 1x2")
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
         st.dataframe(lay12_total_profit_sorted, width=800)
+
+    with tab6:      
+
+     ######################### TOP LIGAS ############################
+       
+
+        def display_league_stats_away(metric_column, metric_name):
+            league_total_profit_away = filtered_df.groupby('League')[metric_column].sum().reset_index()
+            league_total_profit_away = league_total_profit_away.rename(columns={metric_column: f'Total_{metric_name}_by_league'})
+            league_total_profit_away = league_total_profit_away[league_total_profit_away[f'Total_{metric_name}_by_league'] > 3]
+            league_total_profit_away = league_total_profit_away.sort_values(by=f'Total_{metric_name}_by_league', ascending=False)
+            top_20_leagues = league_total_profit_away.head(20)
+            st.subheader(metric_name)
+            st.dataframe(top_20_leagues, width=800)
+
+        st.subheader("Top 20 Ligas")
+        st.text("Serão exibidas apenas as Ligas que acumulam pelo menos 3und de lucro")
+
+        # Display statistics for different metrics
+        display_league_stats_away('profit_home', 'Back Casa')
+        display_league_stats_away('profit_lay_away', 'Lay Zebra Visitante')
+        display_league_stats_away('profit_over05HT', 'Over 05HT')
+        display_league_stats_away('profit_under05HT', 'Under 05HT')
+        display_league_stats_away('profit_over15', 'Over 15FT')
+        display_league_stats_away('profit_under15', 'Under 15FT')
+        display_league_stats_away('profit_over25', 'Over 25FT')
+        display_league_stats_away('profit_under25', 'Under 25FT')
+        display_league_stats_away('profit_over35', 'Over 35FT')
+        display_league_stats_away('profit_under35', 'Under 35FT')
+        display_league_stats_away('profit_over45', 'Over 45FT')
+        display_league_stats_away('profit_under45', 'Under 45FT')
+        display_league_stats_away('profit_Lay_0x1', 'Lay 0x1')
+        display_league_stats_away('profit_Lay_1x0', 'Lay 1x0')
+        display_league_stats_away('profit_Lay_2x1', 'Lay 2x1')
+        display_league_stats_away('profit_Lay_1x2', 'Lay 1x2')
   
 
 
