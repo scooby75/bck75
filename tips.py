@@ -32,8 +32,15 @@ def load_base():
 
     # Função para extrair o número da rodada usando uma função de string simples
     def extrair_numero_rodada(rodada_str):
-    # Remova a palavra "ROUND" e quaisquer espaços em branco antes do número
-        return rodada_str.replace("ROUND", "").strip()
+    # Use uma expressão regular para encontrar o número após "ROUND" (desconsiderando espaços em branco)
+        match = re.search(r'ROUND\s*(\d+)', rodada_str)
+    
+    # Se houver uma correspondência, retorne o número encontrado
+        if match:
+            return match.group(1)
+    
+    # Caso contrário, retorne None ou algum valor padrão, dependendo da sua preferência
+        return None
 
     # Aplicar a função à coluna "ROUND" do DataFrame
     df['Rodada'] = df['ROUND'].apply(extrair_numero_rodada)
