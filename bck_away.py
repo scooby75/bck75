@@ -304,6 +304,36 @@ def bck_away_page():
         # Exiba o DataFrame "Odds Mais Lucrativas"
         st.dataframe(faixa_de_odds_mais_lucrativas)
 
+    ############## Faixa de Ranking vs Odd ################3
+
+        st.subheader("Posição no Ranking mais Lucrativo por Faixa de Odd")
+
+        # Crie uma cópia do DataFrame original
+        filtered_df_copy = filtered_df.copy()
+
+        # Defina as faixas de odds
+        faixas_de_odd = [(1.01, 1.20), (1.21, 1.40), (1.41, 1.60), (1.61, 1.80), (1.81, 2.00),
+                         (2.01, 2.20), (2.21, 2.40), (2.41, 2.60), (2.61, 2.80), (2.81, 3.00),
+                         (3.01, 3.20), (3.21, 3.40), (3.41, 3.60), (3.61, 3.80), (3.81, 4.00)]
+
+        # Crie uma função para mapear a faixa de odd com base na odd
+        def encontrar_faixa(odd):
+            for faixa in faixas_de_odd:
+                if faixa[0] <= odd <= faixa[1]:
+                    return f"({faixa[0]}, {faixa[1]})"
+            return "Outras"
+
+        # Adicione uma coluna "faixa_de_odd" à cópia do DataFrame original
+        filtered_df_copy["faixa_de_odd"] = filtered_df_copy["FT_Odd_A"].apply(encontrar_faixa)
+
+        # Calcule a soma de profit_home para cada combinação de faixa de odd e posição no ranking
+        soma_profit_por_combinacao = filtered_df_copy.groupby(["Rank_Away", "faixa_de_odd"])["profit_away"].sum().reset_index()
+        soma_profit_por_combinacao = soma_profit_por_combinacao.rename(columns={"profit_away": "Soma Profit Away"})
+
+        # Exiba o DataFrame com a soma de profit_home por faixa de odd e posição no ranking
+        st.dataframe(soma_profit_por_combinacao)
+
+    
 
 ################################################################################3        
     
@@ -2023,9 +2053,12 @@ def bck_away_page():
         st.subheader("Top 20 Ligas")
         st.text("Serão exibidas apenas as Ligas que acumulam pelo menos 3und de lucro")
 
+        # Renomeie as colunas
+        league_total_profit_away.rename(columns={'Total_profit_away': 'Total', 'Total_profit_lay_home': 'Total', 'Total_profit_over05HT': 'Total', 'Total_profit_under05HT': 'Total', 'Total_profit_over15': 'Total', 'Total_profit_under15': 'Total', 'Total_profit_over25': 'Total', 'Total_profit_under25': 'Total', 'Total_profit_over35': 'Total', 'Total_profit_under35': 'Total', 'Total_profit_over45': 'Total', 'Total_profit_under45': 'Total', 'Total_profit_Lay_0x1': 'Total', 'Total_profit_Lay_1x0': 'Total', 'Total_profit_Lay_2x1': 'Total', 'Total_profit_Lay_1x2': 'Total'}, inplace=True)
+
         # Display statistics for different metrics
-        display_league_stats_away('profit_home', 'Back Casa')
-        display_league_stats_away('profit_lay_away', 'Lay Zebra Visitante')
+        display_league_stats_away('profit_away', 'Back Visitante')
+        display_league_stats_away('profit_lay_home', 'Lay Zebra Casa')
         display_league_stats_away('profit_over05HT', 'Over 05HT')
         display_league_stats_away('profit_under05HT', 'Under 05HT')
         display_league_stats_away('profit_over15', 'Over 15FT')
