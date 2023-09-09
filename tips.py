@@ -30,8 +30,13 @@ def load_base():
         'ROUND': 'Rodada',
     }, inplace=True)
 
-    # Apply the function to extract the round number and create a new column "Rodada_Num"
-    df["Rodada_Num"] = df["Rodada"].apply(extrair_numero_rodada)
+    # Função para extrair o número da rodada usando uma função de string simples
+    def extrair_numero_rodada(rodada_str):
+    # Remova a palavra "ROUND" e quaisquer espaços em branco antes do número
+        return rodada_str.replace("ROUND", "").strip()
+
+    # Aplicar a função à coluna "ROUND" do DataFrame
+    df['Rodada'] = df['ROUND'].apply(extrair_numero_rodada)
 
     return df
     
