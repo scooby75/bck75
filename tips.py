@@ -70,7 +70,7 @@ def tips_page():
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
             ha_df = df[
                 (df["FT_Odd_H"] <= 1.70) &
-                (df["CS_0x1"] >= 19)
+                (df["CS_01"] >= 19)
                 
             ]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
