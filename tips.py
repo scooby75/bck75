@@ -115,7 +115,7 @@ def tips_page():
       
             st.subheader("Lay Goleada Visitante")
             st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
-            eventos_raros2_df = df[(df["FT_Odd_A"] >= 2) & (df["FT_Odd_A"] <= 5) & (df["FT_Odd_Over25"] >= 2.30) & (df["FT_Odd_BTTS_Yes"] >= 2) & (df["Rodada"] >= 10]
+            eventos_raros2_df = df[(df["FT_Odd_A"] >= 2) & (df["FT_Odd_A"] <= 5) & (df["FT_Odd_Over25"] >= 2.30) & (df["FT_Odd_BTTS_Yes"] >= 2) & (df["Rodada"] >= 10)]
             eventos_raros2_df = eventos_raros2_df[colunas_desejadas]
             st.dataframe(eventos_raros2_df,width=800)
 
