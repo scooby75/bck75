@@ -2040,11 +2040,11 @@ def bck_away_page():
     ######################### TOP LIGAS ############################
 
         def display_league_stats(metric_column, metric_name):
-            league_total_profit = filtered_df.groupby('League')[metric_column].sum().reset_index()
-            league_total_profit = league_total_profit.rename(columns={metric_column: f'Total_{metric_name}_by_league'})
-            league_total_profit = league_total_profit[league_total_profit[f'Total_{metric_name}_by_league'] > 3]
-            league_total_profit = league_total_profit.sort_values(by=f'Total_{metric_name}_by_league', ascending=False)
-            top_20_leagues = league_total_profit.head(20)
+            league_total_profit_away = filtered_df.groupby('League')[metric_column].sum().reset_index()
+            league_total_profit_away = league_total_profit_away.rename(columns={metric_column: f'Total_{metric_name}_by_league'})
+            league_total_profit_away = league_total_profit_away[league_total_profit_away[f'Total_{metric_name}_by_league'] > 3]
+            league_total_profit_away = league_total_profit_away.sort_values(by=f'Total_{metric_name}_by_league', ascending=False)
+            top_20_leagues = league_total_profit_away.head(20)
             st.subheader(metric_name)
             st.dataframe(top_20_leagues, width=800)
 
@@ -2052,11 +2052,11 @@ def bck_away_page():
         st.text("Serão exibidas apenas as Ligas que acumulam pelo menos 3und de lucro")
 
         # Renomeie as colunas
-        league_total_profit_away.rename(columns={'Total_profit_home': 'Total', 'Total_profit_lay_away': 'Total', 'Total_profit_over05HT': 'Total', 'Total_profit_under05HT': 'Total', 'Total_profit_over15': 'Total', 'Total_profit_under15': 'Total', 'Total_profit_over25': 'Total', 'Total_profit_under25': 'Total', 'Total_profit_over35': 'Total', 'Total_profit_under35': 'Total', 'Total_profit_over45': 'Total', 'Total_profit_under45': 'Total', 'Total_profit_Lay_0x1': 'Total', 'Total_profit_Lay_1x0': 'Total', 'Total_profit_Lay_2x1': 'Total', 'Total_profit_Lay_1x2': 'Total'}, inplace=True)
+        league_total_profit_away.rename(columns={'Total_profit_away': 'Total', 'Total_profit_lay_home': 'Total', 'Total_profit_over05HT': 'Total', 'Total_profit_under05HT': 'Total', 'Total_profit_over15': 'Total', 'Total_profit_under15': 'Total', 'Total_profit_over25': 'Total', 'Total_profit_under25': 'Total', 'Total_profit_over35': 'Total', 'Total_profit_under35': 'Total', 'Total_profit_over45': 'Total', 'Total_profit_under45': 'Total', 'Total_profit_Lay_0x1': 'Total', 'Total_profit_Lay_1x0': 'Total', 'Total_profit_Lay_2x1': 'Total', 'Total_profit_Lay_1x2': 'Total'}, inplace=True)
 
         # Display statistics for different metrics
-        display_league_stats('profit_home', 'Back Casa')
-        display_league_stats('profit_lay_away', 'Lay Zebra Visitante')
+        display_league_stats('profit_away', 'Back Visitante')
+        display_league_stats('profit_lay_home', 'Lay Zebra Casa')
         display_league_stats('profit_over05HT', 'Over 05HT')
         display_league_stats('profit_under05HT', 'Under 05HT')
         display_league_stats('profit_over15', 'Over 15FT')
@@ -2071,10 +2071,6 @@ def bck_away_page():
         display_league_stats('profit_Lay_1x0', 'Lay 1x0')
         display_league_stats('profit_Lay_2x1', 'Lay 2x1')
         display_league_stats('profit_Lay_1x2', 'Lay 1x2')
-
-
-# Execute a função para criar a página
-bck_home_page()
 
 
 # Execute the function to create the page
