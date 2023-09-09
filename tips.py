@@ -26,9 +26,15 @@ def load_base():
         'Odd_A': 'FT_Odd_A',
         'Odd_Over25': 'FT_Odd_Over25',
         'Odd_Under25': 'FT_Odd_Under25',
-        'Odd_BTTS_Yes': 'FT_Odd_BTTS_Yes',        
+        'Odd_BTTS_Yes': 'FT_Odd_BTTS_Yes',
+        'ROUND': 'Rodada',
     }, inplace=True)
 
+    # Apply the function to extract the round number and create a new column "Rodada_Num"
+    df["Rodada_Num"] = df["Rodada"].apply(extrair_numero_rodada)
+
+    return df
+    
     # Adjust the 'Time' column by subtracting 3 hours
     df['Time'] = pd.to_datetime(df['Time']) - pd.to_timedelta(3, unit='h')
 
@@ -70,7 +76,8 @@ def tips_page():
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
             ha_df = df[
                 (df["FT_Odd_H"] <= 1.70) &
-                (df["CS_01"] >= 19)
+                (df["CS_01"] >= 19) &
+                (df["Rodada"] >= 10)
                 
             ]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
@@ -91,7 +98,7 @@ def tips_page():
             # Use df aqui para a aba "Lay Goleada"
             st.subheader("Lay Goleada Casa")
             st.text("Apostar em Lay Goleada Casa, Odd máxima 30")
-            eventos_raros_df = df[(df["FT_Odd_H"] >= 2) & (df["FT_Odd_H"] <= 5) & (df["FT_Odd_Over25"] >= 2.30) & (df["FT_Odd_BTTS_Yes"] <= 2)]
+            eventos_raros_df = df[(df["FT_Odd_H"] >= 2) & (df["FT_Odd_H"] <= 5) & (df["FT_Odd_Over25"] >= 2.30) & (df["FT_Odd_BTTS_Yes"] <= 2) & (df["Rodada"] >= 10)]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             eventos_raros_df = eventos_raros_df[colunas_desejadas]
             st.dataframe(eventos_raros_df,width=800)
@@ -108,7 +115,7 @@ def tips_page():
       
             st.subheader("Lay Goleada Visitante")
             st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
-            eventos_raros2_df = df[(df["FT_Odd_A"] >= 2) & (df["FT_Odd_A"] <= 5) & (df["FT_Odd_Over25"] >= 2.30) & (df["FT_Odd_BTTS_Yes"] >= 2)]
+            eventos_raros2_df = df[(df["FT_Odd_A"] >= 2) & (df["FT_Odd_A"] <= 5) & (df["FT_Odd_Over25"] >= 2.30) & (df["FT_Odd_BTTS_Yes"] >= 2) & (df["Rodada"] >= 10]
             eventos_raros2_df = eventos_raros2_df[colunas_desejadas]
             st.dataframe(eventos_raros2_df,width=800)
 
@@ -128,7 +135,8 @@ def tips_page():
             st.text("Apostar em Lay visitante, Odd máxima 6")
             layzebraht_df = df[
                 (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
-                (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10)            
+                (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10) &
+                (df["FT_Odd_A"] >= 10)
             ]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             layzebraht_df = layzebraht_df[colunas_desejadas]
@@ -150,7 +158,8 @@ def tips_page():
             st.text("Apostar em Lay visitante, Odd máxima 6")
             layzebraft_df = df[
                 (df["FT_Odd_H"] >= 1.4) & (df["FT_Odd_H"] <= 2.1) &
-                (df["FT_Odd_A"] >= 5) & (df["FT_Odd_A"] <= 10)
+                (df["FT_Odd_A"] >= 5) & (df["FT_Odd_A"] <= 10) &
+                (df["Rodada"] >= 10)
             ]
             colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
             layzebraft_df = layzebraft_df[colunas_desejadas]
@@ -191,12 +200,12 @@ def tips_page():
 
                 # Filtrar jogos com critérios específicos
                 filtered_games = jogos_filtrados[
-                    (jogos_filtrados['Odd_H_home'] >= 1.70) & (jogos_filtrados['Odd_Over25_home'] >= 2.02) 
+                    (jogos_filtrados['FT_Odd_H'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25'] >= 2.02) 
                 ]
 
                 # Selecionar colunas relevantes e renomear
-                result_df = filtered_games[['Home', 'Away', 'Odd_H_home', 'Odd_A_home', 'Odd_Over25_home']]
-                result_df.columns = ['Home', 'Away', 'Odd_H', 'Odd_A', 'Odd_Over25']
+                result_df = filtered_games[['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']]
+                result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
 
                 # Streamlit App
                 st.subheader("Lay Over 25FT")
