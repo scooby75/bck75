@@ -397,13 +397,11 @@ def bck_away_page():
 
 ###### ADD Gráfico com Resultado Back FT #####
 
-    #st.subheader("Desempenho Geral do Filtro")
-
     # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
         filtered_df_copy = filtered_df.copy()
 
-    # Converter a coluna 'Date' para o tipo datetime
-        filtered_df_copy['Date'] = pd.to_datetime(filtered_df_copy['Date'])
+    # Converter a coluna 'Date' para o tipo datetime com o formato correto
+        filtered_df_copy['Date'] = pd.to_datetime(filtered_df_copy['Date'], format='%d/%m/%Y')
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
         filtered_df_copy.sort_values(by='Date', inplace=True)
@@ -412,7 +410,7 @@ def bck_away_page():
         filtered_df_copy['Lucro_Acumulado_FT'] = filtered_df_copy['profit_away'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_FT', use_container_width=True)
+        st.line_chart(filtered_df_copy.set_index('Date')['Lucro_Acumulado_FT'], use_container_width=True)
 
 ###########################################################################################        
 
