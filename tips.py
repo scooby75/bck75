@@ -16,42 +16,6 @@ def load_base():
     url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
     df = pd.read_csv(url)
 
-    # Formate a coluna 'Date' para o formato "dd-mm-aaaa"
-    df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%d-%m-%Y')
-   
-    # Rename the columns
-    df.rename(columns={
-        'Odd_H': 'FT_Odd_H',
-        'Odd_D': 'FT_Odd_D',
-        'Odd_A': 'FT_Odd_A',
-        'Odd_Over25': 'FT_Odd_Over25',
-        'Odd_Under25': 'FT_Odd_Under25',
-        'Odd_BTTS_Yes': 'FT_Odd_BTTS_Yes',
-        'ROUND': 'Rodada',
-    }, inplace=True)
-
-    # Função para extrair o número da rodada usando uma função de string simples
-    def extrair_numero_rodada(rodada_str):
-        # Use uma expressão regular para encontrar o número após "ROUND" (desconsiderando espaços em branco)
-        match = re.search(r'ROUND\s*(\d+)', rodada_str)
-    
-        # Se houver uma correspondência, retorne o número encontrado
-        if match:
-            return match.group(1)
-    
-        # Caso contrário, retorne None ou algum valor padrão, dependendo da sua preferência
-        return None
-
-    # Aplicar a função à coluna "Rodada" do DataFrame
-    df['Rodada'] = df['Rodada'].apply(extrair_numero_rodada)
-
-     # Convert the "Rodada" column to numerical values
-    df['Rodada'] = pd.to_numeric(df['Rodada'], errors='coerce')
-
-    return df
-    
-    # Adjust the 'Time' column by subtracting 3 hours
-    df['Time'] = pd.to_datetime(df['Time']) - pd.to_timedelta(3, unit='h')
 
     # Exclude rows where 'Home' or 'Away' contains specific substrings
     substrings_to_exclude = ['U16', 'U17', 'U18', 'U19', 'U20', '21', 'U22', 'U23']
@@ -91,11 +55,11 @@ def tips_page():
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
             ha_df = df[
                 (df["FT_Odd_H"] <= 1.70) &
-                (df["CS_01"] >= 19) &
+                (df["DC_1X"] <= 1.3) &
                 (df["Rodada"] >= 10)
                 
             ]
-            colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
+            colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
             ha_df = ha_df[colunas_desejadas]
             st.dataframe(ha_df,width=800)
 
@@ -114,7 +78,7 @@ def tips_page():
             st.subheader("Lay Goleada Casa")
             st.text("Apostar em Lay Goleada Casa, Odd máxima 30")
             eventos_raros_df = df[(df["FT_Odd_H"] >= 2) & (df["FT_Odd_H"] <= 5) & (df["FT_Odd_Over25"] >= 2.30) & (df["FT_Odd_BTTS_Yes"] <= 2) & (df["Rodada"] >= 10)]
-            colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
+            colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
             eventos_raros_df = eventos_raros_df[colunas_desejadas]
             st.dataframe(eventos_raros_df,width=800)
 
@@ -151,9 +115,9 @@ def tips_page():
             layzebraht_df = df[
                 (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
                 (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10) &
-                (df["FT_Odd_A"] >= 10)
+                (df["Rodada"] >= 10)
             ]
-            colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
+            colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
             layzebraht_df = layzebraht_df[colunas_desejadas]
             st.dataframe(layzebraht_df,width=800)
 
@@ -176,7 +140,7 @@ def tips_page():
                 (df["FT_Odd_A"] >= 5) & (df["FT_Odd_A"] <= 10) &
                 (df["Rodada"] >= 10)
             ]
-            colunas_desejadas = ["Date", "Time", "League", "Home", "Away"]
+            colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
             layzebraft_df = layzebraft_df[colunas_desejadas]
             st.dataframe(layzebraft_df,width=800)
 
