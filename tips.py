@@ -25,7 +25,7 @@ def load_base():
 
     # Exclude rows where 'League' contains 'WOMEN'
     substring_to_exclude = 'WOMEN'
-    mask = ~df['League'].str.contains(substring_to_exclude, case=False)
+    mask = ~df['Liga'].str.contains(substring_to_exclude, case=False)
     df = df[mask]
 
     return df
