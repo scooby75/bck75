@@ -73,10 +73,12 @@ def jogos_do_dia_page():
         selected_ft_odd_btts_yes_max = st.number_input("FT Odds BTTS Yes (max)", selected_ft_odd_btts_yes_min, 10.0, 10.0)
 
     #with col3:
-        #selected_rodada_min = st.number_input("Rodada (min)", 0.0, 50.0, 5.0)
-        #selected_rodada_max = st.number_input("Rodada (max)", 0.0, 50.0, 50.0)
-        #selected_lay_goleada_a_min = st.number_input("Lay Goleada Visitante (min)", 0.0, 50.0, 0.0)
-        #selected_lay_goleada_a_max = st.number_input("Lay Goleada Visitante (max)", 0.0, 50.0, 50.0)
+        selected_rodada_min = st.number_input("Rodada (min)", 0.0, 50.0, 1.0)
+        selected_rodada_max = st.number_input("Rodada (max)", 0.0, 50.0, 50.0)
+        selected_rank_home_min = st.number_input("Rank Home (min)", 0.0, 50.0, 1.0)
+        selected_rank_home_max = st.number_input("Rank Home (max)", 0.0, 50.0, 50.0)
+        selected_rank_away_min = st.number_input("Rank Away (min)", 0.0, 50.0, 1.0)
+        selected_rank_away_max = st.number_input("Rank Away (max)", 0.0, 50.0, 50.0)
 
     
 
@@ -94,10 +96,12 @@ def jogos_do_dia_page():
         (df2['FT_Odd_Under25'] <= selected_ft_odd_under25_max) &
         (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_min) &
         (df2['FT_Odd_BTTS_Yes'] <= selected_ft_odd_btts_yes_max) 
-        #(df2['Lay_Goleada_H'] >= selected_lay_goleada_h_min) &
-        #(df2['Lay_Goleada_H'] <= selected_lay_goleada_h_max) &
-        #(df2['Lay_Goleada_A'] >= selected_lay_goleada_a_min) &
-        #(df2['Lay_Goleada_A'] <= selected_lay_goleada_a_max) 
+        (df2['Rodada'] >= rodada_min) &
+        (df2['Rodada'] >= rodada_max) &
+        (df2['Rank_Home'] >= selected_rank_home_min) &
+        (df2['Rank_Home'] >= selected_rank_home_max) &
+        (df2['Rank_Away'] >= selected_rank_away_min) &
+        (df2['Rank_Away'] >= selected_rank_away_max) 
     ]
 
     if not filtered_data.empty:
