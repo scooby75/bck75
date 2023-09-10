@@ -76,9 +76,9 @@ def jogos_do_dia_page():
     with col3:
         selected_rodada_min = st.number_input("Rodada (min)", 0.0, 50.0, 1.0)
         selected_rodada_max = st.number_input("Rodada (max)", 0.0, 50.0, 50.0)
-        selected_ppg_home_min = st.number_input("PPG Home (min)", 0.0, 3.0, 1.0)
+        selected_ppg_home_min = st.number_input("PPG Home (min)", 0.0, 3.0, 0.0)
         selected_ppg_home_max = st.number_input("PPG Home (max)", 0.0, 3.0, 3.0)
-        selected_ppg_away_min = st.number_input("PPG Away (min)", 0.0, 3.0, 1.0)
+        selected_ppg_away_min = st.number_input("PPG Away (min)", 0.0, 3.0, 0.0)
         selected_ppg_away_max = st.number_input("PPG Away (max)", 0.0, 3.0, 3.0)
 
     
