@@ -172,15 +172,19 @@ def tips_page():
                 jogos_filtrados = jogos_filtrados_home.merge(jogos_filtrados_away, on=['Date', 'Home', 'Away'], suffixes=('_home', '_away'))
                 
                 # Filtrar jogos com critérios específicos
+               
                 filtered_games = jogos_filtrados[
                     (jogos_filtrados['0_15_mar_home'] == 0) & (jogos_filtrados['0_15_sofri_home'] == 0) &
                     (jogos_filtrados['0_15_mar_away'] == 0) & (jogos_filtrados['0_15_sofri_away'] == 0) &
-                    (jogos_filtrados['FT_Odd_H'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25'] >= 2.02)
+                    (jogos_filtrados['FT_Odd_H_home'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25_home'] >= 2.02) &
+                    (jogos_filtrados['FT_Odd_H_away'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25_away'] >= 2.02)
                 ]
-                
+
                 # Selecionar colunas relevantes e renomear
-                result_df = filtered_games[['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']]
-                result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']
+                result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home',
+                                            'FT_Odd_H_away', 'FT_Odd_A_away', 'FT_Odd_Over25_away']]
+                result_df.columns = ['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home',
+                                     'FT_Odd_H_away', 'FT_Odd_A_away', 'FT_Odd_Over25_away']
 
                 # Streamlit App
                 st.subheader("Lay Over 25FT")
