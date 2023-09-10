@@ -19,5 +19,6 @@ valid_users = {
     "gugafdk": {"password": "Gui280419#", "profile": 3},
     "wagner2662": {"password": "flamengo26624364", "profile": 3},
     "mmoren0": {"password": "mmoren23", "profile": 3}, 
-    #"gblbet": {"password": "gblbet23", "profile": 2} 
+    "willame_eduardo": {"password": "Will2015", "profile": 3},
+    "thomasgabriel": {"password": "thomas123", "profile": 1} 
 }
