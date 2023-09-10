@@ -98,7 +98,7 @@ def jogos_do_dia_page():
         (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_min) &
         (df2['FT_Odd_BTTS_Yes'] <= selected_ft_odd_btts_yes_max) &
         (df2['Rodada'] >= selected_rodada_min) &
-        (df2['Rodada'] <= selected_rodada_max)
+        (df2['Rodada'] <= selected_rodada_max) &
         (df2['PPG_Home'] >= selected_ppg_home_min) &
         (df2['PPG_Home'] >= selected_ppg_home_max) &
         (df2['PPG_Away'] >= selected_ppg_away_min) &
