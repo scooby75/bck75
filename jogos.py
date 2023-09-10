@@ -28,25 +28,7 @@ def jogos_do_dia_page():
         url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
         data_jogos = pd.read_csv(url)
 
-        
-        # Formate a coluna 'Date' para o formato "dd-mm-aaaa"
-        data_jogos['Date'] = pd.to_datetime(data_jogos['Date']).dt.strftime('%d-%m-%Y')
-
-        # Rename the columns and process 'Rodada'
-        data_jogos.rename(columns={
-            'Odd_H': 'FT_Odd_H',
-            'Odd_D': 'FT_Odd_D',
-            'Odd_A': 'FT_Odd_A',
-            'Odd_Over25': 'FT_Odd_Over25',
-            'Odd_Under25': 'FT_Odd_Under25',
-            'Odd_BTTS_Yes': 'FT_Odd_BTTS_Yes',
-            'CS_Goleada_H': 'Lay_Goleada_H',
-            'CS_Goleada_A': 'Lay_Goleada_A',
-            'League': 'Liga',
-            'Time': 'Hora',            
-        }, inplace=True)
-        
-        
+       
         return data_jogos
 
     df2 = load_base()
@@ -91,8 +73,8 @@ def jogos_do_dia_page():
         selected_ft_odd_btts_yes_max = st.number_input("FT Odds BTTS Yes (max)", selected_ft_odd_btts_yes_min, 10.0, 10.0)
 
     #with col3:
-        #selected_lay_goleada_h_min = st.number_input("Lay Goleada Casa (min)", 0.0, 50.0, 0.0)
-        #selected_lay_goleada_h_max = st.number_input("Lay Goleada Casa (max)", 0.0, 50.0, 50.0)
+        #selected_rodada_min = st.number_input("Rodada (min)", 0.0, 50.0, 5.0)
+        #selected_rodada_max = st.number_input("Rodada (max)", 0.0, 50.0, 50.0)
         #selected_lay_goleada_a_min = st.number_input("Lay Goleada Visitante (min)", 0.0, 50.0, 0.0)
         #selected_lay_goleada_a_max = st.number_input("Lay Goleada Visitante (max)", 0.0, 50.0, 50.0)
 
