@@ -60,7 +60,7 @@ def cs_page():
         time_casa = row['Home']
         time_visitante = row['Away']
         data_jogo = row['Date']
-        hora_jogo = row['Time']
+        hora_jogo = row['Hora']
         media_gols_casa = row['Media_Gols_Casa']
         media_gols_fora = row['Media_Gols_For']
         
