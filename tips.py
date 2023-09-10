@@ -166,7 +166,7 @@ def tips_page():
                 momento_gol_home = pd.read_csv(url_momento_gol_home)
                 momento_gol_away = pd.read_csv(url_momento_gol_away)
 
-                # Lógica de mesclagem e filtragem de dados
+               # Lógica de mesclagem e filtragem de dados
                 jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home', right_on='Equipe')
                 jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away', right_on='Equipe')
                 jogos_filtrados = jogos_filtrados_home.merge(jogos_filtrados_away, on=['Date', 'Home', 'Away'], suffixes=('_home', '_away'))
@@ -174,9 +174,9 @@ def tips_page():
                 # Filtrar jogos com critérios específicos
                 filtered_games = jogos_filtrados[
                     (jogos_filtrados['0_15_mar_home'] == 0) & (jogos_filtrados['0_15_sofri_home'] == 0) &
-                    (jogos_filtrados['0_15_mar_away'] == 0) & (jogos_filtrados['0_15_sofri_away'] == 0)
+                    (jogos_filtrados['0_15_mar_away'] == 0) & (jogos_filtrados['0_15_sofri_away'] == 0) &
+                    (jogos_filtrados['FT_Odd_H'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25'] >= 2.02)
                 ]
-
                 # Filtrar jogos com critérios específicos
                 filtered_games = jogos_filtrados[
                     (jogos_filtrados['FT_Odd_H'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25'] >= 2.02) 
