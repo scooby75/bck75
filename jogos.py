@@ -96,8 +96,8 @@ def jogos_do_dia_page():
         (df2['FT_Odd_Under25'] <= selected_ft_odd_under25_max) &
         (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_min) &
         (df2['FT_Odd_BTTS_Yes'] <= selected_ft_odd_btts_yes_max) &
-        (df2['Rodada'] >= rodada_min) &
-        (df2['Rodada'] >= rodada_max) 
+        (df2['Rodada'] >= selected_rodada_min) &
+        (df2['Rodada'] <= selected_rodada_max)
         #(df2['Rank_Home'] >= selected_rank_home_min) &
         #(df2['Rank_Home'] >= selected_rank_home_max) &
         #(df2['Rank_Away'] >= selected_rank_away_min) &
