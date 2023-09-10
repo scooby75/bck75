@@ -49,7 +49,7 @@ def jogos_do_dia_page():
         ('FT Odds Over 2.5', 'selected_ft_odd_over25'),
         ('FT Odds Under 2.5', 'selected_ft_odd_under25'),
         ('FT Odds BTTS Yes', 'selected_ft_odd_btts_yes'),
-        #('Lay Goleada Casa', 'selected_lay_goleada_h'),
+        ('Rodada', 'selected_rodada'),
         #('Lay Goleada Visitante', 'selected_lay_goleada_a'),
         
     ]
@@ -75,10 +75,10 @@ def jogos_do_dia_page():
     with col3:
         selected_rodada_min = st.number_input("Rodada (min)", 0.0, 50.0, 1.0)
         selected_rodada_max = st.number_input("Rodada (max)", 0.0, 50.0, 50.0)
-        selected_rank_home_min = st.number_input("Rank Home (min)", 0.0, 50.0, 1.0)
-        selected_rank_home_max = st.number_input("Rank Home (max)", 0.0, 50.0, 50.0)
-        selected_rank_away_min = st.number_input("Rank Away (min)", 0.0, 50.0, 1.0)
-        selected_rank_away_max = st.number_input("Rank Away (max)", 0.0, 50.0, 50.0)
+        #selected_rank_home_min = st.number_input("Rank Home (min)", 0.0, 50.0, 1.0)
+        #selected_rank_home_max = st.number_input("Rank Home (max)", 0.0, 50.0, 50.0)
+        #selected_rank_away_min = st.number_input("Rank Away (min)", 0.0, 50.0, 1.0)
+        #selected_rank_away_max = st.number_input("Rank Away (max)", 0.0, 50.0, 50.0)
 
     
 
@@ -97,11 +97,11 @@ def jogos_do_dia_page():
         (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_min) &
         (df2['FT_Odd_BTTS_Yes'] <= selected_ft_odd_btts_yes_max) 
         (df2['Rodada'] >= rodada_min) &
-        (df2['Rodada'] >= rodada_max) &
-        (df2['Rank_Home'] >= selected_rank_home_min) &
-        (df2['Rank_Home'] >= selected_rank_home_max) &
-        (df2['Rank_Away'] >= selected_rank_away_min) &
-        (df2['Rank_Away'] >= selected_rank_away_max) 
+        (df2['Rodada'] >= rodada_max) 
+        #(df2['Rank_Home'] >= selected_rank_home_min) &
+        #(df2['Rank_Home'] >= selected_rank_home_max) &
+        #(df2['Rank_Away'] >= selected_rank_away_min) &
+        #(df2['Rank_Away'] >= selected_rank_away_max) 
     ]
 
     if not filtered_data.empty:
