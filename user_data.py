@@ -1,7 +1,7 @@
 valid_users = {
     "lsilveira": {"password": "senha123", "profile": 3},
     #"lamaral": {"password": "lamaral23", "profile": 1},
-    #"blamim": {"password": "lamim23", "profile": 1},
+    "blamim": {"password": "lamim23", "profile": 3},
     "mrodrigues": {"password": "mrodrigues23", "profile": 3},
     "alexbadcarrel": {"password": "Badminton76", "profile": 3},
     "Ellwanger": {"password": "21ellwanger", "profile": 3}, 
