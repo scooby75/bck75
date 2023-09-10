@@ -35,7 +35,7 @@ def jogos_do_dia_page():
 
     # Define columns to display
     columns_to_display = [
-        'Date', 'Hora', 'Liga', 'Home', 'Away', 
+        'Date', 'Hora', 'Liga', 'Rodada', 'Home', 'Away', 
         'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
         'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes'
     ]
@@ -95,7 +95,7 @@ def jogos_do_dia_page():
         (df2['FT_Odd_Under25'] >= selected_ft_odd_under25_min) &
         (df2['FT_Odd_Under25'] <= selected_ft_odd_under25_max) &
         (df2['FT_Odd_BTTS_Yes'] >= selected_ft_odd_btts_yes_min) &
-        (df2['FT_Odd_BTTS_Yes'] <= selected_ft_odd_btts_yes_max) 
+        (df2['FT_Odd_BTTS_Yes'] <= selected_ft_odd_btts_yes_max) &
         (df2['Rodada'] >= rodada_min) &
         (df2['Rodada'] >= rodada_max) 
         #(df2['Rank_Home'] >= selected_rank_home_min) &
