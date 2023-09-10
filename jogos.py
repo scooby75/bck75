@@ -72,7 +72,7 @@ def jogos_do_dia_page():
         selected_ft_odd_btts_yes_min = st.number_input("FT Odds BTTS Yes (min)", 0.0, 10.0, 0.0)
         selected_ft_odd_btts_yes_max = st.number_input("FT Odds BTTS Yes (max)", selected_ft_odd_btts_yes_min, 10.0, 10.0)
 
-    #with col3:
+    with col3:
         selected_rodada_min = st.number_input("Rodada (min)", 0.0, 50.0, 1.0)
         selected_rodada_max = st.number_input("Rodada (max)", 0.0, 50.0, 50.0)
         selected_rank_home_min = st.number_input("Rank Home (min)", 0.0, 50.0, 1.0)
