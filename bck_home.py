@@ -1902,24 +1902,26 @@ def bck_home_page():
         ########### Back Empate ###############
 
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
-        df_back_draw_h = filtered_df.groupby('Home')['profit_draw'].cumsum()
+        df_back_draw_profit_h = filtered_df.groupby('Home')['profit_draw'].cumsum()
 
         # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
-        filtered_df['profit_draw_acumulado'] = df_back_draw_h
-    
+        filtered_df['profit_draw_acumulado'] = df_back_draw_profit_h
+
         # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
-        filtered_df_back_draw_h = filtered_df[filtered_df['profit_draw_acumulado'] >= 1]
+        filtered_back_draw_profit_h = filtered_df[filtered_df['profit_draw_acumulado'] >= 1]
 
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
-        back_draw_team_total_profit_h = df_back_draw_h.groupby(['Home', 'League'])['profit_draw_acumulado'].last().reset_index()
+        back_draw_team_total_profit_h = filtered_back_draw_profit_h.groupby(['Home', 'League'])['profit_draw_acumulado'].last().reset_index()
 
-        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
-        back_draw_team_total_profit_h_sorted = back_draw_team_total_profit_h.sort_values(by='profit_draw_acumulado', ascending=False)
+        # Classifica o DataFrame back_draw_team_total_profit_h em ordem decrescente de lucro
+        back_draw_team_total_profit_sorted_h = back_draw_team_total_profit_h.sort_values(by='profit_draw_acumulado', ascending=False)
 
         # Exibe a tabela com o lucro total por time da casa em ordem decrescente
         st.subheader("Top Back Empate")
-        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
-        st.dataframe(back_draw_team_total_profit_h_sorted, width=800)
+        st.text("Serão exibidas apenas as equipes que acumulam pelo menos 1 unidade de lucro")
+        st.dataframe(back_draw_team_total_profit_sorted_h, width=800)
+
+
 
         ########### Top Over 05HT ###############
 
