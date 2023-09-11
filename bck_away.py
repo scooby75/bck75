@@ -1,3 +1,5 @@
+# Back Away
+
 import pandas as pd
 import numpy as np
 import streamlit as st
@@ -256,25 +258,20 @@ def bck_away_page():
 
     ##### Top Away Visitante ####
 
-      # Group the filtered DataFrame by 'Away' (Away Team) and calculate the cumulative sum of 'Profit'
-        df_away_profit = filtered_df.groupby('Away')['profit_away'].cumsum()
+        # Calculate the total profit for each home team and league combination across all seasons
+        away_team_total_profit = filtered_df.groupby(['Away', 'League'])['profit_away'].sum().reset_index()
 
-        # Add the 'Profit_acumulado' column to the filtered DataFrame
-        filtered_df['profit_away_acumulado'] = df_away_profit
+        # Filter teams with profit_home >= 3
+        away_team_total_profit_filtered = away_team_total_profit[away_team_total_profit['profit_away'] >= 3]
 
-        # Filter the DataFrame to include only rows where 'Profit_acumulado' is greater than 1
-        filtered_away_profit = filtered_df[filtered_df['profit_away_acumulado'] >= 3]
+        # Sort the home_team_total_profit_filtered DataFrame in descending order of profit
+        away_team_total_profit_sorted = away_team_total_profit_filtered.sort_values(by='profit_away', ascending=False)
 
-        # Group the filtered DataFrame by 'Away' (Away Team) and calculate the total profit for each home team
-        away_team_total_profit = filtered_away_profit.groupby(['Away', 'League'])['profit_away_acumulado'].last().reset_index()
-
-        # Sort the away_team_total_profit DataFrame in descending order of profit
-        away_team_total_profit_sorted = away_team_total_profit.sort_values(by='profit_away_acumulado', ascending=False)
-
-        # Display the table with total profit by away team in descending order
+        # Display the table with total profit by home team and league in descending order
         st.subheader("Top Back Visitante")
-        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3und de lucro")
-        st.dataframe(away_team_total_profit_sorted, width=800)
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 3 unidades de lucro")
+        st.dataframe(away_team_total_profit_sorted)
+
 
     ########## Faixa de Odd Mais Lucrativa
 
@@ -404,13 +401,165 @@ def bck_away_page():
         filtered_df_copy['Date'] = pd.to_datetime(filtered_df_copy['Date'], format='%d/%m/%Y')
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_FT'] = filtered_df_copy['profit_away'].cumsum()
 
     # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
         st.line_chart(filtered_df_copy.set_index('Date')['Lucro_Acumulado_FT'], use_container_width=True)
+
+#####################################################################################################
+
+            ##### Calculo Win/Loss OverLay Zebra FT ####
+
+        # Create a new DataFrame for the "Lay Zebra FT" table
+        df_lay_zebra_a = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Calculate the number of "Win" and "Loss" occurrences
+        num_win = len(filtered_df[filtered_df["Resultado_FT"].isin(["A", "D"])])
+        num_loss = len(filtered_df[filtered_df["Resultado_FT"] == "H"])
+        total_games = num_win + num_loss
+
+        # Check if total_games is not zero before performing division
+        if total_games != 0:
+        # Calculate win and loss percentages
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+        # Handle the case when total_games is zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calculate the fair odds with 2 decimal places
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+        # Handle the case when win_percentage is zero
+            fair_odd = 0
+
+        #### Add the data to the "Back Casa FT" table ####
+        df_lay_zebra_a.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Display the "Back Casa FT" table
+        st.subheader("Lay Zebra FT")
+        st.dataframe(df_lay_zebra_a)
+    with tab3:
+    
+    # Verificar se o DataFrame não está vazio
+        if not filtered_df.empty:
+    # Somar os valores da coluna 'profit_home' para obter o lucro total
+            lucro_total = filtered_df['profit_lay_home'].sum()
+
+    # Calcular o ROI
+            total_de_jogos = len(filtered_df)
+            roi = (lucro_total / total_de_jogos) * 100
+    
+    # Arredondar os valores para duas casas decimais
+            lucro_total = round(lucro_total, 2)
+            roi = round(roi, 2)
+    
+    # Exibir os resultados usando st.write()
+            st.write(f"Lucro/Prejuízo: {lucro_total} Und em {total_de_jogos} jogos")
+            st.write(f"Yield: {roi}%")
+        else:
+    # Exibir mensagem de DataFrame vazio
+            st.write("Nenhum dado disponível. O DataFrame está vazio.")
+
+###### ADD Gráfico com Resultado Lay Zebra FT #####
+
+    #st.subheader("Desempenho Geral do Filtro")
+
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+        
+    # Converter a coluna 'Date' para o tipo datetime e formatar como "DD/MM/YYYY"
+        filtered_df_copy['Date'] = pd.to_datetime(filtered_df_copy['Date'], format='%d/%m/%Y')
+
+    # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
+
+    # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df_copy['Lucro_Acumulado_Zebra'] = filtered_df_copy['profit_lay_home'].cumsum()
+
+    # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_Zebra', use_container_width=True)        
+
+#####################################################################################################
+
+     ##### Calculo Win/Loss Back Empate - Visitante ####
+
+        # Create a new DataFrame for the "Back Casa FT" table
+        df_back_empate_a = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Calculate the number of "Win" and "Loss" occurrences
+        num_win = len(filtered_df[filtered_df["Resultado_FT"] == "D"])
+        num_loss = len(filtered_df[filtered_df["Resultado_FT"].isin(["A", "H"])])
+        total_games = num_win + num_loss
+
+        # Check if total_games is not zero before performing division
+        if total_games != 0:
+        # Calculate win and loss percentages
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+        # Handle the case when total_games is zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calculate the fair odds with 2 decimal places
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+        # Handle the case when win_percentage is zero
+            fair_odd = 0
+
+        #### Add the data to the "Back Empate" table ####
+        df_back_empate_a.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Display the "Back Empate" table
+        st.subheader("Back Empate")
+        st.dataframe(df_back_empate_a)
+    with tab3:
+    
+    # Verificar se o DataFrame não está vazio
+        if not filtered_df.empty:
+    # Somar os valores da coluna 'profit_home' para obter o lucro total
+            lucro_total = filtered_df['profit_draw'].sum()
+
+    # Calcular o ROI
+            total_de_jogos = len(filtered_df)
+            roi = (lucro_total / total_de_jogos) * 100
+    
+    # Arredondar os valores para duas casas decimais
+            lucro_total = round(lucro_total, 2)
+            roi = round(roi, 2)
+    
+    # Exibir os resultados usando st.write()
+            st.write(f"Lucro/Prejuízo: {lucro_total} Und em {total_de_jogos} jogos")
+            st.write(f"Yield: {roi}%")
+        else:
+    # Exibir mensagem de DataFrame vazio
+            st.write("Nenhum dado disponível. O DataFrame está vazio.")
+
+###### ADD Gráfico com Resultado Back Empate - Casa #####
+
+    #st.subheader("Desempenho Geral do Filtro")
+
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+        
+    # Converter a coluna 'Date' para o tipo datetime e formatar como "DD/MM/YYYY"
+        filtered_df_copy['Date'] = pd.to_datetime(filtered_df_copy['Date'], format='%d/%m/%Y')
+
+    # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
+
+    # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df_copy['Lucro_Acumulado_FT'] = filtered_df_copy['profit_draw'].cumsum()
+
+    # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_FT', use_container_width=True)
 
 ###########################################################################################        
 
@@ -582,7 +731,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_OV05HT'] = filtered_df_copy['profit_over05HT'].cumsum()
@@ -652,7 +801,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_U05HT'] = filtered_df_copy['profit_under05HT'].cumsum()
@@ -724,7 +873,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_O15FT'] = filtered_df_copy['profit_over15'].cumsum()
@@ -794,7 +943,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_U15FT'] = filtered_df_copy['profit_under15'].cumsum()
@@ -866,7 +1015,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_O25FT'] = filtered_df_copy['profit_over25'].cumsum()
@@ -936,7 +1085,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_U25FT'] = filtered_df_copy['profit_under25'].cumsum()
@@ -1008,7 +1157,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_O35FT'] = filtered_df_copy['profit_over35'].cumsum()
@@ -1078,7 +1227,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_U35FT'] = filtered_df_copy['profit_under35'].cumsum()
@@ -1150,7 +1299,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_O45FT'] = filtered_df_copy['profit_over45'].cumsum()
@@ -1220,7 +1369,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
         
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_U45FT'] = filtered_df_copy['profit_under45'].cumsum()
@@ -1292,7 +1441,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_Lay_01'] = filtered_df_copy['profit_Lay_0x1'].cumsum()
@@ -1364,7 +1513,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
         
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_Lay_10'] = filtered_df_copy['profit_Lay_1x0'].cumsum()
@@ -1436,7 +1585,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_Lay_12'] = filtered_df_copy['profit_Lay_1x2'].cumsum()
@@ -1508,7 +1657,7 @@ def bck_away_page():
         filtered_df_copy = filtered_df.copy()
 
     # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
-        filtered_df_copy.sort_values(by='Date', inplace=True)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
 
     # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
         filtered_df_copy['Lucro_Acumulado_Lay_21'] = filtered_df_copy['profit_Lay_2x1'].cumsum()
@@ -1725,6 +1874,28 @@ def bck_away_page():
         st.subheader("Top Lay Zebra - Casa")
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
         st.dataframe(home_team_total_profit_sorted, width=800)
+
+        ########### Back Empate ###############
+
+        # Agrupa o DataFrame filtrado pelo time visitante ('Away') e calcula a soma cumulativa do 'Profit'
+        df_back_draw_a = filtered_df.groupby('Away')['profit_draw'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_draw_acumulado'] = df_back_draw_a
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_df_back_draw_a = filtered_df[filtered_df['profit_draw_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time visitante ('Away') e calcula o lucro total para cada time visitante
+        back_draw_team_total_profit_a = filtered_df.groupby(['Away', 'League'])['profit_draw_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame back_draw_team_total_profit_h em ordem decrescente de lucro
+        back_draw_team_total_profit_a_sorted = back_draw_team_total_profit_a.sort_values(by='profit_draw_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time visitante em ordem decrescente
+        st.subheader("Top Back Empate")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(back_draw_team_total_profit_a_sorted, width=800)
 
         ########### Top Over 05HT ###############
 
@@ -2054,6 +2225,7 @@ def bck_away_page():
         # Display statistics for different metrics
         display_league_stats('profit_away', 'Back Visitante')
         display_league_stats('profit_lay_home', 'Lay Zebra Casa')
+        display_league_stats('profit_draw', 'Back Empate')
         display_league_stats('profit_over05HT', 'Over 05HT')
         display_league_stats('profit_under05HT', 'Under 05HT')
         display_league_stats('profit_over15', 'Over 15FT')
@@ -2073,4 +2245,3 @@ def bck_away_page():
 
 # Execute the function to create the page
 bck_away_page()
-
