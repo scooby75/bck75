@@ -1867,9 +1867,9 @@ def bck_home_page():
         filtered_df_back_draw_h = filtered_df[filtered_df['profit_draw_acumulado'] >= 1]
 
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
-        back_draw_team_total_profit_h = df_back_draw_h_profit.groupby(['Home', 'League'])['profit_draw_acumulado'].last().reset_index()
+        back_draw_team_total_profit_h = filtered_df.groupby(['Home', 'League'])['profit_draw_acumulado'].last().reset_index()
 
-        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        # Classifica o DataFrame back_draw_team_total_profit_h em ordem decrescente de lucro
         back_draw_team_total_profit_h_sorted = back_draw_team_total_profit_h.sort_values(by='profit_draw_acumulado', ascending=False)
 
         # Exibe a tabela com o lucro total por time da casa em ordem decrescente
