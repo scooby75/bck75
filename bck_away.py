@@ -1409,6 +1409,7 @@ def bck_away_page():
 
         # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
         st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_U45FT', use_container_width=True)
+        
 
 #########################################################
 
@@ -1854,54 +1855,40 @@ def bck_away_page():
     
     with tab5:      
 
-        ########### Back Casa ###############
+        ########### Top 20 Times ###############
 
-        # Agrupa o DataFrame filtrado pelo time da casa ('Away') e calcula a soma cumulativa do 'Profit'
-        df_back_away_profit = filtered_df.groupby('Away')['profit_away'].cumsum()
+        def display_away_stats(metric_column, metric_name):
+            away_total_profit = filtered_df.groupby('Away')[metric_column].sum().reset_index()
+            away_total_profit = away_total_profit.rename(columns={metric_column: f'Total_{metric_name}_by_away'})
+            away_total_profit = away_total_profit[away_total_profit[f'Total_{metric_name}_by_away'] > 2]
+            away_total_profit = away_total_profit.sort_values(by=f'Total_{metric_name}_by_away', ascending=False)
+            top_20_away = away_total_profit.head(20)
+            st.subheader(metric_name)
+            st.dataframe(top_20_away, width=800)
 
-        # Defina uma lista com os nomes das colunas de lucro
-        profit_columns = [
-            'profit_home',
-            'profit_lay_away',
-            'profit_lay_home',
-            'profit_draw',
-            'profit_over05HT',
-            'profit_under05HT',
-            'profit_over15',
-            'profit_under15',
-            'profit_over25',
-            'profit_under25',
-            'profit_over35',
-            'profit_under35',
-            'profit_over45',
-            'profit_under45',
-            'profit_btts_yes',
-            'profit_Lay_0x1',
-            'profit_Lay_1x0',
-            'profit_Lay_2x1',
-            'profit_Lay_1x2'
-        ]
+        st.subheader("Top 20 Times")
+        st.text("Serão exibidas apenas as equipes que acumulam pelo menos 2und de lucro")
+     
 
-        for column in profit_columns:
-            # Agrupe o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
-            df_profit = filtered_df.groupby('Away')[column].cumsum()
-
-            # Adicione a coluna 'Profit_acumulado' ao DataFrame filtrado
-            filtered_df[f'profit_{column}_acumulado'] = df_profit
-
-            # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
-            filtered_profit = filtered_df[filtered_df[f'profit_{column}_acumulado'] >= 1]
-
-            # Agrupe o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
-            total_profit = filtered_profit.groupby(['Away', 'League'])[f'profit_{column}_acumulado'].last().reset_index()
-
-            # Classifique o DataFrame total_profit em ordem decrescente de lucro
-            total_profit_sorted = total_profit.sort_values(by=f'profit_{column}_acumulado', ascending=False)
-
-            # Exibe a tabela com o lucro total por time da casa em ordem decrescente
-            st.subheader(f"Top {column}")
-            st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
-            st.dataframe(total_profit_sorted, width=800)
+        # Display statistics for different metrics
+        display_away_stats('profit_away', 'Back Visitante')
+        display_away_stats('profit_lay_home', 'Lay Zebra Casa')
+        display_away_stats('profit_draw', 'Back Empate')
+        display_away_stats('profit_over05HT', 'Over 05HT')
+        display_away_stats('profit_under05HT', 'Under 05HT')
+        display_away_stats('profit_over15', 'Over 15FT')
+        display_away_stats('profit_under15', 'Under 15FT')
+        display_away_stats('profit_over25', 'Over 25FT')
+        display_away_stats('profit_under25', 'Under 25FT')
+        display_away_stats('profit_over35', 'Over 35FT')
+        display_away_stats('profit_under35', 'Under 35FT')
+        display_away_stats('profit_over45', 'Over 45FT')
+        display_away_stats('profit_under45', 'Under 45FT')
+        display_away_stats('profit_btts_yes', 'BTTS Yes')
+        display_away_stats('profit_Lay_0x1', 'Lay 0x1')
+        display_away_stats('profit_Lay_1x0', 'Lay 1x0')
+        display_away_stats('profit_Lay_2x1', 'Lay 2x1')
+        display_away_stats('profit_Lay_1x2', 'Lay 1x2')
 
     with tab6: 
 
