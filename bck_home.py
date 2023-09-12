@@ -1392,7 +1392,6 @@ def bck_home_page():
         #################### BTTS Yes #####################################
 
        
-
         # Criar um novo DataFrame para a tabela "BTTS Yes"
         df_btts = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
 
@@ -1427,8 +1426,8 @@ def bck_home_page():
         df_btts.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
 
         # Exibir a tabela "BTTS Yes"
-        print("BTTS Yes")
-        print(df_btts)
+        st.subheader("BTTS Yes")
+        st.dataframe(df_btts)
 
    ###### ADD Gráfico BTTS Yes  #####  
 
