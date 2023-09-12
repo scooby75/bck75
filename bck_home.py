@@ -2223,7 +2223,7 @@ def bck_home_page():
         # Exibe a tabela com o lucro total por time da casa em ordem decrescente
         st.subheader("Top BTTS Yes")
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
-        st.dataframe(u45_total_profit_sorted, width=800)
+        st.dataframe(btts_total_profit_sorted, width=800)
 
         ########### Top Lay 0x1 ###############
 
