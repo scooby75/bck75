@@ -20,6 +20,7 @@ valid_users = {
     "wagner2662": {"password": "flamengo26624364", "profile": 3},
     "mmoren0": {"password": "mmoren23", "profile": 3}, 
     "willame_eduardo": {"password": "Will2015", "profile": 3},
+    "santanabet85": {"password": "santana85", "profile": 3},
     "fagnerom": {"password": "120714", "profile": 2},
     "thomasgabriel": {"password": "thomas123", "profile": 1} 
 }
