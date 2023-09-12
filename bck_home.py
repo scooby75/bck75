@@ -1429,6 +1429,28 @@ def bck_home_page():
         st.subheader("BTTS Yes")
         st.dataframe(df_btts)
 
+    ###### Calculo Lucro/Prejuízo ####
+
+    # Verificar se o DataFrame não está vazio
+        if not filtered_df.empty:
+    # Somar os valores da coluna 'profit_home' para obter o lucro total
+            lucro_total = filtered_df['profit_btts_yes'].sum()
+            
+    # Calcular o ROI
+            total_de_jogos = len(filtered_df)
+            roi = (lucro_total / total_de_jogos) * 100
+    
+    # Arredondar os valores para duas casas decimais
+            lucro_total = round(lucro_total, 2)
+            roi = round(roi, 2)
+    
+    # Exibir os resultados usando st.write()
+            st.write(f"Lucro/Prejuízo: {lucro_total} Und em {total_de_jogos} jogos")
+            st.write(f"Yield: {roi}%")
+        else:
+    # Exibir mensagem de DataFrame vazio
+            st.write("Nenhum dado disponível. O DataFrame está vazio.")
+
    ###### ADD Gráfico BTTS Yes  #####  
 
         # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
