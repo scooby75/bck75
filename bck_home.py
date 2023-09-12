@@ -2203,6 +2203,28 @@ def bck_home_page():
         st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
         st.dataframe(u45_total_profit_sorted, width=800)
 
+                ########### Top BTTS Yes ###############
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
+        df_btts_profit = filtered_df.groupby('Home')['profit_btts_yes'].cumsum()
+
+        # Adiciona a coluna 'Profit_acumulado' ao DataFrame filtrado
+        filtered_df['profit_btts_acumulado'] = df_btts_profit
+    
+        # Filtra o DataFrame para incluir apenas as linhas em que 'Profit_acumulado' é maior que 1
+        filtered_btts_profit = filtered_df[filtered_df['profit_btts_acumulado'] >= 1]
+
+        # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula o lucro total para cada time da casa
+        btts_total_profit = filtered_btts_profit.groupby(['Home', 'League'])['profit_btts_acumulado'].last().reset_index()
+
+        # Classifica o DataFrame home_team_total_profit em ordem decrescente de lucro
+        btts_total_profit_sorted =btts_total_profit.sort_values(by='profit_btts_acumulado', ascending=False)
+
+        # Exibe a tabela com o lucro total por time da casa em ordem decrescente
+        st.subheader("Top BTTS Yes")
+        st.text("Serão exibidas apenas as Equipes que acumulam pelo menos 1und de lucro")
+        st.dataframe(u45_total_profit_sorted, width=800)
+
         ########### Top Lay 0x1 ###############
 
         # Agrupa o DataFrame filtrado pelo time da casa ('Home') e calcula a soma cumulativa do 'Profit'
@@ -2322,6 +2344,7 @@ def bck_home_page():
         display_league_stats('profit_under35', 'Under 35FT')
         display_league_stats('profit_over45', 'Over 45FT')
         display_league_stats('profit_under45', 'Under 45FT')
+        display_league_stats('profit_btts_yes', 'BTTS Yes')
         display_league_stats('profit_Lay_0x1', 'Lay 0x1')
         display_league_stats('profit_Lay_1x0', 'Lay 1x0')
         display_league_stats('profit_Lay_2x1', 'Lay 2x1')
