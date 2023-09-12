@@ -1418,7 +1418,7 @@ def bck_home_page():
 
         # Calcular as probabilidades justas com 2 casas decimais
         if win_percentage != 0:
-        fair_odd = round(100 / win_percentage, 2)
+            fair_odd = round(100 / win_percentage, 2)
         else:
             # Lidar com o caso em que win_percentage é zero
             fair_odd = 0
