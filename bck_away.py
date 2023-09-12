@@ -1409,6 +1409,65 @@ def bck_away_page():
 
         # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
         st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_U45FT', use_container_width=True)
+
+       
+        #################### BTTS Yes #####################################
+
+       
+        # Criar um novo DataFrame para a tabela "BTTS Yes"
+        df_btts = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Filtrar os jogos onde ambas as equipes marcaram (BTTS Yes)
+        btts_yes_games = filtered_df[(filtered_df["FT_Goals_H"] >= 1) & (filtered_df["FT_Goals_A"] >= 1)]
+
+        # Calcular o número de vitórias e derrotas
+        num_win = len(btts_yes_games)
+        num_loss = len(filtered_df) - num_win  # O restante é considerado derrotas
+
+        # Calcular o total de jogos
+        total_games = len(filtered_df)
+
+        # Verificar se total_games é diferente de zero antes de realizar a divisão
+        if total_games != 0:
+            # Calcular as porcentagens de vitória e derrota
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+            # Lidar com o caso em que total_games é zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calcular as probabilidades justas com 2 casas decimais
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+            # Lidar com o caso em que win_percentage é zero
+            fair_odd = 0
+
+        # Adicionar os dados à tabela "BTTS Yes"
+        df_btts.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Exibir a tabela "BTTS Yes"
+        st.subheader("BTTS Yes")
+        st.dataframe(df_btts)
+
+   ###### ADD Gráfico BTTS Yes  #####  
+
+        # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+
+        # Converter a coluna 'Date' para o tipo datetime e formatar como "DD/MM/YYYY"
+        filtered_df_copy['Date'] = pd.to_datetime(filtered_df_copy['Date'], format='%d/%m/%Y')
+
+        # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
+
+        # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df_copy['Lucro_Acumulado_btts_yes'] = filtered_df_copy['profit_btts_yes'].cumsum()
+
+        # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_btts_yes', use_container_width=True)
+        
         
 
 #########################################################
