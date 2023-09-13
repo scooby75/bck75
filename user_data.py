@@ -22,5 +22,6 @@ valid_users = {
     "willame_eduardo": {"password": "Will2015", "profile": 3},
     "santanabet85": {"password": "santana85", "profile": 3},
     "fagnerom": {"password": "120714", "profile": 3},
+    "Borguezam": {"password": "91579877Luiz.", "profile": 1},
     "thomasgabriel": {"password": "thomas123", "profile": 1} 
 }
