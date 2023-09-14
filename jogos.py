@@ -90,7 +90,7 @@ def jogos_do_dia_page():
         selected_hg_away_min = st.number_input("XG Away (min)", 0.0, 10.0, 1.0)
         selected_hg_away_max = st.number_input("XG Away (max)", 0.0, 10.0, 10.0)
         selected_average_goals_min = st.number_input("Média de Gols (min)", 0.0, 10.0, 1.0)
-        selected_average_goals_max = st.number_input("Média de Gols (max)", 0.0, 10.0, 1.0)
+        selected_average_goals_max = st.number_input("Média de Gols (max)", 0.0, 10.0, 10.0)
         
 
 
