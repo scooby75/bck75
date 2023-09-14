@@ -52,6 +52,9 @@ def jogos_do_dia_page():
         ('Rodada', 'selected_rodada'),
         ('PPG Home', 'selected_ppg_h'),
         ('PPG Away', 'selected_ppg_a'),
+        ('XG Home', 'selected_hg_home'),
+        ('XG Away', 'selected_hg_away'),
+        ('Média de Gols', 'selected_average_goals'),
         
     ]
 
@@ -81,6 +84,16 @@ def jogos_do_dia_page():
         selected_ppg_away_min = st.number_input("PPG Away (min)", 0.0, 3.0, 0.0)
         selected_ppg_away_max = st.number_input("PPG Away (max)", 0.0, 3.0, 3.0)
 
+    with col4:
+        selected_hg_home_min = st.number_input("XG Home (min)", 0.0, 10.0, 1.0)
+        selected_hg_home_max = st.number_input("XG Home (max)", 0.0, 10.0, 10.0)
+        selected_hg_away_min = st.number_input("XG Away (min)", 0.0, 10.0, 1.0)
+        selected_hg_away_max = st.number_input("XG Away (max)", 0.0, 10.0, 10.0)
+        selected_average_goals_min = st.number_input("Média de Gols (min)", 0.0, 10.0, 1.0)
+        selected_average_goals_max = st.number_input("Média de Gols (max)", 0.0, 10.0, 1.0)
+        
+
+
     
 
     # Apply filters to the DataFrame
@@ -102,7 +115,13 @@ def jogos_do_dia_page():
         (df2['PPG_Home'] >= selected_ppg_home_min) &
         (df2['PPG_Home'] <= selected_ppg_home_max) &
         (df2['PPG_Away'] >= selected_ppg_away_min) &
-        (df2['PPG_Away'] <= selected_ppg_away_max)
+        (df2['PPG_Away'] <= selected_ppg_away_max) &
+        (df2['XG_Home'] >= selected_hg_home_min) &
+        (df2['XG_Home'] >= selected_hg_home_max) &
+        (df2['XG_Away'] >= selected_hg_away_min) &
+        (df2['XG_Away'] >= selected_hg_away_max) &
+        (df2['Média de Gols'] >= selected_average_goals_min) &
+        (df2['Média de Gols'] >= selected_average_goals_max) 
     ]
 
     if not filtered_data.empty:
