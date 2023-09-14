@@ -59,7 +59,7 @@ def jogos_do_dia_page():
     ]
 
     # Create number inputs for filter conditions
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     with col1:
         selected_ft_odd_h_min = st.number_input("FT Odds Home (min)", 0.0, 10.0, 0.0)
         selected_ft_odd_h_max = st.number_input("FT Odds Home (max)", selected_ft_odd_h_min, 15.0, 15.0)
