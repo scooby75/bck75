@@ -23,7 +23,7 @@ def bck_home_page():
         #st.write("Acesso concedido!")  # Debug
          
     ##### PÁGINA BCK HOME ######
-    tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top Equipes", "Top Ligas", "Resumo"])
+    tab0, tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top Equipes", "Top Ligas"])
 
     with tab0:
         # Carregar os dados
@@ -1987,45 +1987,6 @@ def bck_home_page():
         display_league_stats('profit_Lay_2x1', 'Lay 2x1')
         display_league_stats('profit_Lay_1x2', 'Lay 1x2')
 
-    with tab7:
-        
-        import pandas as pd
-        import matplotlib.pyplot as plt
-
-        # Certifique-se de que filtered_df esteja definido
-        filtered_df = ...
-
-        # Calcule a contagem de cada resultado
-        contagem_resultados = filtered_df['Resultado_FT'].value_counts()
-
-        # Calcule o percentual de cada resultado em relação ao total
-        percentagens = (contagem_resultados / contagem_resultados.sum()) * 100
-
-        # Cores para cada resultado
-        cores = {'H': 'blue', 'A': 'green', 'D': 'red'}
-
-        # Rótulos para cada segmento
-        rotulos_segmento = {'H': 'Casa', 'A': 'Fora', 'D': 'Empate'}
-
-        # Crie uma figura vazia
-        fig, ax = plt.subplots(figsize=(10, 3))
-
-        # Itere sobre os resultados e desenhe as barras, rótulos de porcentagem e rótulos de segmento correspondentes
-        x_start = 0
-        for resultado, cor in cores.items():
-            x_end = x_start + percentagens[resultado]
-            ax.hlines(y=1, xmin=x_start, xmax=x_end, color=cor, linewidth=16)
-            ax.text((x_start + x_end) / 2, 1.1, f'{percentagens[resultado]:.1f}%', color=cor, ha='center', va='bottom', fontsize=10)
-            ax.text((x_start + x_end) / 2, 1.3, rotulos_segmento[resultado], color=cor, ha='center', va='bottom', fontsize=10)
-            x_start = x_end
-
-        # Configurações adicionais para melhorar a aparência
-        ax.set_xlim(0, 100)  # Ajuste o limite do eixo x
-        ax.set_ylim(0, 2)    # Ajuste o limite do eixo y para exibir as barras horizontais e os rótulos de segmento
-        ax.axis('off')        # Desligue os eixos e seus rótulos
-
-        # Exibir o gráfico
-        plt.show()
 
 # Execute a função para criar a página
 bck_home_page()
