@@ -209,27 +209,11 @@ def tips_page():
 
             # Nome do arquivo que será baixado
             nome_arquivo = "btts_yes_data_atual.csv"
-
-            # Estilo CSS para tornar o botão vermelho
-            botao_estilizado = """
-            <style>
-                .botao-vermelho {
-                    background-color: red;
-                    color: white;
-                    padding: 10px 20px;
-                    text-decoration: none;
-                    border-radius: 5px;
-                    text-align: center;
-                }
-            </style>
-            """
-
-            # Renderizar o botão estilizado
-            st.markdown(botao_estilizado, unsafe_allow_html=True)
-
+ 
             # Renderizar o botão de download
-            if st.button("Baixar CSV", key="btts_csv_download", class="botao-vermelho"):
-                st.markdown(f'<a href="{url_arquivo}" download="{nome_arquivo}">Clique aqui para baixar</a>', unsafe_allow_html=True)
+            if st.button("Baixar CSV", key="btts_csv_download"):
+                link_html = f'<a href="{url_arquivo}" download="{nome_arquivo}" style="background-color: red; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">Clique aqui para baixar</a>'
+                st.markdown(link_html, unsafe_allow_html=True)
 
 
         with tab5:
