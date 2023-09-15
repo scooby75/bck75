@@ -4,7 +4,6 @@ import streamlit as st
 import base64
 import re
 import datetime as dt
-import requests
 
 from datetime import datetime
 
@@ -16,7 +15,7 @@ from session_state import SessionState
 # Função para carregar o CSV
 @st.cache_data(ttl=21600.0)  # 06 hours in seconds
 def load_base():
-    url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Jogos_do_Dia_FS.csv"
+    url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
     df = pd.read_csv(url)
 
 
@@ -129,7 +128,6 @@ def tips_page():
             layzebraht_df = df[
                 (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
                 (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10) &
-                (df["PPG_Home"] >= 1.7) &
                 (df["Rodada"] >= 10)
             ]
             colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
@@ -201,41 +199,8 @@ def tips_page():
                 file_name=f"btts_yes_{data_atual}.csv",
                 key="btts_yes_df_csv"
             )
-            
 
-            # Link CSV LBB
 
-            import requests
-            import streamlit as st
-            from datetime import datetime
-
-            # Substitua 'SEU_PAT_AQUI' pelo seu token de acesso pessoal do GitHub
-            GITHUB_PAT = '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'
-
-            # Função para fazer o download do arquivo
-            def download_arquivo(url, nome_arquivo):
-                headers = {
-                    'Authorization': f'token {GITHUB_PAT}'
-                }
-                response = requests.get(url, headers=headers)
-                if response.status_code == 200:
-                    with open(nome_arquivo, "wb") as file:
-                        file.write(response.content)
-                    return True
-                return False
-
-            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
-            data_atual = datetime.now().strftime("%d-%m-%Y")
-
-            # Nome do arquivo que será baixado
-            nome_arquivo = f"btts_yes_{data_atual}.csv"
-
-            # Cria um botão para download
-            if st.button("Baixar LBB"):
-                if download_arquivo("https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv", nome_arquivo):
-                    st.success(f"O arquivo {nome_arquivo} foi baixado com sucesso!")
-                else:
-                    st.error("Ocorreu um erro ao baixar o arquivo.")
 
         with tab5:
             # Definir URLs para os arquivos CSV
