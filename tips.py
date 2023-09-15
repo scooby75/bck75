@@ -203,8 +203,15 @@ def tips_page():
 
             # Baixar CSV LBB
 
-            if st.button("Baixar LBB", key="btts_csv_download"):
-                link_html = f'<a href="{url_arquivo}" download="{nome_arquivo}" style="background-color: red; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">Clique aqui para baixar</a>'
+            # URL do arquivo CSV no GitHub
+            url_arquivo = "https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv"
+
+            # Nome do arquivo que será baixado
+            nome_arquivo = "btts_yes_data_atual.csv"
+
+            # Renderizar o botão de download com estilo CSS inline
+            if st.button("Baixar CSV", key="btts_csv_download"):
+                link_html = f'<a href="{url_arquivo}" download="{nome_arquivo}" style="background-color: red; color: red; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">Clique aqui para baixar</a>'
                 st.markdown(link_html, unsafe_allow_html=True)
             
 
