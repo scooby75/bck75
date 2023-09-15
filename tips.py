@@ -200,6 +200,12 @@ def tips_page():
                 file_name=f"btts_yes_{data_atual}.csv",
                 key="btts_yes_df_csv"
             )
+
+            # Baixar CSV LBB
+
+            if st.button("Baixar LBB", key="btts_csv_download"):
+                link_html = f'<a href="{url_arquivo}" download="{nome_arquivo}" style="background-color: red; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">Clique aqui para baixar</a>'
+                st.markdown(link_html, unsafe_allow_html=True)
             
 
         with tab5:
