@@ -47,7 +47,7 @@ def tips_page():
         df = load_base()
 
         # ##### PÁGINA BCK HOME ######
-        tab0, tab1, tab2, tab3, tab4 = st.tabs(["HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "Scalping"])
+        tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "BTTS Sim", "Scalping"])
 
         with tab0:
             # Use df aqui para a aba "HA"
@@ -153,8 +153,33 @@ def tips_page():
                 key="lay_zebra_ft_csv"
             )
 
-
         with tab4:
+            # Use df aqui para a aba "BTTS Sim"
+            st.subheader("BTTS Sim")
+            st.text("Apostar em Ambas Marcam Sim, Odd minima 1.6")
+            btts_yes_df = df[
+                (df["FT_Odd_Over25"] <= 1.7) & 
+                (df["FT_Odd_BTTS_Yes"] <= 1.7) &
+                (df["XG_Home"] >= 1.2) & 
+                (df["XG_Away"] >= 1.2) &
+                (df["Rodada"] >= 10)
+            ]
+            colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
+            btts_yes_df = btts_yes_df[colunas_desejadas]
+            st.dataframe(btts_yes_df,width=800)
+
+            # Criar um link para download do CSV
+            csv_link = btts_yes_df.to_csv(index=False, encoding='utf-8-sig')
+            st.download_button(
+                label="Baixar CSV",
+                data=csv_link,
+                file_name="btts_yes.csv",
+                key="btts_yes_df_csv"
+            )
+
+
+
+        with tab5:
             # Definir URLs para os arquivos CSV
             url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
             url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
