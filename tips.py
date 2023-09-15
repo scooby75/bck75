@@ -4,6 +4,7 @@ import streamlit as st
 import base64
 import re
 import datetime as dt
+import requests
 
 from datetime import datetime
 
@@ -15,7 +16,7 @@ from session_state import SessionState
 # Função para carregar o CSV
 @st.cache_data(ttl=21600.0)  # 06 hours in seconds
 def load_base():
-    url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
+    url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Jogos_do_Dia_FS.csv"
     df = pd.read_csv(url)
 
 
@@ -200,9 +201,24 @@ def tips_page():
                 file_name=f"btts_yes_{data_atual}.csv",
                 key="btts_yes_df_csv"
             )
-
-
             
+
+            # Link CSV LBB
+
+             # Função para fazer o download do arquivo
+            def download_arquivo(url, nome_arquivo):
+                response = requests.get(url)
+                with open(nome_arquivo, "wb") as file:
+                    file.write(response.content)
+
+            # Nome do arquivo que será baixado
+            nome_arquivo = "btts_yes_data_atual.csv"
+
+            # Criar um botão para download
+            if st.button("Baixar LBB"):
+                download_arquivo("https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv", nome_arquivo)
+                st.success(f"O arquivo {nome_arquivo} foi baixado com sucesso!")
+
 
         with tab5:
             # Definir URLs para os arquivos CSV
