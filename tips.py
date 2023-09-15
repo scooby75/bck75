@@ -202,20 +202,6 @@ def tips_page():
             )
             
 
-            # Link CSV LBB
-
-            # URL do arquivo que você deseja baixar
-            url_arquivo = "https://github.com/scooby75/bdfootball/blob/main/btts.csv"
-
-            # Nome do arquivo que será baixado
-            nome_arquivo = "btts_yes_data_atual.csv"
- 
-            # Renderizar o botão de download
-            if st.button("Baixar CSV", key="btts_csv_download"):
-                link_html = f'<a href="{url_arquivo}" download="{nome_arquivo}" style="background-color: red; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">Clique aqui para baixar</a>'
-                st.markdown(link_html, unsafe_allow_html=True)
-
-
         with tab5:
             # Definir URLs para os arquivos CSV
             url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
