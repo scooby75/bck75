@@ -205,20 +205,33 @@ def tips_page():
 
             # Link CSV LBB
 
-             # Função para fazer o download do arquivo
+            # Substitua 'SEU_PAT_AQUI' pelo seu token de acesso pessoal do GitHub
+            GITHUB_PAT = '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'
+
+            # Função para fazer o download do arquivo
             def download_arquivo(url, nome_arquivo):
-                response = requests.get(url)
-                with open(nome_arquivo, "wb") as file:
-                    file.write(response.content)
+                headers = {
+                    'Authorization': f'token {GITHUB_PAT}'
+                }
+                response = requests.get(url, headers=headers)
+                if response.status_code == 200:
+                    with open(nome_arquivo, "wb") as file:
+                        file.write(response.content)
+                    return True
+                return False
+
+            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+            data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Nome do arquivo que será baixado
-            nome_arquivo = "btts_yes_data_atual.csv"
+            nome_arquivo = "btts_yes_{data_atual}.csv"
 
-            # Criar um botão para download
+            # Cria um botão para download
             if st.button("Baixar LBB"):
-                download_arquivo("https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv", nome_arquivo)
-                st.success(f"O arquivo {nome_arquivo} foi baixado com sucesso!")
-
+                if download_arquivo("https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv", nome_arquivo):
+                    st.success(f"O arquivo {nome_arquivo} foi baixado com sucesso!")
+                else:
+                    st.error("Ocorreu um erro ao baixar o arquivo.")
 
         with tab5:
             # Definir URLs para os arquivos CSV
