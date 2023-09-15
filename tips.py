@@ -128,6 +128,7 @@ def tips_page():
             layzebraht_df = df[
                 (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
                 (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10) &
+                (df["PPG_Home"] >= 1.7) &
                 (df["Rodada"] >= 10)
             ]
             colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
@@ -199,7 +200,36 @@ def tips_page():
                 file_name=f"btts_yes_{data_atual}.csv",
                 key="btts_yes_df_csv"
             )
+            
 
+            # Link CSV LBB
+
+            # URL do arquivo que você deseja baixar
+            url_arquivo = "https://github.com/scooby75/bdfootball/blob/main/btts.csv"
+
+            # Nome do arquivo que será baixado
+            nome_arquivo = "btts_yes_data_atual.csv"
+
+            # Estilo CSS para tornar o botão vermelho
+            botao_estilizado = """
+            <style>
+                .botao-vermelho {
+                    background-color: red;
+                    color: white;
+                    padding: 10px 20px;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    text-align: center;
+                }
+            </style>
+            """
+
+            # Renderizar o botão estilizado
+            st.markdown(botao_estilizado, unsafe_allow_html=True)
+
+            # Renderizar o botão de download
+            if st.button("Baixar CSV", key="btts_csv_download", class="botao-vermelho"):
+                st.markdown(f'<a href="{url_arquivo}" download="{nome_arquivo}">Clique aqui para baixar</a>', unsafe_allow_html=True)
 
 
         with tab5:
