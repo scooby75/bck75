@@ -205,6 +205,10 @@ def tips_page():
 
             # Link CSV LBB
 
+            import requests
+            import streamlit as st
+            from datetime import datetime
+
             # Substitua 'SEU_PAT_AQUI' pelo seu token de acesso pessoal do GitHub
             GITHUB_PAT = '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'
 
@@ -224,7 +228,7 @@ def tips_page():
             data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Nome do arquivo que será baixado
-            nome_arquivo = "btts_yes_{data_atual}.csv"
+            nome_arquivo = f"btts_yes_{data_atual}.csv"
 
             # Cria um botão para download
             if st.button("Baixar LBB"):
