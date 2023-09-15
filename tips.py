@@ -5,6 +5,8 @@ import base64
 import re
 import datetime as dt
 
+from datetime import datetime
+
 from io import BytesIO
 
 from datetime import datetime, timedelta
@@ -56,6 +58,7 @@ def tips_page():
             ha_df = df[
                 (df["FT_Odd_H"] <= 1.70) &
                 (df["DC_1X"] <= 1.3) &
+                (df["PPG_Home"] >= 1.7) &
                 (df["Rodada"] >= 10)
                 
             ]
@@ -63,12 +66,16 @@ def tips_page():
             ha_df = ha_df[colunas_desejadas]
             st.dataframe(ha_df,width=800)
 
+            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+            data_atual = datetime.now().strftime("%d-%m-%Y")
+
+
             # Criar um link para download do CSV
             csv_link = ha_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
-                file_name="handicap_asiatico.csv",
+                file_name = f"handicap_asiatico_{data_atual}.csv",
                 key="handicap_asiatico_csv"
             )
 
@@ -82,12 +89,15 @@ def tips_page():
             eventos_raros_df = eventos_raros_df[colunas_desejadas]
             st.dataframe(eventos_raros_df,width=800)
 
+            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+            data_atual = datetime.now().strftime("%d-%m-%Y")
+
             # Criar um link para download do CSV
             csv_link = eventos_raros_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
-                file_name="Lay_Goleada_Casa.csv",
+                file_name=f"lay_goleada_casa_{data_atual}.csv",
                 key="lay_goleada_casa_csv"
             )
 
@@ -98,12 +108,15 @@ def tips_page():
             eventos_raros2_df = eventos_raros2_df[colunas_desejadas]
             st.dataframe(eventos_raros2_df,width=800)
 
+            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+            data_atual = datetime.now().strftime("%d-%m-%Y")
+
             # Criar um link para download do CSV
             csv_link = eventos_raros2_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
-                file_name="Lay_Goleada_Visitante.csv",
+                file_name=f"lay_goleada_visitante_{data_atual}.csv",
                 key="lay_goleada_visitante_csv"
             )
 
@@ -121,12 +134,15 @@ def tips_page():
             layzebraht_df = layzebraht_df[colunas_desejadas]
             st.dataframe(layzebraht_df,width=800)
 
+            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+            data_atual = datetime.now().strftime("%d-%m-%Y")
+
             # Criar um link para download do CSV
             csv_link = layzebraht_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
-                file_name="lay_zebra_ht.csv",
+                file_name=f"lay_zebra_ht_{data_atual}.csv",
                 key="lay_zebra_ht_csv"
             )
 
@@ -138,18 +154,22 @@ def tips_page():
             layzebraft_df = df[
                 (df["FT_Odd_H"] >= 1.4) & (df["FT_Odd_H"] <= 2.1) &
                 (df["FT_Odd_A"] >= 5) & (df["FT_Odd_A"] <= 10) &
+                (df["PPG_Home"] >= 1.7) &
                 (df["Rodada"] >= 10)
             ]
             colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
             layzebraft_df = layzebraft_df[colunas_desejadas]
             st.dataframe(layzebraft_df,width=800)
 
+            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+            data_atual = datetime.now().strftime("%d-%m-%Y")
+
             # Criar um link para download do CSV
             csv_link = layzebraft_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
-                file_name="lay_zebra_ft.csv",
+                file_name=f"lay_zebra_ft_{data_atual}.csv",
                 key="lay_zebra_ft_csv"
             )
 
@@ -168,12 +188,15 @@ def tips_page():
             btts_yes_df = btts_yes_df[colunas_desejadas]
             st.dataframe(btts_yes_df,width=800)
 
+            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+            data_atual = datetime.now().strftime("%d-%m-%Y")
+
             # Criar um link para download do CSV
             csv_link = btts_yes_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
-                file_name="btts_yes.csv",
+                file_name=f"btts_yes_{data_atual}.csv",
                 key="btts_yes_df_csv"
             )
 
@@ -216,12 +239,15 @@ def tips_page():
                 st.text("Apostar em Lay Over 25FT e fechar posição com 3% ou 5min de exposição.")
                 st.dataframe(result_df,width=800)
 
+                # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+                data_atual = datetime.now().strftime("%d-%m-%Y")
+
                 # Criar um link para download do CSV
                 csv_link = result_df.to_csv(index=False, encoding='utf-8-sig')
                 st.download_button(
                     label="Baixar CSV",
                     data=csv_link,
-                    file_name="scalping.csv",
+                    file_name=f"scalping_{data_atual}.csv",
                     key="scalping_csv"
                 )
 
