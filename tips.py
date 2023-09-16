@@ -254,6 +254,7 @@ def tips_page():
             # Usando o DataFrame
             st.subheader("Arquivo LBB - Lay Goleada Casa")
             
+
             url_lay_goleada_casa = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_casa.csv?raw=true"
             df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa)
             
@@ -265,9 +266,9 @@ def tips_page():
             # Definindo o tipo de dados da coluna 'id' como string
             df_lay_goleada_casa['id'] = df_lay_goleada_casa['id'].astype(str)
             
-            # Criando um arquivo CSV com todas as células entre aspas duplas
+            # Criando um arquivo CSV com as aspas duplas ao redor do texto
             output = io.StringIO()
-            df_lay_goleada_casa.to_csv(output, index=False, quoting=csv.QUOTE_ALL, sep=';')
+            df_lay_goleada_casa.to_csv(output, index=False, header=True, quoting=csv.QUOTE_NONE, sep=';')
             
             # Criando um link para download do CSV
             csv_data = output.getvalue()
