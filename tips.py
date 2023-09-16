@@ -254,14 +254,14 @@ def tips_page():
             st.subheader("Arquivo LBB - Lay Goleada Casa")
             
             # Lê o arquivo CSV
-            url_lay_goleada_casa = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_casa.csv?raw=true"
+            url_lay_goleada_casa = "https://drive.google.com/file/d/1GLsRo2OHmC_DDe7G5r32loNrJLVeG-uB/view?usp=drive_link"
             df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa)
             
             # Obtendo a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
             
             # Criando um link para download do CSV
-            csv_data = df_lay_goleada_casa.to_csv(index=False, sep='"', encoding='utf-8-sig')
+            csv_data = df_lay_goleada_casa.to_csv(index=False, encoding='utf-8-sig')
             
             st.download_button(
                 label="Baixar LBB",
