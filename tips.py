@@ -249,10 +249,6 @@ def tips_page():
 
         with tab6:
 
-            import pandas as pd
-            import streamlit as st
-            from datetime import datetime
-
             # Use df aqui para a aba "HA"
             st.subheader("Arquivo LBB - Lay Goleada Casa")
             
