@@ -198,19 +198,25 @@ def tips_page():
             )
 
              # Link para o CSV no GitHub
-            csv_url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv"            
+            csv_url = "csv_url = f"https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv?token={github_token}""            
           
+            # Botão para baixar o arquivo CSV
             if st.button("Baixar LBB"):
-                # Faça o download dos dados do CSV
-                response = requests.get(csv_url)
-                if response.status_code == 200:
-                    data = response.content
+                # Função para baixar o arquivo
+                @st.cache
+                def download_csv():
+                    response = requests.get(csv_url)
+                    if response.status_code == 200:
+                        return response.content
+                    else:
+                        return None
             
-                    # Crie um link de download para o DataFrame
-                    csv_data = df.to_csv(index=False, encoding='utf-8')
-                    st.markdown(f'<a href="data:text/csv;charset=utf-8,{csv_data}" download="btts_yes.csv">Baixar CSV</a>', unsafe_allow_html=True)
-                else:
-                    st.error("Falha ao baixar os dados. Verifique o URL ou a conexão com a internet.")
+                csv_data = download_csv()
+                if csv_data is not None:
+                    st.markdown("### Arquivo sendo baixado... Aguarde...")
+                    with open("btts_yes.csv", "wb") as f:
+                        f.write(csv_data)
+                    st.success("Download concluído! Você pode encontrar o arquivo como 'btts_yes.csv'")
 
         with tab5:
             # Definir URLs para os arquivos CSV
