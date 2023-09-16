@@ -264,15 +264,18 @@ def tips_page():
             # Definindo o tipo de dados da coluna 'id' como int ao exportar para CSV
             df_lay_goleada_casa['id'] = df_lay_goleada_casa['id'].astype(int)
             
-            # Criando um link para download do CSV com aspas duplas ao redor de cada valor
-            csv_link_lay_goleada_casa = df_lay_goleada_casa.to_csv(index=False, encoding='utf-8-sig', quoting=csv.QUOTE_ALL)
+            # Criando um arquivo CSV com o texto dentro de cada célula entre aspas duplas
+            output = io.StringIO()
+            df_lay_goleada_casa.to_csv(output, index=False, quoting=csv.QUOTE_NONNUMERIC, sep=';')
+            
+            # Criando um link para download do CSV
+            csv_data = output.getvalue()
             st.download_button(
                 label="Baixar LBB",
-                data=csv_link_lay_goleada_casa,
+                data=csv_data,
                 file_name=f"Lay_Goleada_Casa_{data_atual}.csv",
                 key="Lay_Goleada_Casa_csv"
             )
-
             ############# Lay Goleada Visitante #######################3
 
             # Use df 
