@@ -198,7 +198,7 @@ def tips_page():
             )
 
             # Link para o CSV no GitHub com o token incorporado
-            csv_url = f"https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv?token={github_token}"
+            csv_url = f"https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv"
             
             # Botão para baixar o arquivo CSV
             if st.button("Baixar LBB"):
