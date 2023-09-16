@@ -255,7 +255,7 @@ def tips_page():
             url_lay_goleada_casa = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_casa.csv?raw=true"
             df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa)
             
-            st.dataframe(df_lay_goleada_casa.head(5), width=800)
+            st.dataframe(df_lay_goleada_casa.head(1), width=800)
 
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
@@ -278,7 +278,7 @@ def tips_page():
             url_lay_goleada_visitante = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_visitante.csv?raw=true"
             df_lay_goleada_visitante = pd.read_csv(url_lay_goleada_visitante)
             
-            st.dataframe(df_lay_goleada_visitante.head(5), width=800)
+            st.dataframe(df_lay_goleada_visitante.head(1), width=800)
 
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
@@ -300,7 +300,7 @@ def tips_page():
             url_lay_visitante_ht = "https://github.com/scooby75/bdfootball/blob/main/lay_zebra_ht.csv?raw=true"
             df_lay_visitante_ht = pd.read_csv(url_lay_visitante_ht)
             
-            st.dataframe(df_lay_visitante_ht.head(5), width=800)
+            st.dataframe(df_lay_visitante_ht.head(1), width=800)
 
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
@@ -322,7 +322,7 @@ def tips_page():
             url_lay_visitante_ft = "https://github.com/scooby75/bdfootball/blob/main/lay_zebra_ft.csv?raw=true"
             df_lay_visitante_ft = pd.read_csv(url_lay_visitante_ft)
             
-            st.dataframe(df_lay_visitante_ft.head(5), width=800)
+            st.dataframe(df_lay_visitante_ft.head(1), width=800)
 
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
@@ -344,7 +344,7 @@ def tips_page():
             url_btts_yes = "https://github.com/scooby75/bdfootball/blob/main/btts.csv?raw=true"
             df_btts_yes = pd.read_csv(url_btts_yes)
             
-            st.dataframe(df_btts_yes.head(5), width=800)
+            st.dataframe(df_btts_yes.head(1), width=800)
 
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
