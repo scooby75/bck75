@@ -249,29 +249,28 @@ def tips_page():
 
         with tab6:
 
+            import pandas as pd
+            import streamlit as st
+            from datetime import datetime
+
             # Use df aqui para a aba "HA"
-            st.subheader("HA -0.25")
-            st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
-            ha_df = df[
-                (df["FT_Odd_H"] >= 1.40) & (df["FT_Odd_H"] <= 2.00) & 
-                (df["DC_1X"] <= 1.3) &
-                (df["PPG_Home"] >= 1.8) &
-                (df["Rodada"] >= 10)
-            ]
-            colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
-            ha_df = ha_df[colunas_desejadas]
-            st.dataframe(ha_df, width=800)
+            st.subheader("Arquivo LBB - Lay Goleada Casa")
+            
+            url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/lay_goleada_casa.csv"
+            df = pd.read_csv(url)
+            
+            st.dataframe(df, width=800)
 
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Criar um link para download do CSV
-            csv_link = ha_df.to_csv(index=False, encoding='utf-8-sig')
+            url = df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
-                label="Baixar CSV",
+                label="Baixar LBB",
                 data=csv_link,
-                file_name=f"handicap_asiatico_{data_atual}.csv",
-                key="handicap_asiatico_csv"
+                file_name=f"Lay_Goleada_Casa_{data_atual}.csv",
+                key="Lay_Goleada_Casa_csv"
             )
 
  
