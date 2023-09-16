@@ -196,24 +196,29 @@ def tips_page():
                 key="btts_yes_df_csv_4"
             )
 
-            # Link CSV LBB
-
-           
-            # Construir a URL com o token de acesso pessoal
-            csv_url = f"https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv?token={github_token}"
-
-
-           # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
-            data_atual = datetime.now().strftime("%d-%m-%Y")
-
+             # Link para o CSV no GitHub
+            csv_url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv"
+            
             # Botão para baixar o arquivo CSV
-            if st.button("Baixar LBB"):                
-                st.download_button(
-                    label="Baixar CSV",
-                    data=csv_url,
-                    file_name=f"btts_yes_{data_atual}.csv",
-                    key="btts_yes_df_csv_5"
-                )
+            if st.button("Baixar LBB"):
+                # Faça o download dos dados do CSV
+                response = requests.get(csv_url)
+                if response.status_code == 200:
+                    data = response.content
+            
+                    # Crie um DataFrame com os dados
+                    df = pd.read_csv(pd.compat.StringIO(data.decode('utf-8')))
+            
+                    # Crie um link de download para o DataFrame
+                    csv_data = df.to_csv(index=False, encoding='utf-8')
+                    st.download_button(
+                        label="Baixar CSV",
+                        data=csv_data,
+                        file_name="btts_yes.csv",
+                        key="btts_yes_df_csv"
+                    )
+                else:
+                    st.error("Falha ao baixar os dados. Verifique o URL ou a conexão com a internet.")
 
         with tab5:
             # Definir URLs para os arquivos CSV
