@@ -254,8 +254,7 @@ def tips_page():
             st.subheader("Arquivo LBB - Lay Goleada Casa")
             
             url_lay_goleada_casa = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_casa.csv?raw=true"
-            dtypes = {'id': int}
-            df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa, dtype=dtypes)
+            df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa)
             
             st.dataframe(df_lay_goleada_casa.head(1), width=800)
             
@@ -266,7 +265,7 @@ def tips_page():
             df_lay_goleada_casa['id'] = df_lay_goleada_casa['id'].astype(int)
             
             # Criando um link para download do CSV com aspas duplas ao redor de cada valor
-            csv_link_lay_goleada_casa = df_lay_goleada_casa.to_csv(index=False, encoding='utf-8-sig', quoting=csv.QUOTE_ALL, dtype=dtypes)
+            csv_link_lay_goleada_casa = df_lay_goleada_casa.to_csv(index=False, encoding='utf-8-sig', quoting=csv.QUOTE_ALL)
             st.download_button(
                 label="Baixar LBB",
                 data=csv_link_lay_goleada_casa,
