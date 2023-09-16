@@ -201,14 +201,14 @@ def tips_page():
             # Link para o LBB CSV
 
         	    
-	        csv_link = "https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv"
+		csv_link = "https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv"
 
 	        # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
-            data_atual = datetime.now().strftime("%d-%m-%Y")
+            	data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Criar um link para download do CSV
-            csv_link = btts_yes_df.to_csv(index=False, encoding='utf-8-sig')
-            st.download_button(
+            	csv_link = btts_yes_df.to_csv(index=False, encoding='utf-8-sig')
+            	st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
                 file_name=f"btts_yes_{data_atual}.csv",
