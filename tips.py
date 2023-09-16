@@ -249,58 +249,30 @@ def tips_page():
 
         with tab6:
 
-             # Função genérica para carregar dados de um URL e criar um botão de download
-            @st.cache_data(ttl=21600.0)  # 06 horas em segundos
-            def load_and_display_data(url, subheader, file_name_prefix, key):
-                df = pd.read_csv(url)
-                st.subheader(subheader)
-                st.dataframe(df.head(5), width=800)
-                data_atual = datetime.now().strftime("%d-%m-%Y")
-                csv_link = df.to_csv(index=False, encoding='utf-8-sig')
-                st.download_button(
-                    label=f"Baixar {subheader}",
-                    data=csv_link,
-                    file_name=f"{file_name_prefix}_{data_atual}.csv",
-                    key=key
-                )
+            # Use df aqui para a aba "HA"
+            st.subheader("HA -0.25")
+            st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
+            ha_df = df[
+                (df["FT_Odd_H"] >= 1.40) & (df["FT_Odd_H"] <= 2.00) & 
+                (df["DC_1X"] <= 1.3) &
+                (df["PPG_Home"] >= 1.8) &
+                (df["Rodada"] >= 10)
+            ]
+            colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
+            ha_df = ha_df[colunas_desejadas]
+            st.dataframe(ha_df, width=800)
 
-            # Streamlit App
-            def tips_page():
-                with tab6:
-                    load_and_display_data(
-                        "https://github.com/scooby75/bdfootball/blob/main/lay_goleda_casa.csv",
-                        "Arquivos LBB - Lay Goleada Casa",
-                        "lay_goleada_casa",
-                        "lay_goleada_casa"
-                    )
+            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+            data_atual = datetime.now().strftime("%d-%m-%Y")
 
-                    load_and_display_data(
-                        "https://raw.githubusercontent.com/scooby75/bdfootball/main/lay_goleada_visitante.csv",
-                        "Arquivos LBB - Lay Goleada Visitante",
-                        "lay_goleada_visitante",
-                        "lay_goleada_visitante"
-                    )
-
-                    load_and_display_data(
-                        "https://raw.githubusercontent.com/scooby75/bdfootball/main/lay_zebra_ht.csv",
-                        "Arquivos LBB - Lay Visitante HT",
-                        "lay_visitante_ht",
-                        "lay_visitante_ht"
-                    )
-
-                    load_and_display_data(
-                        "https://raw.githubusercontent.com/scooby75/bdfootball/main/lay_zebra_ft.csv",
-                        "Arquivos LBB - Lay Visitante FT",
-                        "lay_visitante_ft",
-                        "lay_visitante_ft"
-                    )
-
-                    load_and_display_data(
-                        "https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv",
-                        "Arquivos LBB - BTTS Sim",
-                        "btts",
-                        "btts"
-                    )
+            # Criar um link para download do CSV
+            csv_link = ha_df.to_csv(index=False, encoding='utf-8-sig')
+            st.download_button(
+                label="Baixar CSV",
+                data=csv_link,
+                file_name=f"handicap_asiatico_{data_atual}.csv",
+                key="handicap_asiatico_csv"
+            )
 
  
 # Chama a função tips_page() no início do código para criar a página
