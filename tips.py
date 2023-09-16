@@ -6,6 +6,7 @@ import re
 import datetime as dt
 import requests
 import csv
+import io
 
 from datetime import datetime
 from my_token import github_token
@@ -261,8 +262,8 @@ def tips_page():
             # Obtendo a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
             
-            # Definindo o tipo de dados da coluna 'id' como int ao exportar para CSV
-            df_lay_goleada_casa['id'] = df_lay_goleada_casa['id'].astype(int)
+            # Definindo o tipo de dados da coluna 'id' como string
+            df_lay_goleada_casa['id'] = df_lay_goleada_casa['id'].astype(str)
             
             # Criando um arquivo CSV com o texto dentro de cada célula entre aspas duplas
             output = io.StringIO()
@@ -276,6 +277,7 @@ def tips_page():
                 file_name=f"Lay_Goleada_Casa_{data_atual}.csv",
                 key="Lay_Goleada_Casa_csv"
             )
+            
             ############# Lay Goleada Visitante #######################3
 
             # Use df 
