@@ -199,8 +199,8 @@ def tips_page():
 
                         
             # Link para o LBB CSV
-            download_link = f'<a href="https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv" download="btts_yes.csv">Baixar LBB</a>'
-            st.markdown(download_link, unsafe_allow_html=True)
+            #download_link = f'<a href="https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv" download="btts_yes.csv">Baixar LBB</a>'
+            #st.markdown(download_link, unsafe_allow_html=True)
             
                 
 
