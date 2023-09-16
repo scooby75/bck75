@@ -255,7 +255,7 @@ def tips_page():
             
             # Lê o arquivo CSV
             url_lay_goleada_casa = "https://drive.google.com/file/d/1GLsRo2OHmC_DDe7G5r32loNrJLVeG-uB/view?usp=drive_link"
-            df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa)
+            df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa, error_bad_lines=False)
             
             # Obtendo a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
