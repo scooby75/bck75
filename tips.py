@@ -61,7 +61,6 @@ def tips_page():
                 (df["DC_1X"] <= 1.3) &
                 (df["PPG_Home"] >= 1.7) &
                 (df["Rodada"] >= 10)
-                
             ]
             colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
             ha_df = ha_df[colunas_desejadas]
@@ -197,24 +196,20 @@ def tips_page():
                 key="btts_yes_df_csv_4"
             )
 
-                        
             # Link para o LBB CSV
+            csv_link = "https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv"
 
-        	    
-		csv_link = "https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv"
-
-	        # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
-            	data_atual = datetime.now().strftime("%d-%m-%Y")
+            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+            data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Criar um link para download do CSV
-            	csv_link = btts_yes_df.to_csv(index=False, encoding='utf-8-sig')
-            	st.download_button(
+            csv_link = btts_yes_df.to_csv(index=False, encoding='utf-8-sig')
+            st.download_button(
                 label="Baixar CSV",
                 data=csv_link,
                 file_name=f"btts_yes_{data_atual}.csv",
                 key="btts_yes_df_csv_5"
             )
-                           
 
         with tab5:
             # Definir URLs para os arquivos CSV
