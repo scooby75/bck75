@@ -198,26 +198,17 @@ def tips_page():
             )
 
              # Link para o CSV no GitHub
-            csv_url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv"
-            
-            # Botão para baixar o arquivo CSV
+            csv_url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/btts.csv"            
+          
             if st.button("Baixar LBB"):
                 # Faça o download dos dados do CSV
                 response = requests.get(csv_url)
                 if response.status_code == 200:
                     data = response.content
             
-                    # Crie um DataFrame com os dados
-                    df = pd.read_csv(StringIO(data.decode('utf-8')))
-            
                     # Crie um link de download para o DataFrame
                     csv_data = df.to_csv(index=False, encoding='utf-8')
-                    st.download_button(
-                        label="Baixar CSV",
-                        data=csv_data,
-                        file_name="btts_yes.csv",
-                        key="btts_yes_df_csv"
-                    )
+                    st.markdown(f'<a href="data:text/csv;charset=utf-8,{csv_data}" download="btts_yes.csv">Baixar CSV</a>', unsafe_allow_html=True)
                 else:
                     st.error("Falha ao baixar os dados. Verifique o URL ou a conexão com a internet.")
 
