@@ -249,26 +249,30 @@ def tips_page():
 
         with tab6:
             
-            # Use df 
+                     
+            # Usando o DataFrame
             st.subheader("Arquivo LBB - Lay Goleada Casa")
             
-            url_lay_goleada_casa = "https://raw.githubusercontent.com/scooby75/bdfootball/main/lay_goleada_casa.csv"
-            df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa)
+            url_lay_goleada_casa = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_casa.csv?raw=true"
+            dtypes = {'id': int}
+            df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa, dtype=dtypes)
             
             st.dataframe(df_lay_goleada_casa.head(1), width=800)
-
-            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+            
+            # Obtendo a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
-
-            # Criar um link para download do CSV
-            csv_link_lay_goleada_casa = df_lay_goleada_casa.to_csv(index=False, encoding='utf-8-sig')
+            
+            # Definindo o tipo de dados da coluna 'id' como int ao exportar para CSV
+            df_lay_goleada_casa['id'] = df_lay_goleada_casa['id'].astype(int)
+            
+            # Criando um link para download do CSV com aspas duplas ao redor de cada valor
+            csv_link_lay_goleada_casa = df_lay_goleada_casa.to_csv(index=False, encoding='utf-8-sig', quoting=csv.QUOTE_ALL, dtype=dtypes)
             st.download_button(
                 label="Baixar LBB",
                 data=csv_link_lay_goleada_casa,
                 file_name=f"Lay_Goleada_Casa_{data_atual}.csv",
                 key="Lay_Goleada_Casa_csv"
             )
-
 
             ############# Lay Goleada Visitante #######################3
 
