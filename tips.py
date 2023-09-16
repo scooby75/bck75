@@ -265,9 +265,9 @@ def tips_page():
             # Definindo o tipo de dados da coluna 'id' como string
             df_lay_goleada_casa['id'] = df_lay_goleada_casa['id'].astype(str)
             
-            # Criando um arquivo CSV com o texto dentro de cada célula entre aspas duplas
+            # Criando um arquivo CSV com todas as células entre aspas duplas
             output = io.StringIO()
-            df_lay_goleada_casa.to_csv(output, index=False, quoting=csv.QUOTE_NONNUMERIC, sep=';')
+            df_lay_goleada_casa.to_csv(output, index=False, quoting=csv.QUOTE_ALL, sep=';')
             
             # Criando um link para download do CSV
             csv_data = output.getvalue()
