@@ -254,26 +254,23 @@ def tips_page():
             # Usando o DataFrame
             st.subheader("Arquivo LBB - Lay Goleada Casa")
             
-            url_lay_goleada_casa = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_casa.csv?raw=true"
-            df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa)
+            url_lay_goleada_visitante = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_visitante.csv?raw=true"
+            df_lay_goleada_visitante = pd.read_csv(url_lay_goleada_visitante)
             
-            # Obtendo a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+            st.dataframe(df_lay_goleada_visitante.head(1), width=800)
+
+            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
-            
-            # Criando um link para download do CSV com as aspas duplas ao redor do texto
-            csv_data = df_lay_goleada_casa.to_csv(index=False, sep=';', encoding='utf-8-sig')
-            
-            # Criando um link para download do CSV
+
+            # Criar um link para download do CSV
+            csv_link_lay_goleada_visitante = df_lay_goleada_visitante.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar LBB",
-                data=csv_data,
-                file_name=f"Lay_Goleada_Casa_{data_atual}.csv",
-                key="Lay_Goleada_Casa_csv"
+                data=csv_link_lay_goleada_visitante,
+                file_name=f"Lay_Goleada_Visitante_{data_atual}.csv",
+                key="Lay_Goleada_Visitante_csv"
             )
-            
-            # Usando print para exibir os dados no console
-            with st.echo():
-                print(df_lay_goleada_casa)
+
             
             ############# Lay Goleada Visitante #######################3
 
