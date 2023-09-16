@@ -10,6 +10,7 @@ import requests
 from datetime import datetime
 from my_token import github_token
 
+from io import StringIO
 from io import BytesIO
 from datetime import datetime, timedelta
 from session_state import SessionState
@@ -207,7 +208,7 @@ def tips_page():
                     data = response.content
             
                     # Crie um DataFrame com os dados
-                    df = pd.read_csv(pd.compat.StringIO(data.decode('utf-8')))
+                    df = pd.read_csv(StringIO(data.decode('utf-8')))
             
                     # Crie um link de download para o DataFrame
                     csv_data = df.to_csv(index=False, encoding='utf-8')
