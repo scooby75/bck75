@@ -268,7 +268,7 @@ def tips_page():
             def tips_page():
                 with tab6:
                     load_and_display_data(
-                        "https://raw.githubusercontent.com/scooby75/bdfootball/main/lay_goleada_casa.csv",
+                        "https://github.com/scooby75/bdfootball/blob/main/lay_goleda_casa.csv",
                         "Arquivos LBB - Lay Goleada Casa",
                         "lay_goleada_casa",
                         "lay_goleada_casa"
