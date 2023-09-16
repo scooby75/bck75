@@ -249,25 +249,26 @@ def tips_page():
                 st.error("Ocorreu um erro: " + str(e))
 
         with tab6:
-            
-                     
-
-            
-            ############# Lay Goleada Visitante #######################3
 
             # Use df 
-            st.subheader("Arquivo LBB - Lay Goleada Visitante")
+            st.subheader("Arquivo LBB - Lay Goleada Casa")
             
             url_lay_goleada_casa = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_casa.csv?raw=true"
             df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa)
             
+            # Função para adicionar aspas duplas a cada célula
+            def add_quotes(cell):
+                return f'"{cell}"'
+            
+            # Aplica a função a todas as células do DataFrame
+            df_lay_goleada_casa = df_lay_goleada_casa.applymap(add_quotes)
+            
             # Obtendo a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
             
-            # Criando um link para download do CSV com as aspas duplas ao redor do texto
+            # Criando um link para download do CSV
             csv_data = df_lay_goleada_casa.to_csv(index=False, sep=';', encoding='utf-8-sig')
             
-            # Criando um link para download do CSV
             st.download_button(
                 label="Baixar LBB",
                 data=csv_data,
@@ -277,6 +278,33 @@ def tips_page():
             
             # Usando print para exibir as 5 primeiras linhas do DataFrame
             print(df_lay_goleada_casa.head(5))
+                     
+
+            
+            ############# Lay Goleada Visitante #######################3
+
+            # Use df 
+            st.subheader("Arquivo LBB - Lay Goleada Visitante")
+            
+            url_lay_goleada_visitante = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_visitante.csv?raw=true"
+            df_lay_goleada_visitante = pd.read_csv(url_lay_goleada_visitante)
+            
+            # Obtendo a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+            data_atual = datetime.now().strftime("%d-%m-%Y")
+            
+            # Criando um link para download do CSV com as aspas duplas ao redor do texto
+            csv_data = df_lay_goleada_visitante.to_csv(index=False, sep=';', encoding='utf-8-sig')
+            
+            # Criando um link para download do CSV
+            st.download_button(
+                label="Baixar LBB",
+                data=csv_data,
+                file_name=f"Lay_Goleada_Visitante_{data_atual}.csv",
+                key="Lay_Goleada_Visitante_csv"
+            )
+            
+            # Usando print para exibir as 5 primeiras linhas do DataFrame
+            print(df_lay_goleada_visitante.head(5))
 
             ############# Lay Visitante HT #######################3
 
