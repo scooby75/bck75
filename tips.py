@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 from session_state import SessionState
 
 # Função para carregar o CSV
-@st.cache_data(ttl=21600.0)  # 06 horas em segundos
+@st.cache(ttl=21600.0)  # 06 horas em segundos
 def load_base():
     url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Jogos_do_Dia_FS.csv"
     df = pd.read_csv(url)
@@ -247,19 +247,18 @@ def tips_page():
             except Exception as e:
                 st.error("Ocorreu um erro: " + str(e))
 
-        
         with tab6:
-            # Use df aqui para a aba "HA"
+            # Use df 
             st.subheader("Arquivo LBB - Lay Goleada Casa")
             
-            url_lay_goleada_casa = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_casa.csv?raw=true"
+            url_lay_goleada_casa = "https://github.com/scooby75/bdfootball/blob/main/lay_goleda_casa.csv?raw=true"
             df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa)
             
             st.dataframe(df_lay_goleada_casa.head(5), width=800)
-        
+
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
-        
+
             # Criar um link para download do CSV
             csv_link_lay_goleada_casa = df_lay_goleada_casa.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
@@ -268,7 +267,6 @@ def tips_page():
                 file_name=f"Lay_Goleada_Casa_{data_atual}.csv",
                 key="Lay_Goleada_Casa_csv"
             )
-
 
 # Chama a função tips_page() no início do código para criar a página
 tips_page()
