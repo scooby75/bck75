@@ -51,7 +51,7 @@ def tips_page():
         df = load_base()
 
         # ##### PÁGINA BCK HOME ######
-        tab0, tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "BTTS Sim", "Scalping", "LBB"])
+        tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "BTTS Sim", "Scalping"])
 
         with tab0:
             # Use df aqui para a aba "HA"
@@ -248,123 +248,6 @@ def tips_page():
             except Exception as e:
                 st.error("Ocorreu um erro: " + str(e))
 
-        with tab6:
-
-            # Use df 
-            st.subheader("Arquivo LBB - Lay Goleada Casa")
-            
-            # Lê o arquivo CSV
-            url_lay_goleada_casa = "https://drive.google.com/file/d/1GLsRo2OHmC_DDe7G5r32loNrJLVeG-uB/view?usp=drive_link"
-            df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa, error_bad_lines=False)
-            
-            # Obtendo a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
-            data_atual = datetime.now().strftime("%d-%m-%Y")
-            
-            # Criando um link para download do CSV
-            csv_data = df_lay_goleada_casa.to_csv(index=False, encoding='utf-8-sig')
-            
-            st.download_button(
-                label="Baixar LBB",
-                data=csv_data,
-                file_name=f"Lay_Goleada_Casa_{data_atual}.csv",
-                key="Lay_Goleada_Casa_csv"
-            )
-            
-            # Usando print para exibir as 5 primeiras linhas do DataFrame
-            print(df_lay_goleada_casa.head(5))
-                     
-
-            
-            ############# Lay Goleada Visitante #######################3
-
-            # Use df 
-            st.subheader("Arquivo LBB - Lay Goleada Visitante")
-            
-            url_lay_goleada_visitante = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_visitante.csv?raw=true"
-            df_lay_goleada_visitante = pd.read_csv(url_lay_goleada_visitante)
-            
-            # Obtendo a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
-            data_atual = datetime.now().strftime("%d-%m-%Y")
-            
-            # Criando um link para download do CSV com as aspas duplas ao redor do texto
-            csv_data = df_lay_goleada_visitante.to_csv(index=False, sep=';', encoding='utf-8-sig')
-            
-            # Criando um link para download do CSV
-            st.download_button(
-                label="Baixar LBB",
-                data=csv_data,
-                file_name=f"Lay_Goleada_Visitante_{data_atual}.csv",
-                key="Lay_Goleada_Visitante_csv"
-            )
-            
-            # Usando print para exibir as 5 primeiras linhas do DataFrame
-            print(df_lay_goleada_visitante.head(5))
-
-            ############# Lay Visitante HT #######################3
-
-            # Use df 
-            st.subheader("Arquivo LBB - Lay Visitante HT")
-            
-            url_lay_visitante_ht = "https://github.com/scooby75/bdfootball/blob/main/lay_zebra_ht.csv?raw=true"
-            df_lay_visitante_ht = pd.read_csv(url_lay_visitante_ht)
-            
-            st.dataframe(df_lay_visitante_ht.head(1), width=800)
-
-            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
-            data_atual = datetime.now().strftime("%d-%m-%Y")
-
-            # Criar um link para download do CSV
-            csv_link_lay_visitante_ht = df_lay_visitante_ht.to_csv(index=False, encoding='utf-8-sig')
-            st.download_button(
-                label="Baixar LBB",
-                data=csv_link_lay_visitante_ht,
-                file_name=f"Lay_Visitante_HT_{data_atual}.csv",
-                key="Lay_Visitante_HT_csv"
-            )
-
-            ############# Lay Visitante FT #######################3
-
-            # Use df 
-            st.subheader("Arquivo LBB - Lay Visitante FT")
-            
-            url_lay_visitante_ft = "https://github.com/scooby75/bdfootball/blob/main/lay_zebra_ft.csv?raw=true"
-            df_lay_visitante_ft = pd.read_csv(url_lay_visitante_ft)
-            
-            st.dataframe(df_lay_visitante_ft.head(1), width=800)
-
-            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
-            data_atual = datetime.now().strftime("%d-%m-%Y")
-
-            # Criar um link para download do CSV
-            csv_link_lay_visitante_ft = df_lay_visitante_ft.to_csv(index=False, encoding='utf-8-sig')
-            st.download_button(
-                label="Baixar LBB",
-                data=csv_link_lay_visitante_ft,
-                file_name=f"Lay_Visitante_FT_{data_atual}.csv",
-                key="Lay_Visitante_FT_csv"
-            )
-
-            ############# BTTS Yes #######################3
-
-            # Use df 
-            st.subheader("Arquivo LBB - BTTS Sim")
-            
-            url_btts_yes = "https://github.com/scooby75/bdfootball/blob/main/btts.csv?raw=true"
-            df_btts_yes = pd.read_csv(url_btts_yes)
-            
-            st.dataframe(df_btts_yes.head(1), width=800)
-
-            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
-            data_atual = datetime.now().strftime("%d-%m-%Y")
-
-            # Criar um link para download do CSV
-            csv_link_btts_yes = df_btts_yes.to_csv(index=False, encoding='utf-8-sig')
-            st.download_button(
-                label="Baixar LBB",
-                data=csv_link_btts_yes,
-                file_name=f"Lay_BTTS_Sim_{data_atual}.csv",
-                key="Lay_BTTS_Sim_csv"
-            )
 
 # Chama a função tips_page() no início do código para criar a página
 tips_page()
