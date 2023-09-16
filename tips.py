@@ -16,20 +16,20 @@ from datetime import datetime, timedelta
 from session_state import SessionState
 
 # Função para carregar o CSV
-@st.cache_data(ttl=21600.0)  # 06 hours in seconds
+@st.cache(ttl=21600.0)  # 06 horas em segundos
 def load_base():
     url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Jogos_do_Dia_FS.csv"
     df = pd.read_csv(url)
 
-    # Exclude rows where 'Home' or 'Away' contains specific substrings
-    substrings_to_exclude = ['U16', 'U17', 'U18', 'U19', 'U20', '21', 'U22', 'U23']
-    mask = ~df['Home'].str.contains('|'.join(substrings_to_exclude), case=False) & \
-           ~df['Away'].str.contains('|'.join(substrings_to_exclude), case=False)
+    # Excluir linhas em que 'Home' ou 'Away' contenham substrings específicas
+    substrings_para_excluir = ['U16', 'U17', 'U18', 'U19', 'U20', '21', 'U22', 'U23']
+    mask = ~df['Home'].str.contains('|'.join(substrings_para_excluir), case=False) & \
+           ~df['Away'].str.contains('|'.join(substrings_para_excluir), case=False)
     df = df[mask]
 
-    # Exclude rows where 'League' contains 'WOMEN'
-    substring_to_exclude = 'WOMEN'
-    mask = ~df['Liga'].str.contains(substring_to_exclude, case=False)
+    # Excluir linhas em que 'League' contenha 'WOMEN'
+    substring_para_excluir = 'WOMEN'
+    mask = ~df['Liga'].str.contains(substring_para_excluir, case=False)
     df = df[mask]
 
     return df
@@ -39,7 +39,7 @@ def tips_page():
     # Inicializa o estado da sessão
     session_state = SessionState()
 
-    # Defina o valor de user_profile após a criação da instância
+    # Define o valor de user_profile após a criação da instância
     session_state.user_profile = 1  # Ou qualquer outro valor desejado
 
     # Verifica se o usuário tem permissão para acessar a página
@@ -70,16 +70,16 @@ def tips_page():
             data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Criar um link para download do CSV
-            csv_link = ha_df.to_csv(index=False, encoding='utf-8-sig')
+            csv_link_ha = ha_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
-                data=csv_link,
+                data=csv_link_ha,
                 file_name=f"handicap_asiatico_{data_atual}.csv",
                 key="handicap_asiatico_csv"
             )
 
         with tab1:
-            # Use df aqui para a aba "Lay Goleada"
+            # Use df aqui para a aba "Lay Goleada Casa"
             st.subheader("Lay Goleada Casa")
             st.text("Apostar em Lay Goleada Casa, Odd máxima 30")
             eventos_raros_df = df[(df["FT_Odd_H"] >= 2) & (df["FT_Odd_H"] <= 5) & (df["FT_Odd_Over25"] >= 2.30) & (df["FT_Odd_BTTS_Yes"] <= 2) & (df["Rodada"] >= 10)]
@@ -91,10 +91,10 @@ def tips_page():
             data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Criar um link para download do CSV
-            csv_link = eventos_raros_df.to_csv(index=False, encoding='utf-8-sig')
+            csv_link_goleada_casa = eventos_raros_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
-                data=csv_link,
+                data=csv_link_goleada_casa,
                 file_name=f"lay_goleada_casa_{data_atual}.csv",
                 key="lay_goleada_casa_csv"
             )
@@ -109,10 +109,10 @@ def tips_page():
             data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Criar um link para download do CSV
-            csv_link = eventos_raros2_df.to_csv(index=False, encoding='utf-8-sig')
+            csv_link_goleada_visitante = eventos_raros2_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
-                data=csv_link,
+                data=csv_link_goleada_visitante,
                 file_name=f"lay_goleada_visitante_{data_atual}.csv",
                 key="lay_goleada_visitante_csv"
             )
@@ -135,10 +135,10 @@ def tips_page():
             data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Criar um link para download do CSV
-            csv_link = layzebraht_df.to_csv(index=False, encoding='utf-8-sig')
+            csv_link_zebra_ht = layzebraht_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
-                data=csv_link,
+                data=csv_link_zebra_ht,
                 file_name=f"lay_zebra_ht_{data_atual}.csv",
                 key="lay_zebra_ht_csv"
             )
@@ -161,10 +161,10 @@ def tips_page():
             data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Criar um link para download do CSV
-            csv_link = layzebraft_df.to_csv(index=False, encoding='utf-8-sig')
+            csv_link_zebra_ft = layzebraft_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
-                data=csv_link,
+                data=csv_link_zebra_ft,
                 file_name=f"lay_zebra_ft_{data_atual}.csv",
                 key="lay_zebra_ft_csv"
             )
@@ -188,12 +188,12 @@ def tips_page():
             data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Criar um link para download do CSV
-            csv_link = btts_yes_df.to_csv(index=False, encoding='utf-8-sig')
+            csv_link_btts = btts_yes_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
-                data=csv_link,
+                data=csv_link_btts,
                 file_name=f"btts_yes_{data_atual}.csv",
-                key="btts_yes_df_csv_4"
+                key="btts_yes_csv"
             )
 
         with tab5:
@@ -236,10 +236,10 @@ def tips_page():
                 data_atual = datetime.now().strftime("%d-%m-%Y")
 
                 # Criar um link para download do CSV
-                csv_link = result_df.to_csv(index=False, encoding='utf-8-sig')
+                csv_link_scalping = result_df.to_csv(index=False, encoding='utf-8-sig')
                 st.download_button(
                     label="Baixar CSV",
-                    data=csv_link,
+                    data=csv_link_scalping,
                     file_name=f"scalping_{data_atual}.csv",
                     key="scalping_csv"
                 )
@@ -248,27 +248,25 @@ def tips_page():
                 st.error("Ocorreu um erro: " + str(e))
 
         with tab6:
-
             # Use df aqui para a aba "HA"
             st.subheader("Arquivo LBB - Lay Goleada Casa")
             
-            url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/lay_goleada_casa.csv"
-            df = pd.read_csv(url)
+            url_lay_goleada_casa = "https://raw.githubusercontent.com/scooby75/bdfootball/main/lay_goleada_casa.csv"
+            df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa)
             
-            st.dataframe(df, width=800)
+            st.dataframe(df_lay_goleada_casa, width=800)
 
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Criar um link para download do CSV
-            url = df.to_csv(index=False, encoding='utf-8-sig')
+            csv_link_lay_goleada_casa = df_lay_goleada_casa.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar LBB",
-                data=csv_link,
+                data=csv_link_lay_goleada_casa,
                 file_name=f"Lay_Goleada_Casa_{data_atual}.csv",
                 key="Lay_Goleada_Casa_csv"
             )
 
- 
 # Chama a função tips_page() no início do código para criar a página
 tips_page()
