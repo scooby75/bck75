@@ -261,7 +261,7 @@ def tips_page():
             data_atual = datetime.now().strftime("%d-%m-%Y")
             
             # Criando um link para download do CSV
-            csv_data = df_lay_goleada_casa.to_csv(index=False, encoding='utf-8-sig')
+            csv_data = df_lay_goleada_casa.to_csv(index=False, sep='"', encoding='utf-8-sig')
             
             st.download_button(
                 label="Baixar LBB",
