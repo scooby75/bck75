@@ -255,7 +255,7 @@ def tips_page():
             st.subheader("Arquivo LBB - Lay Goleada Casa")
             
 
-            url_lay_goleada_casa = "https://github.com/scooby75/bdfootball/blob/main/lay_goleada_casa.csv?raw=true"
+            url_lay_goleada_casa = "https://raw.githubusercontent.com/scooby75/bdfootball/main/lay_goleada_casa.csv"
             df_lay_goleada_casa = pd.read_csv(url_lay_goleada_casa)
             
             st.dataframe(df_lay_goleada_casa.head(1), width=800)
