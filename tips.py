@@ -193,7 +193,7 @@ def tips_page():
                 label="Baixar CSV",
                 data=csv_link,
                 file_name=f"btts_yes_{data_atual}.csv",
-                key="btts_yes_df_csv"
+                key="btts_yes_df_csv_4"
             )
 
             # Link CSV LBB
@@ -212,7 +212,7 @@ def tips_page():
                     label="Baixar CSV",
                     data=csv_url,
                     file_name=f"btts_yes_{data_atual}.csv",
-                    key="btts_yes_df_csv"
+                    key="btts_yes_df_csv_5"
                 )
 
         with tab5:
