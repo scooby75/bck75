@@ -1988,14 +1988,11 @@ def bck_home_page():
         display_league_stats('profit_Lay_2x1', 'Lay 2x1')
         display_league_stats('profit_Lay_1x2', 'Lay 1x2')
 
-     with tab7:      
-
-        ######################### Resumo ############################
+    with tab7:      
         
         a1, a2 = st.columns(2)
 
         with a1:
-            
             # Função para gerar o gráfico
             def plot_resultados(df):
                 # Calcule a contagem de cada resultado
@@ -2039,7 +2036,6 @@ def bck_home_page():
             st.pyplot(plot_resultados(df))
 
         with a2:
-
             # Função para gerar o gráfico
             def plot_goals(df):
                 # Calcule se a soma de FT_Goals_H e FT_Goals_A é maior que 0
