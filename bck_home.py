@@ -2105,8 +2105,26 @@ def bck_home_page():
                 x_start = 0
                 for resultado, cor in cores.items():
                     x_end = x_start + percentagens[resultado]
-                    ax.hlines(y=1, xmin=x_start, xmax=x_end, color
+                    ax.hlines(y=1, xmin=x_start, xmax=x_end, color=cor, linewidth=16)
+                    ax.text((x_start + x_end) / 2, 1.1, f'{percentagens[resultado]:.1f}%', color=cor, ha='center', va='bottom', fontsize=10)
+                    ax.text((x_start + x_end) / 2, 1.3, rotulos_segmento[resultado], color=cor, ha='center', va='bottom', fontsize=10)
+                    x_start = x_end
 
+                # Configurações adicionais para melhorar a aparência
+                ax.set_xlim(0, 100)  # Ajuste o limite do eixo x
+                ax.set_ylim(-0.5, 1.5)    # Ajuste o limite do eixo y para exibir as linhas horizontais e os rótulos de segmento
+                ax.axis('off')        # Desligue os eixos e seus rótulos
+
+                return fig
+
+            # Carregue os dados do arquivo CSV em um DataFrame
+            df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
+
+            # Título do aplicativo Streamlit
+            st.subheader('WinRate Over/Under 15FT')
+
+            # Exiba o gráfico dentro do aplicativo Streamlit
+            st.pyplot(plot_goals(df))
 
 # Execute a função para criar a página
 bck_home_page()
