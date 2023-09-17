@@ -2100,20 +2100,20 @@ def bck_home_page():
             return fig
 
         # Load data from a CSV file into a DataFrame
-        df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
+        df = filtered_df
 
         # Streamlit app
-        with tab7:
-            st.subheader('WinRate Match Odd')
-            st.pyplot(plot_resultados(df))
-
-        with b1:
-            st.subheader('WinRate Over/Under 0.5FT')
-            st.pyplot(plot_goals_over_05(df))
-
-        with b2:
-            st.subheader('WinRate Over/Under 1.5FT')
-            st.pyplot(plot_goals_over_15(df))
+        
+        st.subheader('WinRate Match Odd')
+        plot_resultados(df)
+        
+        # Segunda linha com um gráfico
+        st.subheader('WinRate Over/Under 0.5FT')
+        plot_goals_over_05(df)
+        
+        # Terceira linha com um gráfico
+        st.subheader('WinRate Over/Under 1.5FT')
+        plot_goals_over_15(df)
 
 
 # Execute a função para criar a página
