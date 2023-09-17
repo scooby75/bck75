@@ -1991,9 +1991,7 @@ def bck_home_page():
      with tab7:      
 
         ######################### Resumo ############################
-        import streamlit as st
-        import pandas as pd
-        import matplotlib.pyplot as plt
+        
         a1, a2 = st.columns(2)
 
         with a1:
