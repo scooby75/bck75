@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 import base64
+import matplotlib.pyplot as plt
 
 from datetime import datetime, timedelta  
 from session_state import SessionState
@@ -1991,8 +1992,7 @@ def bck_home_page():
 
      ######################### Resumo ############################
 
-        import pandas as pd
-        import matplotlib.pyplot as plt
+        
 
         # Carregue os dados do arquivo CSV em um DataFrame
         df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
