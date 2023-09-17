@@ -1989,142 +1989,132 @@ def bck_home_page():
         display_league_stats('profit_Lay_1x2', 'Lay 1x2')
 
     with tab7:      
-        a1 = st.columns(1)
 
-        
-            # Função para gerar o gráfico
-            def plot_resultados(df):
-                # Calcule a contagem de cada resultado
-                contagem_resultados = df['Resultado_FT'].value_counts()
 
-                # Calcule o percentual de cada resultado em relação ao total
-                percentagens = (contagem_resultados / contagem_resultados.sum()) * 100
+        # Create columns for layout
+        tab7, b1, b2 = st.columns(3)
 
-                # Cores para cada resultado
-                cores = {'H': 'blue', 'A': 'green', 'D': 'red'}
+        # Define a function to generate the results plot
+        def plot_resultados(df):
+            # Calculate the count of each result
+            contagem_resultados = df['Resultado_FT'].value_counts()
 
-                # Rótulos para cada segmento
-                rotulos_segmento = {'H': 'Casa', 'A': 'Fora', 'D': 'Empate'}
+            # Calculate the percentage of each result relative to the total
+            percentagens = (contagem_resultados / contagem_resultados.sum()) * 100
 
-                # Crie uma figura vazia
-                fig, ax = plt.subplots(figsize=(10, 3))
+            # Colors for each result
+            cores = {'H': 'blue', 'A': 'green', 'D': 'red'}
 
-                # Itere sobre os resultados e desenhe as linhas, rótulos de porcentagem e rótulos de segmento correspondentes
-                x_start = 0
-                for resultado, cor in cores.items():
-                    x_end = x_start + percentagens[resultado]
-                    ax.hlines(y=1, xmin=x_start, xmax=x_end, color=cor, linewidth=16)
-                    ax.text((x_start + x_end) / 2, 1.1, f'{percentagens[resultado]:.1f}%', color=cor, ha='center', va='bottom', fontsize=10)
-                    ax.text((x_start + x_end) / 2, 1.3, rotulos_segmento[resultado], color=cor, ha='center', va='bottom', fontsize=10)
-                    x_start = x_end
+            # Labels for each segment
+            rotulos_segmento = {'H': 'Home', 'A': 'Away', 'D': 'Draw'}
 
-                # Configurações adicionais para melhorar a aparência
-                ax.set_xlim(0, 100)  # Ajuste o limite do eixo x
-                ax.set_ylim(-0.5, 1.5)    # Ajuste o limite do eixo y para exibir as linhas horizontais e os rótulos de segmento
-                ax.axis('off')        # Desligue os eixos e seus rótulos
+            # Create an empty figure
+            fig, ax = plt.subplots(figsize=(10, 3))
 
-                return fig
+            # Iterate over the results and draw the lines, percentage labels, and segment labels
+            x_start = 0
+            for resultado, cor in cores.items():
+                x_end = x_start + percentagens[resultado]
+                ax.hlines(y=1, xmin=x_start, xmax=x_end, color=cor, linewidth=16)
+                ax.text((x_start + x_end) / 2, 1.1, f'{percentagens[resultado]:.1f}%', color=cor, ha='center', va='bottom', fontsize=10)
+                ax.text((x_start + x_end) / 2, 1.3, rotulos_segmento[resultado], color=cor, ha='center', va='bottom', fontsize=10)
+                x_start = x_end
 
-            # Carregue os dados do arquivo CSV em um DataFrame
-            df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
+            # Additional settings for better appearance
+            ax.set_xlim(0, 100)  # Adjust the x-axis limit
+            ax.set_ylim(-0.5, 1.5)  # Adjust the y-axis limit to display horizontal lines and segment labels
+            ax.axis('off')  # Turn off the axes and their labels
 
-            # Título do aplicativo Streamlit
+            return fig
+
+        # Define a function to generate the Over 0.5 / Under 0.5 plot
+        def plot_goals_over_05(df):
+            # Calculate if the sum of FT_Goals_H and FT_Goals_A is greater than 0
+            df['Over_05'] = (df['FT_Goals_H'] + df['FT_Goals_A'] > 0).astype(int)
+
+            # Calculate the count of Over 05 and Under 05
+            contagem_resultados = df['Over_05'].value_counts()
+
+            # Calculate the percentage of each result relative to the total
+            percentagens = (contagem_resultados / contagem_resultados.sum()) * 100
+
+            # Colors for each result
+            cores = {1: 'blue', 0: 'red'}
+
+            # Labels for each segment
+            rotulos_segmento = {1: 'Over 0.5', 0: 'Under 0.5'}
+
+            # Create an empty figure
+            fig, ax = plt.subplots(figsize=(10, 3))
+
+            # Iterate over the results and draw the lines, percentage labels, and segment labels
+            x_start = 0
+            for resultado, cor in cores.items():
+                x_end = x_start + percentagens[resultado]
+                ax.hlines(y=1, xmin=x_start, xmax=x_end, color=cor, linewidth=16)
+                ax.text((x_start + x_end) / 2, 1.1, f'{percentagens[resultado]:.1f}%', color=cor, ha='center', va='bottom', fontsize=10)
+                ax.text((x_start + x_end) / 2, 1.3, rotulos_segmento[resultado], color=cor, ha='center', va='bottom', fontsize=10)
+                x_start = x_end
+
+            # Additional settings for better appearance
+            ax.set_xlim(0, 100)  # Adjust the x-axis limit
+            ax.set_ylim(-0.5, 1.5)  # Adjust the y-axis limit to display horizontal lines and segment labels
+            ax.axis('off')  # Turn off the axes and their labels
+
+            return fig
+
+        # Define a function to generate the Over 1.5 / Under 1.5 plot
+        def plot_goals_over_15(df):
+            # Calculate if the sum of FT_Goals_H and FT_Goals_A is greater than 1
+            df['Over_15'] = (df['FT_Goals_H'] + df['FT_Goals_A'] > 1).astype(int)
+
+            # Calculate the count of Over 15 and Under 15
+            contagem_resultados = df['Over_15'].value_counts()
+
+            # Calculate the percentage of each result relative to the total
+            percentagens = (contagem_resultados / contagem_resultados.sum()) * 100
+
+            # Colors for each result
+            cores = {1: 'blue', 0: 'red'}
+
+            # Labels for each segment
+            rotulos_segmento = {1: 'Over 1.5', 0: 'Under 1.5'}
+
+            # Create an empty figure
+            fig, ax = plt.subplots(figsize=(10, 3))
+
+            # Iterate over the results and draw the lines, percentage labels, and segment labels
+            x_start = 0
+            for resultado, cor in cores.items():
+                x_end = x_start + percentagens[resultado]
+                ax.hlines(y=1, xmin=x_start, xmax=x_end, color=cor, linewidth=16)
+                ax.text((x_start + x_end) / 2, 1.1, f'{percentagens[resultado]:.1f}%', color=cor, ha='center', va='bottom', fontsize=10)
+                ax.text((x_start + x_end) / 2, 1.3, rotulos_segmento[resultado], color=cor, ha='center', va='bottom', fontsize=10)
+                x_start = x_end
+
+            # Additional settings for better appearance
+            ax.set_xlim(0, 100)  # Adjust the x-axis limit
+            ax.set_ylim(-0.5, 1.5)  # Adjust the y-axis limit to display horizontal lines and segment labels
+            ax.axis('off')  # Turn off the axes and their labels
+
+            return fig
+
+        # Load data from a CSV file into a DataFrame
+        df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
+
+        # Streamlit app
+        with tab7:
             st.subheader('WinRate Match Odd')
-
-            # Exiba o gráfico dentro do aplicativo Streamlit
             st.pyplot(plot_resultados(df))
 
         with b1:
-            # Função para gerar o gráfico
-            def plot_goals_over_05(df):
-                # Calcule se a soma de FT_Goals_H e FT_Goals_A é maior que 0
-                df['Over_05'] = (df['FT_Goals_H'] + df['FT_Goals_A'] > 0).astype(int)
-
-                # Calcule a contagem de Over 05 e Under 05
-                contagem_resultados = df['Over_05'].value_counts()
-
-                # Calcule o percentual de cada resultado em relação ao total
-                percentagens = (contagem_resultados / contagem_resultados.sum()) * 100
-
-                # Cores para cada resultado
-                cores = {1: 'blue', 0: 'red'}
-
-                # Rótulos para cada segmento
-                rotulos_segmento = {1: 'Over 0.5', 0: 'Under 0.5'}
-
-                # Crie uma figura vazia
-                fig, ax = plt.subplots(figsize=(10, 3))
-
-                # Itere sobre os resultados e desenhe as linhas, rótulos de porcentagem e rótulos de segmento correspondentes
-                x_start = 0
-                for resultado, cor in cores.items():
-                    x_end = x_start + percentagens[resultado]
-                    ax.hlines(y=1, xmin=x_start, xmax=x_end, color=cor, linewidth=16)
-                    ax.text((x_start + x_end) / 2, 1.1, f'{percentagens[resultado]:.1f}%', color=cor, ha='center', va='bottom', fontsize=10)
-                    ax.text((x_start + x_end) / 2, 1.3, rotulos_segmento[resultado], color=cor, ha='center', va='bottom', fontsize=10)
-                    x_start = x_end
-
-                # Configurações adicionais para melhorar a aparência
-                ax.set_xlim(0, 100)  # Ajuste o limite do eixo x
-                ax.set_ylim(-0.5, 1.5)    # Ajuste o limite do eixo y para exibir as linhas horizontais e os rótulos de segmento
-                ax.axis('off')        # Desligue os eixos e seus rótulos
-
-                return fig
-
-            # Carregue os dados do arquivo CSV em um DataFrame
-            df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
-
-            # Título do aplicativo Streamlit
-            st.subheader('WinRate Over/Under 05FT')
-
-            # Exiba o gráfico dentro do aplicativo Streamlit
-            st.pyplot(plot_goals(df))
+            st.subheader('WinRate Over/Under 0.5FT')
+            st.pyplot(plot_goals_over_05(df))
 
         with b2:
-            # Função para gerar o gráfico
-            def plot_goals_over_15(df):
-                # Calcule se a soma de FT_Goals_H e FT_Goals_A é maior que 0
-                df['Over_15'] = (df['FT_Goals_H'] + df['FT_Goals_A'] > 1).astype(int)
+            st.subheader('WinRate Over/Under 1.5FT')
+            st.pyplot(plot_goals_over_15(df))
 
-                # Calcule a contagem de Over 15 e Under 15
-                contagem_resultados = df['Over_15'].value_counts()
-
-                # Calcule o percentual de cada resultado em relação ao total
-                percentagens = (contagem_resultados / contagem_resultados.sum()) * 100
-
-                # Cores para cada resultado
-                cores = {1: 'blue', 0: 'red'}
-
-                # Rótulos para cada segmento
-                rotulos_segmento = {1: 'Over 1.5', 0: 'Under 1.5'}
-
-                # Crie uma figura vazia
-                fig, ax = plt.subplots(figsize=(10, 3))
-
-                # Itere sobre os resultados e desenhe as linhas, rótulos de porcentagem e rótulos de segmento correspondentes
-                x_start = 0
-                for resultado, cor in cores.items():
-                    x_end = x_start + percentagens[resultado]
-                    ax.hlines(y=1, xmin=x_start, xmax=x_end, color=cor, linewidth=16)
-                    ax.text((x_start + x_end) / 2, 1.1, f'{percentagens[resultado]:.1f}%', color=cor, ha='center', va='bottom', fontsize=10)
-                    ax.text((x_start + x_end) / 2, 1.3, rotulos_segmento[resultado], color=cor, ha='center', va='bottom', fontsize=10)
-                    x_start = x_end
-
-                # Configurações adicionais para melhorar a aparência
-                ax.set_xlim(0, 100)  # Ajuste o limite do eixo x
-                ax.set_ylim(-0.5, 1.5)    # Ajuste o limite do eixo y para exibir as linhas horizontais e os rótulos de segmento
-                ax.axis('off')        # Desligue os eixos e seus rótulos
-
-                return fig
-
-            # Carregue os dados do arquivo CSV em um DataFrame
-            df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
-
-            # Título do aplicativo Streamlit
-            st.subheader('WinRate Over/Under 15FT')
-
-            # Exiba o gráfico dentro do aplicativo Streamlit
-            st.pyplot(plot_goals(df))
 
 # Execute a função para criar a página
 bck_home_page()
