@@ -9,4 +9,11 @@ altair
 requests
 secure
 streamlit==1.26.0
+matplotlib
+
+
+
+
+
+
 
