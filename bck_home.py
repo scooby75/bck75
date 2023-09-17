@@ -1988,16 +1988,15 @@ def bck_home_page():
         display_league_stats('profit_Lay_2x1', 'Lay 2x1')
         display_league_stats('profit_Lay_1x2', 'Lay 1x2')
 
-    with tab6:      
+     with tab7:      
 
-     ######################### Resumo ############################
+        ######################### Resumo ############################
         import streamlit as st
         import pandas as pd
         import matplotlib.pyplot as plt
         a1, a2 = st.columns(2)
 
         with a1:
-
             
             # Função para gerar o gráfico
             def plot_resultados(df):
@@ -2043,7 +2042,7 @@ def bck_home_page():
 
         with a2:
 
-        # Função para gerar o gráfico
+            # Função para gerar o gráfico
             def plot_goals(df):
                 # Calcule se a soma de FT_Goals_H e FT_Goals_A é maior que 0
                 df['Over_05'] = (df['FT_Goals_H'] + df['FT_Goals_A'] > 0).astype(int)
@@ -2087,6 +2086,7 @@ def bck_home_page():
 
             # Exiba o gráfico dentro do aplicativo Streamlit
             st.pyplot(plot_goals(df))
+
 
 # Execute a função para criar a página
 bck_home_page()
