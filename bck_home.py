@@ -1991,7 +1991,7 @@ def bck_home_page():
     with tab7:      
         a1 = st.columns(1)
 
-        with a1:
+        
             # Função para gerar o gráfico
             def plot_resultados(df):
                 # Calcule a contagem de cada resultado
@@ -2036,7 +2036,7 @@ def bck_home_page():
 
         with b1:
             # Função para gerar o gráfico
-            def plot_goals(df):
+            def plot_goals_over_05(df):
                 # Calcule se a soma de FT_Goals_H e FT_Goals_A é maior que 0
                 df['Over_05'] = (df['FT_Goals_H'] + df['FT_Goals_A'] > 0).astype(int)
 
@@ -2082,7 +2082,7 @@ def bck_home_page():
 
         with b2:
             # Função para gerar o gráfico
-            def plot_goals(df):
+            def plot_goals_over_15(df):
                 # Calcule se a soma de FT_Goals_H e FT_Goals_A é maior que 0
                 df['Over_15'] = (df['FT_Goals_H'] + df['FT_Goals_A'] > 1).astype(int)
 
