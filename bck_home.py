@@ -2100,7 +2100,7 @@ def bck_home_page():
             return fig
 
         # Load data from a CSV file into a DataFrame
-        df = filtered_df
+        df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
 
         # Streamlit app
         
