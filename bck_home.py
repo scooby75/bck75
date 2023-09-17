@@ -1989,8 +1989,7 @@ def bck_home_page():
         display_league_stats('profit_Lay_1x2', 'Lay 1x2')
 
     with tab7:      
-        
-        a1, a2 = st.columns(2)
+        a1 = st.columns(1)
 
         with a1:
             # Função para gerar o gráfico
@@ -2030,12 +2029,12 @@ def bck_home_page():
             df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
 
             # Título do aplicativo Streamlit
-            st.title('Gráfico de Resultados')
+            st.subheader('WinRate Match Odd')
 
             # Exiba o gráfico dentro do aplicativo Streamlit
             st.pyplot(plot_resultados(df))
 
-        with a2:
+        with b1:
             # Função para gerar o gráfico
             def plot_goals(df):
                 # Calcule se a soma de FT_Goals_H e FT_Goals_A é maior que 0
@@ -2076,10 +2075,37 @@ def bck_home_page():
             df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
 
             # Título do aplicativo Streamlit
-            st.title('Gráfico de Resultados de Over/Under 0.5')
+            st.subheader('WinRate Over/Under 05FT')
 
             # Exiba o gráfico dentro do aplicativo Streamlit
             st.pyplot(plot_goals(df))
+
+        with b2:
+            # Função para gerar o gráfico
+            def plot_goals(df):
+                # Calcule se a soma de FT_Goals_H e FT_Goals_A é maior que 0
+                df['Over_15'] = (df['FT_Goals_H'] + df['FT_Goals_A'] > 1).astype(int)
+
+                # Calcule a contagem de Over 15 e Under 15
+                contagem_resultados = df['Over_15'].value_counts()
+
+                # Calcule o percentual de cada resultado em relação ao total
+                percentagens = (contagem_resultados / contagem_resultados.sum()) * 100
+
+                # Cores para cada resultado
+                cores = {1: 'blue', 0: 'red'}
+
+                # Rótulos para cada segmento
+                rotulos_segmento = {1: 'Over 1.5', 0: 'Under 1.5'}
+
+                # Crie uma figura vazia
+                fig, ax = plt.subplots(figsize=(10, 3))
+
+                # Itere sobre os resultados e desenhe as linhas, rótulos de porcentagem e rótulos de segmento correspondentes
+                x_start = 0
+                for resultado, cor in cores.items():
+                    x_end = x_start + percentagens[resultado]
+                    ax.hlines(y=1, xmin=x_start, xmax=x_end, color
 
 
 # Execute a função para criar a página
