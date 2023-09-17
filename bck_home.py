@@ -1992,41 +1992,99 @@ def bck_home_page():
 
      ######################### Resumo ############################
 
-        
+        a1, a2 = st.columns(2)
 
-        # Carregue os dados do arquivo CSV em um DataFrame
-        df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
+        with a1:
 
-        # Calcule a contagem de cada resultado
-        contagem_resultados = df['Resultado_FT'].value_counts()
+            
+            # Função para gerar o gráfico
+            def plot_resultados(df):
+                # Calcule a contagem de cada resultado
+                contagem_resultados = df['Resultado_FT'].value_counts()
 
-        # Calcule o percentual de cada resultado em relação ao total
-        percentagens = (contagem_resultados / contagem_resultados.sum()) * 100
+                # Calcule o percentual de cada resultado em relação ao total
+                percentagens = (contagem_resultados / contagem_resultados.sum()) * 100
 
-        # Cores para cada resultado
-        cores = {'H': 'blue', 'A': 'green', 'D': 'red'}
+                # Cores para cada resultado
+                cores = {'H': 'blue', 'A': 'green', 'D': 'red'}
 
-        # Rótulos para cada segmento
-        rotulos_segmento = {'H': 'Casa', 'A': 'Fora', 'D': 'Empate'}
+                # Rótulos para cada segmento
+                rotulos_segmento = {'H': 'Casa', 'A': 'Fora', 'D': 'Empate'}
 
-        # Crie uma figura vazia
-        fig, ax = plt.subplots(figsize=(10, 3))
+                # Crie uma figura vazia
+                fig, ax = plt.subplots(figsize=(10, 3))
 
-        # Itere sobre os resultados e desenhe as linhas, rótulos de porcentagem e rótulos de segmento correspondentes
-        x_start = 0
-        for resultado, cor in cores.items():
-            x_end = x_start + percentagens[resultado]
-            ax.hlines(y=1, xmin=x_start, xmax=x_end, color=cor, linewidth=16)
-            ax.text((x_start + x_end) / 2, 1.1, f'{percentagens[resultado]:.1f}%', color=cor, ha='center', va='bottom', fontsize=10)
-            ax.text((x_start + x_end) / 2, 1.3, rotulos_segmento[resultado], color=cor, ha='center', va='bottom', fontsize=10)
-            x_start = x_end
+                # Itere sobre os resultados e desenhe as linhas, rótulos de porcentagem e rótulos de segmento correspondentes
+                x_start = 0
+                for resultado, cor in cores.items():
+                    x_end = x_start + percentagens[resultado]
+                    ax.hlines(y=1, xmin=x_start, xmax=x_end, color=cor, linewidth=16)
+                    ax.text((x_start + x_end) / 2, 1.1, f'{percentagens[resultado]:.1f}%', color=cor, ha='center', va='bottom', fontsize=10)
+                    ax.text((x_start + x_end) / 2, 1.3, rotulos_segmento[resultado], color=cor, ha='center', va='bottom', fontsize=10)
+                    x_start = x_end
 
-        # Configurações adicionais para melhorar a aparência
-        ax.set_xlim(0, 100)  # Ajuste o limite do eixo x
-        ax.set_ylim(-0.5, 1.5)    # Ajuste o limite do eixo y para exibir as linhas horizontais e os rótulos de segmento
-        ax.axis('off')        # Desligue os eixos e seus rótulos
-        plt.show()
+                # Configurações adicionais para melhorar a aparência
+                ax.set_xlim(0, 100)  # Ajuste o limite do eixo x
+                ax.set_ylim(-0.5, 1.5)    # Ajuste o limite do eixo y para exibir as linhas horizontais e os rótulos de segmento
+                ax.axis('off')        # Desligue os eixos e seus rótulos
 
+                return fig
+
+            # Carregue os dados do arquivo CSV em um DataFrame
+            df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
+
+            # Título do aplicativo Streamlit
+            st.title('Gráfico de Resultados')
+
+            # Exiba o gráfico dentro do aplicativo Streamlit
+            st.pyplot(plot_resultados(df))
+
+        with a2:
+
+        # Função para gerar o gráfico
+            def plot_goals(df):
+                # Calcule se a soma de FT_Goals_H e FT_Goals_A é maior que 0
+                df['Over_05'] = (df['FT_Goals_H'] + df['FT_Goals_A'] > 0).astype(int)
+
+                # Calcule a contagem de Over 05 e Under 05
+                contagem_resultados = df['Over_05'].value_counts()
+
+                # Calcule o percentual de cada resultado em relação ao total
+                percentagens = (contagem_resultados / contagem_resultados.sum()) * 100
+
+                # Cores para cada resultado
+                cores = {1: 'blue', 0: 'red'}
+
+                # Rótulos para cada segmento
+                rotulos_segmento = {1: 'Over 0.5', 0: 'Under 0.5'}
+
+                # Crie uma figura vazia
+                fig, ax = plt.subplots(figsize=(10, 3))
+
+                # Itere sobre os resultados e desenhe as linhas, rótulos de porcentagem e rótulos de segmento correspondentes
+                x_start = 0
+                for resultado, cor in cores.items():
+                    x_end = x_start + percentagens[resultado]
+                    ax.hlines(y=1, xmin=x_start, xmax=x_end, color=cor, linewidth=16)
+                    ax.text((x_start + x_end) / 2, 1.1, f'{percentagens[resultado]:.1f}%', color=cor, ha='center', va='bottom', fontsize=10)
+                    ax.text((x_start + x_end) / 2, 1.3, rotulos_segmento[resultado], color=cor, ha='center', va='bottom', fontsize=10)
+                    x_start = x_end
+
+                # Configurações adicionais para melhorar a aparência
+                ax.set_xlim(0, 100)  # Ajuste o limite do eixo x
+                ax.set_ylim(-0.5, 1.5)    # Ajuste o limite do eixo y para exibir as linhas horizontais e os rótulos de segmento
+                ax.axis('off')        # Desligue os eixos e seus rótulos
+
+                return fig
+
+            # Carregue os dados do arquivo CSV em um DataFrame
+            df = pd.read_csv('https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv')
+
+            # Título do aplicativo Streamlit
+            st.title('Gráfico de Resultados de Over/Under 0.5')
+
+            # Exiba o gráfico dentro do aplicativo Streamlit
+            st.pyplot(plot_goals(df))
 
 # Execute a função para criar a página
 bck_home_page()
