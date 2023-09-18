@@ -25,6 +25,8 @@ valid_users = {
     "Mayconjp19": {"password": "210319", "profile": 3},
     "Edward": {"password": "Edward23", "profile": 3},
     "suporteacampo": {"password": "analise2023", "profile": 3}, 
+    "bhctorres1982": {"password": "Rafael2015*", "profile": 3},
+    "Felipe Gonçalves": {"password": "felipesantos", "profile": 3},
     "Borguezam": {"password": "91579877Luiz.", "profile": 1},
     "thomasgabriel": {"password": "thomas123", "profile": 1} 
 }
