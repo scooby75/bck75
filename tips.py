@@ -275,20 +275,21 @@ def tips_page():
             odd_justa = round(100 / winrate, 2)
             
             # Exiba os resultados no Streamlit em três colunas separadas com centralização
-            st.write("Resultados:")
+            st.subheader("Resultado HA -0,25")
+            st.text("A partir de 16/09/2023")
             
             col1, col2, col3 = st.columns(3)
             
             with col1:
-                st.markdown('<div style="text-align: center;">C1 (Winrate)</div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(winrate_formatted), unsafe_allow_html=True)
             
             with col2:
-                st.markdown('<div style="text-align: center;">C2 (Profit)</div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;"> Profit </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(profit), unsafe_allow_html=True)
             
             with col3:
-                st.markdown('<div style="text-align: center;">C3 (Odd Justa)</div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
 
 # Chama a função tips_page() no início do código para criar a página
