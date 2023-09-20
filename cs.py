@@ -63,9 +63,9 @@ def cs_page():
             'Liga': row['Liga'],
             'Home': row['Home'],
             'Away': row['Away'],
-            'FT_Odds_H': row['FT_Odd_H'],
-            'FT_Odds_D': row['FT_Odd_D'],
-            'FT_Odds_A': row['FT_Odd_A']
+            'FT_Odd_H': row['FT_Odd_H'],
+            'FT_Odd_D': row['FT_Odd_D'],
+            'FT_Odd_A': row['FT_Odd_A']
         }
 
         for i, placar in enumerate(placares):
