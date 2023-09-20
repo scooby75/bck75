@@ -53,9 +53,9 @@ def tips_page():
         df = load_base()
 
         # ##### PÁGINA BCK HOME ######
-        tab0, tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "BTTS Sim", "Scalping", "Resultados"])
+        tab0, tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Resultados", "HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "BTTS Sim", "Scalping"])
 
-        with tab0:
+        with tab1:
             # Use df aqui para a aba "HA"
             st.subheader("HA -0.25")
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
@@ -81,7 +81,7 @@ def tips_page():
                 key="handicap_asiatico_csv"
             )
 
-        with tab1:
+        with tab2:
             # Use df aqui para a aba "Lay Goleada Casa"
             st.subheader("Lay Goleada Casa")
             st.text("Apostar em Lay Goleada Casa, Odd máxima 30")
@@ -120,7 +120,7 @@ def tips_page():
                 key="lay_goleada_visitante_csv"
             )
 
-        with tab2:
+        with tab3:
             # Use df aqui para a aba "Lay Zebra HT"
             st.subheader("Lay Zebra HT")
             st.text("Apostar em Lay visitante, Odd máxima 6")
@@ -146,7 +146,7 @@ def tips_page():
                 key="lay_zebra_ht_csv"
             )
 
-        with tab3:
+        with tab4:
             # Use df aqui para a aba "Lay Zebra FT"
             st.subheader("Lay Zebra FT")
             st.text("Apostar em Lay visitante, Odd máxima 6")
@@ -172,7 +172,7 @@ def tips_page():
                 key="lay_zebra_ft_csv"
             )
 
-        with tab4:
+        with tab5:
             # Use df aqui para a aba "BTTS Sim"
             st.subheader("BTTS Sim")
             st.text("Apostar em Ambas Marcam Sim, Odd minima 1.6")
@@ -199,7 +199,7 @@ def tips_page():
                 key="btts_yes_csv"
             )
 
-        with tab5:
+        with tab6:
             # Definir URLs para os arquivos CSV
             url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
             url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
@@ -250,7 +250,7 @@ def tips_page():
             except Exception as e:
                 st.error("Ocorreu um erro: " + str(e))
 
-        with tab6:
+        with tab0:
  
 
             # Baixe o arquivo CSV do GitHub usando a URL fornecida
@@ -272,7 +272,7 @@ def tips_page():
             df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
             
             # Cálculo do Lucro/Prejuízo
-            profit = df['Profit'].sum()
+            profit = round(df['Profit'].sum(), 2)
             
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
@@ -316,7 +316,7 @@ def tips_page():
             df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
             
             # Cálculo do Lucro/Prejuízo
-            profit = df['Profit'].sum()
+            profit = round(df['Profit'].sum(), 2)
             
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
@@ -325,17 +325,17 @@ def tips_page():
             st.subheader("Lay Goleada Casa")
             st.text("A partir de 16/09/2023")
             
-            col3, col4, col5 = st.columns(3)
+            col4, col5, col6 = st.columns(3)
             
-            with col3:
+            with col4:
                 st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(winrate_formatted), unsafe_allow_html=True)
             
-            with col4:
+            with col5:
                 st.markdown('<div style="text-align: center;"> Profit </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(profit), unsafe_allow_html=True)
             
-            with col5:
+            with col6:
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
 
@@ -361,7 +361,7 @@ def tips_page():
             df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
             
             # Cálculo do Lucro/Prejuízo
-            profit = df['Profit'].sum()
+            profit = round(df['Profit'].sum(), 2)
             
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
@@ -370,17 +370,17 @@ def tips_page():
             st.subheader("Lay Goleada Visitante")
             st.text("A partir de 16/09/2023")
             
-            col6, col7, col8 = st.columns(3)
+            col7, col8, col9 = st.columns(3)
             
-            with col6:
+            with col7:
                 st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(winrate_formatted), unsafe_allow_html=True)
             
-            with col7:
+            with col8:
                 st.markdown('<div style="text-align: center;"> Profit </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(profit), unsafe_allow_html=True)
             
-            with col8:
+            with col9:
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
 
