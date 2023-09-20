@@ -251,13 +251,14 @@ def tips_page():
                 st.error("Ocorreu um erro: " + str(e))
 
         with tab6:
- 
 
-            # URL do arquivo Excel
-            url = "https://github.com/scooby75/bdfootball/raw/main/tips_ha_geral.xltx"
+            # Baixe o arquivo CSV do GitHub usando a URL fornecida
+            url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/tips_ha_geral.csv"
+            response = requests.get(url)
+            csv_data = StringIO(response.text)
 
-            # Use a função read_excel do pandas para ler o arquivo Excel da URL
-            df = pd.read_excel(url)
+            # Carregue os dados do CSV em um DataFrame do Pandas
+            df = pd.read_csv(csv_data)
             
             # Cálculo do Winrate com 2 casas decimais e formato de porcentagem
             winrate = (df['Winrate'] * 100).mean()  # Média dos Winrates em formato de porcentagem
