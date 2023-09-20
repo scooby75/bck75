@@ -384,6 +384,51 @@ def tips_page():
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
 
+############### Lay Visitante HT ##########################
+
+            # Baixe o arquivo CSV do GitHub usando a URL fornecida
+            url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/tips_lay_zebra_ht_geral.csv"
+            response = requests.get(url)
+            csv_data = StringIO(response.text)
+
+            # Carregue os dados do CSV em um DataFrame do Pandas
+            df = pd.read_csv(csv_data)
+
+            # Conversão da coluna "Profit" para um tipo numérico (float)
+            df['Profit'] = df['Profit'].str.replace(',', '.').astype(float)
+            
+            # Cálculo do Winrate com 2 casas decimais e formato de porcentagem
+            winrate = (df['Winrate'] * 100).mean()  # Média dos Winrates em formato de porcentagem
+            winrate_formatted = "{:.2f}%".format(winrate)
+            
+            # Conversão da coluna "Profit" para um tipo numérico (float)
+            df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
+            
+            # Cálculo do Lucro/Prejuízo
+            profit = round(df['Profit'].sum(), 2)
+            
+            # Cálculo da Odd Justa com 2 casas decimais
+            odd_justa = round(100 / winrate, 2)
+            
+            # Exiba os resultados no Streamlit em três colunas separadas com centralização
+            st.subheader("Lay Visitante HT")
+            st.text("A partir de 16/09/2023")
+            
+            col10, col11, col12 = st.columns(3)
+            
+            with col10:
+                st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{}</div>'.format(winrate_formatted), unsafe_allow_html=True)
+            
+            with col11:
+                st.markdown('<div style="text-align: center;"> Profit </div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{}</div>'.format(profit), unsafe_allow_html=True)
+            
+            with col12:
+                st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
+
+
 
 # Chama a função tips_page() no início do código para criar a página
 tips_page()
