@@ -262,7 +262,7 @@ def tips_page():
             df = pd.read_csv(csv_data)
             
             # Cálculo do Winrate com 2 casas decimais e formato de porcentagem
-            winrate = (df['Winrate'].sum() / df.shape[0])  # Soma dos Winrates dividida pelo número de linhas
+            winrate = (df['Winrate'] * 100).mean()  # Média dos Winrates em formato de porcentagem
             winrate_formatted = "{:.2f}%".format(winrate)
             
             # Conversão da coluna "Profit" para um tipo numérico (float)
@@ -289,7 +289,7 @@ def tips_page():
             
             with col3:
                 st.markdown('<div style="text-align: center;">C3 (Odd Justa)</div>', unsafe_allow_html=True)
-                st.markdown('<div style="text-align: center;">{}</div>'.format(odd_justa), unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
 
 # Chama a função tips_page() no início do código para criar a página
 tips_page()
