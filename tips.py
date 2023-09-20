@@ -274,19 +274,19 @@ def tips_page():
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
             
-            # Exiba os resultados no Streamlit em três colunas separadas
+            # Exiba os resultados no Streamlit em três colunas separadas com centralização
             st.write("Resultados:")
             with st.beta_container():
-                st.write("C1 (Winrate)")
-                st.write(winrate_formatted)
+                st.markdown('<div style="text-align: center;">C1 (Winrate)</div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{}</div>'.format(winrate_formatted), unsafe_allow_html=True)
             
             with st.beta_container():
-                st.write("C2 (Profit)")
-                st.write(profit)
+                st.markdown('<div style="text-align: center;">C2 (Profit)</div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{}</div>'.format(profit), unsafe_allow_html=True)
             
             with st.beta_container():
-                st.write("C3 (Odd Justa)")
-                st.write(odd_justa)
+                st.markdown('<div style="text-align: center;">C3 (Odd Justa)</div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{}</div>'.format(odd_justa), unsafe_allow_html=True)
 
 # Chama a função tips_page() no início do código para criar a página
 tips_page()
