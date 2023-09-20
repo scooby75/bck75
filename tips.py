@@ -260,29 +260,25 @@ def tips_page():
 
             # Carregue os dados do CSV em um DataFrame do Pandas
             df = pd.read_csv(csv_data)
-
+            
             # Cálculo do Winrate
             winrate = (df['Winrate'].sum() / df.shape[0]) * 100  # Soma dos Winrates dividida pelo número de linhas
-
+            
             # Conversão da coluna "Profit" para um tipo numérico (float)
             df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
-
+            
             # Cálculo do Lucro/Prejuízo
             profit = df['Profit'].sum()
-
+            
             # Cálculo da Odd Justa
             odd_justa = 100 / winrate
-
+            
             # Criar um DataFrame para exibir no Streamlit
-            result_df = pd.DataFrame({'c1': [winrate], 'c2': [profit], 'c3': [odd_justa]})
-
-            # Exiba os resultados no Streamlit com formatação CSS para centralizar o texto
+            result_df = pd.DataFrame({'C1 (Winrate)': [winrate], 'C2 (Profit)': [profit], 'C3 (Odd Justa)': [odd_justa]})
+            
+            # Exiba os resultados no Streamlit
             st.write("Resultados:")
-            for col in result_df.columns:
-                st.write(f'<div style="text-align: center;">{col}</div>', unsafe_allow_html=True)
-                st.write(f'<div style="text-align: center;">{result_df[col].iloc[0]}</div>', unsafe_allow_html=True)
-
-
+            st.write(result_df)
 
 # Chama a função tips_page() no início do código para criar a página
 tips_page()
