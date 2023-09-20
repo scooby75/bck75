@@ -1,99 +1,106 @@
-# cs.py
-import pandas as pd
-import numpy as np
 import streamlit as st
-from datetime import datetime, timedelta
-
-from session_state import SessionState
-
-# Função para calcular a probabilidade de um certo número de gols usando a distribuição de Poisson
-def poisson_prob(media, k):
-    return (np.exp(-media) * media ** k) / np.math.factorial(k)
+import pandas as pd
+from scipy.stats import poisson
 
 def cs_page():
-    # Inicializa o estado da sessão
-    session_state = SessionState()
+    # URL do arquivo CSV com os dados dos jogos
+    url = "https://github.com/scooby75/bdfootball/blob/main/jogos_do_dia.csv?raw=true"
 
-    # Defina o valor de user_profile após a criação da instância
-    session_state.user_profile = 2  # Ou qualquer outro valor desejado
+    # Carregar os dados do arquivo CSV em um DataFrame
+    df = pd.read_csv(url)
 
-    # Verifica se o usuário tem permissão para acessar a página
-    if session_state.user_profile < 2:
-        st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
-        return
+    # Filtrar jogos com round maior ou igual a 10
+    df = df[df['Rodada'] >= 10]
 
+    # Filtrar jogos com home menor ou igual a 1.90
+    df = df[(df['FT_Odd_H'] >= 1.40) & (df['FT_Odd_H'] <= 2.4)]
+
+    # Filtrar jogos com home menor ou igual a 1.90
+    df = df[(df['FT_Odd_Under25'] <= 2)]
+
+    # Placares para os quais você deseja calcular a probabilidade
+    placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x2', '3x3', '4x0', '4x1', '4x2', '4x3', '4x4', '5x0', '5x1', '5x2', '5x3']
+
+    # Lista para armazenar as linhas dos resultados
+    linhas_resultados = []
+
+    # Iterar sobre os jogos e calcular as probabilidades para cada placar
+    for index, row in df.iterrows():
+        # Calcular as médias de gols esperados para cada time e o total esperado
+        lambda_home = row['XG_Home']
+        lambda_away = row['XG_Away']
+        lambda_total = row['Average Goals']
+
+        # Calcular as probabilidades usando a distribuição de Poisson
+        probabilidades = []
+        total_prob = 0  # Total de probabilidade para normalização
+
+        for placar in placares:
+            placar_split = placar.split('x')
+            gols_home = int(placar_split[0])
+            gols_away = int(placar_split[1])
+
+            prob_home = poisson.pmf(gols_home, lambda_home)
+            prob_away = poisson.pmf(gols_away, lambda_away)
+            prob_total = poisson.pmf(gols_home + gols_away, lambda_total)
+
+            # Aplicar o ajuste de zero inflado para placares "estranhos"
+            if (lambda_home < gols_home) or (lambda_away < gols_away):
+                prob_placar = prob_home * prob_away * prob_total * 1.50
+            else:
+                prob_placar = prob_home * prob_away * prob_total
+
+            total_prob += prob_placar
+            probabilidades.append(prob_placar)
+
+        # Normalizar as probabilidades para que a soma seja 100%
+        probabilidades = [prob / total_prob for prob in probabilidades]
+
+        # Criar uma linha para o resultado deste jogo
+        linha_resultado = {
+            'Date': row['Date'],
+            'Hora': row['Hora'],
+            'Liga': row['Liga'],
+            'Home': row['Home'],
+            'Away': row['Away'],
+            'FT_Odds_H': row['FT_Odd_H'],
+            'FT_Odds_D': row['FT_Odd_D'],
+            'FT_Odds_A': row['FT_Odd_A']
+        }
+
+        for i, placar in enumerate(placares):
+            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
+
+        linhas_resultados.append(linha_resultado)
+
+    # Criar um novo DataFrame com os resultados
+    resultado_df = pd.DataFrame(linhas_resultados)
+
+    # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
-    st.text("A base de dados é atualizada diariamente e as odds de referência são da Bet365")
-    
-    # Carregar os dados CSV a partir das URLs para DataFrames
-    url_bdgeral = "https://github.com/scooby75/bdfootball/blob/main/BD_Geral.csv?raw=true"
-    url_jogosdodia = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
 
-    bdgeral = pd.read_csv(url_bdgeral)
-    jogosdodia = pd.read_csv(url_jogosdodia)
+    # Loop para exibir os detalhes e a tabela
+    for index, row in resultado_df.iterrows():
+        details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
+        details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
+        st.write(details1)
+        st.write(details2)
 
-    # Excluir jogos com palavras-chave "U19", "U20", "U21" e "U23"
-    keywords_to_exclude = ["U19", "U20", "U21", "U23"]
-    bdgeral = bdgeral[~bdgeral['Home'].str.contains('|'.join(keywords_to_exclude)) & ~bdgeral['Away'].str.contains('|'.join(keywords_to_exclude))]
+        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
+        prob_game_df = resultado_df[placares].iloc[[index]]
 
-    # Calcular a média de gols marcados em casa (Home)
-    df_media_gols_casa = bdgeral.groupby('Home').agg({'FT_Goals_H': 'mean'}).reset_index()
-    df_media_gols_casa.rename(columns={'FT_Goals_H': 'Media_Gols_Casa'}, inplace=True)
+        # Selecionar os 6 placares mais prováveis
+        top_placares = prob_game_df.T.nlargest(8, index)[index].index
 
-    # Calcular a média de gols marcados fora de casa (Away)
-    df_media_gols_fora = bdgeral.groupby('Away').agg({'FT_Goals_A': 'mean'}).reset_index()
-    df_media_gols_fora.rename(columns={'FT_Goals_A': 'Media_Gols_For'}, inplace=True)
+        # Filtrar o DataFrame temporário para incluir apenas os 6 placares mais prováveis
+        prob_game_df = prob_game_df[top_placares]
 
-    # Combinar os jogos filtrados com os dados de média de gols calculados
-    jogosdodia = jogosdodia.merge(df_media_gols_casa, left_on='Home', right_on='Home')
-    jogosdodia = jogosdodia.merge(df_media_gols_fora, left_on='Away', right_on='Away')
+        # Formatar e exibir a tabela
+        formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
+        st.dataframe(formatted_df)
 
-    # Filtrar jogos com FT_Odd_H e FT_Odd_A >= 1.80 e Odd_Over25 >= 2.10
-    jogos_filtrados_odds = jogosdodia[
-        (jogosdodia['FT_Odd_H'] >= 1.80) &
-        (jogosdodia['FT_Odd_A'] >= 1.80) &
-        (jogosdodia['FT_Odd_Over25'] >= 2.10) 
-    ]
-
-    # Exibir os resultados para cada jogo usando o Streamlit
-    for index, row in jogos_filtrados_odds.iterrows():
-        time_casa = row['Home']
-        time_visitante = row['Away']
-        data_jogo = row['Date']
-        hora_jogo = row['Hora']
-        media_gols_casa = row['Media_Gols_Casa']
-        media_gols_fora = row['Media_Gols_For']
-        
-        # Especifique o formato das datas como DD/MM/AAAA
-        formato_data = "%d/%m/%Y"     
-        
-
-        placares_previstos = []
-        for gols_casa in range(7):
-            for gols_fora in range(7):
-                prob_gols_casa = poisson_prob(media_gols_casa, gols_casa)
-                prob_gols_fora = poisson_prob(media_gols_fora, gols_fora)
-                prob_total = prob_gols_casa * prob_gols_fora
-                placares_previstos.append((gols_casa, gols_fora, prob_total))
-
-        # Ordenar os placares previstos por probabilidade em ordem decrescente
-        placares_previstos.sort(key=lambda x: x[2], reverse=True)
-
-        # Exibir os resultados para cada jogo usando o Streamlit
-        st.write(f"**{time_casa} vs {time_visitante}**")
-        
-        # Criar uma lista para os resultados do jogo
-        resultados_jogo = []
-        for i in range(6):
-            prob_porcentagem = f"{placares_previstos[i][2] * 100:.2f}%"
-            resultados_jogo.append({'Placar': f"{placares_previstos[i][0]} - {placares_previstos[i][1]}",
-                                     'Probabilidade': prob_porcentagem})
-        
-        # Organizar os resultados em ordem decrescente de probabilidade
-        resultados_jogo = sorted(resultados_jogo, key=lambda x: float(x['Probabilidade'][:-1]), reverse=True)
-        
-        # Exibir os resultados usando st.dataframe
-        st.write(pd.DataFrame(resultados_jogo))
-
-# Chamar a função para executar o app
+# Chamar a função para executar o aplicativo
 cs_page()
+
+
+
