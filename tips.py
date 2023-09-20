@@ -8,6 +8,8 @@ import requests
 import csv
 import io
 
+
+
 from datetime import datetime
 from my_token import github_token
 
@@ -51,7 +53,7 @@ def tips_page():
         df = load_base()
 
         # ##### PÁGINA BCK HOME ######
-        tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "BTTS Sim", "Scalping"])
+        tab0, tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["HA", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "BTTS Sim", "Scalping", "Resultados"])
 
         with tab0:
             # Use df aqui para a aba "HA"
@@ -247,6 +249,39 @@ def tips_page():
 
             except Exception as e:
                 st.error("Ocorreu um erro: " + str(e))
+
+        with tab6:
+ 
+
+            # Baixe o arquivo CSV do GitHub usando a URL fornecida
+            url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/tips_ha_geral.csv"
+            response = requests.get(url)
+            csv_data = StringIO(response.text)
+
+            # Carregue os dados do CSV em um DataFrame do Pandas
+            df = pd.read_csv(csv_data)
+
+            # Cálculo do Winrate
+            winrate = (df['Winrate'].sum() / df.shape[0]) * 100  # Soma dos Winrates dividida pelo número de linhas
+
+            # Conversão da coluna "Profit" para um tipo numérico (float)
+            df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
+
+            # Cálculo do Lucro/Prejuízo
+            profit = df['Profit'].sum()
+
+            # Cálculo da Odd Justa
+            odd_justa = 100 / winrate
+
+            # Criar um DataFrame para exibir no Streamlit
+            result_df = pd.DataFrame({'c1': [winrate], 'c2': [profit], 'c3': [odd_justa]})
+
+            # Exiba os resultados no Streamlit com formatação CSS para centralizar o texto
+            st.write("Resultados:")
+            for col in result_df.columns:
+                st.write(f'<div style="text-align: center;">{col}</div>', unsafe_allow_html=True)
+                st.write(f'<div style="text-align: center;">{result_df[col].iloc[0]}</div>', unsafe_allow_html=True)
+
 
 
 # Chama a função tips_page() no início do código para criar a página
