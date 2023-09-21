@@ -118,7 +118,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Back Casa - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
 
         ####################################################        
@@ -130,7 +130,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Back Visitante - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
         
 
@@ -143,7 +143,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Back Empate - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
     
 
@@ -156,7 +156,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Over 05HT - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
    
 
@@ -169,7 +169,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Under 05HT - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
     ####################################################        
         # Over 15FT agrupado por liga
@@ -180,7 +180,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Over 15FT - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
     ##################################################        
         # Under 15FT agrupado por liga
@@ -191,7 +191,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Under 15FT - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
     ##################################################        
         # Over 25FT agrupado por liga
@@ -202,7 +202,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Over 25FT - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
     ##################################################        
         # Under 25FT agrupado por liga
@@ -213,7 +213,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Under 25FT - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
     ##################################################        
         # Over 35FT agrupado por liga
@@ -224,7 +224,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Over 35FT - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
     ##################################################        
         # Under 35FT agrupado por liga
@@ -235,7 +235,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Under 35FT - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
     ##################################################        
         # Over 45FT agrupado por liga
@@ -246,7 +246,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Over 45FT - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
     ##################################################        
         # Under 45FT agrupado por liga
@@ -257,7 +257,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Under 45FT - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
         
 
     ##################################################        
@@ -269,7 +269,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Lay 0x1 - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
      ##################################################        
         # Lay 1x0 agrupado por liga
@@ -280,7 +280,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Lay 1x0 - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
        ##################################################        
         # Lay 1x2 agrupado por liga
@@ -291,7 +291,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Lay 1x2 - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
 
         ##################################################        
         # Lay 2x1 agrupado por liga
@@ -302,7 +302,7 @@ def bck_league_home_page():
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Lay 2x1 - Desempenho por Liga")
-        st.dataframe(pivot_table)
+        st.dataframe(pivot_table, width=800)
     
     with tab2:
 
@@ -321,7 +321,7 @@ def bck_league_home_page():
 
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Back Casa - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top back visitante agrupado por liga
@@ -338,7 +338,7 @@ def bck_league_home_page():
 
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Back Visitante - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top back empate agrupado por liga
@@ -355,7 +355,7 @@ def bck_league_home_page():
 
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Back Empate - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Over 05HT agrupado por liga
@@ -372,7 +372,7 @@ def bck_league_home_page():
 
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Over 05HT - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Under 05HT agrupado por liga
@@ -389,7 +389,7 @@ def bck_league_home_page():
 
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Under 05HT - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Over 15FT agrupado por liga
@@ -406,7 +406,7 @@ def bck_league_home_page():
 
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Over 15FT - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Under 15FT agrupado por liga
@@ -423,7 +423,7 @@ def bck_league_home_page():
 
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Under 15FT - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Over 25FT agrupado por liga
@@ -440,7 +440,7 @@ def bck_league_home_page():
 
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Over 25FT - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Under 25FT agrupado por liga
@@ -457,7 +457,7 @@ def bck_league_home_page():
 
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Under 25FT - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Over 35FT agrupado por liga
@@ -474,7 +474,7 @@ def bck_league_home_page():
         
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Over 35FT - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Under 35FT agrupado por liga
@@ -491,7 +491,7 @@ def bck_league_home_page():
 
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Under 35FT - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Over 45FT agrupado por liga
@@ -508,7 +508,7 @@ def bck_league_home_page():
         
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Over 45FT - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Under 45FT agrupado por liga
@@ -525,7 +525,7 @@ def bck_league_home_page():
 
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Under 45FT - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Lay 0x1 agrupado por liga
@@ -542,7 +542,7 @@ def bck_league_home_page():
         
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Lay 0x1 - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Lay 1x0 agrupado por liga
@@ -559,7 +559,7 @@ def bck_league_home_page():
         
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Lay 1x0 - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Lay 1x2 agrupado por liga
@@ -576,7 +576,7 @@ def bck_league_home_page():
         
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Lay 1x2 - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top Lay 2x1 agrupado por liga
@@ -593,7 +593,7 @@ def bck_league_home_page():
         
         # Exibir o lucro acumulado por liga nas temporadas lucrativas
         st.subheader("Top Lay 2x1 - Desempenho por Liga")
-        st.dataframe(cumulative_profit)
+        st.dataframe(cumulative_profit, width=800)
 
 ################ Placar ##########################
     
