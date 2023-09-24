@@ -89,7 +89,8 @@ def tips_page():
             back_casa_ht = df[
                 (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
                 (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10) &
-                (df["PPG_Home"] >= 1.8) &
+                (df["PPG_Home"] >= 2.1) &
+                (df["PPG_Away"] <= 1) &
                 (df["Rodada"] >= 10)
             ]
             colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
