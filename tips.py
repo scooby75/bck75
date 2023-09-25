@@ -65,13 +65,20 @@ def tips_page():
                 (df["PPG_Home"] >= 1.8) &
                 (df["Rodada"] >= 10)
             ]
+        
+            # Lista das ligas que deseja excluir
+            ligas_para_excluir = ["Superettan", "Primera División", "Prim B Nacional", "Kazakhstan Premier League", "K League 1", "J3 League", "FNL"]
+        
+            # Filtrar as linhas onde a coluna "Liga" não está na lista de ligas para excluir
+            ha_df = ha_df[~ha_df["Liga"].isin(ligas_para_excluir)]
+        
             colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
             ha_df = ha_df[colunas_desejadas]
             st.dataframe(ha_df, width=800)
-
+        
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
-
+        
             # Criar um link para download do CSV
             csv_link_ha = ha_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
@@ -80,7 +87,6 @@ def tips_page():
                 file_name=f"handicap_asiatico_{data_atual}.csv",
                 key="handicap_asiatico_csv"
             )
-
 
         with tab2:
             # Use df aqui para a aba "Back Casa HT"
