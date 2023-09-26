@@ -7,6 +7,7 @@ import datetime as dt
 import requests
 import csv
 import io
+import matplotlib.pyplot as plt
 
 
 
@@ -287,7 +288,7 @@ def tips_page():
         with tab0:
  
 
-            # Baixe o arquivo CSV do GitHub usando a URL fornecida
+             # Baixe o arquivo CSV do GitHub usando a URL fornecida
             url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/tips_ha_geral.csv"
             response = requests.get(url)
             csv_data = StringIO(response.text)
@@ -297,37 +298,49 @@ def tips_page():
 
             # Conversão da coluna "Profit" para um tipo numérico (float)
             df['Profit'] = df['Profit'].str.replace(',', '.').astype(float)
-            
+
+            # Conversão da coluna "Date" para o tipo datetime
+            df['Date'] = pd.to_datetime(df['Date'])
+
             # Cálculo do Winrate com 2 casas decimais e formato de porcentagem
             winrate = (df['Winrate'] * 100).mean()  # Média dos Winrates em formato de porcentagem
             winrate_formatted = "{:.2f}%".format(winrate)
-            
+
             # Conversão da coluna "Profit" para um tipo numérico (float)
             df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
-            
+
             # Cálculo do Lucro/Prejuízo
             profit = round(df['Profit'].sum(), 2)
-            
+
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
-            
+
             # Exiba os resultados no Streamlit em três colunas separadas com centralização
             st.subheader("HA -0,25")
             st.text("A partir de 16/09/2023")
-            
+
             col1, col2, col3 = st.columns(3)
-            
+
             with col1:
                 st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(winrate_formatted), unsafe_allow_html=True)
-            
+
             with col2:
                 st.markdown('<div style="text-align: center;"> Profit </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(profit), unsafe_allow_html=True)
-            
+
             with col3:
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
+
+            # Adicione um gráfico de linha para mostrar a evolução do Profit
+            st.subheader("Evolução do Profit ao longo do tempo")
+            plt.figure(figsize=(10, 6))
+            plt.plot(df['Date'], df['Profit'], marker='o', linestyle='-')
+            plt.xlabel('Data')
+            plt.ylabel('Profit')
+            plt.title('Evolução do Profit ao longo do tempo')
+            st.pyplot(plt)
 
 
 ############### Back  Casa HT ##########################
