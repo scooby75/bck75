@@ -7,7 +7,7 @@ import datetime as dt
 import requests
 import csv
 import io
-import matplotlib.pyplot as plt
+
 
 
 
@@ -302,6 +302,9 @@ def tips_page():
             # Conversão da coluna "Date" para o tipo datetime
             df['Date'] = pd.to_datetime(df['Date'])
 
+            # Ordene o DataFrame pela coluna 'Date' de forma ascendente
+            df = df.sort_values(by='Date', ascending=True)
+
             # Cálculo do Winrate com 2 casas decimais e formato de porcentagem
             winrate = (df['Winrate'] * 100).mean()  # Média dos Winrates em formato de porcentagem
             winrate_formatted = "{:.2f}%".format(winrate)
@@ -309,8 +312,8 @@ def tips_page():
             # Conversão da coluna "Profit" para um tipo numérico (float)
             df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
 
-            # Cálculo do Lucro/Prejuízo
-            profit = round(df['Profit'].sum(), 2)
+            # Cálculo do Lucro/Prejuízo acumulado
+            df['Cumulative Profit'] = df['Profit'].cumsum()
 
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
@@ -333,14 +336,10 @@ def tips_page():
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
 
-            # Adicione um gráfico de linha para mostrar a evolução do Profit
-            st.subheader("Evolução do Profit ao longo do tempo")
-            plt.figure(figsize=(10, 6))
-            plt.plot(df['Date'], df['Profit'], marker='o', linestyle='-')
-            plt.xlabel('Data')
-            plt.ylabel('Profit')
-            plt.title('Evolução do Profit ao longo do tempo')
-            st.pyplot(plt)
+            # Crie um gráfico de linha ascendente para o Profit acumulado
+            #st.subheader("Profit Acumulado ao longo do tempo")
+            df.set_index('Date', inplace=True)
+            st.line_chart(df['Cumulative Profit'])
 
 
 ############### Back  Casa HT ##########################
