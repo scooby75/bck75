@@ -65,7 +65,7 @@ def tips_page():
         
             # Lista das ligas desejadas
             ligas_desejadas = ["Prim B Nacional", "J2 League", "Serie A", "First Division", "Premier Division", "J1 League",
-                "PRIMERA B", "PRIMERA DIVISION", "Division Intermedia", "Primera División", "Meistriliiga"]
+                "Primera B", "Division Intermedia", "Primera División", "Meistriliiga"]
         
             # Filtrar os jogos com base em países e ligas desejadas
             ha_df = df[
