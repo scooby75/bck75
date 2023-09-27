@@ -59,27 +59,21 @@ def tips_page():
             # Use df aqui para a aba "HA"
             st.subheader("HA -0.25")
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
-            
-            # Lista das ligas desejadas
-            ligas_desejadas = [
-                "ARGENTINA - PRIMERA NACIONAL",
-                "JAPAN - J2 LEAGUE",
-                "BRAZIL - SERIE A",
-                "NORWAY - OBOS-LIGAEN",
-                "IRELAND - PREMIER DIVISION",
-                "JAPAN - J1 LEAGUE",
-                "CHILE - PRIMERA B",
-                "CHILE - PRIMERA DIVISION",
-                "PARAGUAY - DIVISION INTERMEDIARIA",
-                "ARGENTINA - LIGA PROFESSIONAL",
-                "ESTONIA - MEISTTILIIGA"
-            ]
+    
+            # Lista dos países desejados
+            paises_desejados = ["Chile", "Argentina", "Brazil", "Japan", "Paraguay", "Estonia", "Norway", "Ireland"]
         
+            # Lista das ligas desejadas
+            ligas_desejadas = ["PRIMERA NACIONAL", "J2 LEAGUE", "SERIE A", "OBOS-LIGAEN", "PREMIER DIVISION", "J1 LEAGUE",
+                "PRIMERA B", "PRIMERA DIVISION", "DIVISION INTERMEDIARIA", "LIGA PROFESSIONAL", "MEISTTILIIGA"]
+        
+            # Filtrar os jogos com base em países e ligas desejadas
             ha_df = df[
                 (df["FT_Odd_H"] >= 1.41) & (df["FT_Odd_H"] <= 2.00) &
                 (df["DC_1X"] <= 1.3) &
                 (df["PPG_Home"] >= 2.2) &
                 (df["Rodada"] >= 10) &
+                (df["Pais"].str.split(" - ").str[0].isin(paises_desejados)) &  # Filtrar por país
                 (df["Liga"].isin(ligas_desejadas))  # Filtrar por ligas desejadas
             ]
         
@@ -98,6 +92,7 @@ def tips_page():
                 file_name=f"handicap_asiatico_{data_atual}.csv",
                 key="handicap_asiatico_csv"
             )
+
             
         with tab2:
             # Use df aqui para a aba "Back Casa HT"
