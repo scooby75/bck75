@@ -61,11 +61,11 @@ def tips_page():
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
     
             # Lista dos países desejados
-            paises_desejados = ["Chile", "Argentina", "Brazil", "Japan", "Paraguay", "Estonia", "Norway", "Republic of Ireland"]
+            paises_desejados = ["Colombia", "USA", "Ecuador", "Chile", "Argentina", "Brazil", "Japan", "Paraguay", "Estonia", "Norway", "Republic of Ireland", "Peru", "Indonesia", "Venezuela", "Finland", "Denmark", "Thailand"]
         
             # Lista das ligas desejadas
-            ligas_desejadas = ["Prim B Nacional", "J2 League", "Serie A", "First Division", "Premier Division", "J1 League",
-                "Primera B", "Division Intermedia", "Primera División", "Meistriliiga"]
+            ligas_desejadas = ["Categoria Primera A", "Categoria Primera B", "MLS", "Prim B Nacional", "J2 League", "Serie A", "Serie D", "First Division", "Premier Division", "J1 League",
+                "Primera B", "Division Intermedia", "Primera División", "Meistriliiga", "Primera Categoría Serie A", "USL Championship", "Serie B", "Segunda División", "Liga 1", "Ykkönen", "Superliga", "Thai League 2"]
         
             # Filtrar os jogos com base em países e ligas desejadas
             ha_df = df[
