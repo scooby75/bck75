@@ -62,7 +62,8 @@ def tips_page():
             ha_df = df[
                 (df["FT_Odd_H"] >= 1.40) & (df["FT_Odd_H"] <= 2.00) & 
                 (df["DC_1X"] <= 1.3) &
-                (df["PPG_Home"] >= 1.8) &
+                (df["Home Team Pre-Match xG"] >= 1.5) &
+                (df["Away Team Pre-Match xG"] <= 1.2) &
                 (df["Rodada"] >= 10)
             ]
         
