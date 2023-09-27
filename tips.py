@@ -72,7 +72,7 @@ def tips_page():
                 (df["FT_Odd_H"] >= 1.41) & (df["FT_Odd_H"] <= 2.00) &
                 (df["DC_1X"] <= 1.3) &
                 (df["PPG_Home"] >= 2.2) &
-                (df["Rodada"] >= 10) &
+                (df["Rodada"] >= 5) &
                 (df["Pais"].str.split(" - ").str[0].isin(paises_desejados)) &  # Filtrar por país
                 (df["Liga"].isin(ligas_desejadas))  # Filtrar por ligas desejadas
             ]
