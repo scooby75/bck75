@@ -59,19 +59,29 @@ def tips_page():
             # Use df aqui para a aba "HA"
             st.subheader("HA -0.25")
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
-            ha_df = df[
-                (df["FT_Odd_H"] >= 1.40) & (df["FT_Odd_H"] <= 2.00) & 
-                (df["DC_1X"] <= 1.3) &
-                (df["XG_Home"] >= 1.5) &
-                (df["XG_Away"] <= 1.2) &
-                (df["Rodada"] >= 10)
+            
+            # Lista das ligas desejadas
+            ligas_desejadas = [
+                "ARGENTINA - PRIMERA NACIONAL",
+                "JAPAN - J2 LEAGUE",
+                "BRAZIL - SERIE A",
+                "NORWAY - OBOS-LIGAEN",
+                "IRELAND - PREMIER DIVISION",
+                "JAPAN - J1 LEAGUE",
+                "CHILE - PRIMERA B",
+                "CHILE - PRIMERA DIVISION",
+                "PARAGUAY - DIVISION INTERMEDIARIA",
+                "ARGENTINA - LIGA PROFESSIONAL",
+                "ESTONIA - MEISTTILIIGA"
             ]
         
-            # Lista das ligas que deseja excluir
-            ligas_para_excluir = ["Superettan", "Primera División", "Prim B Nacional", "Kazakhstan Premier League", "K League 1", "J3 League", "FNL"]
-        
-            # Filtrar as linhas onde a coluna "Liga" não está na lista de ligas para excluir
-            ha_df = ha_df[~ha_df["Liga"].isin(ligas_para_excluir)]
+            ha_df = df[
+                (df["FT_Odd_H"] >= 1.41) & (df["FT_Odd_H"] <= 2.00) &
+                (df["DC_1X"] <= 1.3) &
+                (df["PPG_Home"] >= 2.2) &
+                (df["Rodada"] >= 10) &
+                (df["Liga"].isin(ligas_desejadas))  # Filtrar por ligas desejadas
+            ]
         
             colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
             ha_df = ha_df[colunas_desejadas]
@@ -88,7 +98,7 @@ def tips_page():
                 file_name=f"handicap_asiatico_{data_atual}.csv",
                 key="handicap_asiatico_csv"
             )
-
+            
         with tab2:
             # Use df aqui para a aba "Back Casa HT"
             st.subheader("Back Casa HT")
