@@ -59,22 +59,16 @@ def tips_page():
             # Use df aqui para a aba "HA"
             st.subheader("HA -0.25")
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
-    
-            # Lista dos países desejados
-            paises_desejados = ["Colombia", "USA", "Ecuador", "Chile", "Argentina", "Brazil", "Japan", "Paraguay", "Estonia", "Norway", "Republic of Ireland", "Peru", "Indonesia", "Venezuela", "Finland", "Denmark", "Thailand"]
+
+            # Lista dos times
+            times_desejados = ["Yokohama F. Marinos", "Urawa Reds", "Boeung Ket", "Shandong Luneng", "Gorica", "Pyunik", "Hamburger SV", "Niort", "Le Mans", "St. Pölten", "Derry City", "Shamrock Rovers", "FC Barcelona", "Leganés", "Benfica", "Vitória"]
         
-            # Lista das ligas desejadas
-            ligas_desejadas = ["Categoria Primera A", "Categoria Primera B", "MLS", "Prim B Nacional", "J2 League", "Serie A", "Serie D", "First Division", "Premier Division", "J1 League",
-                "Primera B", "Division Intermedia", "Primera División", "Meistriliiga", "Primera Categoría Serie A", "USL Championship", "Serie B", "Segunda División", "Liga 1", "Ykkönen", "Superliga", "Thai League 2"]
-        
-            # Filtrar os jogos com base em países e ligas desejadas
+            # Filtrar os jogos com base em países e ligas desejadas e times da casa desejados
             ha_df = df[
-                (df["FT_Odd_H"] >= 1.41) & (df["FT_Odd_H"] <= 2.00) &
+                (df["FT_Odd_H"] >= 1.41) & (df["FT_Odd_H"] <= 2.20) &
                 (df["DC_1X"] <= 1.3) &
-                (df["PPG_Home"] >= 2.2) &
                 (df["Rodada"] >= 5) &
-                (df["Pais"].str.split(" - ").str[0].isin(paises_desejados)) &  # Filtrar por país
-                (df["Liga"].isin(ligas_desejadas))  # Filtrar por ligas desejadas
+                (df["Home"].isin(times_desejados))  # Filtrar por times da casa desejados
             ]
         
             colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
@@ -92,6 +86,7 @@ def tips_page():
                 file_name=f"handicap_asiatico_{data_atual}.csv",
                 key="handicap_asiatico_csv"
             )
+        
 
             
         with tab2:
