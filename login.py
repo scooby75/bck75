@@ -12,7 +12,7 @@ def initialize_session_state():
 def login_page():
     session_state = initialize_session_state()  # Inicializa o session_state
     st.image("https://lifeisfootball22.files.wordpress.com/2021/09/data-2.png?w=660", width=240)
-    st.title("Análise de Dados de Futebol")
+    st.title("Football Data Analysis")
     
     # Adicione uma mensagem de informação com um link clicável e ícone "info-circle-fill"
     st.markdown('<i class="bi bi-info-circle-fill"></i> Informações sobre acesso, [clique aqui](https://t.me/Lyssandro).', unsafe_allow_html=True)
