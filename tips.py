@@ -62,7 +62,9 @@ def tips_page():
 
             # Lista dos times
             times_desejados = ["Shanghai Shenhua", "Aktobe", "Phoenix Rising", "MC Alger", "Mamelodi Sundowns", "Aris", "Dinamo Minsk", "Al Ahli", 
-                               "HFX Wanderers FC", "Huachipato", "Atlético Nacional", "Rionegro Águilas" ]
+                               "HFX Wanderers FC", "Huachipato", "Atlético Nacional", "Rionegro Águilas", "Rīgas FS", "Modena", "Paksi SE", "Lecce",
+                              "Djurgården", "Ballkani", "The New Saints", "Považská Bystrica", "Rangers", "Cliftonville", "Linfield", "Crawley Town", "Phönix Lübeck",
+                              "Maccabi Tel Aviv", "Trenčín", "Vestri", "Skanste", "Connah's Quay", "Girona FC", "PSV", "Hapoel Be'er Sheva", "HB", "Debrecen"]
         
             # Filtrar os jogos com base em países e ligas desejadas e times da casa desejados
             ha_df = df[
