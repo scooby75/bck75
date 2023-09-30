@@ -61,7 +61,8 @@ def tips_page():
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
 
             # Lista dos times
-            times_desejados = ["Yokohama F. Marinos", "Urawa Reds", "Boeung Ket", "Shandong Luneng", "Gorica", "Pyunik", "Hamburger SV", "Niort", "Le Mans", "St. Pölten", "Derry City", "Shamrock Rovers", "FC Barcelona", "Leganés", "Benfica", "Vitória"]
+            times_desejados = ["Shanghai Shenhua", "Aktobe", "Phoenix Rising", "MC Alger", "Mamelodi Sundowns", "Aris", "Dinamo Minsk", "Al Ahli", 
+                               "HFX Wanderers FC", "Huachipato", "Atlético Nacional", "Rionegro Águilas" ]
         
             # Filtrar os jogos com base em países e ligas desejadas e times da casa desejados
             ha_df = df[
