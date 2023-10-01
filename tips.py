@@ -60,29 +60,18 @@ def tips_page():
             st.subheader("HA -0.25")
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
 
-            # Lista dos times
-            times_desejados = ["Shanghai Shenhua", "Aktobe", "Phoenix Rising", "MC Alger", "Mamelodi Sundowns", "Aris", "Dinamo Minsk", "Al Ahli", 
-                               "HFX Wanderers FC", "Huachipato", "Atlético Nacional", "Rionegro Águilas", "Rīgas FS", "Modena", "Paksi SE", "Lecce",
-                              "Djurgården", "Ballkani", "The New Saints", "Považská Bystrica", "Rangers", "Cliftonville", "Linfield", "Crawley Town", "Phönix Lübeck",
-                              "Maccabi Tel Aviv", "Trenčín", "Vestri", "Skanste", "Connah's Quay", "Girona FC", "PSV", "Hapoel Be'er Sheva", "HB", "Debrecen",
-                              "Twente", "Academia Puerto Cabello", "Deportivo Táchira", "Bolivar", "Pittsburgh Riverhounds", "Atlético Nacional", "Columbus Crew",
-                              "New England Revolution", "Tampa Bay Rowdies", "Malacateco", "Managua"]
+            # Carregue os dados do CSV da URL
+            url_df = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Apostas_HA.csv"
+            df = pd.read_csv(url_df)
         
-            # Filtrar os jogos com base em países e ligas desejadas e times da casa desejados
-            ha_df = df[
-                (df["FT_Odd_H"] >= 1.41) & (df["FT_Odd_H"] <= 2.20) &
-                (df["DC_1X"] <= 1.3) &
-                (df["Rodada"] >= 5) &
-                (df["Home"].isin(times_desejados))  # Filtrar por times da casa desejados
-            ]
-        
+            # Selecionar as colunas desejadas
             colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
-            ha_df = ha_df[colunas_desejadas]
+            ha_df = df[colunas_desejadas]
             st.dataframe(ha_df, width=800)
-        
+            
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
-        
+            
             # Criar um link para download do CSV
             csv_link_ha = ha_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
@@ -91,7 +80,6 @@ def tips_page():
                 file_name=f"handicap_asiatico_{data_atual}.csv",
                 key="handicap_asiatico_csv"
             )
-        
 
             
         with tab2:
