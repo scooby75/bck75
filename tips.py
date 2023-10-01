@@ -61,12 +61,12 @@ def tips_page():
             st.text("Apostar em HA -0.25 casa, Odd mínima 1.40")
 
             # Carregue os dados do CSV da URL
-            url_df = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Apostas_HA.csv"
-            df = pd.read_csv(url_df)
+            url_df2 = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Apostas_HA.csv"
+            df2 = pd.read_csv(url_df2)
         
             # Selecionar as colunas desejadas
             colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
-            ha_df = df[colunas_desejadas]
+            ha_df = df2[colunas_desejadas]
             st.dataframe(ha_df, width=800)
             
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
