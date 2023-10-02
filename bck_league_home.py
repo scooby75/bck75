@@ -111,14 +111,17 @@ def bck_league_home_page():
 
 ####################################################        
         # back casa agrupado por liga
-        profit_home_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_home'].sum()
+        
+        # Agrupar o DataFrame filtrado pela Liga e calcular a soma cumulativa do 'Lucro' tanto em casa quanto fora
+	    profit_home_by_season_league = filtered_df.groupby(['Season', 'League'])[['profit_home', 'profit_away']].sum().reset_index()
 
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_home_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_home', aggfunc='sum')
+	    # Criar uma tabela dinâmica do lucro/prejuízo combinado das equipes da casa e fora para a temporada selecionada
+	    profit_home_by_season_league_pivot = profit_home_by_season_league.pivot_table(index="League", columns="Season", values=["profit_home", "profit_away"])
 
-        # Display profit/loss by Season and League with Season as columns and League as rows
-        st.subheader("Back Casa - Desempenho por Liga")
-        st.dataframe(pivot_table, width=800)
+	    # Exibir a tabela com o lucro/prejuízo combinado das equipes da casa e fora (tabela dinâmica)
+	    st.subheader("Back Casa - Desempenho por Liga")
+	    st.text("Serão exibidas todas as equipes que atenderam aos critérios de filtro de Odds")
+	    st.dataframe(profit_home_by_season_league_pivot, width=800)
 
 
         ####################################################        
