@@ -65,7 +65,7 @@ def tips_page():
             df2 = pd.read_csv(url_df2)
         
             # Selecionar as colunas desejadas
-            colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
+            colunas_desejadas = ["date_GMT", "League", "Home Team", "Away Team"]
             ha_df = df2[colunas_desejadas]
             st.dataframe(ha_df, width=800)
             
