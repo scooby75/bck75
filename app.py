@@ -9,6 +9,7 @@ from bck_home import bck_home_page
 from bck_away import bck_away_page
 from bck_league_home import bck_league_home_page
 from h2h import h2h_page
+from last4 import last4_page
 from tips import tips_page
 
 from session_state import get_or_create_session_state
@@ -41,7 +42,7 @@ def main():
             logout()
 
         # Caixa de seleção para diferentes páginas
-        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Análise Home", "Análise Away", "Análise Liga", "Dutching CS",  "H2H", "Predict", "Tips"])
+        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Análise Home", "Análise Away", "Análise Liga", "Dutching CS",  "H2H", "Last4", "Predict", "Tips"])
 
         # Exibe o conteúdo da página selecionada, considerando as permissões do perfil
         user_profile = session_state.user_profile  # Use session_state here
@@ -58,6 +59,8 @@ def main():
             cs_page()
         elif selected_tab == "H2H" and user_profile >= 2:
             h2h_page()
+        elif selected_tab == "Last4" and user_profile >= 2:
+            last4_page()
         elif selected_tab == "Predict" and user_profile >= 2:
             predict_page()
         elif selected_tab == "Tips" and user_profile >= 1:
