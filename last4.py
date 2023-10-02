@@ -35,7 +35,7 @@ def last4_page():
     piores_equipes = df[df['W'] == 0]
 
     # Criar um aplicativo Streamlit
-    st.subheader("Análise das ùltimas 4  Partidas")
+    st.subheader("Análise das últimas 4  Partidas")
     st.text("Serão exibidas todas as equipes que ganharam e perderam as últimas 4 partidas")
 
     # Adicionar uma barra de consulta para selecionar equipes
