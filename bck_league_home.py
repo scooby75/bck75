@@ -362,7 +362,7 @@ def bck_league_home_page():
         # Top Over 05HT agrupado por liga
         
         # Calcula o lucro total para cada combinação de equipe da casa e liga ao longo de todas as temporadas
-        lucro_por_temporada_e_liga = filtered_df.groupby(['Season', 'League'])['profit_over05ht'].sum().reset_index()
+        lucro_por_temporada_e_liga = filtered_df.groupby(['Season', 'League'])['profit_over05HT'].sum().reset_index()
 
         # Filtra as equipes com lucro_home >= 3
         lucro_por_temporada_e_liga_filtrado = lucro_por_temporada_e_liga[lucro_por_temporada_e_liga['profit_over05HT'] >= 3]
