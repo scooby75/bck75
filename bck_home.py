@@ -252,19 +252,21 @@ def bck_home_page():
 
      ##### Desempenho Geral - Casa ####
 
-        # Group the filtered dataframe by home team (equipe da casa) and calculate cumulative sum of 'Profit'
-        df_home_profit = filtered_df.groupby('Home')['profit_home'].sum().reset_index()
-
-        # Group the filtered dataframe by home team (equipe da casa) and calculate cumulative sum of 'Profit'
+                
+        # Grupo do DataFrame original para calcular 'profit_home' por temporada e equipe da casa
         df_home_profit = filtered_df.groupby(['Season', 'Home'])['profit_home'].sum().reset_index()
-
-        # Create a pivot table of profit/loss by home team for the selected season
+        
+        # Crie uma pivot table de lucro/perda por equipe da casa para a temporada selecionada
         home_team_profit_loss_pivot = df_home_profit.pivot_table(index="Home", columns="Season", values="profit_home")
-
-        # Display the table with profit/loss by home team (pivot table)
+        
+        # Calcule a soma de cada linha (cada equipe da casa) e adicione uma coluna 'Total'
+        home_team_profit_loss_pivot['Total'] = home_team_profit_loss_pivot.sum(axis=1)
+        
+        # Configure a interface do Streamlit
         st.subheader("Desempenho Geral - Equipe da Casa")
         st.text("Serão exibidas todas as Equipes que se enquadraram no(s) filtro(s) de Odd")
         st.dataframe(home_team_profit_loss_pivot, width=800)
+
 
     ##### Top Back Casa ####
 
