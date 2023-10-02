@@ -307,21 +307,21 @@ def bck_league_home_page():
     with tab2:
 
         ####################################################        
-        # Top back casa agrupado por liga
-        profit_home_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_home'].sum()
+        
+        # Calcula o lucro total para cada combinação de equipe da casa e liga ao longo de todas as temporadas
+        lucro_por_temporada_e_liga = filtered_df.groupby(['Season', 'League'])['profit_home'].sum().reset_index()
 
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_home_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_home', aggfunc='sum')
+        # Filtra as equipes com lucro_home >= 3
+        lucro_por_temporada_e_liga_filtrado = lucro_por_temporada_e_liga[lucro_por_temporada_e_liga['profit_home'] >= 3]
 
-        # Filtrar as ligas que tiveram lucro em todas as temporadas
-        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
+        # Classifica o DataFrame lucro_por_temporada_e_liga_filtrado em ordem decrescente de lucro
+        lucro_por_temporada_e_liga_ordenado = lucro_por_temporada_e_liga_filtrado.sort_values(by='profit_home', ascending=False)
 
-        # Calcular o lucro acumulado nas temporadas lucrativas
-        cumulative_profit = profitable_leagues.cumsum()
+        # Exibe a tabela com o lucro total por equipe da casa e liga em ordem decrescente
+        st.subheader("Top Back Casa")
+        st.text("Serão exibidas apenas as equipes que acumulam pelo menos 3 unidades de lucro")
+        st.dataframe(lucro_por_temporada_e_liga_ordenado, width=800)
 
-        # Exibir o lucro acumulado por liga nas temporadas lucrativas
-        st.subheader("Top Back Casa - Desempenho por Liga")
-        st.dataframe(cumulative_profit, width=800)
 
         ####################################################        
         # Top back visitante agrupado por liga
