@@ -1,5 +1,5 @@
 valid_users = {
-    "lsilveira": {"password": "senha123", "profile": 3},
+    "lsilveira": {"password": "Fcl2fcl2#", "profile": 3},
     "lamaral": {"password": "lamaral23", "profile": 3},
     "blamim": {"password": "lamim23", "profile": 3},
     "mrodrigues": {"password": "mrodrigues23", "profile": 3},
@@ -36,5 +36,6 @@ valid_users = {
     #"HarleyLeal": {"password": "Galo1353@", "profile": 3},
     "thomasgabriel": {"password": "thomas123", "profile": 1},
     "ACarlosFreitas": {"password": "198120@Ac", "profile": 3},
+    "JorgeSilva": {"password": "Teste123", "profile": 3},
     "fellipinho": {"password": "110099", "profile": 3}
 }
