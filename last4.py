@@ -26,7 +26,7 @@ def last4_page():
     df = pd.read_csv(io.StringIO(data))
 
     # Renomear as colunas
-    df.rename(columns={'GF': 'Gols_Feitos', 'GA': 'Gols_Tomados', 'GD': 'Saldo_Gols'}, inplace=True)
+    df.rename(columns={'W': 'Vitórias', 'D': 'Empates', 'L': 'Derrotas', 'GF': 'Gols_Feitos', 'GA': 'Gols_Tomados', 'GD': 'Saldo_Gols'}, inplace=True)
 
     # Filtrar as equipes com 4 vitórias para o "Top Equipes"
     top_equipes = df[df['W'] == 4]
@@ -46,15 +46,15 @@ def last4_page():
 
     # Exibir o dataframe com as equipes selecionadas
     st.subheader("Equipes Selecionadas:")
-    st.dataframe(equipes_filtradas[["Equipe", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
+    st.dataframe(equipes_filtradas[["Equipe", "Vitórias", "Empates", "Derrotas", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
 
     # Exibir "Top Equipes" em uma tabela interativa
     st.subheader("Top Equipes:")
-    st.dataframe(top_equipes[["Equipe", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
+    st.dataframe(top_equipes[["Equipe", "Vitórias", "Empates", "Derrotas", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
 
     # Exibir "Piores Equipes" em uma tabela interativa
     st.subheader("Piores Equipes:")
-    st.dataframe(piores_equipes[["Equipe", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
+    st.dataframe(piores_equipes[["Equipe", "Vitórias", "Empates", "Derrotas", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
 
     
 
