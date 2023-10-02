@@ -38,6 +38,16 @@ def last4_page():
     st.subheader("Análise das ùltimas 4  Partidas")
     st.text("Serão exibidas todas as equipes que ganharam e perderam as últimas 4 partidas")
 
+    # Adicionar uma barra de consulta para selecionar equipes
+    equipes_selecionadas = st.multiselect("Selecione as equipes", df["Equipe"].unique())
+
+    # Filtrar as equipes selecionadas
+    equipes_filtradas = df[df["Equipe"].isin(equipes_selecionadas)]
+
+    # Exibir o dataframe com as equipes selecionadas
+    st.subheader("Equipes Selecionadas:")
+    st.dataframe(equipes_filtradas[["Equipe", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
+
     # Exibir "Top Equipes" em uma tabela interativa
     st.subheader("Top Equipes:")
     st.dataframe(top_equipes[["Equipe", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
@@ -45,6 +55,8 @@ def last4_page():
     # Exibir "Piores Equipes" em uma tabela interativa
     st.subheader("Piores Equipes:")
     st.dataframe(piores_equipes[["Equipe", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
+
+    
 
 # Chamar a função para iniciar o aplicativo
 last4_page()
