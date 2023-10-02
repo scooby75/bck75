@@ -29,10 +29,10 @@ def last4_page():
     df.rename(columns={'W': 'Vitórias', 'D': 'Empates', 'L': 'Derrotas', 'GF': 'Gols_Feitos', 'GA': 'Gols_Tomados', 'GD': 'Saldo_Gols'}, inplace=True)
 
     # Filtrar as equipes com 4 vitórias para o "Top Equipes"
-    top_equipes = df[df['W'] == 4]
+    top_equipes = df[df['Vitórias'] == 4]
 
     # Filtrar as equipes com 0 vitórias para o "Piores Equipes"
-    piores_equipes = df[df['W'] == 0]
+    piores_equipes = df[df['Vitórias'] == 0]
 
     # Criar um aplicativo Streamlit
     st.subheader("Análise das últimas 4  Partidas")
