@@ -36,7 +36,7 @@ def last4_page():
 
     # Criar um aplicativo Streamlit
     st.subheader("Análise das últimas 4  Partidas")
-    st.text("Serão exibidas todas as equipes que ganharam e perderam as últimas 4 partidas")
+    
 
     # Adicionar uma barra de consulta para selecionar equipes
     equipes_selecionadas = st.multiselect("Selecione as equipes", df["Equipe"].unique())
@@ -50,10 +50,12 @@ def last4_page():
 
     # Exibir "Top Equipes" em uma tabela interativa
     st.subheader("Top Equipes:")
+    st.text("Serão exibidas todas as equipes que ganharam as últimas 4 partidas")
     st.dataframe(top_equipes[["Equipe", "Vitórias", "Empates", "Derrotas", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
 
     # Exibir "Piores Equipes" em uma tabela interativa
     st.subheader("Piores Equipes:")
+    st.text("Serão exibidas todas as equipes que perderam as últimas 4 partidas")
     st.dataframe(piores_equipes[["Equipe", "Vitórias", "Empates", "Derrotas", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
 
     
