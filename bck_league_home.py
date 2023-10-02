@@ -530,71 +530,71 @@ def bck_league_home_page():
         
         ####################################################        
         # Top Lay 0x1 agrupado por liga
-        profit_lay01_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_Lay_0x1'].sum()
-
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_lay01_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_0x1', aggfunc='sum')
-
-        # Filtrar as ligas que tiveram lucro em todas as temporadas
-        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
-
-        # Calcular o lucro acumulado nas temporadas lucrativas
-        cumulative_profit = profitable_leagues.cumsum()
         
-        # Exibir o lucro acumulado por liga nas temporadas lucrativas
-        st.subheader("Top Lay 0x1 - Desempenho por Liga")
-        st.dataframe(cumulative_profit, width=800)
+         # Calcula o lucro total para cada combinação de equipe da casa e liga ao longo de todas as temporadas
+        lucro_por_temporada_e_liga = filtered_df.groupby(['Season', 'League'])['profit_Lay_0x1'].sum().reset_index()
+
+        # Filtra as equipes com lucro_home >= 3
+        lucro_por_temporada_e_liga_filtrado = lucro_por_temporada_e_liga[lucro_por_temporada_e_liga['profit_Lay_0x1'] >= 3]
+
+        # Classifica o DataFrame lucro_por_temporada_e_liga_filtrado em ordem decrescente de lucro
+        lucro_por_temporada_e_liga_ordenado = lucro_por_temporada_e_liga_filtrado.sort_values(by='profit_Lay_0x1', ascending=False)
+
+        # Exibe a tabela com o lucro total por equipe da casa e liga em ordem decrescente
+        st.subheader("Top Lay 0x1")
+        st.text("Serão exibidas apenas as equipes que acumulam pelo menos 3 unidades de lucro")
+        st.dataframe(lucro_por_temporada_e_liga_ordenado, width=800)
 
         ####################################################        
         # Top Lay 1x0 agrupado por liga
-        profit_lay10_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_Lay_1x0'].sum()
-
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_lay10_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_1x0', aggfunc='sum')
-
-        # Filtrar as ligas que tiveram lucro em todas as temporadas
-        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
-
-        # Calcular o lucro acumulado nas temporadas lucrativas
-        cumulative_profit = profitable_leagues.cumsum()
         
-        # Exibir o lucro acumulado por liga nas temporadas lucrativas
-        st.subheader("Top Lay 1x0 - Desempenho por Liga")
-        st.dataframe(cumulative_profit, width=800)
+        # Calcula o lucro total para cada combinação de equipe da casa e liga ao longo de todas as temporadas
+        lucro_por_temporada_e_liga = filtered_df.groupby(['Season', 'League'])['profit_Lay_1x0'].sum().reset_index()
+
+        # Filtra as equipes com lucro_home >= 3
+        lucro_por_temporada_e_liga_filtrado = lucro_por_temporada_e_liga[lucro_por_temporada_e_liga['profit_Lay_1x0'] >= 3]
+
+        # Classifica o DataFrame lucro_por_temporada_e_liga_filtrado em ordem decrescente de lucro
+        lucro_por_temporada_e_liga_ordenado = lucro_por_temporada_e_liga_filtrado.sort_values(by='profit_Lay_1x0', ascending=False)
+
+        # Exibe a tabela com o lucro total por equipe da casa e liga em ordem decrescente
+        st.subheader("Top Lay 1x0")
+        st.text("Serão exibidas apenas as equipes que acumulam pelo menos 3 unidades de lucro")
+        st.dataframe(lucro_por_temporada_e_liga_ordenado, width=800)
 
         ####################################################        
         # Top Lay 1x2 agrupado por liga
-        profit_lay12_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_Lay_1x2'].sum()
-
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_lay12_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_1x2', aggfunc='sum')
-
-        # Filtrar as ligas que tiveram lucro em todas as temporadas
-        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
-
-        # Calcular o lucro acumulado nas temporadas lucrativas
-        cumulative_profit = profitable_leagues.cumsum()
         
-        # Exibir o lucro acumulado por liga nas temporadas lucrativas
-        st.subheader("Top Lay 1x2 - Desempenho por Liga")
-        st.dataframe(cumulative_profit, width=800)
+        # Calcula o lucro total para cada combinação de equipe da casa e liga ao longo de todas as temporadas
+        lucro_por_temporada_e_liga = filtered_df.groupby(['Season', 'League'])['profit_Lay_1x2'].sum().reset_index()
 
+        # Filtra as equipes com lucro_home >= 3
+        lucro_por_temporada_e_liga_filtrado = lucro_por_temporada_e_liga[lucro_por_temporada_e_liga['profit_Lay_1x2'] >= 3]
+
+        # Classifica o DataFrame lucro_por_temporada_e_liga_filtrado em ordem decrescente de lucro
+        lucro_por_temporada_e_liga_ordenado = lucro_por_temporada_e_liga_filtrado.sort_values(by='profit_Lay_1x2', ascending=False)
+
+        # Exibe a tabela com o lucro total por equipe da casa e liga em ordem decrescente
+        st.subheader("Top Lay 1X2")
+        st.text("Serão exibidas apenas as equipes que acumulam pelo menos 3 unidades de lucro")
+        st.dataframe(lucro_por_temporada_e_liga_ordenado, width=800)
+        
         ####################################################        
         # Top Lay 2x1 agrupado por liga
-        profit_lay21_by_season_league = filtered_df.groupby(['Season', 'League'])['profit_Lay_2x1'].sum()
-
-        # Use a função pivot_table para reorganizar os dados
-        pivot_table = profit_lay21_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_2x1', aggfunc='sum')
-
-        # Filtrar as ligas que tiveram lucro em todas as temporadas
-        profitable_leagues = pivot_table[pivot_table.gt(0).all(axis=1)]
-
-        # Calcular o lucro acumulado nas temporadas lucrativas
-        cumulative_profit = profitable_leagues.cumsum()
         
-        # Exibir o lucro acumulado por liga nas temporadas lucrativas
-        st.subheader("Top Lay 2x1 - Desempenho por Liga")
-        st.dataframe(cumulative_profit, width=800)
+        # Calcula o lucro total para cada combinação de equipe da casa e liga ao longo de todas as temporadas
+        lucro_por_temporada_e_liga = filtered_df.groupby(['Season', 'League'])['profit_Lay_2x1'].sum().reset_index()
+
+        # Filtra as equipes com lucro_home >= 3
+        lucro_por_temporada_e_liga_filtrado = lucro_por_temporada_e_liga[lucro_por_temporada_e_liga['profit_Lay_2x1'] >= 3]
+
+        # Classifica o DataFrame lucro_por_temporada_e_liga_filtrado em ordem decrescente de lucro
+        lucro_por_temporada_e_liga_ordenado = lucro_por_temporada_e_liga_filtrado.sort_values(by='profit_Lay_2x1', ascending=False)
+
+        # Exibe a tabela com o lucro total por equipe da casa e liga em ordem decrescente
+        st.subheader("Top Lay 2x1")
+        st.text("Serão exibidas apenas as equipes que acumulam pelo menos 3 unidades de lucro")
+        st.dataframe(lucro_por_temporada_e_liga_ordenado, width=800)
 
 ################ Placar ##########################
     
