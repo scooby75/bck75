@@ -58,7 +58,7 @@ def main():
             cs_page()
         elif selected_tab == "H2H" and user_profile >= 2:
             h2h_page()
-        elif selected_tab == "Predict" and user_profile == 3:
+        elif selected_tab == "Predict" and user_profile >= 2:
             predict_page()
         elif selected_tab == "Tips" and user_profile >= 1:
             tips_page()
