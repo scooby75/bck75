@@ -83,18 +83,19 @@ def last4_page():
     
     # Função para destacar o time em vermelho
     def highlight_red(s):
-        return f"color: {'red' if s in nomes_coincidentes['Home'].values else 'black'}"
+        return f"<span style='color:red'>{s}</span>"
     
     # Apresenta os resultados em DataFrames do Streamlit com destaque em vermelho
-    st.header("Jogos do Dia - Melhores Equipes")
-    melhores_equipes_styled = melhores_equipes[["Date", "Hora", "Liga", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A"]].style.applymap(highlight_red, subset=["Home"])
-    st.dataframe(melhores_equipes_styled, unsafe_allow_html=True)
+    st.subheader("Jogos do Dia - Melhores Equipes")
+    melhores_equipes_styled = melhores_equipes[["Date", "Hora", "Liga", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A"]].copy()
+    melhores_equipes_styled["Home"] = melhores_equipes_styled["Home"].apply(highlight_red)
+    st.write(melhores_equipes_styled.to_html(escape=False), unsafe_allow_html=True)
     
-    st.header("Jogos do Dia - Piores Equipes")
-    piores_equipes_styled = piores_equipes[["Date", "Hora", "Liga", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A"]].style.applymap(highlight_red, subset=["Home"])
-    st.dataframe(piores_equipes_styled, unsafe_allow_html=True)
-    
-    
+    st.subheader("Jogos do Dia - Piores Equipes")
+    piores_equipes_styled = piores_equipes[["Date", "Hora", "Liga", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A"]].copy()
+    piores_equipes_styled["Home"] = piores_equipes_styled["Home"].apply(highlight_red)
+    st.write(piores_equipes_styled.to_html(escape=False), unsafe_allow_html=True)
+        
 
 # Chamar a função para iniciar o aplicativo
 last4_page()
