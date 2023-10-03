@@ -76,10 +76,10 @@ def last4_page():
     nomes_coincidentes = merged_df[merged_df["W"].isin([0, 4])]
     
     # Filtra os resultados com W == 4 (Melhores Equipes)
-    melhores_equipes = nomes_coincidentes[nomes_coincidentes["W"] == 4]
+    melhores_equipes = nomes_coincidentes[nomes_coincidentes["W"] == 4].head(800)
     
     # Filtra os resultados com W == 0 (Piores Equipes)
-    piores_equipes = nomes_coincidentes[nomes_coincidentes["W"] == 0]
+    piores_equipes = nomes_coincidentes[nomes_coincidentes["W"] == 0].head(800)
     
     # Função para destacar o time em vermelho
     def highlight_red(s):
