@@ -58,6 +58,42 @@ def last4_page():
     st.text("Serão exibidas todas as equipes que perderam as últimas 4 partidas")
     st.dataframe(piores_equipes[["Equipe", "Vitórias", "Empates", "Derrotas", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
 
+###########################################
+
+
+    # Lê o arquivo CSV "last4_geral.csv" e seleciona as colunas "Equipe" e "W"
+    url1 = "https://raw.githubusercontent.com/scooby75/bdfootball/main/last4_geral.csv"
+    equipe_df = pd.read_csv(url1)
+    
+    # Lê o arquivo CSV "Jogos_do_Dia_FS.csv" e seleciona as colunas relevantes
+    url2 = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Jogos_do_Dia_FS.csv"
+    partidas_df = pd.read_csv(url2, usecols=["Date", "Hora", "Liga", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A"])
+    
+    # Merge dos DataFrames com base na coluna "Home"
+    merged_df = pd.merge(partidas_df, equipe_df, left_on="Home", right_on="Equipe", suffixes=("_partida", "_equipe"))
+    
+    # Encontra os nomes que coincidem entre as duas colunas
+    nomes_coincidentes = merged_df[merged_df["W"].isin([0, 4])]
+    
+    # Filtra os resultados com W == 4 (Melhores Equipes)
+    melhores_equipes = nomes_coincidentes[nomes_coincidentes["W"] == 4]
+    
+    # Filtra os resultados com W == 0 (Piores Equipes)
+    piores_equipes = nomes_coincidentes[nomes_coincidentes["W"] == 0]
+    
+    # Função para destacar o time em vermelho
+    def highlight_red(s):
+        return f"color: {'red' if s in nomes_coincidentes['Home'].values else 'black'}"
+    
+    # Apresenta os resultados em DataFrames do Streamlit com destaque em vermelho
+    st.header("Jogos do Dia - Melhores Equipes")
+    melhores_equipes_styled = melhores_equipes[["Date", "Hora", "Liga", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A"]].style.applymap(highlight_red, subset=["Home"])
+    st.dataframe(melhores_equipes_styled, unsafe_allow_html=True)
+    
+    st.header("Jogos do Dia - Piores Equipes")
+    piores_equipes_styled = piores_equipes[["Date", "Hora", "Liga", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A"]].style.applymap(highlight_red, subset=["Home"])
+    st.dataframe(piores_equipes_styled, unsafe_allow_html=True)
+    
     
 
 # Chamar a função para iniciar o aplicativo
