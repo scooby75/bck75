@@ -66,13 +66,13 @@ def stats_equipes_page():
     derrotas_HT = ultimas_partidas['Resultado_HT'].eq('Away').sum()  # Alterado de 'Derrota' para 'Away'
     
     # Exibir as estatísticas
-    st.subheader("Estatísticas:")
-    st.write("Resultados em FT:")
+    #st.subheader("Estatísticas:")
+    st.subheader("Resultados em FT:")
     st.write(f"Vitórias: {vitorias_FT} ({(vitorias_FT / total_partidas * 100):.2f}%)")
     st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
     st.write(f"Derrotas: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
     
-    st.write("Resultados em HT:")
+    st.subheader("Resultados em HT:")
     st.write(f"Vitórias: {vitorias_HT} ({(vitorias_HT / total_partidas * 100):.2f}%)")
     st.write(f"Empates: {empates_HT} ({(empates_HT / total_partidas * 100):.2f}%)")
     st.write(f"Derrotas: {derrotas_HT} ({(derrotas_HT / total_partidas * 100):.2f}%)")
