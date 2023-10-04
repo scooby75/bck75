@@ -41,24 +41,38 @@ def stats_equipes_page():
     df_equipe_liga = df_equipe_liga.sort_values(by='Unnamed: 0', ascending=False)
 
     # Exiba as últimas N partidas selecionadas em uma tabela
-    partidas_recentes = df_equipe_liga[['Date', 'League', 'Home', 'Away', 'Placar_HT', 'Placar_FT', 'Resultado_FT']].head(num_partidas)
+    partidas_recentes = df_equipe_liga[['Date', 'League', 'Home', 'Away', 'Placar_HT', 'Placar_FT']].head(num_partidas)
     partidas_recentes = partidas_recentes.reset_index(drop=True)  # Remover o índice
     st.subheader("Partidas mais recentes:")
     st.dataframe(partidas_recentes)
 
-    # Gráficos de barras para cada partida
-    st.subheader("Gráficos de barras por partida:")
+    # Calcular as estatísticas das últimas N partidas selecionadas
+    ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
+    
+    total_partidas = ultimas_partidas.shape[0]
+    
+    # Mapear os valores nas colunas 'Resultado_FT' e 'Resultado_HT' para os resultados correspondentes
+    mapeamento_resultados = {'H': 'Vitória', 'D': 'Empate', 'A': 'Away'}
+    
+    ultimas_partidas['Resultado_FT'] = ultimas_partidas['Resultado_FT'].map(mapeamento_resultados)
+    ultimas_partidas['Resultado_HT'] = ultimas_partidas['Resultado_HT'].map(mapeamento_resultados)
+    
+    # Subheaders e estatísticas em FT e HT
+    col1, col2 = st.columns(2)
 
-    for i, row in partidas_recentes.iterrows():
-        resultado_FT = row['Resultado_FT']
-        cor = 'green' if resultado_FT == 'H' else ('red' if resultado_FT == 'A' else 'gray')
+    with col1:
+        st.subheader("Resultados em FT:")
+        st.write(f"Vitórias: {vitorias_FT} ({(vitorias_FT / total_partidas * 100):.2f}%)")
+        st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
+        st.write(f"Derrotas: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
 
-        fig, ax = plt.subplots()
-        ax.barh(['Home'], [1], color=cor)
-        ax.set_xlim(0, 1)
-        ax.axis('off')
+    with col2:
+        st.subheader("Resultados em HT:")
+        st.write(f"Vitórias: {vitorias_HT} ({(vitorias_HT / total_partidas * 100):.2f}%)")
+        st.write(f"Empates: {empates_HT} ({(empates_HT / total_partidas * 100):.2f}%)")
+        st.write(f"Derrotas: {derrotas_HT} ({(derrotas_HT / total_partidas * 100):.2f}%)")
 
-        st.pyplot(fig)
+
 
 # Execute a função para criar a página
 stats_equipes_page()
