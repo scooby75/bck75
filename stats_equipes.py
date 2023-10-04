@@ -2,6 +2,7 @@
 
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from session_state import SessionState
 
@@ -56,29 +57,34 @@ def stats_equipes_page():
     ultimas_partidas['Resultado_FT'] = ultimas_partidas['Resultado_FT'].map(mapeamento_resultados)
     ultimas_partidas['Resultado_HT'] = ultimas_partidas['Resultado_HT'].map(mapeamento_resultados)
     
-    # Contar as ocorrências de cada resultado
-    vitorias_FT = ultimas_partidas['Resultado_FT'].eq('Vitória').sum()
-    empates_FT = ultimas_partidas['Resultado_FT'].eq('Empate').sum()
-    derrotas_FT = ultimas_partidas['Resultado_FT'].eq('Away').sum()  # Alterado de 'Derrota' para 'Away'
-    
-    vitorias_HT = ultimas_partidas['Resultado_HT'].eq('Vitória').sum()
-    empates_HT = ultimas_partidas['Resultado_HT'].eq('Empate').sum()
-    derrotas_HT = ultimas_partidas['Resultado_HT'].eq('Away').sum()  # Alterado de 'Derrota' para 'Away'
-    
     # Subheaders e estatísticas em FT e HT
     col1, col2 = st.columns(2)
-    
+
     with col1:
         st.subheader("Resultados em FT:")
         st.write(f"Vitórias: {vitorias_FT} ({(vitorias_FT / total_partidas * 100):.2f}%)")
         st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
         st.write(f"Derrotas: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
-    
+
     with col2:
         st.subheader("Resultados em HT:")
         st.write(f"Vitórias: {vitorias_HT} ({(vitorias_HT / total_partidas * 100):.2f}%)")
         st.write(f"Empates: {empates_HT} ({(empates_HT / total_partidas * 100):.2f}%)")
         st.write(f"Derrotas: {derrotas_HT} ({(derrotas_HT / total_partidas * 100):.2f}%)")
+
+    # Gráficos de barras para cada partida
+    st.subheader("Gráficos de barras por partida:")
+    
+    for i, row in ultimas_partidas.iterrows():
+        resultado = row['Resultado_FT']
+        cor = 'green' if resultado == 'Vitória' else ('red' if resultado == 'Away' else 'gray')
+        
+        fig, ax = plt.subplots()
+        ax.barh(['Home'], [1], color=cor)
+        ax.set_xlim(0, 1)
+        ax.axis('off')
+        
+        st.pyplot(fig)
 
 # Execute a função para criar a página
 stats_equipes_page()
