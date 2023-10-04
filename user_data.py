@@ -40,5 +40,6 @@ valid_users = {
     "Wandersonvip": {"password": "Hillsong932", "profile": 3},
     "RenanTL": {"password": "renan123", "profile": 3},
     "Julio": {"password": "Abcd102030*", "profile": 3},
+    "Lucasbd": {"password": "Laybackbot*", "profile": 1},
     "fellipinho": {"password": "110099", "profile": 3}
 }
