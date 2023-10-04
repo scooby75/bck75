@@ -52,12 +52,12 @@ def last4_page():
 
         # Exibir "Top Equipes" em uma tabela interativa
         st.subheader("Top Equipes:")
-        st.text("Serão exibidas todas as equipes que ganharam as últimas 4 partidas")
+        st.text("Serão exibidas todas as equipes que ganharam as últimas 4 partidas jogando em casa ou fora na mesma Liga")
         st.dataframe(top_equipes[["Equipe", "Vitórias", "Empates", "Derrotas", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
 
         # Exibir "Piores Equipes" em uma tabela interativa
         st.subheader("Piores Equipes:")
-        st.text("Serão exibidas todas as equipes que perderam as últimas 4 partidas")
+        st.text("Serão exibidas todas as equipes que perderam as últimas 4 partidas jogando em casa ou fora na mesma Liga")
         st.dataframe(piores_equipes[["Equipe", "Vitórias", "Empates", "Derrotas", "Gols_Feitos", "Gols_Tomados", "Saldo_Gols"]])
 
     with tab1:
