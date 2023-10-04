@@ -3,6 +3,9 @@
 import streamlit as st
 import pandas as pd
 
+from session_state import SessionState
+
+
 def stats_equipes_page():
     # Inicializa o estado da sessão
     session_state = SessionState()
