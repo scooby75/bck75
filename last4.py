@@ -67,7 +67,7 @@ def last4_page():
 
         # Lê o arquivo CSV "Jogos_do_Dia_FS.csv" e seleciona as colunas relevantes
         url2 = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Jogos_do_Dia_FS.csv"
-        partidas_df = pd.read_csv(url2, usecols=["Date", "Hora", "Liga", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A"])
+        partidas_df = pd.read_csv(url2, usecols=["Date", "Hora", "Liga", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "Rodada"])
 
         # Filtro para selecionar apenas as linhas em que a coluna "Rodada" seja >= 8
         partidas_df = partidas_df[partidas_df["Rodada"] >= 8]
