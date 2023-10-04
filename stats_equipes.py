@@ -22,7 +22,7 @@ def stats_equipes_page():
     df = pd.read_csv(url)
 
     # Título da página
-    st.title("Análise de Resultados de Futebol")
+    st.subheader("Análise Desempenho das Equipes")
 
     # Escolha a equipe que deseja analisar usando um seletor
     equipe_escolhida = st.selectbox("Escolha a equipe:", df['Home'].unique())
@@ -41,7 +41,7 @@ def stats_equipes_page():
 
     # Exiba as últimas N partidas selecionadas em uma tabela
     partidas_recentes = df_equipe_liga[['Date', 'League', 'Home', 'Away', 'Placar_HT', 'Placar_FT']].head(num_partidas)
-    st.header("Partidas mais recentes:")
+    st.subheader("Partidas mais recentes:")
     st.dataframe(partidas_recentes, index=False)
 
     # Calcular as estatísticas das últimas N partidas selecionadas
@@ -58,7 +58,7 @@ def stats_equipes_page():
     derrotas_HT = ultimas_partidas['Resultado_HT'].eq('Derrota').sum()
 
     # Exibir as estatísticas
-    st.header("Estatísticas:")
+    st.subheader("Estatísticas:")
     st.write("Resultados em FT:")
     st.write(f"Vitórias: {vitorias_FT} ({(vitorias_FT / total_partidas * 100):.2f}%)")
     st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
