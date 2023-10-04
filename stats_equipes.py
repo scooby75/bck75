@@ -5,7 +5,6 @@ import pandas as pd
 
 from session_state import SessionState
 
-
 def stats_equipes_page():
     # Inicializa o estado da sessão
     session_state = SessionState()
@@ -17,8 +16,6 @@ def stats_equipes_page():
     if session_state.user_profile < 3:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
-    # else:
-    #     st.write("Acesso concedido!")  # Debug
 
     # Carregue os dados do CSV
     url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv"
@@ -33,8 +30,8 @@ def stats_equipes_page():
     # Escolha a liga que deseja analisar usando um seletor
     liga_escolhida = st.selectbox("Escolha a liga:", df['League'].unique())
 
-    # Solicite ao usuário o número de partidas a serem analisadas
-    num_partidas = st.slider("Número de partidas a analisar:", min_value=1, max_value=len(df), value=3)
+    # Solicite ao usuário o número de partidas a serem analisadas, limitado a 8
+    num_partidas = st.slider("Número de partidas a analisar:", min_value=3, max_value=min(8, len(df)), value=3)
 
     # Filtre o DataFrame com base nas escolhas do usuário
     df_equipe_liga = df[(df['Home'] == equipe_escolhida) & (df['League'] == liga_escolhida)]
@@ -44,8 +41,9 @@ def stats_equipes_page():
 
     # Exiba as últimas N partidas selecionadas em uma tabela
     partidas_recentes = df_equipe_liga[['Date', 'League', 'Home', 'Away', 'Placar_HT', 'Placar_FT']].head(num_partidas)
+    partidas_recentes = partidas_recentes.reset_index(drop=True)  # Remover o índice
     st.subheader("Partidas mais recentes:")
-    st.dataframe(partidas_recentes, index=False)
+    st.dataframe(partidas_recentes)
 
     # Calcular as estatísticas das últimas N partidas selecionadas
     ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
