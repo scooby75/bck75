@@ -262,14 +262,10 @@ def bck_home_page():
         # Calcule a soma de cada linha (cada equipe da casa) e adicione uma coluna 'Total'
         home_team_profit_loss_pivot['Total'] = home_team_profit_loss_pivot.sum(axis=1)
         
-        # Reorganize as colunas do DataFrame para ter 'Home' e 'League' no início
-        home_team_profit_loss_pivot = home_team_profit_loss_pivot[['Home', 'League'] + [col for col in home_team_profit_loss_pivot.columns if col not in ['Home', 'League']]]
-        
         # Configure a interface do Streamlit
         st.subheader("Desempenho Geral - Equipe da Casa")
         st.text("Serão exibidas todas as Equipes que se enquadraram no(s) filtro(s) de Odd")
         st.dataframe(home_team_profit_loss_pivot, width=800)
-       
 
 
     ##### Top Back Casa ####
