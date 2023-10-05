@@ -50,12 +50,6 @@ def stats_equipes_page():
     ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
     
     total_partidas = ultimas_partidas.shape[0]
-    
-    # Mapear os valores nas colunas 'Resultado_FT' e 'Resultado_HT' para os resultados correspondentes
-    mapeamento_resultados = {'H': 'Vitória', 'D': 'Empate', 'A': 'Away'}
-    
-    ultimas_partidas['Resultado_FT'] = ultimas_partidas['Resultado_FT'].map(mapeamento_resultados)
-    ultimas_partidas['Resultado_HT'] = ultimas_partidas['Resultado_HT'].map(mapeamento_resultados)
 
     # Calcular as estatísticas de vitórias, empates e derrotas em FT e HT
     vitorias_FT = ultimas_partidas[ultimas_partidas['Resultado_FT'] == 'Vitória'].shape[0]
@@ -92,7 +86,7 @@ def stats_equipes_page():
     deslocamentos = (largura_barra * (largura_total - 1)) / 2
 
     for i, row in ultimas_partidas.iterrows():
-        resultado = row['Desempenho FT']
+        resultado = row['Resultado_FT']
         cor = 'green' if resultado == 'Vitória' else ('red' if resultado == 'Away' else 'gray')
 
         fig, ax = plt.subplots()
