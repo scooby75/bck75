@@ -1,5 +1,3 @@
-# h2h.py
-
 import streamlit as st
 import pandas as pd
 
@@ -66,16 +64,17 @@ def h2h_page():
             most_common_score_in_group = odd_group['Placar_FT'].value_counts().idxmax()
             st.write(f'Intervalo de Odd: [{lower_bound:.2f}, {upper_bound:.2f}): Placar mais comum: {most_common_score_in_group}')
         
-    
     # Filtrar os jogos correspondentes às equipes selecionadas
-    matching_games = data[(data['Home'] == home_team) & (data['Away'] == away_team)]
+    matching_games_home = data[(data['Home'] == home_team) & (data['Away'] == away_team) & (data['Home'] == data['Local'])].head(5)
+    matching_games_away = data[(data['Home'] == home_team) & (data['Away'] == away_team) & (data['Away'] == data['Local'])].head(5)
 
-    if not matching_games.empty:
-        st.write("Jogos correspondentes:")
-        st.dataframe(matching_games[['Date', 'Season', 'League', 'Home', 'Away', 'Resultado_FT', 'Placar_FT', 'FT_Odd_H']])
-    else:
-        st.write("Nenhum jogo correspondente encontrado.")
+    if not matching_games_home.empty:
+        st.subheader("Jogos do time da casa jogando em casa:")
+        st.dataframe(matching_games_home[['Date', 'Season', 'League', 'Home', 'Away', 'Resultado_FT', 'Placar_FT', 'FT_Odd_H']])
+
+    if not matching_games_away.empty:
+        st.subheader("Jogos do time visitante jogando fora de casa:")
+        st.dataframe(matching_games_away[['Date', 'Season', 'League', 'Home', 'Away', 'Resultado_FT', 'Placar_FT', 'FT_Odd_H']])
 
 # Chamar a função para iniciar o aplicativo
 h2h_page()
-
