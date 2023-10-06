@@ -118,15 +118,15 @@ def h2h_page():
     })
 
     # Criar duas colunas, col1 e col2
-    col1, col2 = st.columns(2)
+    col3, col4 = st.columns(2)
 
-    # Em col1, exibir st.dataframe(stats_casa)
-    with col1:
-        st.subheader("Stats Casa")
+    # Em col3, exibir st.dataframe(stats_casa)
+    with col3:
+        st.subheader("Stats Desempenho")
         st.dataframe(stats_casa)
 
-    # Em col2, exibir st.dataframe(stats_gols)
-    with col2:
+    # Em col4, exibir st.dataframe(stats_gols)
+    with col4:
         st.subheader("Stats Gols")
         st.dataframe(stats_gols)
 
@@ -136,6 +136,49 @@ def h2h_page():
     # Exibir o novo DataFrame para a equipe visitante
     st.subheader("Últimos Jogos - Equipe Visitante")
     st.dataframe(ultimos_jogos_visitante, width=800)
+
+        # Selecionar as 5 últimas partidas da equipe visitante
+    ultimos_jogos_visitante = data[data['Away'] == away_team].sort_values(by='Unnamed: 0', ascending=False).head(5)
+
+    # Calcular as estatísticas de vitórias, empates e derrotas
+    vitorias = ultimos_jogos_visitante[ultimos_jogos_visitante['Resultado_FT'] == 'A']['Resultado_FT'].count()
+    empates = ultimos_jogos_visitante[ultimos_jogos_visitante['Resultado_FT'] == 'D']['Resultado_FT'].count()
+    derrotas = ultimos_jogos_visitante[ultimos_jogos_visitante['Resultado_FT'] == 'H']['Resultado_FT'].count()
+
+    # Criar um DataFrame com as estatísticas
+    stats_casa = pd.DataFrame({
+        'Estatísticas': ['Vitórias', 'Empates', 'Derrotas'],
+        'Total': [vitorias, empates, derrotas]
+    })
+
+    # Selecionar as 5 últimas partidas da equipe visitante
+    ultimos_jogos_visitante = data[data['Away'] == away_team].sort_values(by='Unnamed: 0', ascending=False).head(5)
+
+    # Calcular a média de gols marcados (Away) nas últimas 5 partidas
+    media_gols_feitos = ultimos_jogos_visitante['FT_Goals_A'].mean()
+
+    # Calcular a média de gols tomados (Away) nas últimas 5 partidas
+    media_gols_tomados = ultimos_jogos_visitante['FT_Goals_H'].mean()
+
+    # Criar um DataFrame com os valores calculados
+    stats_gols = pd.DataFrame({
+        'Equipe Visitante': [away_team],
+        'Gols Feitos (Away)': [media_gols_feitos],
+        'Gols Tomados (Away)': [media_gols_tomados]
+    })
+
+    # Criar duas colunas, col5 e col6
+    col5, col6 = st.columns(2)
+
+    # Em col1, exibir st.dataframe(stats_casa)
+    with col5:
+        st.subheader("Stats Desempenho")
+        st.dataframe(stats_casa)
+
+    # Em col2, exibir st.dataframe(stats_gols)
+    with col6:
+        st.subheader("Stats Gols")
+        st.dataframe(stats_gols)
 
 # Chamar a função para iniciar o aplicativo
 h2h_page()
