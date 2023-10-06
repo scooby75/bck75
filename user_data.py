@@ -1,5 +1,5 @@
 valid_users = {
-    "lsilveira": {"password": "Fcl2fcl2#", "profile": 3},
+    "Lyssandro": {"password": "Fcl2fcl2#", "profile": 3},
     "lamaral": {"password": "lamaral23", "profile": 3},
     "blamim": {"password": "lamim23", "profile": 3},
     "mrodrigues": {"password": "mrodrigues23", "profile": 3},
@@ -45,5 +45,6 @@ valid_users = {
     "maycon22": {"password": "Meg1309", "profile": 3},
     "RBManzano": {"password": "Melina91", "profile": 1},
     "daniel25": {"password": "Bi@253082", "profile": 2},
+    "franklinmg": {"password": "Emp@#123", "profile": 3},
     "fellipinho": {"password": "110099", "profile": 3}
 }
