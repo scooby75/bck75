@@ -254,10 +254,10 @@ def bck_home_page():
 
                 
         # Grupo do DataFrame original para calcular 'profit_home' por temporada e equipe da casa
-        df_home_profit = filtered_df.groupby(['Season', 'Home'])['profit_home'].sum().reset_index()
+        df_home_profit = filtered_df.groupby(['Season', 'League', 'Home'])['profit_home'].sum().reset_index()
         
         # Crie uma pivot table de lucro/perda por equipe da casa para a temporada selecionada
-        home_team_profit_loss_pivot = df_home_profit.pivot_table(index="Home", columns="Season", values="profit_home")
+        home_team_profit_loss_pivot = df_home_profit.pivot_table(index="Home", columns=["League", "Season"], values="profit_home", aggfunc="sum")
         
         # Calcule a soma de cada linha (cada equipe da casa) e adicione uma coluna 'Total'
         home_team_profit_loss_pivot['Total'] = home_team_profit_loss_pivot.sum(axis=1)
