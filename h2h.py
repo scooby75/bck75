@@ -75,26 +75,19 @@ def h2h_page():
         st.dataframe(matching_games[['Date', 'Season', 'League', 'Home', 'Away', 'Resultado_FT', 'Placar_FT', 'FT_Odd_H']])
     else:
         st.write("Nenhum jogo correspondente encontrado.")
-
-    # Ordenar as partidas em ordem decrescente com base na coluna "Unnamed: 0"
-    matching_games_sorted = matching_games.sort_values(by='Unnamed: 0', ascending=False)
+  
     
     # Selecionar as 5 últimas partidas da equipe da casa
-    ultimos_jogos_casa = matching_games_sorted[matching_games_sorted['Home'] == home_team].head(5)
+    ultimos_jogos_casa = data[(data['Home'] == home_team)].sort_values(by='Unnamed: 0', ascending=False).head(5)[['Date', 'Time', 'League', 'Season', 'Home', 'Away', 'Placar_HT', 'Placar_FT']]
     
-    # Exibir o novo DataFrame
+    # Exibir o novo DataFrame para a equipe da casa
     st.subheader("Últimos Jogos - Equipe da Casa")
     st.dataframe(ultimos_jogos_casa, width=800)
-
-    ##add nova dataframe para equipe visitante
-
-    # Ordenar as partidas em ordem decrescente com base na coluna "Unnamed: 0"
-    matching_games_sorted = matching_games.sort_values(by='Unnamed: 0', ascending=False)
     
-    # Selecionar as 5 últimas partidas da equipe da casa
-    ultimos_jogos_visitante = matching_games_sorted[matching_games_sorted['Away'] == away_team].head(5)
+    # Selecionar as 5 últimas partidas da equipe visitante
+    ultimos_jogos_visitante = data[(data['Away'] == away_team)].sort_values(by='Unnamed: 0', ascending=False).head(5)[['Date', 'Time', 'League', 'Season', 'Home', 'Away', 'Placar_HT', 'Placar_FT']]
     
-    # Exibir o novo DataFrame
+    # Exibir o novo DataFrame para a equipe visitante
     st.subheader("Últimos Jogos - Equipe Visitante")
     st.dataframe(ultimos_jogos_visitante, width=800)
 
