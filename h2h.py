@@ -84,7 +84,19 @@ def h2h_page():
     
     # Exibir o novo DataFrame
     st.subheader("Últimos Jogos - Equipe da Casa")
-    st.dataframe(ultimos_jogos_casa)
+    st.dataframe(ultimos_jogos_casa, width=800)
+
+    ##add nova dataframe para equipe visitante
+
+    # Ordenar as partidas em ordem decrescente com base na coluna "Unnamed: 0"
+    matching_games_sorted = matching_games.sort_values(by='Unnamed: 0', ascending=False)
+    
+    # Selecionar as 5 últimas partidas da equipe da casa
+    ultimos_jogos_visitante = matching_games_sorted[matching_games_sorted['Away'] == away_team].head(5)
+    
+    # Exibir o novo DataFrame
+    st.subheader("Últimos Jogos - Equipe Visitante")
+    st.dataframe(ultimos_jogos_visitante, width=800)
 
 
 # Chamar a função para iniciar o aplicativo
