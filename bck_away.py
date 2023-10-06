@@ -242,19 +242,29 @@ def bck_away_page():
 
      ##### Desempenho Geral - Visitante ####
 
-        # Group the filtered dataframe by away team (equipe da casa) and calculate cumulative sum of 'Profit'
-        df_away_profit = filtered_df.groupby('Away')['profit_away'].sum().reset_index()
-
-        # Group the filtered dataframe by away team (equipe da casa) and calculate cumulative sum of 'Profit'
-        df_away_profit = filtered_df.groupby(['Season', 'Away'])['profit_away'].sum().reset_index()
-
-        # Create a pivot table of profit/loss by away team for the selected season
-        away_team_profit_loss_pivot = df_away_profit.pivot_table(index="Away", columns="Season", values="profit_away")
-
-        # Display the table with profit/loss by away team (pivot table)
+               
+        # Suponha que você já tenha o DataFrame original "filtered_df" carregado aqui
+        
+        # Grupo do DataFrame original para calcular 'profit_away' por temporada e equipe visitante
+        df_away_profit = filtered_df.groupby(['Season', 'Away', 'League'])['profit_away'].sum().reset_index()
+        
+        # Crie uma pivot table de lucro/perda por equipe visitante para a temporada selecionada
+        away_team_profit_loss_pivot = df_away_profit.pivot_table(index=["Away", "League"], columns="Season", values="profit_away")
+        
+        # Calcule a soma de cada linha (cada equipe visitante) e adicione uma coluna 'Total'
+        away_team_profit_loss_pivot['Total'] = away_team_profit_loss_pivot.sum(axis=1)
+        
+        # Resetar o índice para que "Away" e "League" se tornem colunas regulares
+        away_team_profit_loss_pivot = away_team_profit_loss_pivot.reset_index()
+        
+        # Reorganize as colunas para ter "Away" e "League" no início
+        away_team_profit_loss_pivot = away_team_profit_loss_pivot[['Away', 'League'] + [col for col in away_team_profit_loss_pivot.columns if col not in ['Away', 'League']]]
+        
+        # Configure a interface do Streamlit
         st.subheader("Desempenho Geral - Equipe Visitante")
         st.text("Serão exibidas todas as Equipes que se enquadraram no(s) filtro(s) de Odd")
         st.dataframe(away_team_profit_loss_pivot, width=800)
+
 
     ##### Top Away Visitante ####
 
