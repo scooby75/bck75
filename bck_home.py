@@ -252,15 +252,22 @@ def bck_home_page():
 
      ##### Desempenho Geral - Casa ####
 
-                
+              
+      
         # Grupo do DataFrame original para calcular 'profit_home' por temporada e equipe da casa
-        df_home_profit = filtered_df.groupby(['Season', 'League', 'Home'])['profit_home'].sum().reset_index()
+        df_home_profit = filtered_df.groupby(['Season', 'Home', 'League'])['profit_home'].sum().reset_index()
         
         # Crie uma pivot table de lucro/perda por equipe da casa para a temporada selecionada
-        home_team_profit_loss_pivot = df_home_profit.pivot_table(index="Home", columns=["League", "Season"], values="profit_home", aggfunc="sum")
+        home_team_profit_loss_pivot = df_home_profit.pivot_table(index=["Home", "League"], columns="Season", values="profit_home")
         
         # Calcule a soma de cada linha (cada equipe da casa) e adicione uma coluna 'Total'
         home_team_profit_loss_pivot['Total'] = home_team_profit_loss_pivot.sum(axis=1)
+        
+        # Resetar o índice para que "Home" e "League" se tornem colunas regulares
+        home_team_profit_loss_pivot = home_team_profit_loss_pivot.reset_index()
+        
+        # Reorganize as colunas para ter "Home" e "League" no início
+        home_team_profit_loss_pivot = home_team_profit_loss_pivot[['Home', 'League'] + [col for col in home_team_profit_loss_pivot.columns if col not in ['Home', 'League']]]
         
         # Configure a interface do Streamlit
         st.subheader("Desempenho Geral - Equipe da Casa")
