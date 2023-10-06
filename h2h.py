@@ -71,10 +71,21 @@ def h2h_page():
     matching_games = data[(data['Home'] == home_team) & (data['Away'] == away_team)]
 
     if not matching_games.empty:
-        st.write("Jogos correspondentes:")
+        st.subheader("Últimos confrontos h2h:")
         st.dataframe(matching_games[['Date', 'Season', 'League', 'Home', 'Away', 'Resultado_FT', 'Placar_FT', 'FT_Odd_H']])
     else:
         st.write("Nenhum jogo correspondente encontrado.")
+
+    # Ordenar as partidas em ordem decrescente com base na coluna "Unnamed: 0"
+    matching_games_sorted = matching_games.sort_values(by='Unnamed: 0', ascending=False)
+    
+    # Selecionar as 5 últimas partidas da equipe da casa
+    ultimos_jogos_casa = matching_games_sorted[matching_games_sorted['Home'] == home_team].head(5)
+    
+    # Exibir o novo DataFrame
+    st.subheader("Últimos Jogos - Equipe da Casa")
+    st.dataframe(ultimos_jogos_casa)
+
 
 # Chamar a função para iniciar o aplicativo
 h2h_page()
