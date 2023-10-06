@@ -87,6 +87,49 @@ def h2h_page():
     st.subheader("Últimos Jogos - Equipe da Casa")
     st.dataframe(ultimos_jogos_casa, width=800)
 
+    # Selecionar as 5 últimas partidas da equipe da casa
+    ultimos_jogos_casa = data[data['Home'] == home_team].sort_values(by='Unnamed: 0', ascending=False).head(5)
+
+    # Calcular as estatísticas de vitórias, empates e derrotas
+    vitorias = ultimos_jogos_casa[ultimos_jogos_casa['Resultado_FT'] == 'H']['Resultado_FT'].count()
+    empates = ultimos_jogos_casa[ultimos_jogos_casa['Resultado_FT'] == 'D']['Resultado_FT'].count()
+    derrotas = ultimos_jogos_casa[ultimos_jogos_casa['Resultado_FT'] == 'A']['Resultado_FT'].count()
+
+    # Criar um DataFrame com as estatísticas
+    stats_casa = pd.DataFrame({
+        'Estatísticas': ['Vitórias', 'Empates', 'Derrotas'],
+        'Total': [vitorias, empates, derrotas]
+    })
+
+    # Selecionar as 5 últimas partidas da equipe da casa
+    ultimos_jogos_casa = data[data['Home'] == home_team].sort_values(by='Unnamed: 0', ascending=False).head(5)
+
+    # Calcular a média de gols marcados (Home) nas últimas 5 partidas
+    media_gols_feitos = ultimos_jogos_casa['FT_Goals_H'].mean()
+
+    # Calcular a média de gols tomados (Home) nas últimas 5 partidas
+    media_gols_tomados = ultimos_jogos_casa['FT_Goals_A'].mean()
+
+    # Criar um DataFrame com os valores calculados
+    stats_gols = pd.DataFrame({
+        'Equipe da Casa': [home_team],
+        'Gols Feitos (Home)': [media_gols_feitos],
+        'Gols Tomados (Home)': [media_gols_tomados]
+    })
+
+    # Criar duas colunas, col1 e col2
+    col1, col2 = st.columns(2)
+
+    # Em col1, exibir st.dataframe(stats_casa)
+    with col1:
+        st.subheader("Stats Casa")
+        st.dataframe(stats_casa)
+
+    # Em col2, exibir st.dataframe(stats_gols)
+    with col2:
+        st.subheader("Stats Gols")
+        st.dataframe(stats_gols)
+
     # Selecionar as 5 últimas partidas da equipe visitante
     ultimos_jogos_visitante = data[(data['Away'] == away_team)].sort_values(by='Unnamed: 0', ascending=False).head(5)[['Date', 'Time', 'League', 'Season', 'Home', 'Away', 'Placar_HT', 'Placar_FT']]
 
