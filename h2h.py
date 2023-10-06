@@ -1,5 +1,3 @@
-# h2h.py
-
 import streamlit as st
 import pandas as pd
 
@@ -48,25 +46,31 @@ def h2h_page():
         'Número de Vitórias': [home_team_wins_count, away_team_wins_count, draws_count]
     })
 
-    st.dataframe(result_data)
+    # Criar duas colunas, col1 e col2
+    col1, col2 = st.columns(2)
 
-    # Encontrar o placar mais comum (Placar_FT) apenas para as equipes selecionadas
-    filtered_data = data[(data['Home'] == home_team) & (data['Away'] == away_team)]
-    if not filtered_data.empty:
-        most_common_score = filtered_data['Placar_FT'].value_counts().idxmax()
-        st.write(f'Placar mais comum: {most_common_score}')
-    else:
-        st.write("Nenhum jogo correspondente encontrado.")
+    # Em col1, exibir o DataFrame result_data
+    with col1:
+        st.dataframe(result_data)
 
-    # Agrupar por intervalo de Odd e encontrar o placar mais comum em cada intervalo
-    for lower_bound, upper_bound in odd_intervals:
-        odd_group = data[(data['FT_Odd_H'] >= lower_bound) & (data['FT_Odd_H'] <= upper_bound) & (data['Home'] == home_team) & (data['Away'] == away_team)]
+    # Em col2, exibir as informações sobre o intervalo de Odd e o placar mais comum
+    with col2:
+        # Encontrar o placar mais comum (Placar_FT) apenas para as equipes selecionadas
+        filtered_data = data[(data['Home'] == home_team) & (data['Away'] == away_team)]
+        if not filtered_data.empty:
+            most_common_score = filtered_data['Placar_FT'].value_counts().idxmax()
+            st.write(f'Placar mais comum: {most_common_score}')
+        else:
+            st.write("Nenhum jogo correspondente encontrado.")
 
-        if not odd_group.empty:
-            most_common_score_in_group = odd_group['Placar_FT'].value_counts().idxmax()
-            st.write(f'Intervalo de Odd: [{lower_bound:.2f}, {upper_bound:.2f}): Placar mais comum: {most_common_score_in_group}')
-        
-    
+        # Agrupar por intervalo de Odd e encontrar o placar mais comum em cada intervalo
+        for lower_bound, upper_bound in odd_intervals:
+            odd_group = data[(data['FT_Odd_H'] >= lower_bound) & (data['FT_Odd_H'] <= upper_bound) & (data['Home'] == home_team) & (data['Away'] == away_team)]
+
+            if not odd_group.empty:
+                most_common_score_in_group = odd_group['Placar_FT'].value_counts().idxmax()
+                st.write(f'Intervalo de Odd: [{lower_bound:.2f}, {upper_bound:.2f}): Placar mais comum: {most_common_score_in_group}')
+
     # Filtrar os jogos correspondentes às equipes selecionadas
     matching_games = data[(data['Home'] == home_team) & (data['Away'] == away_team)]
 
@@ -75,23 +79,20 @@ def h2h_page():
         st.dataframe(matching_games[['Date', 'Season', 'League', 'Home', 'Away', 'Resultado_FT', 'Placar_FT', 'FT_Odd_H']])
     else:
         st.write("Nenhum jogo correspondente encontrado.")
-  
-    
+
     # Selecionar as 5 últimas partidas da equipe da casa
     ultimos_jogos_casa = data[(data['Home'] == home_team)].sort_values(by='Unnamed: 0', ascending=False).head(5)[['Date', 'Time', 'League', 'Season', 'Home', 'Away', 'Placar_HT', 'Placar_FT']]
-    
+
     # Exibir o novo DataFrame para a equipe da casa
     st.subheader("Últimos Jogos - Equipe da Casa")
     st.dataframe(ultimos_jogos_casa, width=800)
-    
+
     # Selecionar as 5 últimas partidas da equipe visitante
     ultimos_jogos_visitante = data[(data['Away'] == away_team)].sort_values(by='Unnamed: 0', ascending=False).head(5)[['Date', 'Time', 'League', 'Season', 'Home', 'Away', 'Placar_HT', 'Placar_FT']]
-    
+
     # Exibir o novo DataFrame para a equipe visitante
     st.subheader("Últimos Jogos - Equipe Visitante")
     st.dataframe(ultimos_jogos_visitante, width=800)
 
-
 # Chamar a função para iniciar o aplicativo
 h2h_page()
-
