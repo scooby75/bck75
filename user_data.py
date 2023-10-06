@@ -44,5 +44,6 @@ valid_users = {
     "regiscotrim": {"password": "Cida1212@", "profile": 3},
     "maycon22": {"password": "Meg1309", "profile": 3},
     "RBManzano": {"password": "Melina91", "profile": 1},
+    "daniel25": {"password": "Bi@253082", "profile": 2},
     "fellipinho": {"password": "110099", "profile": 3}
 }
