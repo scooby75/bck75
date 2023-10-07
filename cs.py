@@ -32,7 +32,7 @@ def cs_page():
     df = df[(df['FT_Odd_Under25'] <= 2)]
 
     # Placares para os quais você deseja calcular a probabilidade
-    placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x2', '3x3', '4x0', '4x1', '4x2', '4x3', '4x4', '5x0', '5x1', '5x2', '5x3']
+    placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x1', '3x2', '3x3', '1x3', '2x3']
 
     # Lista para armazenar as linhas dos resultados
     linhas_resultados = []
