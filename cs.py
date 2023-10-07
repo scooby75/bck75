@@ -3,6 +3,8 @@ import pandas as pd
 from scipy.stats import poisson
 from streamlit import SessionState
 
+from session_state import SessionState
+
 def cs_page():
     # Inicializa o estado da sessão
     session_state = SessionState()
