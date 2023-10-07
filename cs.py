@@ -107,7 +107,7 @@ def cs_page():
             if any(prob_game_df.iloc[0] >= 16):
                 st.dataframe(formatted_df)
             else:
-                st.write("Nenhum jogo atende aos critérios de probabilidade)
+                st.write("Nenhum jogo atende aos critérios de probabilidade")
     else:
         st.write("Nenhum jogo atende aos critérios de probabilidade")
 
