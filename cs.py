@@ -90,7 +90,7 @@ def cs_page():
     resultado_df = pd.DataFrame(linhas_resultados)
 
     # Verificar se há pelo menos um jogo onde o placar mais provável seja >= 16%
-    if resultado_df.iloc[:, 3:].astype(float).max(axis=1).ge(16).any():
+    if resultado_df.iloc[:, 4:].apply(lambda x: pd.to_numeric(x, errors='coerce')).max(axis=1).ge(16).any():
         # Iniciar aplicativo Streamlit
         st.subheader("Probabilidade de Placar")
 
@@ -110,7 +110,7 @@ def cs_page():
             # Exibir o placar mais provável e sua probabilidade
             st.write(f"Placar Mais Provável: {most_probable_score} - {prob_game_df.at[index, most_probable_score]:.1f}%")
 
-   
+    
 
 # Chamar a função para executar o aplicativo
 cs_page()
