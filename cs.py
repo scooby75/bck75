@@ -103,9 +103,13 @@ def cs_page():
             # Formatar e exibir a tabela
             formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
 
-            st.dataframe(formatted_df)
+            # Check if the probability of the home team winning by any score is greater than or equal to 16%
+            if any(prob_game_df.iloc[0] >= 16):
+                st.dataframe(formatted_df)
+            else:
+                st.write("Nenhum jogo atende aos critérios de probabilidade)
     else:
-        st.write("Nenhum jogo atende aos critérios de probabilidade maior ou igual a 16%.")
+        st.write("Nenhum jogo atende aos critérios de probabilidade")
 
 # Chamar a função para executar o aplicativo
 cs_page()
