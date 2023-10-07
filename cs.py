@@ -9,15 +9,6 @@ def cs_page():
     # Carregar os dados do arquivo CSV em um DataFrame
     df = pd.read_csv(url)
 
-    # Filtrar jogos com round maior ou igual a 10
-    df = df[df['Rodada'] >= 10]
-
-    # Filtrar jogos com home menor ou igual a 1.90
-    df = df[(df['FT_Odd_H'] >= 1.40) & (df['FT_Odd_H'] <= 2.4)]
-
-    # Filtrar jogos com home menor ou igual a 1.90
-    df = df[(df['FT_Odd_Under25'] <= 2)]
-
     # Placares para os quais você deseja calcular a probabilidade
     placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x2', '3x3', '4x0', '4x1', '4x2', '4x3', '4x4', '5x0', '5x1', '5x2', '5x3']
 
@@ -81,25 +72,29 @@ def cs_page():
     # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
-    # Loop para exibir os detalhes e a tabela
-    for index, row in resultado_df.iterrows():
-        details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
-        details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
-        st.write(details1)
-        st.write(details2)
+    # Check if there are any games to display
+    if not resultado_df.empty:
+        # Loop para exibir os detalhes e a tabela
+        for index, row in resultado_df.iterrows():
+            details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
+            details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
+            st.write(details1)
+            st.write(details2)
 
-        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
-        prob_game_df = resultado_df[placares].iloc[[index]]
+            # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
+            prob_game_df = resultado_df[placares].iloc[[index]]
 
-        # Selecionar os 6 placares mais prováveis
-        top_placares = prob_game_df.T.nlargest(8, index)[index].index
+            # Selecionar os 6 placares mais prováveis
+            top_placares = prob_game_df.T.nlargest(8, index)[index].index
 
-        # Filtrar o DataFrame temporário para incluir apenas os 6 placares mais prováveis
-        prob_game_df = prob_game_df[top_placares]
+            # Filtrar o DataFrame temporário para incluir apenas os 6 placares mais prováveis
+            prob_game_df = prob_game_df[top_placares]
 
-        # Formatar e exibir a tabela
-        formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
-        st.dataframe(formatted_df)
+            # Formatar e exibir a tabela
+            formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
+            st.dataframe(formatted_df)
+    else:
+        st.write("Nenhum jogo atende aos critérios especificados.")
 
 # Chamar a função para executar o aplicativo
 cs_page()
