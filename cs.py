@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 from scipy.stats import poisson
-from streamlit import SessionState
 
 from session_state import SessionState
 
