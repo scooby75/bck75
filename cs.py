@@ -58,14 +58,14 @@ def cs_page():
 
         # Criar uma linha para o resultado deste jogo
         linha_resultado = {
-            'Data': row['Data'],
+            'Date': row['Data'],
             'Hora': row['Hora'],
             'Liga': row['Liga'],
-            'Casa': row['Casa'],
-            'Visitante': row['Visitante'],
-            'Cotação_Casa': row['Cotação_Casa'],
-            'Cotação_Empate': row['Cotação_Empate'],
-            'Cotação_Visitante': row['Cotação_Visitante']
+            'Home': row['Casa'],
+            'Away': row['Visitante'],
+            'FT_Odd_H': row['FT_Odd_H'],
+            'FT_Odd_D': row['FT_Odd_D'],
+            'FT_Odd_A': row['FT_Odd_A']
         }
 
         for i, placar in enumerate(placares):
@@ -83,8 +83,8 @@ def cs_page():
 
         # Loop para exibir os detalhes e a tabela
         for index, row in resultado_df.iterrows():
-            detalhes1 = f"**Hora:** {row['Hora']}  |  **Casa:** {row['Casa']}  |  **Visitante:** {row['Visitante']}"
-            detalhes2 = f"**Cotação Casa:** {row['Cotação_Casa']} |  **Cotação Empate:** {row['Cotação_Empate']} |  **Cotação Visitante:** {row['Cotação_Visitante']}"
+            detalhes1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
+            detalhes2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
             st.write(detalhes1)
             st.write(detalhes2)
 
