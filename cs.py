@@ -86,8 +86,8 @@ def cs_page():
 
         # Loop para exibir os detalhes e a tabela
         for index, row in resultado_df.iterrows():
-            detalhes1 = f"**Hora:** {row['Hora']}  |  **Casa:** {row['Home']}  |  **Visitante:** {row['Away']}"
-            detalhes2 = f"**Cotação Casa:** {row['FT_Odd_H']} |  **Cotação Empate:** {row['FT_Odd_D']} |  **Cotação Visitante:** {row['FT_Odd_A']}"
+            detalhes1 = f"Hora: {row['Hora']}  |  {row['Home']}  |  {row['Away']}"
+            detalhes2 = f"Odd Casa: {row['FT_Odd_H']} |  Odd Empate: {row['FT_Odd_D']} |  Odd Visitante: {row['FT_Odd_A']}"
 
             # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
             prob_game_df = resultado_df[placares].iloc[[index]]
@@ -105,9 +105,7 @@ def cs_page():
                 # Formatar e exibir a tabela
                 formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
                 st.dataframe(formatted_df)
-            else:
-                st.write("Nenhum jogo atende aos critérios de probabilidade")
-
+            
 
 # Chamar a função para executar o aplicativo
 cs_page()
