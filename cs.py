@@ -91,8 +91,7 @@ def cs_page():
 
             # Check if the probability of the home team winning by any score is greater than or equal to 16%
             if any(prob_game_df.iloc[0] >= 16):
-                st.write(detalhes1)
-                st.write(detalhes2)
+                st.dataframe(pd.DataFrame({'Detalhes': [detalhes1, detalhes2]}))  # Display details in a DataFrame
 
                 # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
                 prob_game_df = resultado_df[placares].iloc[[index]]
