@@ -22,13 +22,13 @@ def cs_page():
     # Carregar os dados do arquivo CSV em um DataFrame
     df = pd.read_csv(url)
 
-    # Filtrar jogos com rodada maior ou igual a 10
+    # Filtrar jogos com round maior ou igual a 10
     df = df[df['Rodada'] >= 10]
 
-    # Filtrar jogos com cotação (odd) da equipe da casa entre 1.40 e 2.4
+    # Filtrar jogos com home menor ou igual a 1.90
     df = df[(df['FT_Odd_H'] >= 1.40) & (df['FT_Odd_H'] <= 2.4)]
 
-    # Filtrar jogos com cotação (odd) de menos de 2.5 gols
+    # Filtrar jogos com home menor ou igual a 1.90
     df = df[(df['FT_Odd_Under25'] <= 2)]
 
     # Placares para os quais você deseja calcular a probabilidade
@@ -89,28 +89,31 @@ def cs_page():
     # Criar um novo DataFrame com os resultados
     resultado_df = pd.DataFrame(linhas_resultados)
 
-    # Verificar se há pelo menos um jogo onde o placar mais provável seja >= 16%
-    if resultado_df.iloc[:, 4:].apply(lambda x: pd.to_numeric(x, errors='coerce')).max(axis=1).ge(16).any():
-        # Iniciar aplicativo Streamlit
-        st.subheader("Probabilidade de Placar")
+    # Iniciar aplicativo Streamlit
+    st.subheader("Probabilidade de Placar")
 
-        # Loop para exibir os detalhes e a tabela
-        for index, row in resultado_df.iterrows():
-            detalhes1 = f"**Hora:** {row['Hora']}  |  **Casa:** {row['Home']}  |  **Visitante:** {row['Away']}"
-            detalhes2 = f"**Cotação Casa:** {row['FT_Odd_H']} |  **Cotação Empate:** {row['FT_Odd_D']} |  **Cotação Visitante:** {row['FT_Odd_A']}"
-            st.write(detalhes1)
-            st.write(detalhes2)
+    # Loop para exibir os detalhes e a tabela
+    for index, row in resultado_df.iterrows():
+        details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
+        details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
+        st.write(details1)
+        st.write(details2)
 
-            # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
-            prob_game_df = resultado_df[placares].iloc[[index]]
+        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
+        prob_game_df = resultado_df[placares].iloc[[index]]
 
-            # Selecionar o placar mais provável
-            most_probable_score = prob_game_df.T.idxmax()[index]
+        # Selecionar os 6 placares mais prováveis
+        top_placares = prob_game_df.T.nlargest(8, index)[index].index
 
-            # Exibir o placar mais provável e sua probabilidade
-            st.write(f"Placar Mais Provável: {most_probable_score} - {prob_game_df.at[index, most_probable_score]:.1f}%")
+        # Filtrar o DataFrame temporário para incluir apenas os 6 placares mais prováveis
+        prob_game_df = prob_game_df[top_placares]
 
-    
+        # Formatar e exibir a tabela
+        formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
+        st.dataframe(formatted_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
+
+
+
