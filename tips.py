@@ -204,32 +204,41 @@ def tips_page():
             
             # Use df aqui para a aba "BTTS Sim"
             st.subheader("BTTS Sim")
-            st.text("Apostar em Ambas Marcam Sim, Odd minima 1.6")
+            st.text("Apostar em Ambas Marcam Sim, Odd mínima 1.6")
             
             # Lista de ligas indesejadas
             ligas_indesejadas = [
+                "1. Liga",
                 "2. Liga",
                 "3 Liga Group 2",
+                "Ascenso MX",
                 "Challenge League",
                 "Championship",
                 "Chinese Super League",
                 "Division 2 Norra Svealand",
                 "Division 2 Sodra Svealand",
                 "EFL League One",
+                "Eliteserien",
                 "Ettan North",
                 "Ettan South",
                 "FNL",
                 "J1 League",
                 "J2 League",
                 "Kakkonen",
+                "Liga MX",
                 "Liga MX Femenil",
+                "Meistriliiga",
+                "National League",
                 "Northern Premier League",
+                "Oberliga Baden Wurttemberg",
                 "Oberliga Bayern Süd",
                 "Oberliga Hessen",
                 "Oberliga Schleswig Holstein",
+                "PrvaLiga",
                 "Regionalliga Bayern",
                 "Regionalliga Mitte",
                 "Regionalliga Nord",
+                "Regionalliga Ost",
                 "Regionalliga Südwest",
                 "Regionalliga West",
                 "Super League",
@@ -261,7 +270,6 @@ def tips_page():
                 file_name=f"btts_yes_{data_atual}.csv",
                 key="btts_yes_csv"
             )
-
         with tab7:
             # Definir URLs para os arquivos CSV
             url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
