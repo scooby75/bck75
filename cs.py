@@ -88,23 +88,23 @@ def cs_page():
         for index, row in resultado_df.iterrows():
             detalhes1 = f"**Hora:** {row['Hora']}  |  **Casa:** {row['Home']}  |  **Visitante:** {row['Away']}"
             detalhes2 = f"**Cotação Casa:** {row['FT_Odd_H']} |  **Cotação Empate:** {row['FT_Odd_D']} |  **Cotação Visitante:** {row['FT_Odd_A']}"
-            st.write(detalhes1)
-            st.write(detalhes2)
-
-            # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
-            prob_game_df = resultado_df[placares].iloc[[index]]
-
-            # Selecionar os 6 placares mais prováveis
-            top_placares = prob_game_df.T.nlargest(8, index)[index].index
-
-            # Filtrar o DataFrame temporário para incluir apenas os 6 placares mais prováveis
-            prob_game_df = prob_game_df[top_placares]
-
-            # Formatar e exibir a tabela
-            formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
 
             # Check if the probability of the home team winning by any score is greater than or equal to 16%
             if any(prob_game_df.iloc[0] >= 16):
+                st.write(detalhes1)
+                st.write(detalhes2)
+
+                # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
+                prob_game_df = resultado_df[placares].iloc[[index]]
+
+                # Selecionar os 6 placares mais prováveis
+                top_placares = prob_game_df.T.nlargest(8, index)[index].index
+
+                # Filtrar o DataFrame temporário para incluir apenas os 6 placares mais prováveis
+                prob_game_df = prob_game_df[top_placares]
+
+                # Formatar e exibir a tabela
+                formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
                 st.dataframe(formatted_df)
             else:
                 st.write("Nenhum jogo atende aos critérios de probabilidade")
