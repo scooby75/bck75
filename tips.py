@@ -201,23 +201,58 @@ def tips_page():
             )
 
         with tab6:
+            
             # Use df aqui para a aba "BTTS Sim"
             st.subheader("BTTS Sim")
             st.text("Apostar em Ambas Marcam Sim, Odd minima 1.6")
+            
+            # Lista de ligas indesejadas
+            ligas_indesejadas = [
+                "2. Liga",
+                "3 Liga Group 2",
+                "Challenge League",
+                "Championship",
+                "Chinese Super League",
+                "Division 2 Norra Svealand",
+                "Division 2 Sodra Svealand",
+                "EFL League One",
+                "Ettan North",
+                "Ettan South",
+                "FNL",
+                "J1 League",
+                "J2 League",
+                "Kakkonen",
+                "Liga MX Femenil",
+                "Northern Premier League",
+                "Oberliga Bayern Süd",
+                "Oberliga Hessen",
+                "Oberliga Schleswig Holstein",
+                "Regionalliga Bayern",
+                "Regionalliga Mitte",
+                "Regionalliga Nord",
+                "Regionalliga Südwest",
+                "Regionalliga West",
+                "Super League",
+                "Superliga",
+                "Welsh Premier League"
+            ]
+        
             btts_yes_df = df[
                 (df["FT_Odd_Over25"] <= 1.7) & 
                 (df["FT_Odd_BTTS_Yes"] <= 1.7) &
                 (df["XG_Home"] >= 1.2) & 
                 (df["XG_Away"] >= 1.2) &
-                (df["Rodada"] >= 10)
+                (df["Rodada"] >= 10) &
+                (~df["Liga"].isin(ligas_indesejadas))  # Adiciona a condição para evitar ligas indesejadas
             ]
+            
             colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
             btts_yes_df = btts_yes_df[colunas_desejadas]
             st.dataframe(btts_yes_df, width=800)
-
+        
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
-
+        
             # Criar um link para download do CSV
             csv_link_btts = btts_yes_df.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
