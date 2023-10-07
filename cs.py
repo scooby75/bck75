@@ -71,10 +71,13 @@ def cs_page():
                 'FT_Odd_A': row['FT_Odd_A']
             }
 
+            # Criar nomes de colunas para os placares mais prováveis
+            nomes_placares = [f"{placar} ({probabilidades[i] * 100:.1f}%)" for i, placar in enumerate(placares) if i in top_placares]
+
             for i in top_placares:
                 placar = placares[i]
                 prob = round(probabilidades[i] * 100, 2)
-                linha_resultado[placar] = prob
+                linha_resultado[f"{placar} ({prob:.1f}%)"] = prob
 
             linhas_resultados.append(linha_resultado)
 
@@ -84,12 +87,8 @@ def cs_page():
     # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
-    # Cabeçalho formatado
-    #st.write("Hora, Home, Away, FT_Odd_H, FT_Odd_D, FT_Odd_A", end=", ")
-    #st.write(", ".join(top_placares))
-
     # Exibir todos os jogos em um único DataFrame
-    st.dataframe(resultado_df[['Hora', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A'] + top_placares])
+    st.dataframe(resultado_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
