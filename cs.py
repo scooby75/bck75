@@ -99,7 +99,7 @@ def cs_page():
         formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
         
         # Check if the probability of the first score outcome is >= 16%
-        if formatted_df.iloc[0, 0] >= 16.0:
+        if formatted_df.iloc[0, 0] >= "16.0%":
             st.dataframe(formatted_df)
 
 # Chamar a função para executar o aplicativo
