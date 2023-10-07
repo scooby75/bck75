@@ -89,12 +89,12 @@ def cs_page():
             detalhes1 = f"**Hora:** {row['Hora']}  |  **Casa:** {row['Home']}  |  **Visitante:** {row['Away']}"
             detalhes2 = f"**Cotação Casa:** {row['FT_Odd_H']} |  **Cotação Empate:** {row['FT_Odd_D']} |  **Cotação Visitante:** {row['FT_Odd_A']}"
 
+            # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
+            prob_game_df = resultado_df[placares].iloc[[index]]
+
             # Check if the probability of the home team winning by any score is greater than or equal to 16%
             if any(prob_game_df.iloc[0] >= 16):
                 st.dataframe(pd.DataFrame({'Detalhes': [detalhes1, detalhes2]}))  # Display details in a DataFrame
-
-                # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
-                prob_game_df = resultado_df[placares].iloc[[index]]
 
                 # Selecionar os 6 placares mais prováveis
                 top_placares = prob_game_df.T.nlargest(8, index)[index].index
