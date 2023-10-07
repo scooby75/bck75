@@ -68,6 +68,7 @@ def cs_page():
             'FT_Odd_A': row['FT_Odd_A']
         }
 
+
         for i, placar in enumerate(placares):
             linha_resultado[placar] = round(probabilidades[i] * 100, 2)
 
@@ -83,8 +84,8 @@ def cs_page():
 
         # Loop para exibir os detalhes e a tabela
         for index, row in resultado_df.iterrows():
-            detalhes1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
-            detalhes2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
+            detalhes1 = f"**Hora:** {row['Hora']}  |  **Casa:** {row['Casa']}  |  **Visitante:** {row['Visitante']}"
+            detalhes2 = f"**Cotação Casa:** {row['Cotação_Casa']} |  **Cotação Empate:** {row['Cotação_Empate']} |  **Cotação Visitante:** {row['Cotação_Visitante']}"
             st.write(detalhes1)
             st.write(detalhes2)
 
@@ -102,7 +103,7 @@ def cs_page():
 
             st.dataframe(formatted_df)
     else:
-        st.write("Nenhum jogo atende aos critérios de probabilidade.")
+        st.write("Nenhum jogo atende aos critérios de probabilidade maior ou igual a 16%.")
 
 # Chamar a função para executar o aplicativo
 cs_page()
