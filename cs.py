@@ -107,8 +107,7 @@ def cs_page():
                 st.dataframe(formatted_df)
             else:
                 st.write("Nenhum jogo atende aos critérios de probabilidade")
-    else:
-        st.write("Nenhum jogo atende aos critérios de probabilidade")
+
 
 # Chamar a função para executar o aplicativo
 cs_page()
