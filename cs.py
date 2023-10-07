@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 from scipy.stats import poisson
-
 from session_state import SessionState
 
 def cs_page():
@@ -37,7 +36,7 @@ def cs_page():
     # Lista para armazenar as linhas dos resultados
     linhas_resultados = []
 
-    # Iterar sobre os jogos e calcular as probabilidades para cada placar
+    # Loop para calcular as probabilidades e filtrar os jogos
     for index, row in df.iterrows():
         # Calcular as médias de gols esperados para cada time e o total esperado
         lambda_home = row['XG_Home']
@@ -69,22 +68,24 @@ def cs_page():
         # Normalizar as probabilidades para que a soma seja 100%
         probabilidades = [prob / total_prob for prob in probabilidades]
 
-        # Criar uma linha para o resultado deste jogo
-        linha_resultado = {
-            'Date': row['Date'],
-            'Hora': row['Hora'],
-            'Liga': row['Liga'],
-            'Home': row['Home'],
-            'Away': row['Away'],
-            'FT_Odd_H': row['FT_Odd_H'],
-            'FT_Odd_D': row['FT_Odd_D'],
-            'FT_Odd_A': row['FT_Odd_A']
-        }
+        # Verificar se pelo menos um placar provável é maior ou igual a 16%
+        if any(prob >= 16 for prob in probabilidades):
+            # Criar uma linha para o resultado deste jogo
+            linha_resultado = {
+                'Date': row['Date'],
+                'Hora': row['Hora'],
+                'Liga': row['Liga'],
+                'Home': row['Home'],
+                'Away': row['Away'],
+                'FT_Odd_H': row['FT_Odd_H'],
+                'FT_Odd_D': row['FT_Odd_D'],
+                'FT_Odd_A': row['FT_Odd_A']
+            }
 
-        for i, placar in enumerate(placares):
-            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
+            for i, placar in enumerate(placares):
+                linha_resultado[placar] = round(probabilidades[i] * 100, 2)
 
-        linhas_resultados.append(linha_resultado)
+            linhas_resultados.append(linha_resultado)
 
     # Criar um novo DataFrame com os resultados
     resultado_df = pd.DataFrame(linhas_resultados)
@@ -114,6 +115,3 @@ def cs_page():
 
 # Chamar a função para executar o aplicativo
 cs_page()
-
-
-
