@@ -78,10 +78,12 @@ def cs_page():
     st.subheader("Probabilidade de Placar")
 
     # Cabeçalho formatado
-    st.write("Hora, Home, Away, FT_Odd_H, FT_Odd_D, FT_Odd_A")
+    #st.write("Hora, Home, Away, FT_Odd_H, FT_Odd_D, FT_Odd_A, 0x0, 1x0, 0x1, 1x1, 2x0, 0x2, 2x1, 1x2, 2x2, 3x0, 0x3, 3x2, 3x3, 4x0, 4x1, 4x2, 4x3, 4x4, 5x0, 5x1, 5x2, 5x3")
 
-    # Exibir todos os jogos em um único DataFrame
-    st.dataframe(resultado_df[['Hora', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A']])
+    # Exibir apenas jogos em que o primeiro placar seja maior ou igual a 16%
+    for index, row in resultado_df.iterrows():
+        if any(row[placares[:8]] >= 16):
+            st.write(f"{row['Hora']}, {row['Home']}, {row['Away']}, {row['FT_Odd_H']}, {row['FT_Odd_D']}, {row['FT_Odd_A']}, {', '.join([f'{placar} ({row[placar]:.1f}%)' for placar in placares])}")
 
 # Chamar a função para executar o aplicativo
 cs_page()
