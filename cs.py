@@ -68,7 +68,6 @@ def cs_page():
             'FT_Odd_A': row['FT_Odd_A']
         }
 
-
         for i, placar in enumerate(placares):
             linha_resultado[placar] = round(probabilidades[i] * 100, 2)
 
@@ -77,15 +76,18 @@ def cs_page():
     # Criar um novo DataFrame com os resultados
     resultado_df = pd.DataFrame(linhas_resultados)
 
-    # Verificar se há pelo menos um jogo onde a primeira coluna seja >= 16%
-    if resultado_df.iloc[:, 0].str.rstrip('%').astype(float).ge(16).any():
+    # Convert the 'Date' column to datetime objects
+    resultado_df['Date'] = pd.to_datetime(resultado_df['Date'], format='%d.%m.%Y')
+
+    # Check if any date is greater than or equal to a specific date
+    if (resultado_df['Date'] >= pd.to_datetime('2023-10-07')).any():
         # Iniciar aplicativo Streamlit
         st.subheader("Probabilidade de Placar")
 
         # Loop para exibir os detalhes e a tabela
         for index, row in resultado_df.iterrows():
-            detalhes1 = f"**Hora:** {row['Hora']}  |  **Casa:** {row['Casa']}  |  **Visitante:** {row['Visitante']}"
-            detalhes2 = f"**Cotação Casa:** {row['Cotação_Casa']} |  **Cotação Empate:** {row['Cotação_Empate']} |  **Cotação Visitante:** {row['Cotação_Visitante']}"
+            detalhes1 = f"**Hora:** {row['Hora']}  |  **Casa:** {row['Home']}  |  **Visitante:** {row['Away']}"
+            detalhes2 = f"**Cotação Casa:** {row['FT_Odd_H']} |  **Cotação Empate:** {row['FT_Odd_D']} |  **Cotação Visitante:** {row['FT_Odd_A']}"
             st.write(detalhes1)
             st.write(detalhes2)
 
