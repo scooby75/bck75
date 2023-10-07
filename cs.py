@@ -56,20 +56,27 @@ def cs_page():
         # Normalizar as probabilidades para que a soma seja 100%
         probabilidades = [prob / total_prob for prob in probabilidades]
 
-        # Criar uma linha para o resultado deste jogo
-        linha_resultado = {
-            'Hora': row['Hora'],
-            'Home': row['Home'],
-            'Away': row['Away'],
-            'FT_Odd_H': row['FT_Odd_H'],
-            'FT_Odd_D': row['FT_Odd_D'],
-            'FT_Odd_A': row['FT_Odd_A']
-        }
+        # Selecionar os 8 placares mais prováveis
+        top_placares = sorted(range(len(probabilidades)), key=lambda i: -probabilidades[i])[:8]
 
-        for i, placar in enumerate(placares):
-            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
+        # Verificar se o primeiro placar mais provável é maior ou igual a 16%
+        if probabilidades[top_placares[0]] >= 16:
+            # Criar uma linha para o resultado deste jogo
+            linha_resultado = {
+                'Hora': row['Hora'],
+                'Home': row['Home'],
+                'Away': row['Away'],
+                'FT_Odd_H': row['FT_Odd_H'],
+                'FT_Odd_D': row['FT_Odd_D'],
+                'FT_Odd_A': row['FT_Odd_A']
+            }
 
-        linhas_resultados.append(linha_resultado)
+            for i in top_placares:
+                placar = placares[i]
+                prob = round(probabilidades[i] * 100, 2)
+                linha_resultado[placar] = prob
+
+            linhas_resultados.append(linha_resultado)
 
     # Criar um novo DataFrame com os resultados
     resultado_df = pd.DataFrame(linhas_resultados)
@@ -78,12 +85,11 @@ def cs_page():
     st.subheader("Probabilidade de Placar")
 
     # Cabeçalho formatado
-    #st.write("Hora, Home, Away, FT_Odd_H, FT_Odd_D, FT_Odd_A, 0x0, 1x0, 0x1, 1x1, 2x0, 0x2, 2x1, 1x2, 2x2, 3x0, 0x3, 3x2, 3x3, 4x0, 4x1, 4x2, 4x3, 4x4, 5x0, 5x1, 5x2, 5x3")
+    #st.write("Hora, Home, Away, FT_Odd_H, FT_Odd_D, FT_Odd_A", end=", ")
+    #st.write(", ".join(top_placares))
 
-    # Exibir apenas jogos em que o primeiro placar seja maior ou igual a 16%
-    for index, row in resultado_df.iterrows():
-        if any(row[placares[:8]] >= 16):
-            st.write(f"{row['Hora']}, {row['Home']}, {row['Away']}, {row['FT_Odd_H']}, {row['FT_Odd_D']}, {row['FT_Odd_A']}, {', '.join([f'{placar} ({row[placar]:.1f}%)' for placar in placares])}")
+    # Exibir todos os jogos em um único DataFrame
+    st.dataframe(resultado_df[['Hora', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A'] + top_placares])
 
 # Chamar a função para executar o aplicativo
 cs_page()
