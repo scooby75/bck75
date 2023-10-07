@@ -58,11 +58,11 @@ def cs_page():
 
         # Criar uma linha para o resultado deste jogo
         linha_resultado = {
-            'Date': row['Data'],
+            'Date': row['Date'],
             'Hora': row['Hora'],
             'Liga': row['Liga'],
-            'Home': row['Casa'],
-            'Away': row['Visitante'],
+            'Home': row['Home'],
+            'Away': row['Away'],
             'FT_Odd_H': row['FT_Odd_H'],
             'FT_Odd_D': row['FT_Odd_D'],
             'FT_Odd_A': row['FT_Odd_A']
