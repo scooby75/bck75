@@ -74,19 +74,14 @@ def cs_page():
     # Criar um novo DataFrame com os resultados
     resultado_df = pd.DataFrame(linhas_resultados)
 
-    # Convert the 'Date' column to datetime objects
-    resultado_df['Date'] = pd.to_datetime(resultado_df['Date'], format='%d.%m.%Y')
+    # Iniciar aplicativo Streamlit
+    st.subheader("Probabilidade de Placar")
 
-    # Check if any date is greater than or equal to a specific date
-    if (resultado_df['Date'] >= pd.to_datetime('2023-10-07')).any():
-        # Iniciar aplicativo Streamlit
-        st.subheader("Probabilidade de Placar")
+    # Cabeçalho formatado
+    st.write("Hora, Home, Away, FT_Odd_H, FT_Odd_D, FT_Odd_A")
 
-        # Cabeçalho formatado
-        st.write("Hora, Home, Away, FT_Odd_H, FT_Odd_D, FT_Odd_A")
-
-        # Exibir todos os jogos em um único DataFrame
-        st.dataframe(resultado_df[['Hora', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A']])
+    # Exibir todos os jogos em um único DataFrame
+    st.dataframe(resultado_df[['Hora', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A']])
 
 # Chamar a função para executar o aplicativo
 cs_page()
