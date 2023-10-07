@@ -47,37 +47,34 @@ def cs_page():
         # Normalizar as probabilidades para que a soma seja 100%
         probabilidades = [prob / total_prob for prob in probabilidades]
 
-        # Criar uma linha para o resultado deste jogo
-        linha_resultado = {
-            'Hora': row['Hora'],
-            'Home': row['Home'],
-            'Away': row['Away'],
-            'FT_Odd_H': row['FT_Odd_H'],
-            'FT_Odd_D': row['FT_Odd_D'],
-            'FT_Odd_A': row['FT_Odd_A']
-        }
+        # Selecionar os 8 placares mais prováveis
+        top_placares = sorted(range(len(probabilidades)), key=lambda i: -probabilidades[i])[:8]
 
-        for i, placar in enumerate(placares):
-            prob = round(probabilidades[i] * 100, 2)
-            linha_resultado[placar] = prob
+        # Verificar se o primeiro placar mais provável é maior ou igual a 16%
+        if probabilidades[top_placares[0]] >= 16:
+            # Criar uma linha para o resultado deste jogo
+            linha_resultado = {
+                'Hora': row['Hora'],
+                'Home': row['Home'],
+                'Away': row['Away'],
+                'FT_Odd_H': row['FT_Odd_H'],
+                'FT_Odd_D': row['FT_Odd_D'],
+                'FT_Odd_A': row['FT_Odd_A']
+            }
 
-        linhas_resultados.append(linha_resultado)
+            for i in top_placares:
+                placar = placares[i]
+                prob = round(probabilidades[i] * 100, 2)
+                linha_resultado[placar] = prob
+
+            linhas_resultados.append(linha_resultado)
 
     # Criar um novo DataFrame com os resultados
     resultado_df = pd.DataFrame(linhas_resultados)
 
-    # Filtrar os jogos que atendem às condições originais
-    df = df[(df['Rodada'] >= 10) & (df['FT_Odd_H'] >= 1.40) & (df['FT_Odd_H'] <= 2.4) & (df['FT_Odd_Under25'] <= 2)]
-
-    # Iniciar aplicativo Streamlit
-    st.subheader("Probabilidade de Placar")
-
-    # Exibir todos os jogos que atendem às condições originais
-    st.dataframe(df)
-
     # Se houver jogos que atendem às condições originais, exibir o DataFrame de resultados
     if not resultado_df.empty:
-        st.subheader("Probabilidades dos Placares")
+        st.subheader("Probabilidade de Placar")
         st.dataframe(resultado_df)
 
 # Chamar a função para executar o aplicativo
