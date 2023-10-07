@@ -12,8 +12,8 @@ def cs_page():
     # Placares para os quais você deseja calcular a probabilidade
     placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x2', '3x3', '4x0', '4x1', '4x2', '4x3', '4x4', '5x0', '5x1', '5x2', '5x3']
 
-    # Criar um DataFrame vazio para armazenar os resultados
-    resultado_df = pd.DataFrame(columns=['Hora', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A'] + placares)
+    # Lista para armazenar as linhas dos resultados
+    linhas_resultados = []
 
     # Iterar sobre os jogos e calcular as probabilidades para cada placar
     for index, row in df.iterrows():
@@ -61,7 +61,10 @@ def cs_page():
             prob = round(probabilidades[i] * 100, 2)
             linha_resultado[placar] = prob
 
-        resultado_df = resultado_df.append(linha_resultado, ignore_index=True)
+        linhas_resultados.append(linha_resultado)
+
+    # Criar um novo DataFrame com os resultados
+    resultado_df = pd.DataFrame(linhas_resultados)
 
     # Filtrar os jogos que atendem às condições originais
     df = df[(df['Rodada'] >= 10) & (df['FT_Odd_H'] >= 1.40) & (df['FT_Odd_H'] <= 2.4) & (df['FT_Odd_Under25'] <= 2)]
