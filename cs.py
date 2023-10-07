@@ -58,9 +58,7 @@ def cs_page():
 
         # Criar uma linha para o resultado deste jogo
         linha_resultado = {
-            'Date': row['Date'],
             'Hora': row['Hora'],
-            'Liga': row['Liga'],
             'Home': row['Home'],
             'Away': row['Away'],
             'FT_Odd_H': row['FT_Odd_H'],
@@ -84,28 +82,11 @@ def cs_page():
         # Iniciar aplicativo Streamlit
         st.subheader("Probabilidade de Placar")
 
-        # Loop para exibir os detalhes e a tabela
-        for index, row in resultado_df.iterrows():
-            detalhes1 = f"Hora: {row['Hora']}  |  {row['Home']}  |  {row['Away']}"
-            detalhes2 = f"Odd Casa: {row['FT_Odd_H']} |  Odd Empate: {row['FT_Odd_D']} |  Odd Visitante: {row['FT_Odd_A']}"
+        # Cabeçalho formatado
+        st.write("Hora, Home, Away, FT_Odd_H, FT_Odd_D, FT_Odd_A")
 
-            # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
-            prob_game_df = resultado_df[placares].iloc[[index]]
-
-            # Check if the probability of the home team winning by any score is greater than or equal to 16%
-            if any(prob_game_df.iloc[0] >= 16):
-                st.dataframe(pd.DataFrame({'Detalhes': [detalhes1, detalhes2]}))  # Display details in a DataFrame
-
-                # Selecionar os 6 placares mais prováveis
-                top_placares = prob_game_df.T.nlargest(8, index)[index].index
-
-                # Filtrar o DataFrame temporário para incluir apenas os 6 placares mais prováveis
-                prob_game_df = prob_game_df[top_placares]
-
-                # Formatar e exibir a tabela
-                formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
-                st.dataframe(formatted_df)
-            
+        # Exibir todos os jogos em um único DataFrame
+        st.dataframe(resultado_df[['Hora', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A']])
 
 # Chamar a função para executar o aplicativo
 cs_page()
