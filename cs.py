@@ -81,7 +81,6 @@ def cs_page():
             'FT_Odd_A': row['FT_Odd_A']
         }
 
-
         for i, placar in enumerate(placares):
             linha_resultado[placar] = round(probabilidades[i] * 100, 2)
 
@@ -90,31 +89,27 @@ def cs_page():
     # Criar um novo DataFrame com os resultados
     resultado_df = pd.DataFrame(linhas_resultados)
 
-    # Verificar se há pelo menos um jogo onde a primeira coluna seja >= 16%
-    if resultado_df.iloc[:, 0].str.rstrip('%').astype(float).ge(16).any():
+    # Verificar se há pelo menos um jogo onde o placar mais provável seja >= 16%
+    if resultado_df.iloc[:, 3:].astype(float).max(axis=1).ge(16).any():
         # Iniciar aplicativo Streamlit
         st.subheader("Probabilidade de Placar")
 
         # Loop para exibir os detalhes e a tabela
         for index, row in resultado_df.iterrows():
-            detalhes1 = f"**Hora:** {row['Hora']}  |  **Casa:** {row['Casa']}  |  **Visitante:** {row['Visitante']}"
-            detalhes2 = f"**Cotação Casa:** {row['Cotação_Casa']} |  **Cotação Empate:** {row['Cotação_Empate']} |  **Cotação Visitante:** {row['Cotação_Visitante']}"
+            detalhes1 = f"**Hora:** {row['Hora']}  |  **Casa:** {row['Home']}  |  **Visitante:** {row['Away']}"
+            detalhes2 = f"**Cotação Casa:** {row['FT_Odd_H']} |  **Cotação Empate:** {row['FT_Odd_D']} |  **Cotação Visitante:** {row['FT_Odd_A']}"
             st.write(detalhes1)
             st.write(detalhes2)
 
             # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
             prob_game_df = resultado_df[placares].iloc[[index]]
 
-            # Selecionar os 6 placares mais prováveis
-            top_placares = prob_game_df.T.nlargest(8, index)[index].index
+            # Selecionar o placar mais provável
+            most_probable_score = prob_game_df.T.idxmax()[index]
 
-            # Filtrar o DataFrame temporário para incluir apenas os 6 placares mais prováveis
-            prob_game_df = prob_game_df[top_placares]
+            # Exibir o placar mais provável e sua probabilidade
+            st.write(f"Placar Mais Provável: {most_probable_score} - {prob_game_df.at[index, most_probable_score]:.1f}%")
 
-            # Formatar e exibir a tabela
-            formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
-
-            st.dataframe(formatted_df)
    
 
 # Chamar a função para executar o aplicativo
