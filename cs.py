@@ -56,6 +56,95 @@ def cs_page():
         # Normalizar as probabilidades para que a soma seja 100%
         probabilidades = [prob / total_prob for prob in probabilidades]
 
+        # Criar uma linha para o resultado deste jogo
+        linha_resultado = {
+            'Date': row['Date'],
+            'Hora': row['Hora'],
+            'Liga': row['Liga'],
+            'Home': row['Home'],
+            'Away': row['Away'],
+            'FT_Odd_H': row['FT_Odd_H'],
+            'FT_Odd_D': row['FT_Odd_D'],
+            'FT_Odd_A': row['FT_Odd_A']
+        }
+
+        for i, placar in enumerate(placares):
+            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
+
+        linhas_resultados.append(linha_resultado)
+
+    # Criar um novo DataFrame com os resultados
+    resultado_df = pd.DataFrame(linhas_resultados)
+
+    # Convert the 'Date' column to datetime objects
+    resultado_df['Date'] = pd.to_datetime(resultado_df['Date'], format='%d.%m.%Y')
+
+    # Check if any date is greater than or equal to a specific date
+    if (resultado_df['Date'] >= pd.to_datetime('2023-10-07')).any():
+        # Iniciar aplicativo Streamlit
+        st.subheader("Probabilidade de Placar")
+
+        # Loop para exibir os detalhes e a tabela
+        for index, row in resultado_df.iterrows():
+            detalhes1 = f"**Hora:** {row['Hora']}  |  **Casa:** {row['Home']}  |  **Visitante:** {row['Away']}"
+            detalhes2 = f"**Cotação Casa:** {row['FT_Odd_H']} |  **Cotação Empate:** {row['FT_Odd_D']} |  **Cotação Visitante:** {row['FT_Odd_A']}"
+
+            # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
+            prob_game_df = resultado_df[placares].iloc[[index]]
+
+            # Check if the probability of the home team winning by any score is greater than or equal to 16%
+            if any(prob_game_df.iloc[0] >= 16):
+                st.dataframe(pd.DataFrame({'Detalhes': [detalhes1, detalhes2]}))  # Display details in a DataFrame
+
+                # Selecionar os 6 placares mais prováveis
+                top_placares = prob_game_df.T.nlargest(8, index)[index].index
+
+                # Filtrar o DataFrame temporário para incluir apenas os 6 placares mais prováveis
+                prob_game_df = prob_game_df[top_placares]
+
+                # Formatar e exibir a tabela
+                formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
+                st.dataframe(formatted_df)
+            else:
+                st.write("Nenhum jogo atende aos critérios de probabilidade")
+    else:
+        st.write("Nenhum jogo atende aos critérios de probabilidade")
+
+# Chamar a função para executar o aplicativo
+cs_page()
+
+    # Iterar sobre os jogos e calcular as probabilidades para cada placar
+    for index, row in df.iterrows():
+        # Calcular as médias de gols esperados para cada time e o total esperado
+        lambda_home = row['XG_Home']
+        lambda_away = row['XG_Away']
+        lambda_total = row['Average Goals']
+
+        # Calcular as probabilidades usando a distribuição de Poisson
+        probabilidades = []
+        total_prob = 0  # Total de probabilidade para normalização
+
+        for placar in placares:
+            placar_split = placar.split('x')
+            gols_home = int(placar_split[0])
+            gols_away = int(placar_split[1])
+
+            prob_home = poisson.pmf(gols_home, lambda_home)
+            prob_away = poisson.pmf(gols_away, lambda_away)
+            prob_total = poisson.pmf(gols_home + gols_away, lambda_total)
+
+            # Aplicar o ajuste de zero inflado para placares "estranhos"
+            if (lambda_home < gols_home) or (lambda_away < gols_away):
+                prob_placar = prob_home * prob_away * prob_total * 1.50
+            else:
+                prob_placar = prob_home * prob_away * prob_total
+
+            total_prob += prob_placar
+            probabilidades.append(prob_placar)
+
+        # Normalizar as probabilidades para que a soma seja 100%
+        probabilidades = [prob / total_prob for prob in probabilidades]
+
         # Selecionar os 8 placares mais prováveis
         top_placares = sorted(range(len(probabilidades)), key=lambda i: -probabilidades[i])[:8]
 
