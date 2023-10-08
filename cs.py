@@ -99,7 +99,7 @@ def cs_page():
         prob_game_df = resultado_df[placares].iloc[[index]]
 
         # Selecionar os 8 placares mais prováveis em ordem decrescente
-        top_placares = prob_game_df.T.nlargest(8).index
+        top_placares = prob_game_df.T.nlargest(8, columns=prob_game_df.columns).index
 
         # Filtrar o DataFrame temporário para incluir apenas os 8 placares mais prováveis
         prob_game_df = prob_game_df[top_placares]
