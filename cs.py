@@ -5,48 +5,48 @@ from scipy.stats import poisson
 from session_state import SessionState
 
 def cs_page():
-    # Initialize the session state
+    # Inicializa o estado da sessão
     session_state = SessionState()
 
-    # Set the user profile value after session state creation
-    session_state.user_profile = 2  # Or any other desired value
+    # Defina o valor de user_profile após a criação da instância
+    session_state.user_profile = 2  # Ou qualquer outro valor desejado
 
-    # Check if the user has permission to access the page
+    # Verifica se o usuário tem permissão para acessar a página
     if session_state.user_profile < 2:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
         
-    # URL of the CSV file with game data
+    # URL do arquivo CSV com os dados dos jogos
     url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Jogos_do_Dia_FS.csv"
 
-    # Load data from the CSV file into a DataFrame
+    # Carregar os dados do arquivo CSV em um DataFrame
     df = pd.read_csv(url)
 
-    # Filter games with round greater than or equal to 10
+    # Filtrar jogos com round maior ou igual a 10
     df = df[df['Rodada'] >= 10]
 
-    # Filter games with home odds between 1.40 and 2.4
+    # Filtrar jogos com home menor ou igual a 1.90
     df = df[(df['FT_Odd_H'] >= 1.40) & (df['FT_Odd_H'] <= 2.4)]
 
-    # Filter games with under 2.5 goals odds less than or equal to 2
+    # Filtrar jogos com home menor ou igual a 1.90
     df = df[(df['FT_Odd_Under25'] <= 2)]
 
-    # Scores for which you want to calculate the probability
+    # Placares para os quais você deseja calcular a probabilidade
     placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x1', '3x2', '3x3', '1x3', '2x3']
 
-    # List to store the result rows
+    # Lista para armazenar as linhas dos resultados
     linhas_resultados = []
 
-    # Iterate over the games and calculate probabilities for each score
+    # Iterar sobre os jogos e calcular as probabilidades para cada placar
     for index, row in df.iterrows():
-        # Calculate expected goal averages for each team and total expected
+        # Calcular as médias de gols esperados para cada time e o total esperado
         lambda_home = row['XG_Home']
         lambda_away = row['XG_Away']
         lambda_total = row['Average Goals']
 
-        # Calculate probabilities using the Poisson distribution
+        # Calcular as probabilidades usando a distribuição de Poisson
         probabilidades = []
-        total_prob = 0  # Total probability for normalization
+        total_prob = 0  # Total de probabilidade para normalização
 
         for placar in placares:
             placar_split = placar.split('x')
@@ -57,7 +57,7 @@ def cs_page():
             prob_away = poisson.pmf(gols_away, lambda_away)
             prob_total = poisson.pmf(gols_home + gols_away, lambda_total)
 
-            # Apply zero-inflation adjustment for "odd" scores
+            # Aplicar o ajuste de zero inflado para placares "estranhos"
             if (lambda_home < gols_home) or (lambda_away < gols_away):
                 prob_placar = prob_home * prob_away * prob_total * 1.50
             else:
@@ -66,10 +66,10 @@ def cs_page():
             total_prob += prob_placar
             probabilidades.append(prob_placar)
 
-        # Normalize probabilities to sum up to 100%
+        # Normalizar as probabilidades para que a soma seja 100%
         probabilidades = [prob / total_prob for prob in probabilidades]
 
-        # Create a row for the result of this game
+        # Criar uma linha para o resultado deste jogo
         linha_resultado = {
             'Date': row['Date'],
             'Hora': row['Hora'],
@@ -86,36 +86,33 @@ def cs_page():
 
         linhas_resultados.append(linha_resultado)
 
-    # Create a new DataFrame with the results
+    # Criar um novo DataFrame com os resultados
     resultado_df = pd.DataFrame(linhas_resultados)
 
-    # Initialize Streamlit app
+    # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
-    # Sort the DataFrame by the highest probability score outcomes and select the top 8
-    top_8_scores = resultado_df[placares].apply(lambda x: x.str.rstrip('%').astype(float) if isinstance(x, str) else x).max(axis=1).nlargest(8).index
-
-    for index in top_8_scores:
-        # Create a temporary DataFrame with probabilities for the current game
+    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade >= 16%
+    for index, row in resultado_df.iterrows():
+        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
         prob_game_df = resultado_df[placares].iloc[[index]]
 
-        # Select the most probable score
+        # Selecionar o placar mais provável
         placar_mais_provavel = prob_game_df.idxmax(axis=1).values[0]
 
-        # Get the probability of the most probable score
+        # Obter a probabilidade do placar mais provável
         probabilidade_mais_provavel = prob_game_df.loc[index, placar_mais_provavel]
 
-        # Check if the probability is greater than or equal to 16%
+        # Verificar se a probabilidade é maior ou igual a 16%
         if probabilidade_mais_provavel >= 16.0:
-            # Display match details and odds
-            details1 = f"**Hora:** {resultado_df.at[index, 'Hora']}  |  **Home:** {resultado_df.at[index, 'Home']}  |  **Away:** {resultado_df.at[index, 'Away']}"
-            details2 = f"**Odd Casa:** {resultado_df.at[index, 'FT_Odd_H']} |  **Odd Empate:** {resultado_df.at[index, 'FT_Odd_D']} |  **Odd Visitante:** {resultado_df.at[index, 'FT_Odd_A']}"
+            details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
+            details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
             st.write(details1)
             st.write(details2)
 
-            # Format and display the table
-            formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%" if isinstance(x, float) else x)
+            # Formatar e exibir a tabela
+            formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
             st.dataframe(formatted_df)
 
-# Call the function to run the application
+# Chamar a função para executar o aplicativo
 cs_page()
