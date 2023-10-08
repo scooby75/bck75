@@ -323,12 +323,15 @@ def tips_page():
             
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
+
+            # Adicione a nova coluna "Eventos" com a quantidade total de jogos
+            df['Eventos'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
             
             # Exiba os resultados no Streamlit em três colunas separadas com centralização
             st.subheader("HA -0,25")
             st.text("A partir de 16/09/2023")
             
-            col1, col2, col3 = st.columns(3)
+            col1, col2, col3, col4 = st.columns(4)
             
             with col1:
                 st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
@@ -341,6 +344,10 @@ def tips_page():
             with col3:
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
+
+            with col4:
+                st.markdown('<div style="text-align: center;"> Eventos </div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
 
 
 ############### Back  Casa HT ##########################
