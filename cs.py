@@ -92,23 +92,23 @@ def cs_page():
     # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
-    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade < 22%
+    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 16% e 22%
     for index, row in resultado_df.iterrows():
         # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
         prob_game_df = resultado_df[placares].iloc[[index]]
 
-        # Selecionar os 8 placares mais prováveis em ordem decrescente de probabilidade
-        top_8_scores = prob_game_df.iloc[0].nlargest(8)
+        # Selecionar os placares mais prováveis em ordem decrescente de probabilidade
+        top_scores = prob_game_df.iloc[0].nlargest(8)
 
-        # Verificar se a probabilidade do placar mais provável é menor ou igual a 22%
-        if top_8_scores.max() <= 22.0:
+        # Verificar se a probabilidade do placar mais provável está entre 16% e 22%
+        if (top_scores.max() >= 16.0) and (top_scores.max() <= 22.0):
             details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
             details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
             st.write(details1)
             st.write(details2)
 
-            # Formatar e exibir a tabela com os 8 placares mais prováveis em ordem decrescente
-            formatted_df = top_8_scores.to_frame(name='Probabilidade').applymap(lambda x: f"{x:.1f}%")
+            # Formatar e exibir a tabela com os placares mais prováveis em ordem decrescente
+            formatted_df = top_scores.to_frame(name='Probabilidade').applymap(lambda x: f"{x:.1f}%")
             st.dataframe(formatted_df)
 
 # Chamar a função para executar o aplicativo
