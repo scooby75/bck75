@@ -93,7 +93,7 @@ def cs_page():
     st.subheader("Probabilidade de Placar")
 
     # Sort the DataFrame by the highest probability score outcomes and select the top 8
-    top_8_scores = resultado_df[placares].apply(lambda x: x.str.rstrip('%').astype(float)).max(axis=1).nlargest(8).index
+    top_8_scores = resultado_df[placares].apply(lambda x: x.str.rstrip('%').astype(float) if isinstance(x, str) else x).max(axis=1).nlargest(8).index
 
     for index in top_8_scores:
         # Create a temporary DataFrame with probabilities for the current game
@@ -114,7 +114,7 @@ def cs_page():
             st.write(details2)
 
             # Format and display the table
-            formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
+            formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%" if isinstance(x, float) else x)
             st.dataframe(formatted_df)
 
 # Call the function to run the application
