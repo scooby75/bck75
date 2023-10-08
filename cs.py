@@ -37,6 +37,10 @@ def cs_page():
     # Lista para armazenar as linhas dos resultados
     linhas_resultados = []
 
+    # Criar uma função para classificar os placares com base nas probabilidades
+    def classificar_placares(probabilidades):
+        return sorted(range(len(probabilidades)), key=lambda i: probabilidades[i], reverse=True)[:8]
+
     # Iterar sobre os jogos e calcular as probabilidades para cada placar
     for index, row in df.iterrows():
         # Calcular as médias de gols esperados para cada time e o total esperado
@@ -81,7 +85,11 @@ def cs_page():
             'FT_Odd_A': row['FT_Odd_A']
         }
 
-        for i, placar in enumerate(placares):
+        # Selecionar os 8 placares mais prováveis
+        placares_mais_provaveis_idx = classificar_placares(probabilidades)
+        placares_mais_provaveis = [placares[i] for i in placares_mais_provaveis_idx]
+
+        for i, placar in enumerate(placares_mais_provaveis):
             linha_resultado[placar] = round(probabilidades[i] * 100, 2)
 
         linhas_resultados.append(linha_resultado)
@@ -94,25 +102,14 @@ def cs_page():
 
     # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade >= 16%
     for index, row in resultado_df.iterrows():
-        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
-        prob_game_df = resultado_df[placares].iloc[[index]]
+        details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
+        details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
+        st.write(details1)
+        st.write(details2)
 
-        # Selecionar o placar mais provável
-        placar_mais_provavel = prob_game_df.idxmax(axis=1).values[0]
-
-        # Obter a probabilidade do placar mais provável
-        probabilidade_mais_provavel = prob_game_df.loc[index, placar_mais_provavel]
-
-        # Verificar se a probabilidade é maior ou igual a 16%
-        if probabilidade_mais_provavel >= 16.0:
-            details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
-            details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
-            st.write(details1)
-            st.write(details2)
-
-            # Formatar e exibir a tabela
-            formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
-            st.dataframe(formatted_df)
+        # Formatar e exibir a tabela
+        formatted_df = resultado_df[placares_mais_provaveis].iloc[[index]].applymap(lambda x: f"{x:.1f}%")
+        st.dataframe(formatted_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
