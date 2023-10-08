@@ -96,22 +96,21 @@ def cs_page():
     # com os 8 placares mais prováveis em ordem decrescente
     for index, row in resultado_df.iterrows():
         # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
-        prob_game_df = resultado_df[placares].iloc[[index]]
+        prob_game_df = resultado_df[['Date', 'Liga', 'Hora', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A'] + placares].iloc[[index]]
 
         # Selecionar os 8 placares mais prováveis em ordem decrescente
-        top_placares = prob_game_df.T.nlargest(8).index
+        top_placares = prob_game_df[placares].T.nlargest(8).index
 
-        # Filtrar o DataFrame temporário para incluir apenas os 8 placares mais prováveis
-        prob_game_df = prob_game_df[top_placares]
+        # Filtrar o DataFrame temporário para incluir apenas as colunas desejadas
+        prob_game_df = prob_game_df[['Date', 'Liga', 'Hora', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A'] + top_placares]
 
         details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
         details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
-        st.write(details1)
-        st.write(details2)
+        #st.write(details1)
+        #st.write(details2)
 
         # Formatar e exibir a tabela
-        formatted_df = prob_game_df.applymap(lambda x: f"{x:.1f}%")
-        st.dataframe(formatted_df)
+        st.dataframe(prob_game_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
