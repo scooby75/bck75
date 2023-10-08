@@ -102,14 +102,25 @@ def cs_page():
 
         # Verificar se a probabilidade do placar mais provável está entre 16% e 22%
         if (top_scores.max() >= 16.0) and (top_scores.max() <= 22.0):
-            details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
-            details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
-            st.write(details1)
-            st.write(details2)
+            # Create a DataFrame with additional information
+            game_info = pd.DataFrame({
+                'Date': row['Date'],
+                'Hora': row['Hora'],
+                'Liga': row['Liga'],
+                'Home': row['Home'],
+                'Away': row['Away'],
+                'Odd Casa': row['FT_Odd_H'],
+                'Odd Empate': row['FT_Odd_D'],
+                'Odd Visitante': row['FT_Odd_A']
+            }, index=[0])
 
-            # Formatar e exibir a tabela com os placares mais prováveis em ordem decrescente
-            formatted_df = top_scores.to_frame(name='Probabilidade').applymap(lambda x: f"{x:.1f}%")
-            st.dataframe(formatted_df)
+            # Concatenate game_info with top_scores DataFrame
+            formatted_df = pd.concat([game_info, top_scores.to_frame(name='Probabilidade')], axis=1)
+
+            # Format probabilities as percentages
+            formatted_df['Probabilidade'] = formatted_df['Probabilidade'].apply(lambda x: f"{x:.1f}%")
+
+            st.write(formatted_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
