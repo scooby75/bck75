@@ -92,22 +92,11 @@ def cs_page():
     # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
-    # Loop para exibir os detalhes e a tabela apenas para jogos
-    # com os 8 placares mais prováveis em ordem decrescente
-    for index, row in resultado_df.iterrows():
-        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
-        prob_game_df = resultado_df[['Date', 'Liga', 'Hora', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A'] + placares].iloc[[index]]
+    # Criar um DataFrame temporário apenas com as probabilidades dos placares
+    prob_df = resultado_df[placares]
 
-        # Classificar o DataFrame com base nas probabilidades em ordem decrescente
-        prob_game_df = prob_game_df.sort_values(by=placares, axis=1, ascending=False)
-
-        details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
-        details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
-        st.write(details1)
-        st.write(details2)
-
-        # Formatar e exibir a tabela
-        st.dataframe(prob_game_df)
+    # Exibir o DataFrame completo com todas as informações
+    st.dataframe(prob_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
