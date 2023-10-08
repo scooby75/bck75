@@ -375,12 +375,15 @@ def tips_page():
             
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
+
+            # Adicione a nova coluna "Eventos" com a quantidade total de jogos
+            df['Eventos'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
             
             # Exiba os resultados no Streamlit em três colunas separadas com centralização
             st.subheader("Back Casa HT")
             st.text("A partir de 16/09/2023")
             
-            col19, col20, col21 = st.columns(3)
+            col19, col20, col21, col22 = st.columns(4)
             
             with col19:
                 st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
@@ -394,6 +397,9 @@ def tips_page():
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
 
+            with col22:
+                st.markdown('<div style="text-align: center;"> Eventos </div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
 
 ############### Lay Goleada Casa ##########################
 
@@ -420,12 +426,15 @@ def tips_page():
             
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
-            
+
+            # Adicione a nova coluna "Eventos" com a quantidade total de jogos
+            df['Eventos'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
+
             # Exiba os resultados no Streamlit em três colunas separadas com centralização
             st.subheader("Lay Goleada Casa")
             st.text("A partir de 16/09/2023")
             
-            col4, col5, col6 = st.columns(3)
+            col4, col5, col6, col7 = st.columns(4)
             
             with col4:
                 st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
@@ -438,6 +447,10 @@ def tips_page():
             with col6:
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
+
+            with col7:
+                st.markdown('<div style="text-align: center;"> Eventos </div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
 
 
 ############### Lay Goleada Visitante ##########################
@@ -465,12 +478,15 @@ def tips_page():
             
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
+
+            # Adicione a nova coluna "Eventos" com a quantidade total de jogos
+            df['Eventos'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
             
             # Exiba os resultados no Streamlit em três colunas separadas com centralização
             st.subheader("Lay Goleada Visitante")
             st.text("A partir de 16/09/2023")
             
-            col7, col8, col9 = st.columns(3)
+            col7, col8, col9, col10 = st.columns(4)
             
             with col7:
                 st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
@@ -483,6 +499,10 @@ def tips_page():
             with col9:
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
+
+            with col10:
+                st.markdown('<div style="text-align: center;"> Eventos </div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
 
 ############### Lay Visitante HT ##########################
 
@@ -509,12 +529,15 @@ def tips_page():
             
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
+
+            # Adicione a nova coluna "Eventos" com a quantidade total de jogos
+            df['Eventos'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
             
             # Exiba os resultados no Streamlit em três colunas separadas com centralização
             st.subheader("Lay Visitante HT")
             st.text("A partir de 16/09/2023")
             
-            col10, col11, col12 = st.columns(3)
+            col10, col11, col12, col13 = st.columns(4)
             
             with col10:
                 st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
@@ -527,6 +550,10 @@ def tips_page():
             with col12:
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
+
+            with col13:
+                st.markdown('<div style="text-align: center;"> Eventos </div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
 
 
 ############### Lay Visitante FT ##########################
@@ -554,12 +581,15 @@ def tips_page():
             
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
+
+            # Adicione a nova coluna "Eventos" com a quantidade total de jogos
+            df['Eventos'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
             
             # Exiba os resultados no Streamlit em três colunas separadas com centralização
             st.subheader("Lay Visitante FT")
             st.text("A partir de 16/09/2023")
             
-            col13, col14, col15 = st.columns(3)
+            col13, col14, col15, col16 = st.columns(4)
             
             with col13:
                 st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
@@ -572,6 +602,10 @@ def tips_page():
             with col15:
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
+
+            with col16:
+                st.markdown('<div style="text-align: center;"> Eventos </div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
 
 
 ############### BTTS ##########################
@@ -599,12 +633,15 @@ def tips_page():
             
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
+
+            # Adicione a nova coluna "Eventos" com a quantidade total de jogos
+            df['Eventos'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
             
             # Exiba os resultados no Streamlit em três colunas separadas com centralização
             st.subheader("BTTS Sim")
             st.text("A partir de 16/09/2023")
             
-            col16, col17, col18 = st.columns(3)
+            col16, col17, col18, col19 = st.columns(4)
             
             with col16:
                 st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
@@ -617,6 +654,10 @@ def tips_page():
             with col18:
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
+
+            with col19:
+                st.markdown('<div style="text-align: center;"> Eventos </div>', unsafe_allow_html=True)
+                st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
 
 
 # Chama a função tips_page() no início do código para criar a página
