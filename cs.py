@@ -95,22 +95,17 @@ def cs_page():
     # Loop para exibir os detalhes e a tabela apenas para jogos
     # com os 6 placares mais prováveis em ordem decrescente
     for index, row in resultado_df.iterrows():
-        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
-        prob_game_df = resultado_df[['Date', 'Liga', 'Hora', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A'] + placares].iloc[[index]]
+        # Criar um DataFrame temporário apenas com as informações relevantes
+        temp_df = pd.DataFrame(row[['Date', 'Hora', 'Liga', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A']]).transpose()
 
-        # Classificar o DataFrame com base nas probabilidades em ordem decrescente
-        prob_game_df = prob_game_df.sort_values(by=placares, axis=1, ascending=False)
+        # Adicionar as colunas de probabilidades para os 6 placares mais prováveis em ordem decrescente
+        top_placares = sorted(placares, key=lambda x: -row[x])[:6]
+        for placar in top_placares:
+            temp_df[placar] = row[placar]
 
         # Verificar se o menor placar mais provável é >= 16%
-        if prob_game_df.iloc[0, -1] >= 16:
-            details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
-            details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
-            st.write(details1)
-            st.write(details2)
-
-            # Formatar e exibir a tabela com os 6 placares mais prováveis
-            prob_game_df = prob_game_df.iloc[:, :6]  # Pegar apenas os 6 primeiros placares
-            st.dataframe(prob_game_df)
+        if temp_df.iloc[0, -1] >= 16:
+            st.dataframe(temp_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
