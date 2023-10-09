@@ -88,7 +88,7 @@ def cs_page():
     if st.button("Baixar CSV"):
         # Use BytesIO to create a temporary in-memory file for download
         import io
-        buffer = io.StringIO()
+        buffer = io.BytesIO()
         partidas_df.to_csv(buffer, index=False, encoding='utf-8-sig')  # Encoding added for better compatibility
         buffer.seek(0)
         st.download_button(
