@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 from scipy.stats import poisson
-from scipy.stats import zipf_pmf  # Importe a distribuição Zero-Inflated Poisson
 from session_state import SessionState
 
 def cs_page():
@@ -59,7 +58,7 @@ def cs_page():
         for i in range(8):
             for j in range(8):
                 if i == 0 and j == 0:
-                    probabilidade_partida[i][j] = zip_prob_zero
+                    probabilidade_partida[i][j] = zip_prob_zero * (1 - prob_home[0]) * (1 - prob_away[0])
                 else:
                     probabilidade_partida[i][j] = zip_prob_non_zero * prob_home[i] * prob_away[j]
 
@@ -71,7 +70,7 @@ def cs_page():
         )
 
         # Calcular a probabilidade do placar 1
-        probabilidade_placar_1 = placares_classificados[0][2] * 100  # Em porcentagem
+        probabilidade_placar_1 = placares_classificados[0][0.5] * 100  # Em porcentagem
 
         # Verificar se a probabilidade do placar 1 está entre 15% e 21%
         if 15 <= probabilidade_placar_1 <= 21:
