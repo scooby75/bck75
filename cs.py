@@ -76,9 +76,9 @@ def cs_page():
             'Liga': row['Liga'],
             'Home': row['Home'],
             'Away': row['Away'],
-            'FT_Odd_H': row['FT_Odd_H'],
-            'FT_Odd_D': row['FT_Odd_D'],
-            'FT_Odd_A': row['FT_Odd_A']
+            'Odd Casa': row['FT_Odd_H'],
+            'Odd Empate': row['FT_Odd_D'],
+            'Odd Visitante': row['FT_Odd_A']
         }
 
         for i, placar in enumerate(placares):
@@ -92,24 +92,14 @@ def cs_page():
     # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
-    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 16% e 22%
-    for index, row in resultado_df.iterrows():
-        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
-        prob_game_df = resultado_df[placares].iloc[[index]]
+    # Organizar os dados em um único DataFrame com todos os jogos
+    formatted_df = resultado_df[['Date', 'Hora', 'Liga', 'Home', 'Away', 'Odd Casa', 'Odd Empate', 'Odd Visitante']]
 
-        # Selecionar os placares mais prováveis em ordem decrescente de probabilidade
-        top_scores = prob_game_df.iloc[0].nlargest(8)
+    # Adicionar os placares mais prováveis
+    for i in range(1, 9):
+        formatted_df[f'Placar {i}'] = resultado_df[f'Placar {i}']
 
-        # Verificar se a probabilidade do placar mais provável está entre 16% e 22%
-        if (top_scores.max() >= 16.0) and (top_scores.max() <= 22.0):
-            details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
-            details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
-            st.write(details1)
-            st.write(details2)
-
-            # Formatar e exibir a tabela com os placares mais prováveis em ordem decrescente
-            formatted_df = top_scores.to_frame(name='Probabilidade').applymap(lambda x: f"{x:.1f}%")
-            st.dataframe(formatted_df)
+    st.write(formatted_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
