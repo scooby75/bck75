@@ -69,31 +69,22 @@ def cs_page():
         # Normalizar as probabilidades para que a soma seja 100%
         probabilidades = [prob / total_prob for prob in probabilidades]
 
-        # Verificar se a probabilidade do placar mais provável está entre 16% e 22%
-        max_prob = max(probabilidades)
-        if 16 <= max_prob <= 22:
-            # Ordenar os placares com base na probabilidade (do maior para o menor)
-            placares_prob = list(zip(placares, probabilidades))
-            placares_prob.sort(key=lambda x: x[1], reverse=True)
-            placares_selecionados = [placar for placar, prob in placares_prob[:8]]
+        # Criar uma linha para o resultado deste jogo
+        linha_resultado = {
+            'Date': row['Date'],
+            'Hora': row['Hora'],
+            'Liga': row['Liga'],
+            'Home': row['Home'],
+            'Away': row['Away'],
+            'FT_Odd_H': row['FT_Odd_H'],
+            'FT_Odd_D': row['FT_Odd_D'],
+            'FT_Odd_A': row['FT_Odd_A']
+        }
 
-            # Criar uma linha para o resultado deste jogo
-            linha_resultado = {
-                'Date': row['Date'],
-                'Hora': row['Hora'],
-                'Liga': row['Liga'],
-                'Home': row['Home'],
-                'Away': row['Away'],
-                'Odd Casa': row['FT_Odd_H'],
-                'Odd Empate': row['FT_Odd_D'],
-                'Odd Visitante': row['FT_Odd_A']
-            }
+        for i, placar in enumerate(placares):
+            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
 
-            # Adicione as probabilidades dos placares selecionados ao DataFrame
-            for placar in placares_selecionados:
-                linha_resultado[placar] = round(probabilidades[placares.index(placar)] * 100, 2)
-
-            linhas_resultados.append(linha_resultado)
+        linhas_resultados.append(linha_resultado)
 
     # Criar um novo DataFrame com os resultados
     resultado_df = pd.DataFrame(linhas_resultados)
@@ -101,8 +92,24 @@ def cs_page():
     # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
-    # Exibir o DataFrame com os jogos selecionados
-    st.write(resultado_df)
+    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 16% e 22%
+    for index, row in resultado_df.iterrows():
+        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
+        prob_game_df = resultado_df[placares].iloc[[index]]
+
+        # Selecionar os placares mais prováveis em ordem decrescente de probabilidade
+        top_scores = prob_game_df.iloc[0].nlargest(8)
+
+        # Verificar se a probabilidade do placar mais provável está entre 16% e 22%
+        if (top_scores.max() >= 16.0) and (top_scores.max() <= 22.0):
+            details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
+            details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
+            st.write(details1)
+            st.write(details2)
+
+            # Formatar e exibir a tabela com os placares mais prováveis em ordem decrescente
+            formatted_df = top_scores.to_frame(name='Probabilidade').applymap(lambda x: f"{x:.1f}%")
+            st.dataframe(formatted_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
