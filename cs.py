@@ -21,7 +21,7 @@ def cs_page():
     df = pd.read_csv(url)
 
     # Defina os placares desejados
-    placares_desejados = [(1, 0), (1, 1), (0, 1), (1, 2), (1, 3), (2, 0), (0, 2), (2, 1), (2, 2), (2, 3), (0, 3), (3, 0), (3, 1), (3, 2), (3, 3)]  
+    placares_desejados = [(1, 0), (1, 1), (0, 1), (1, 2), (1, 3), (2, 0), (0, 2), (2, 1)]  
 
     # Filtrar partidas que não contenham as strings "U21", "U19", "U20", "U16", "U23" ou "U18" nas colunas "Home" ou "Away"
     df = df[~df['Home'].str.contains(r'(U21|U19|U20|U16|U23|U18)', case=False) & ~df['Away'].str.contains(r'(U21|U19|U20|U16|U23|U18)', case=False)]
@@ -62,10 +62,21 @@ def cs_page():
                 else:
                     probabilidade_partida[i][j] = zip_prob_non_zero * prob_home[i] * prob_away[j]
 
+        # Selecionar os 08 placares mais prováveis
+        placares_classificados = sorted(
+            [(i, j, probabilidade_partida[i][j]) for i in range(8) for j in range(8)],
+            key=lambda x: x[2],
+            reverse=True
+        )[:8]
+
+        # Ajustar as probabilidades para que a soma seja igual a 100%
+        soma_probabilidades = np.sum([prob for _, _, prob in placares_classificados])
+        placares_classificados = [(i, j, prob / soma_probabilidades) for i, j, prob in placares_classificados]
+
         # Armazenar as informações da partida e probabilidades apenas para os placares desejados
         for placar_desejado in placares_desejados:
             i, j = placar_desejado
-            probabilidade = probabilidade_partida[i][j]
+            probabilidade = [prob for _, _, prob in placares_classificados if i == _ and j == j][0]
             
             # Verificar se a probabilidade é maior que zero
             if probabilidade > 0:
@@ -75,19 +86,22 @@ def cs_page():
                     'Liga': liga,
                     'Home': home_team,
                     'Away': away_team,
+                    'Placar': f"{i}x{j}",
                     'Odd Casa': odd_casa,
                     'Odd Empate': odd_empate,
                     'Odd Visitante': odd_visitante,
-                    'Placar': f"{i}x{j}",
-                    'Probabilidade': f"{i}x{j} ({round(probabilidade * 100, 2)}%)",  # Formato desejado
+                    'Probabilidade': probabilidade,  # Ajustar o formato da probabilidade conforme necessário
                 }
                 partidas_info.append(partida_info)
 
     # Criar um DataFrame com as informações das partidas
     partidas_df = pd.DataFrame(partidas_info)
 
+    # Ordenar o DataFrame pelos placares mais prováveis (do maior para o menor)
+    partidas_df = partidas_df.sort_values(by='Probabilidade', ascending=False)
+
     # Exibir a tabela com todas as informações usando st.dataframe
-    st.subheader("Probabilidades de Placares Desejados")
+    st.subheader("Probabilidades de Placares Desejados (do maior para o menor)")
     st.dataframe(partidas_df)
 
     # Exportar o DataFrame para um arquivo CSV quando o botão é clicado
@@ -106,3 +120,4 @@ def cs_page():
 
 # Chamar a função para executar o aplicativo
 cs_page()
+
