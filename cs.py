@@ -2,35 +2,34 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 from scipy.stats import poisson
-
 from session_state import SessionState
 
 def cs_page():
-    # Inicializa o estado da sessão
+    # Initialize the session state
     session_state = SessionState()
 
-    # Defina o valor de user_profile após a criação da instância
-    session_state.user_profile = 2  # Ou qualquer outro valor desejado
+    # Set the user_profile value after creating the instance
+    session_state.user_profile = 2  # Or any other desired value
 
-    # Verifica se o usuário tem permissão para acessar a página
+    # Check if the user has permission to access the page
     if session_state.user_profile < 2:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
 
-    # URL do arquivo CSV com os dados dos jogos
+    # URL of the CSV file with game data
     url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Jogos_do_Dia_FS.csv"
     df = pd.read_csv(url)
 
-    # Definir os placares desejados
+    # Define desired scores
     placares = [(i, j) for i in range(8) for j in range(8)]
 
-    # Filtrar partidas que não contenham as strings "U21", "U19", "U20", "U16", "U23" ou "U18" nas colunas "Home" ou "Away"
+    # Filter out matches that do not contain specific strings in the "Home" or "Away" columns
     df = df[~df['Home'].str.contains(r'(U21|U19|U20|U16|U23|U18)', case=False) & ~df['Away'].str.contains(r'(U21|U19|U20|U16|U23|U18)', case=False)]
 
-    # Inicializar uma lista para armazenar as informações das partidas
+    # Initialize a list to store match information
     partidas_info = []
 
-    # Calcular as probabilidades para cada partida usando Poisson
+    # Calculate probabilities for each match using Poisson
     for index, row in df.iterrows():
         date = row['Date']
         hora = row['Hora']
@@ -41,26 +40,26 @@ def cs_page():
         odd_empate = row['FT_Odd_D']
         odd_visitante = row['FT_Odd_A']
 
-        # Calcular as probabilidades de gols para cada equipe
+        # Calculate goal probabilities for each team
         prob_home = poisson.pmf(np.arange(0, 8), row['XG_Home'])
         prob_away = poisson.pmf(np.arange(0, 8), row['XG_Away'])
 
-        # Calcular a probabilidade de cada placar possível
+        # Calculate the probability of each possible score
         probabilidade_partida = np.outer(prob_home, prob_away)
 
-        # Classificar os placares com base nas probabilidades
+        # Sort the scores based on probabilities
         placares_classificados = sorted(
             [(i, j, probabilidade_partida[i][j]) for i in range(8) for j in range(8)],
             key=lambda x: x[2],
             reverse=True
         )
 
-        # Calcular a probabilidade do placar 1
-        probabilidade_placar_1 = placares_classificados[0][2] * 100  # Em porcentagem
+        # Calculate the probability of score 1
+        probabilidade_placar_1 = placares_classificados[0][2] * 100  # In percentage
 
-        # Verificar se a probabilidade do placar 1 está entre 15% e 21%
+        # Check if the probability of score 1 is between 15% and 21%
         if 15 <= probabilidade_placar_1 <= 21:
-            # Armazenar as informações da partida e probabilidades
+            # Store match information and probabilities
             partida_info = {
                 'Date': date,
                 'Hora': hora,
@@ -73,23 +72,24 @@ def cs_page():
             }
 
             for idx, (i, j, probabilidade) in enumerate(placares_classificados[:8]):
-                probabilidade_percentual = round(probabilidade * 100, 2)  # Arredonda para 2 casas decimais e converte em porcentagem
+                probabilidade_percentual = round(probabilidade * 100, 2)  # Round to 2 decimal places and convert to percentage
                 partida_info[f'Prob {idx + 1}'] = f"{i}x{j} ({probabilidade_percentual}%)"
 
             partidas_info.append(partida_info)
 
-    # Criar um DataFrame com as informações das partidas
+    # Create a DataFrame with match information
     partidas_df = pd.DataFrame(partidas_info)
 
-    # Exibir a tabela com todas as informações usando st.dataframe
-    st.subheader("Dutching CS ")
+    # Display the table with all information using st.dataframe
+    st.subheader("Dutching CS")
     st.dataframe(partidas_df)
 
     # Export the DataFrame to a CSV file when the button is clicked
-    if st.button("Baixar CSV"):
+    if st.button("Export CSV"):
         # Export the DataFrame to a CSV file
         partidas_df.to_csv('dutching_cs.csv', index=False)
-        
+        st.write("Arquivo CSV gerado com sucesso.")
 
-# Chamar a função para executar o aplicativo
+# Call the function to run the application
 cs_page()
+
