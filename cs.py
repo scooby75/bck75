@@ -85,10 +85,11 @@ def cs_page():
     st.subheader("Dutching CS ")
     st.dataframe(partidas_df)
 
-    # Exportar o DataFrame para um arquivo CSV
-    partidas_df.to_csv('dutching_cs.csv', index=False)
-
-    st.write("Arquivo CSV gerado com sucesso.")
+    # Export the DataFrame to a CSV file when the button is clicked
+    if st.button("Baixar CSV"):
+        # Export the DataFrame to a CSV file
+        partidas_df.to_csv('dutching_cs.csv', index=False)
+        
 
 # Chamar a função para executar o aplicativo
 cs_page()
