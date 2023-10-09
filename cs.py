@@ -2,34 +2,35 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 from scipy.stats import poisson
+from scipy.stats import zipf_pmf  # Importe a distribuição Zero-Inflated Poisson
 from session_state import SessionState
 
 def cs_page():
-    # Initialize the session state
+    # Inicializa o estado da sessão
     session_state = SessionState()
 
-    # Set the user_profile value after creating the instance
-    session_state.user_profile = 2  # Or any other desired value
+    # Defina o valor de user_profile após a criação da instância
+    session_state.user_profile = 2  # Ou qualquer outro valor desejado
 
-    # Check if the user has permission to access the page
+    # Verifica se o usuário tem permissão para acessar a página
     if session_state.user_profile < 2:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
 
-    # URL of the CSV file with game data
+    # URL do arquivo CSV com os dados dos jogos
     url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Jogos_do_Dia_FS.csv"
     df = pd.read_csv(url)
 
-    # Define desired scores
+    # Definir os placares desejados
     placares = [(i, j) for i in range(8) for j in range(8)]
 
-    # Filter out matches that do not contain specific strings in the "Home" or "Away" columns
+    # Filtrar partidas que não contenham as strings "U21", "U19", "U20", "U16", "U23" ou "U18" nas colunas "Home" ou "Away"
     df = df[~df['Home'].str.contains(r'(U21|U19|U20|U16|U23|U18)', case=False) & ~df['Away'].str.contains(r'(U21|U19|U20|U16|U23|U18)', case=False)]
 
-    # Initialize a list to store match information
+    # Inicializar uma lista para armazenar as informações das partidas
     partidas_info = []
 
-    # Calculate probabilities for each match using Poisson
+    # Calcular as probabilidades para cada partida usando Poisson e ZIP
     for index, row in df.iterrows():
         date = row['Date']
         hora = row['Hora']
@@ -40,26 +41,41 @@ def cs_page():
         odd_empate = row['FT_Odd_D']
         odd_visitante = row['FT_Odd_A']
 
-        # Calculate goal probabilities for each team
-        prob_home = poisson.pmf(np.arange(0, 8), row['XG_Home'])
-        prob_away = poisson.pmf(np.arange(0, 8), row['XG_Away'])
+        # Parâmetros para a distribuição Poisson
+        lambda_home = row['XG_Home']
+        lambda_away = row['XG_Away']
 
-        # Calculate the probability of each possible score
-        probabilidade_partida = np.outer(prob_home, prob_away)
+        # Parâmetros para a distribuição Zero-Inflated Poisson (ZIP)
+        zip_prob_zero = 0.2  # Ajuste esse valor conforme necessário
+        zip_prob_non_zero = 1 - zip_prob_zero
 
-        # Sort the scores based on probabilities
+        # Calcular as probabilidades de gols para cada equipe usando Poisson
+        prob_home = poisson.pmf(np.arange(0, 8), lambda_home)
+        prob_away = poisson.pmf(np.arange(0, 8), lambda_away)
+
+        # Calcular a probabilidade de cada placar possível usando a distribuição ZIP
+        probabilidade_partida = np.zeros((8, 8))
+
+        for i in range(8):
+            for j in range(8):
+                if i == 0 and j == 0:
+                    probabilidade_partida[i][j] = zip_prob_zero
+                else:
+                    probabilidade_partida[i][j] = zip_prob_non_zero * prob_home[i] * prob_away[j]
+
+        # Classificar os placares com base nas probabilidades
         placares_classificados = sorted(
             [(i, j, probabilidade_partida[i][j]) for i in range(8) for j in range(8)],
             key=lambda x: x[2],
             reverse=True
         )
 
-        # Calculate the probability of score 1
-        probabilidade_placar_1 = placares_classificados[0][2] * 100  # In percentage
+        # Calcular a probabilidade do placar 1
+        probabilidade_placar_1 = placares_classificados[0][2] * 100  # Em porcentagem
 
-        # Check if the probability of score 1 is between 15% and 21%
+        # Verificar se a probabilidade do placar 1 está entre 15% e 21%
         if 15 <= probabilidade_placar_1 <= 21:
-            # Store match information and probabilities
+            # Armazenar as informações da partida e probabilidades
             partida_info = {
                 'Date': date,
                 'Hora': hora,
@@ -72,24 +88,24 @@ def cs_page():
             }
 
             for idx, (i, j, probabilidade) in enumerate(placares_classificados[:8]):
-                probabilidade_percentual = round(probabilidade * 100, 2)  # Round to 2 decimal places and convert to percentage
+                probabilidade_percentual = round(probabilidade * 100, 2)  # Arredonda para 2 casas decimais e converte em porcentagem
                 partida_info[f'Prob {idx + 1}'] = f"{i}x{j} ({probabilidade_percentual}%)"
 
             partidas_info.append(partida_info)
 
-    # Create a DataFrame with match information
+    # Criar um DataFrame com as informações das partidas
     partidas_df = pd.DataFrame(partidas_info)
 
-    # Display the table with all information using st.dataframe
-    st.subheader("Dutching CS")
+    # Exibir a tabela com todas as informações usando st.dataframe
+    st.subheader("Dutching CS ")
     st.dataframe(partidas_df)
 
-    # Export the DataFrame to a CSV file when the button is clicked
-    if st.button("Baixar CSV"):
-        # Use BytesIO to create a temporary in-memory file for download
+    # Exportar o DataFrame para um arquivo CSV quando o botão é clicado
+    if st.button("Exportar CSV"):
+        # Usar BytesIO para criar um arquivo temporário em memória para download
         import io
         buffer = io.BytesIO()
-        partidas_df.to_csv(buffer, index=False, encoding='utf-8-sig')  # Encoding added for better compatibility
+        partidas_df.to_csv(buffer, index=False, encoding='utf-8-sig')
         buffer.seek(0)
         st.download_button(
             label="Baixar CSV",
@@ -98,5 +114,5 @@ def cs_page():
             key="dutching_cs_csv"
         )
 
-# Call the function to run the application
+# Chamar a função para executar o aplicativo
 cs_page()
