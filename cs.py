@@ -85,11 +85,18 @@ def cs_page():
     st.dataframe(partidas_df)
 
     # Export the DataFrame to a CSV file when the button is clicked
-    if st.button("Export CSV"):
-        # Export the DataFrame to a CSV file
-        partidas_df.to_csv('dutching_cs.csv', index=False)
-        st.write("Arquivo CSV gerado com sucesso.")
+    if st.button("Baixar CSV"):
+        # Use BytesIO to create a temporary in-memory file for download
+        import io
+        buffer = io.StringIO()
+        partidas_df.to_csv(buffer, index=False, encoding='utf-8-sig')  # Encoding added for better compatibility
+        buffer.seek(0)
+        st.download_button(
+            label="Baixar CSV",
+            data=buffer,
+            file_name=f"dutching_cs.csv",
+            key="dutching_cs_csv"
+        )
 
 # Call the function to run the application
 cs_page()
-
