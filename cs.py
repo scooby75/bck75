@@ -32,7 +32,7 @@ def cs_page():
     df = df[(df['FT_Odd_Under25'] <= 2)]
 
     # Placares para os quais você deseja calcular a probabilidade
-    placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x1', '3x2', '3x3', '1x3', '2x3']
+    placares = ['1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '3x1', '3x2', '3x3', '1x3', '2x3']
 
     # Lista para armazenar as linhas dos resultados
     linhas_resultados = []
@@ -46,7 +46,6 @@ def cs_page():
 
         # Calcular as probabilidades usando a distribuição de Poisson
         probabilidades = []
-        total_prob = 0  # Total de probabilidade para normalização
 
         for placar in placares:
             placar_split = placar.split('x')
@@ -63,37 +62,29 @@ def cs_page():
             else:
                 prob_placar = prob_home * prob_away * prob_total
 
-            total_prob += prob_placar
             probabilidades.append(prob_placar)
 
         # Normalizar as probabilidades para que a soma seja 100%
+        total_prob = sum(probabilidades)
         probabilidades = [prob / total_prob for prob in probabilidades]
 
         # Criar uma linha para o resultado deste jogo
         linha_resultado = {
-            'Date': row['Date'],
-            'Hora': row['Hora'],
-            'Liga': row['Liga'],
             'Home': row['Home'],
             'Away': row['Away'],
-            'FT_Odd_H': row['FT_Odd_H'],
-            'FT_Odd_D': row['FT_Odd_D'],
-            'FT_Odd_A': row['FT_Odd_A']
+            'Odd Casa': row['FT_Odd_H'],
+            'Odd Empate': row['FT_Odd_D'],
+            'Odd Visitante': row['FT_Odd_A']
         }
 
         for i, placar in enumerate(placares):
-            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
+            probabilidade_formatada = f"{probabilidades[i] * 100:.2f}%"
+            linha_resultado[f'Prob {placar}'] = probabilidade_formatada
 
         linhas_resultados.append(linha_resultado)
 
     # Criar um novo DataFrame com os resultados
     resultado_df = pd.DataFrame(linhas_resultados)
-
-    # Iniciar aplicativo Streamlit
-    st.subheader("Probabilidade de Placar")
-
-    # Transpor o DataFrame para exibir os placares em colunas
-    resultado_df = resultado_df.transpose()
 
     # Exibir a tabela
     st.dataframe(resultado_df)
