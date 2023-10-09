@@ -69,12 +69,8 @@ def cs_page():
             reverse=True
         )
 
-        # Calcular a probabilidade do placar 1
-        probabilidade_maior_placar = placares_classificados[0][2] * 100  # Em porcentagem
-        probabilidade_menor_placar = placares_classificados[-1][2] * 100  # Em porcentagem
-
-        # Verificar as condições desejadas
-        if 15 <= probabilidade_maior_placar <= 22 and probabilidade_menor_placar >= 2:
+        # Verificar se a maior probabilidade não é 0x0, a menor probabilidade é maior ou igual a 2% e a maior probabilidade está entre 16% e 22%
+        if placares_classificados[0] != (0, 0, 0) and placares_classificados[-1][2] >= 2 and 16 <= placares_classificados[0][2] <= 22:
             # Armazenar as informações da partida e probabilidades
             partida_info = {
                 'Date': date,
