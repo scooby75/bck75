@@ -45,7 +45,7 @@ def cs_page():
         lambda_away = row['XG_Away']
 
         # Parâmetros para a distribuição Zero-Inflated Poisson (ZIP)
-        zip_prob_zero = 0.2  # Ajuste esse valor conforme necessário
+        zip_prob_zero = 0.5  # Ajuste esse valor conforme necessário
         zip_prob_non_zero = 1 - zip_prob_zero
 
         # Calcular as probabilidades de gols para cada equipe usando Poisson
@@ -70,7 +70,7 @@ def cs_page():
         )
 
         # Calcular a probabilidade do placar 1
-        probabilidade_placar_1 = placares_classificados[0][0.5] * 100  # Em porcentagem
+        probabilidade_placar_1 = placares_classificados[0][2] * 100  # Em porcentagem
 
         # Verificar se a probabilidade do placar 1 está entre 15% e 21%
         if 15 <= probabilidade_placar_1 <= 21:
@@ -100,7 +100,7 @@ def cs_page():
     st.dataframe(partidas_df)
 
     # Exportar o DataFrame para um arquivo CSV quando o botão é clicado
-    if st.button("Exportar CSV"):
+    if st.button("Baixar CSV"):
         # Usar BytesIO para criar um arquivo temporário em memória para download
         import io
         buffer = io.BytesIO()
