@@ -85,11 +85,11 @@ def jogos_do_dia_page():
         selected_ppg_away_max = st.number_input("PPG Away (max)", 0.0, 3.0, 3.0)
 
     with col4:
-        selected_hg_home_min = st.number_input("XG Home (min)", 0.0, 10.0, 1.0)
+        selected_hg_home_min = st.number_input("XG Home (min)", 0.0, 10.0, 0.0)
         selected_hg_home_max = st.number_input("XG Home (max)", 0.0, 10.0, 10.0)
-        selected_hg_away_min = st.number_input("XG Away (min)", 0.0, 10.0, 1.0)
+        selected_hg_away_min = st.number_input("XG Away (min)", 0.0, 10.0, 0.0)
         selected_hg_away_max = st.number_input("XG Away (max)", 0.0, 10.0, 10.0)
-        selected_average_goals_min = st.number_input("Média de Gols (min)", 0.0, 10.0, 1.0)
+        selected_average_goals_min = st.number_input("Média de Gols (min)", 0.0, 10.0, 0.0)
         selected_average_goals_max = st.number_input("Média de Gols (max)", 0.0, 10.0, 10.0)
         
 
