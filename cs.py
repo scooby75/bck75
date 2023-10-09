@@ -89,12 +89,6 @@ def cs_page():
     # Criar um novo DataFrame com os resultados
     resultado_df = pd.DataFrame(linhas_resultados)
 
-    # Pivot the DataFrame to have score outcomes as columns
-    resultado_df = resultado_df.pivot(index=['Date', 'Hora', 'Liga', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A'], columns=placares, values=placares)
-
-    # Fill NaN values with empty strings
-    resultado_df = resultado_df.fillna('')
-
     # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
@@ -109,6 +103,11 @@ def cs_page():
 
         # Display the DataFrame for this game
         st.dataframe(row)
+
+    # Create a new DataFrame with all the games of the day
+    all_games_df = df[['Date', 'Hora', 'Liga', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A']].copy()
+    st.subheader("Todos os Jogos do Dia")
+    st.dataframe(all_games_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
