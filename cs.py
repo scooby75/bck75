@@ -69,22 +69,26 @@ def cs_page():
         # Normalizar as probabilidades para que a soma seja 100%
         probabilidades = [prob / total_prob for prob in probabilidades]
 
-        # Criar uma linha para o resultado deste jogo
-        linha_resultado = {
-            'Date': row['Date'],
-            'Hora': row['Hora'],
-            'Liga': row['Liga'],
-            'Home': row['Home'],
-            'Away': row['Away'],
-            'Odd Casa': row['FT_Odd_H'],
-            'Odd Empate': row['FT_Odd_D'],
-            'Odd Visitante': row['FT_Odd_A']
-        }
+        # Verificar se a probabilidade do placar mais provável está entre 16% e 22%
+        max_prob = max(probabilidades)
+        if 16 <= max_prob <= 22:
+            # Criar uma linha para o resultado deste jogo
+            linha_resultado = {
+                'Date': row['Date'],
+                'Hora': row['Hora'],
+                'Liga': row['Liga'],
+                'Home': row['Home'],
+                'Away': row['Away'],
+                'Odd Casa': row['FT_Odd_H'],
+                'Odd Empate': row['FT_Odd_D'],
+                'Odd Visitante': row['FT_Odd_A']
+            }
 
-        for i, placar in enumerate(placares):
-            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
+            # Adicione as probabilidades dos placares ao DataFrame
+            for i, placar in enumerate(placares):
+                linha_resultado[placar] = round(probabilidades[i] * 100, 2)
 
-        linhas_resultados.append(linha_resultado)
+            linhas_resultados.append(linha_resultado)
 
     # Criar um novo DataFrame com os resultados
     resultado_df = pd.DataFrame(linhas_resultados)
