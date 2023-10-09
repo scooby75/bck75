@@ -34,8 +34,8 @@ def cs_page():
     # Placares para os quais você deseja calcular a probabilidade
     placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x1', '3x2', '3x3', '1x3', '2x3']
 
-    # Criar um DataFrame vazio com todas as colunas desejadas
-    formatted_df = pd.DataFrame(columns=['Date', 'Hora', 'Liga', 'Home', 'Away', 'Odd Casa', 'Odd Empate', 'Odd Visitante'] + placares)
+    # Lista para armazenar as linhas dos resultados
+    linhas_resultados = []
 
     # Iterar sobre os jogos e calcular as probabilidades para cada placar
     for index, row in df.iterrows():
@@ -72,6 +72,11 @@ def cs_page():
         # Verificar se a probabilidade do placar mais provável está entre 16% e 22%
         max_prob = max(probabilidades)
         if 16 <= max_prob <= 22:
+            # Ordenar os placares com base na probabilidade (do maior para o menor)
+            placares_prob = list(zip(placares, probabilidades))
+            placares_prob.sort(key=lambda x: x[1], reverse=True)
+            placares_selecionados = [placar for placar, prob in placares_prob[:8]]
+
             # Criar uma linha para o resultado deste jogo
             linha_resultado = {
                 'Date': row['Date'],
@@ -84,18 +89,20 @@ def cs_page():
                 'Odd Visitante': row['FT_Odd_A']
             }
 
-            # Adicione as probabilidades dos placares ao DataFrame
-            for i, placar in enumerate(placares):
-                linha_resultado[placar] = round(probabilidades[i] * 100, 2)
+            # Adicione as probabilidades dos placares selecionados ao DataFrame
+            for placar in placares_selecionados:
+                linha_resultado[placar] = round(probabilidades[placares.index(placar)] * 100, 2)
 
-            # Adicione a linha ao DataFrame final
-            formatted_df = formatted_df.append(linha_resultado, ignore_index=True)
+            linhas_resultados.append(linha_resultado)
+
+    # Criar um novo DataFrame com os resultados
+    resultado_df = pd.DataFrame(linhas_resultados)
 
     # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
     # Exibir o DataFrame com os jogos selecionados
-    st.write(formatted_df)
+    st.write(resultado_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
