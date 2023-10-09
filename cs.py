@@ -102,7 +102,7 @@ def cs_page():
 
         # Verificar se a probabilidade do placar mais provável está entre 16% e 22%
         if (top_scores.max() >= 16.0) and (top_scores.max() <= 22.0):
-            details1 = f"**Hora:** {hora}  |  {home} vs {away}"
+            details1 = f"**Hora:** {row['Hora']}  |  {row['Home']} vs {row['Away']}"
             details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
             st.write(details1)
             st.write(details2)
