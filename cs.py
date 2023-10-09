@@ -75,11 +75,11 @@ def cs_page():
                     'Liga': liga,
                     'Home': home_team,
                     'Away': away_team,
-                    'Placar': f"{i}x{j}",
                     'Odd Casa': odd_casa,
                     'Odd Empate': odd_empate,
                     'Odd Visitante': odd_visitante,
-                    'Probabilidade': probabilidade,
+                    'Placar': f"{i}x{j}",
+                    'Probabilidade': f"{i}x{j} ({round(probabilidade * 100, 2)}%)",  # Formato desejado
                 }
                 partidas_info.append(partida_info)
 
