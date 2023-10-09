@@ -34,8 +34,8 @@ def cs_page():
     # Placares para os quais você deseja calcular a probabilidade
     placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x1', '3x2', '3x3', '1x3', '2x3']
 
-    # Lista para armazenar as linhas dos resultados
-    linhas_resultados = []
+    # Criar um DataFrame vazio com todas as colunas desejadas
+    formatted_df = pd.DataFrame(columns=['Date', 'Hora', 'Liga', 'Home', 'Away', 'Odd Casa', 'Odd Empate', 'Odd Visitante'] + placares)
 
     # Iterar sobre os jogos e calcular as probabilidades para cada placar
     for index, row in df.iterrows():
@@ -88,21 +88,13 @@ def cs_page():
             for i, placar in enumerate(placares):
                 linha_resultado[placar] = round(probabilidades[i] * 100, 2)
 
-            linhas_resultados.append(linha_resultado)
-
-    # Criar um novo DataFrame com os resultados
-    resultado_df = pd.DataFrame(linhas_resultados)
+            # Adicione a linha ao DataFrame final
+            formatted_df = formatted_df.append(linha_resultado, ignore_index=True)
 
     # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
-    # Organizar os dados em um único DataFrame com todos os jogos
-    formatted_df = resultado_df[['Date', 'Hora', 'Liga', 'Home', 'Away', 'Odd Casa', 'Odd Empate', 'Odd Visitante']]
-
-    # Adicionar os placares mais prováveis
-    for i in range(1, 9):
-        formatted_df[f'Placar {i}'] = resultado_df[f'Placar {i}']
-
+    # Exibir o DataFrame com os jogos selecionados
     st.write(formatted_df)
 
 # Chamar a função para executar o aplicativo
