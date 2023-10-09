@@ -5,37 +5,10 @@ from scipy.stats import poisson
 from session_state import SessionState
 
 def cs_page():
-    # Inicializa o estado da sessão
-    session_state = SessionState()
+    # ... Código anterior ...
 
-    # Defina o valor de user_profile após a criação da instância
-    session_state.user_profile = 2  # Ou qualquer outro valor desejado
-
-    # Verifica se o usuário tem permissão para acessar a página
-    if session_state.user_profile < 2:
-        st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
-        return
-
-    # URL do arquivo CSV com os dados dos jogos
-    url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Jogos_do_Dia_FS.csv"
-
-    # Carregar os dados do arquivo CSV em um DataFrame
-    df = pd.read_csv(url)
-
-    # Filtrar jogos com round maior ou igual a 10
-    df = df[df['Rodada'] >= 10]
-
-    # Filtrar jogos com home menor ou igual a 1.90
-    df = df[(df['FT_Odd_H'] >= 1.40) & (df['FT_Odd_H'] <= 2.4)]
-
-    # Filtrar jogos com home menor ou igual a 1.90
-    df = df[(df['FT_Odd_Under25'] <= 2)]
-
-    # Placares para os quais você deseja calcular a probabilidade
-    placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x1', '3x2', '3x3', '1x3', '2x3']
-
-    # Lista para armazenar as linhas dos resultados
-    linhas_resultados = []
+    # Criar um DataFrame vazio para armazenar as probabilidades de placar
+    resultado_df = pd.DataFrame(columns=placares)
 
     # Iterar sobre os jogos e calcular as probabilidades para cada placar
     for index, row in df.iterrows():
@@ -69,47 +42,29 @@ def cs_page():
         # Normalizar as probabilidades para que a soma seja 100%
         probabilidades = [prob / total_prob for prob in probabilidades]
 
-        # Criar uma linha para o resultado deste jogo
-        linha_resultado = {
-            'Date': row['Date'],
-            'Hora': row['Hora'],
-            'Liga': row['Liga'],
-            'Home': row['Home'],
-            'Away': row['Away'],
-            'FT_Odd_H': row['FT_Odd_H'],
-            'FT_Odd_D': row['FT_Odd_D'],
-            'FT_Odd_A': row['FT_Odd_A']
-        }
+        # Adicionar as probabilidades deste jogo como uma nova linha no DataFrame
+        resultado_df.loc[index] = probabilidades
 
-        for i, placar in enumerate(placares):
-            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
-
-        linhas_resultados.append(linha_resultado)
-
-    # Criar um novo DataFrame com os resultados
-    resultado_df = pd.DataFrame(linhas_resultados)
+    # Adicionar colunas de informações do jogo ao DataFrame resultado_df
+    resultado_df['Hora'] = df['Hora']
+    resultado_df['Home'] = df['Home']
+    resultado_df['Away'] = df['Away']
+    resultado_df['FT_Odd_H'] = df['FT_Odd_H']
+    resultado_df['FT_Odd_D'] = df['FT_Odd_D']
+    resultado_df['FT_Odd_A'] = df['FT_Odd_A']
 
     # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
-    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 16% e 22%
+    # Exibir as informações dos jogos em colunas
     for index, row in resultado_df.iterrows():
-        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
-        prob_game_df = resultado_df[placares].iloc[[index]]
+        st.write(f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}")
+        st.write(f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}")
 
-        # Selecionar os placares mais prováveis em ordem decrescente de probabilidade
-        top_scores = prob_game_df.iloc[0].nlargest(8)
-
-        # Verificar se a probabilidade do placar mais provável está entre 16% e 22%
-        if (top_scores.max() >= 16.0) and (top_scores.max() <= 22.0):
-            details1 = f"**Hora:** {row['Hora']}  |  **Home:** {row['Home']}  |  **Away:** {row['Away']}"
-            details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
-            st.write(details1)
-            st.write(details2)
-
-            # Formatar e exibir a tabela com os placares mais prováveis em ordem decrescente
-            formatted_df = top_scores.to_frame(name='Probabilidade').applymap(lambda x: f"{x:.1f}%")
-            st.dataframe(formatted_df)
+        # Formatar e exibir as probabilidades de placar em colunas
+        formatted_df = pd.DataFrame(row[placares], index=placares, columns=['Probabilidade'])
+        formatted_df['Probabilidade'] = formatted_df['Probabilidade'].apply(lambda x: f"{x*100:.2f}%")
+        st.dataframe(formatted_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
