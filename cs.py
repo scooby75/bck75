@@ -112,8 +112,10 @@ def cs_page():
             # Formatar as probabilidades em porcentagem com número inteiro
             top_scores_formatted = top_scores.apply(lambda x: f"{int(x)}%")
 
-            # Adicionar os placares mais prováveis a uma lista
-            placares_provaveis.append(top_scores_formatted.to_frame(name=row['Home'] + ' vs ' + row['Away']))
+            # Verificar se há algum "None" nas probabilidades
+            if not top_scores_formatted.isnull().any():
+                # Adicionar os placares mais prováveis a uma lista
+                placares_provaveis.append(top_scores_formatted.to_frame(name=row['Home'] + ' vs ' + row['Away']))
 
     # Concatenar os DataFrames da lista em um único DataFrame com os placares como colunas
     if placares_provaveis:
