@@ -1,6 +1,5 @@
-import pandas as pd
-import numpy as np
 import streamlit as st
+import pandas as pd
 from scipy.stats import poisson
 
 from session_state import SessionState
@@ -19,76 +18,98 @@ def cs_page():
 
     # URL do arquivo CSV com os dados dos jogos
     url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Jogos_do_Dia_FS.csv"
+
+    # Carregar os dados do arquivo CSV em um DataFrame
     df = pd.read_csv(url)
 
-    # Definir os placares desejados
-    placares = [(i, j) for i in range(8) for j in range(8)]
+    # Filtrar jogos com round maior ou igual a 10
+    df = df[df['Rodada'] >= 10]
 
-    # Filtrar partidas que não contenham as strings "U21", "U19", "U20", "U16", "U23" ou "U18" nas colunas "Home" ou "Away"
-    df = df[~df['Home'].str.contains(r'(U21|U19|U20|U16|U23|U18)', case=False) & ~df['Away'].str.contains(r'(U21|U19|U20|U16|U23|U18)', case=False)]
+    # Filtrar jogos com home menor ou igual a 1.90
+    df = df[(df['FT_Odd_H'] >= 1.40) & (df['FT_Odd_H'] <= 2.4)]
 
-    # Inicializar uma lista para armazenar as informações das partidas
-    partidas_info = []
+    # Filtrar jogos com home menor ou igual a 1.90
+    df = df[(df['FT_Odd_Under25'] <= 2)]
 
-    # Calcular as probabilidades para cada partida usando Poisson
+    # Placares para os quais você deseja calcular a probabilidade
+    placares = ['1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x1', '3x2', '3x3', '1x3', '2x3']
+
+    # Lista para armazenar as linhas dos resultados
+    linhas_resultados = []
+
+    # Iterar sobre os jogos e calcular as probabilidades para cada placar
     for index, row in df.iterrows():
-        date = row['Date']
-        hora = row['Hora']
-        liga = row['Liga']
-        home_team = row['Home']
-        away_team = row['Away']
-        odd_casa = row['FT_Odd_H']
-        odd_empate = row['FT_Odd_D']
-        odd_visitante = row['FT_Odd_A']
+        # Calcular as médias de gols esperados para cada time e o total esperado
+        lambda_home = row['XG_Home']
+        lambda_away = row['XG_Away']
+        lambda_total = row['Average Goals']
 
-        # Calcular as probabilidades de gols para cada equipe
-        prob_home = poisson.pmf(np.arange(0, 8), row['XG_Home'])
-        prob_away = poisson.pmf(np.arange(0, 8), row['XG_Away'])
+        # Calcular as probabilidades usando a distribuição de Poisson
+        probabilidades = []
+        total_prob = 0  # Total de probabilidade para normalização
 
-        # Calcular a probabilidade de cada placar possível
-        probabilidade_partida = np.outer(prob_home, prob_away)
+        for placar in placares:
+            placar_split = placar.split('x')
+            gols_home = int(placar_split[0])
+            gols_away = int(placar_split[1])
 
-        # Classificar os placares com base nas probabilidades
-        placares_classificados = sorted(
-            [(i, j, probabilidade_partida[i][j]) for i in range(8) for j in range(8)],
-            key=lambda x: x[2],
-            reverse=True
-        )
+            prob_home = poisson.pmf(gols_home, lambda_home)
+            prob_away = poisson.pmf(gols_away, lambda_away)
+            prob_total = poisson.pmf(gols_home + gols_away, lambda_total)
 
-        # Calcular a probabilidade do placar 1
-        probabilidade_placar_1 = placares_classificados[0][2] * 100  # Em porcentagem
+            # Aplicar o ajuste de zero inflado para placares "estranhos"
+            if (lambda_home < gols_home) or (lambda_away < gols_away):
+                prob_placar = prob_home * prob_away * prob_total * 1.50
+            else:
+                prob_placar = prob_home * prob_away * prob_total
 
-        # Verificar se a probabilidade do placar 1 está entre 15% e 21%
-        if 15 <= probabilidade_placar_1 <= 21:
-            # Armazenar as informações da partida e probabilidades
-            partida_info = {
-                'Date': date,
-                'Hora': hora,
-                'Liga': liga,
-                'Home': home_team,
-                'Away': away_team,
-                'Odd Casa': odd_casa,
-                'Odd Empate': odd_empate,
-                'Odd Visitante': odd_visitante,
-            }
+            total_prob += prob_placar
+            probabilidades.append(prob_placar)
 
-            for idx, (i, j, probabilidade) in enumerate(placares_classificados[:8]):
-                probabilidade_percentual = round(probabilidade * 100, 2)  # Arredonda para 2 casas decimais e converte em porcentagem
-                partida_info[f'Prob {idx + 1}'] = f"{i}x{j} ({probabilidade_percentual}%)"
+        # Normalizar as probabilidades para que a soma seja 100%
+        probabilidades = [prob / total_prob for prob in probabilidades]
 
-            partidas_info.append(partida_info)
+        # Criar uma linha para o resultado deste jogo
+        linha_resultado = {
+            'Date': row['Date'],
+            'Hora': row['Hora'],
+            'Liga': row['Liga'],
+            'Home': row['Home'],
+            'Away': row['Away'],
+            'FT_Odd_H': row['FT_Odd_H'],
+            'FT_Odd_D': row['FT_Odd_D'],
+            'FT_Odd_A': row['FT_Odd_A']
+        }
 
-    # Criar um DataFrame com as informações das partidas
-    partidas_df = pd.DataFrame(partidas_info)
+        for i, placar in enumerate(placares):
+            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
 
-    # Exibir a tabela com todas as informações usando st.dataframe
-    st.subheader("Dutching CS ")
-    st.dataframe(partidas_df)
+        linhas_resultados.append(linha_resultado)
 
-    # Exportar o DataFrame para um arquivo CSV
-    partidas_df.to_csv('dutching_cs.csv', index=False)
+    # Criar um novo DataFrame com os resultados
+    resultado_df = pd.DataFrame(linhas_resultados)
 
-    st.write("Arquivo CSV gerado com sucesso.")
+    # Iniciar aplicativo Streamlit
+    st.subheader("Probabilidade de Placar")
+
+    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 16% e 22%
+    for index, row in resultado_df.iterrows():
+        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
+        prob_game_df = resultado_df[placares].iloc[[index]]
+
+        # Selecionar os placares mais prováveis em ordem decrescente de probabilidade
+        top_scores = prob_game_df.iloc[0].nlargest(8)
+
+        # Verificar se a probabilidade do placar mais provável está entre 14% e 20%
+        if (top_scores.max() >= 14.0) and (top_scores.max() <= 20.0):
+            details1 = f"**Hora:** {row['Hora']}  |  **Partida:** {row['Home']} vs {row['Away']}"
+            details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
+            st.write(details1)
+            st.write(details2)
+
+            # Formatar e exibir a tabela com os placares mais prováveis em ordem decrescente
+            formatted_df = top_scores.to_frame(name='Probabilidade').applymap(lambda x: f"{x:.1f}%")
+            st.dataframe(formatted_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
