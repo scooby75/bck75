@@ -32,7 +32,7 @@ def cs_page():
     df = df[(df['FT_Odd_Under25'] <= 2)]
 
     # Placares para os quais você deseja calcular a probabilidade
-    placares = ['0x0', '1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x1', '3x2', '3x3', '1x3', '2x3']
+    placares = ['1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x1', '3x2', '3x3', '1x3', '2x3']
 
     # Lista para armazenar as linhas dos resultados
     linhas_resultados = []
@@ -73,6 +73,7 @@ def cs_page():
         linha_resultado = {
             'Date': row['Date'],
             'Hora': row['Hora'],
+            'Pais': row['Pais'],
             'Liga': row['Liga'],
             'Home': row['Home'],
             'Away': row['Away'],
@@ -92,6 +93,9 @@ def cs_page():
     # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
+    # Lista para armazenar os placares mais prováveis
+    placares_provaveis = []
+
     # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 16% e 22%
     for index, row in resultado_df.iterrows():
         # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
@@ -100,16 +104,25 @@ def cs_page():
         # Selecionar os placares mais prováveis em ordem decrescente de probabilidade
         top_scores = prob_game_df.iloc[0].nlargest(8)
 
-        # Verificar se a probabilidade do placar mais provável está entre 16% e 22%
-        if (top_scores.max() >= 16.0) and (top_scores.max() <= 22.0):
+        # Verificar se a probabilidade do placar mais provável está entre 14% e 18%
+        if (top_scores.max() >= 14.0) and (top_scores.max() <= 18.0):
             details1 = f"**Hora:** {row['Hora']}  |  {row['Home']} vs {row['Away']}"
             details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
             st.write(details1)
             st.write(details2)
 
-            # Formatar e exibir a tabela com os placares mais prováveis em ordem decrescente
-            formatted_df = top_scores.to_frame(name='Probabilidade').applymap(lambda x: f"{x:.1f}%")
-            st.dataframe(formatted_df)
+            # Adicionar os placares mais prováveis a uma lista
+            placares_provaveis.append(top_scores.to_frame(name=row['Home'] + ' vs ' + row['Away']))
+
+    # Concatenar os DataFrames da lista em um único DataFrame com os placares como colunas
+    if placares_provaveis:
+        placares_df = pd.concat(placares_provaveis, axis=1)
+
+        # Transpor o DataFrame para que os placares se tornem colunas
+        placares_df = placares_df.transpose()
+
+        # Formatar e exibir o DataFrame com os placares como colunas
+        st.dataframe(placares_df)
 
 # Chamar a função para executar o aplicativo
 cs_page()
