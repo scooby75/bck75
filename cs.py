@@ -73,8 +73,8 @@ def cs_page():
         linha_resultado = {
             'Date': row['Date'],
             'Hora': row['Hora'],
-            'Pais': row['Pais'],
-            'Liga': row['Liga'],
+            'Pais': row['Pais'],  # Adicionando a coluna "Pais"
+            'Liga': row['Liga'],  # Adicionando a coluna "Liga"
             'Home': row['Home'],
             'Away': row['Away'],
             'FT_Odd_H': row['FT_Odd_H'],
@@ -104,12 +104,12 @@ def cs_page():
         # Selecionar os placares mais prováveis em ordem decrescente de probabilidade
         top_scores = prob_game_df.iloc[0].nlargest(8)
 
-        # Verificar se a probabilidade do placar mais provável está entre 14% e 18%
-        if (top_scores.max() >= 14.0) and (top_scores.max() <= 18.0):
-            details1 = f"**Hora:** {row['Hora']}  |  {row['Home']} vs {row['Away']}"
+        # Verificar se a probabilidade do placar mais provável está entre 14% e 20%
+        if (top_scores.max() >= 14.0) and (top_scores.max() <= 20.0):
+            details1 = f"**Hora:** {row['Hora']}  |  {row['Pais']} - {row['Liga']}  |  {row['Home']} vs {row['Away']}"
             details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
-            st.write(details1)
-            st.write(details2)
+            #st.write(details1)
+            #st.write(details2)
 
             # Adicionar os placares mais prováveis a uma lista
             placares_provaveis.append(top_scores.to_frame(name=row['Home'] + ' vs ' + row['Away']))
