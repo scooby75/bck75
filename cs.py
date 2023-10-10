@@ -79,8 +79,7 @@ def cs_page():
         # Armazenar as informações da partida e probabilidades apenas para os placares desejados
         for placar_desejado in placares_desejados:
             i, j = placar_desejado
-            probabilidade = [prob for _, _, prob in placares_classificados if i == _ and j == _][0]
-
+            probabilidade = [prob for _, _, prob in placares_classificados if i == _ and j == _][0] if placares_classificados else 0
             
             # Verificar se a probabilidade é maior que zero
             if probabilidade > 0:
