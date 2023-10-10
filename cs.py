@@ -26,12 +26,7 @@ def cs_page():
     df = df[df['Rodada'] >= 10]
 
     # Filtrar jogos com home menor ou igual a 1.90
-    df = df[(df['FT_Odd_H'] >= 1.80) & 
-
-    df = df[(df['FT_Odd_A'] >= 1.80) & 
-
-    # Filtrar jogos com home menor ou igual a 1.90
-    df = df[(df['FT_Odd_Under25'] <= 2)]
+    df = df[(df['FT_Odd_H'] >= 1.80) & (df['FT_Odd_A'] >= 1.80) & (df['FT_Odd_Under25'] <= 2)]
 
     # Placares para os quais você deseja calcular a probabilidade
     placares = ['1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x1', '3x2', '3x3', '1x3', '2x3']
@@ -94,7 +89,7 @@ def cs_page():
     # Iniciar aplicativo Streamlit
     st.subheader("Probabilidade de Placar")
 
-    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 16% e 22%
+    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 14% e 20%
     for index, row in resultado_df.iterrows():
         # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
         prob_game_df = resultado_df[placares].iloc[[index]]
@@ -109,8 +104,10 @@ def cs_page():
             st.write(details1)
             st.write(details2)
 
-            # Formatar e exibir a tabela com os placares mais prováveis em ordem decrescente
-            formatted_df = top_scores.to_frame(name='Probabilidade').applymap(lambda x: f"{x:.1f}%")
+            # Transpor o DataFrame para exibir probabilidades em colunas
+            formatted_df = top_scores.to_frame(name='Probabilidade')
+            formatted_df = formatted_df.transpose()  # Transpor o DataFrame
+            formatted_df.columns = [f"Prob {i+1}" for i in range(8)]  # Renomear colunas
             st.dataframe(formatted_df)
 
 # Chamar a função para executar o aplicativo
