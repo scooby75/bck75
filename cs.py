@@ -67,14 +67,14 @@ def cs_page():
             probabilidades.append(prob_placar)
 
         # Normalizar as probabilidades para que a soma seja 100%
-        probabilidades = [int(prob / total_prob * 100) for prob in probabilidades]
+        probabilidades = [prob / total_prob for prob in probabilidades]
 
         # Criar uma linha para o resultado deste jogo
         linha_resultado = {
             'Date': row['Date'],
             'Hora': row['Hora'],
-            'Pais': row['Pais'], 
-            'Liga': row['Liga'], 
+            'Pais': row['Pais'],  # Adicionando a coluna "Pais"
+            'Liga': row['Liga'],  # Adicionando a coluna "Liga"
             'Home': row['Home'],
             'Away': row['Away'],
             'FT_Odd_H': row['FT_Odd_H'],
@@ -83,7 +83,7 @@ def cs_page():
         }
 
         for i, placar in enumerate(placares):
-            linha_resultado[placar] = f"{probabilidades[i]}%"
+            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
 
         linhas_resultados.append(linha_resultado)
 
@@ -96,7 +96,7 @@ def cs_page():
     # Lista para armazenar os placares mais prováveis
     placares_provaveis = []
 
-    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 14% e 20%
+    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 16% e 22%
     for index, row in resultado_df.iterrows():
         # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
         prob_game_df = resultado_df[placares].iloc[[index]]
@@ -105,14 +105,9 @@ def cs_page():
         top_scores = prob_game_df.iloc[0].nlargest(6)
 
         # Verificar se a probabilidade do placar mais provável está entre 14% e 20%
-        if (top_scores.max() >= 14) and (top_scores.max() <= 20):
+        if (top_scores.max() >= 14.0) and (top_scores.max() <= 20.0):
             details1 = f"**Hora:** {row['Hora']}  |  {row['Pais']} - {row['Liga']}  |  {row['Home']} vs {row['Away']}"
             details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
-
-            # Adicionar as informações de detalhes ao DataFrame
-            row['Detalhes1'] = details1
-            row['Detalhes2'] = details2
-
             #st.write(details1)
             #st.write(details2)
 
