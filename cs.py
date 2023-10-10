@@ -18,10 +18,6 @@ def cs_page():
 
     # URL do arquivo CSV com os dados dos jogos
     url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/Jogos_do_Dia_FS.csv"
-    
-    # Extrair "País" e "Liga" da URL
-    pais, liga = url.split('/')[-1].split('_')[:2]
-    
     df = pd.read_csv(url)
 
     # Defina os placares desejados
@@ -37,6 +33,7 @@ def cs_page():
     for index, row in df.iterrows():
         date = row['Date']
         hora = row['Hora']
+        liga = row['Liga']
         home_team = row['Home']
         away_team = row['Away']
         odd_casa = row['FT_Odd_H']
@@ -65,12 +62,12 @@ def cs_page():
                 else:
                     probabilidade_partida[i][j] = zip_prob_non_zero * prob_home[i] * prob_away[j]
 
-        # Selecionar os 6 placares mais prováveis
+        # Selecionar os 08 placares mais prováveis
         placares_classificados = sorted(
             [(i, j, probabilidade_partida[i][j]) for i in range(8) for j in range(8)],
             key=lambda x: x[2],
             reverse=True
-        )[:6]  # Alterado para pegar apenas os 6 placares mais prováveis
+        )[:8]
 
         # Ajustar as probabilidades para que a soma seja igual a 100%
         soma_probabilidades = np.sum([prob for _, _, prob in placares_classificados])
@@ -79,14 +76,13 @@ def cs_page():
         # Armazenar as informações da partida e probabilidades apenas para os placares desejados
         for placar_desejado in placares_desejados:
             i, j = placar_desejado
-            probabilidade = [prob for _, _, prob in placares_classificados if i == _ and j == _][0] if placares_classificados else 0
+            probabilidade = [prob for _, _, prob in placares_classificados if i == _ and j == j][0]
             
             # Verificar se a probabilidade é maior que zero
             if probabilidade > 0:
                 partida_info = {
                     'Date': date,
                     'Hora': hora,
-                    'País': pais,
                     'Liga': liga,
                     'Home': home_team,
                     'Away': away_team,
