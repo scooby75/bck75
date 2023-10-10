@@ -96,23 +96,24 @@ def cs_page():
     # Lista para armazenar os placares mais prováveis
     placares_provaveis = []
 
-    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 16% e 22%
+    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 14% e 20%
     for index, row in resultado_df.iterrows():
         # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
         prob_game_df = resultado_df[placares].iloc[[index]]
 
-        # Selecionar os placares mais prováveis em ordem decrescente de probabilidade
+        # Selecionar os 6 placares mais prováveis em ordem decrescente de probabilidade
         top_scores = prob_game_df.iloc[0].nlargest(6)
 
         # Verificar se a probabilidade do placar mais provável está entre 14% e 20%
         if (top_scores.max() >= 14.0) and (top_scores.max() <= 20.0):
             details1 = f"**Hora:** {row['Hora']}  |  {row['Pais']} - {row['Liga']}  |  {row['Home']} vs {row['Away']}"
             details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
-            #st.write(details1)
-            #st.write(details2)
+            
+            # Formatar as probabilidades em porcentagem com número inteiro
+            top_scores_formatted = top_scores.apply(lambda x: f"{int(x)}%")
 
             # Adicionar os placares mais prováveis a uma lista
-            placares_provaveis.append(top_scores.to_frame(name=row['Home'] + ' vs ' + row['Away']))
+            placares_provaveis.append(top_scores_formatted.to_frame(name=row['Home'] + ' vs ' + row['Away']))
 
     # Concatenar os DataFrames da lista em um único DataFrame com os placares como colunas
     if placares_provaveis:
