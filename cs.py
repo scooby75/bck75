@@ -39,7 +39,7 @@ def cs_page():
         'Date', 'Hora', 'Pais', 'Liga', 'Home', 'Away', 'Odd Casa', 'Odd Empate', 'Odd Visitante'] + placares)
 
     # Iterar sobre os jogos e calcular as probabilidades para cada placar
-    for index, row in df.iterrows:
+    for index, row in df.iterrows():
         # Calcular as médias de gols esperados para cada time e o total esperado
         lambda_home = row['XG_Home']
         lambda_away = row['XG_Away']
@@ -90,7 +90,7 @@ def cs_page():
         resultado_global = resultado_global.append(resultado_temporario, ignore_index=True)
 
     # Iniciar aplicativo Streamlit
-    st.subheader("Dutching CS")
+    st.subheader("Probabilidade de Placar para Todos os Jogos do Dia")
 
     # Exibir o DataFrame com os resultados
     st.write(resultado_global)
