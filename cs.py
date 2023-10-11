@@ -105,7 +105,7 @@ def cs_page():
     st.write(resultado_global)
 
     # Obter a data atual no formato desejado
-    data_atual = datetime.now().strftime('%Y-%m-%d')
+    data_atual = datetime.now().strftime('%d/%m/%Y')
 
     # Criar um link para download do CSV
     csv_link_cs = resultado_global.to_csv(index=False, encoding='utf-8-sig')
