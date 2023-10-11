@@ -83,7 +83,9 @@ def cs_page():
         }
 
         for i, placar in enumerate(placares):
-            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
+            # Formatar a probabilidade com uma casa decimal e em formato de porcentagem
+            prob_formatada = f"{probabilidades[i] * 100:.1f}%"
+            linha_resultado[placar] = prob_formatada
 
         # Adicionar o dicionário à lista
         linhas_resultados.append(linha_resultado)
