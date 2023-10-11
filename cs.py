@@ -67,7 +67,8 @@ def cs_page():
             probabilidades.append(prob_placar)
 
         # Normalizar as probabilidades para que a soma seja 100%
-        probabilidades = [prob / total_prob for prob in probabilidades]
+        total_prob_percent = total_prob * 100.0
+        probabilidades = [prob / total_prob_percent for prob in probabilidades]
 
         # Criar um dicionário para o resultado deste jogo
         linha_resultado = {
@@ -83,7 +84,9 @@ def cs_page():
         }
 
         for i, placar in enumerate(placares):
-            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
+            # Formatar a probabilidade com uma casa decimal e em formato de porcentagem
+            prob_formatada = f"{probabilidades[i]:.1f}%"
+            linha_resultado[placar] = prob_formatada
 
         # Adicionar o dicionário à lista
         linhas_resultados.append(linha_resultado)
@@ -92,7 +95,7 @@ def cs_page():
     resultado_global = pd.DataFrame(linhas_resultados)
 
     # Iniciar aplicativo Streamlit
-    st.subheader("Duching CS")
+    st.subheader("Dutching CS")
 
     # Exibir o DataFrame com os resultados
     st.write(resultado_global)
