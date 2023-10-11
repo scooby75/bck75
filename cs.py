@@ -34,9 +34,8 @@ def cs_page():
     # Placares para os quais você deseja calcular a probabilidade
     placares = ['1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2']
 
-    # DataFrame para armazenar os resultados de todos os jogos do dia
-    resultado_global = pd.DataFrame(columns=[
-        'Date', 'Hora', 'Pais', 'Liga', 'Home', 'Away', 'Odd Casa', 'Odd Empate', 'Odd Visitante'] + placares)
+    # Lista de dicionários para armazenar os resultados de todos os jogos do dia
+    linhas_resultados = []
 
     # Iterar sobre os jogos e calcular as probabilidades para cada placar
     for index, row in df.iterrows():
@@ -70,8 +69,8 @@ def cs_page():
         # Normalizar as probabilidades para que a soma seja 100%
         probabilidades = [prob / total_prob for prob in probabilidades]
 
-        # Adicionar os resultados a um DataFrame temporário
-        resultado_temporario = {
+        # Criar um dicionário para o resultado deste jogo
+        linha_resultado = {
             'Date': row['Date'],
             'Hora': row['Hora'],
             'Pais': row['Pais'],
@@ -84,13 +83,16 @@ def cs_page():
         }
 
         for i, placar in enumerate(placares):
-            resultado_temporario[placar] = round(probabilidades[i] * 100, 2)
+            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
 
-        # Adicionar os resultados ao DataFrame global
-        resultado_global = resultado_global.append(resultado_temporario, ignore_index=True)
+        # Adicionar o dicionário à lista
+        linhas_resultados.append(linha_resultado)
+
+    # Criar um DataFrame com os resultados
+    resultado_global = pd.DataFrame(linhas_resultados)
 
     # Iniciar aplicativo Streamlit
-    st.subheader("Probabilidade de Placar para Todos os Jogos do Dia")
+    st.subheader("Duching CS")
 
     # Exibir o DataFrame com os resultados
     st.write(resultado_global)
