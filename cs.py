@@ -32,13 +32,14 @@ def cs_page():
     df = df[(df['FT_Odd_Under25'] <= 2)]
 
     # Placares para os quais você deseja calcular a probabilidade
-    placares = ['1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2', '3x0', '0x3', '3x1', '3x2', '3x3', '1x3', '2x3']
+    placares = ['1x0', '0x1', '1x1', '2x0', '0x2', '2x1', '1x2', '2x2']
 
-    # Lista para armazenar as linhas dos resultados
-    linhas_resultados = []
+    # DataFrame para armazenar os resultados de todos os jogos do dia
+    resultado_global = pd.DataFrame(columns=[
+        'Date', 'Hora', 'Pais', 'Liga', 'Home', 'Away', 'Odd Casa', 'Odd Empate', 'Odd Visitante'] + placares)
 
     # Iterar sobre os jogos e calcular as probabilidades para cada placar
-    for index, row in df.iterrows():
+    for index, row in df.iterrows:
         # Calcular as médias de gols esperados para cada time e o total esperado
         lambda_home = row['XG_Home']
         lambda_away = row['XG_Away']
@@ -69,47 +70,30 @@ def cs_page():
         # Normalizar as probabilidades para que a soma seja 100%
         probabilidades = [prob / total_prob for prob in probabilidades]
 
-        # Criar uma linha para o resultado deste jogo
-        linha_resultado = {
+        # Adicionar os resultados a um DataFrame temporário
+        resultado_temporario = {
             'Date': row['Date'],
             'Hora': row['Hora'],
+            'Pais': row['Pais'],
             'Liga': row['Liga'],
             'Home': row['Home'],
             'Away': row['Away'],
-            'FT_Odd_H': row['FT_Odd_H'],
-            'FT_Odd_D': row['FT_Odd_D'],
-            'FT_Odd_A': row['FT_Odd_A']
+            'Odd Casa': row['FT_Odd_H'],
+            'Odd Empate': row['FT_Odd_D'],
+            'Odd Visitante': row['FT_Odd_A']
         }
 
         for i, placar in enumerate(placares):
-            linha_resultado[placar] = round(probabilidades[i] * 100, 2)
+            resultado_temporario[placar] = round(probabilidades[i] * 100, 2)
 
-        linhas_resultados.append(linha_resultado)
-
-    # Criar um novo DataFrame com os resultados
-    resultado_df = pd.DataFrame(linhas_resultados)
+        # Adicionar os resultados ao DataFrame global
+        resultado_global = resultado_global.append(resultado_temporario, ignore_index=True)
 
     # Iniciar aplicativo Streamlit
-    st.subheader("Probabilidade de Placar")
+    st.subheader("Dutching CS")
 
-    # Loop para exibir os detalhes e a tabela apenas para jogos com probabilidade entre 16% e 22%
-    for index, row in resultado_df.iterrows():
-        # Criar um DataFrame temporário apenas com as probabilidades para o jogo atual
-        prob_game_df = resultado_df[placares].iloc[[index]]
-
-        # Selecionar os placares mais prováveis em ordem decrescente de probabilidade
-        top_scores = prob_game_df.iloc[0].nlargest(8)
-
-        # Verificar se a probabilidade do placar mais provável está entre 16% e 22%
-        if (top_scores.max() >= 16.0) and (top_scores.max() <= 22.0):
-            details1 = f"**Hora:** {row['Hora']}  |  {row['Home']} vs {row['Away']}"
-            details2 = f"**Odd Casa:** {row['FT_Odd_H']} |  **Odd Empate:** {row['FT_Odd_D']} |  **Odd Visitante:** {row['FT_Odd_A']}"
-            st.write(details1)
-            st.write(details2)
-
-            # Formatar e exibir a tabela com os placares mais prováveis em ordem decrescente
-            formatted_df = top_scores.to_frame(name='Probabilidade').applymap(lambda x: f"{x:.1f}%")
-            st.dataframe(formatted_df)
+    # Exibir o DataFrame com os resultados
+    st.write(resultado_global)
 
 # Chamar a função para executar o aplicativo
 cs_page()
