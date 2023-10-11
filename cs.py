@@ -1,8 +1,13 @@
 import streamlit as st
 import pandas as pd
+import io
 from scipy.stats import poisson
-
 from session_state import SessionState
+from datetime import datetime  # Importe datetime para obter a data atual
+
+from io import StringIO
+from io import BytesIO
+
 
 def cs_page():
     # Inicializa o estado da sessão
@@ -67,8 +72,7 @@ def cs_page():
             probabilidades.append(prob_placar)
 
         # Normalizar as probabilidades para que a soma seja 100%
-        total_prob_percent = total_prob * 100.0
-        probabilidades = [int(prob * 100) for prob in probabilidades]
+        probabilidades = [prob / total_prob for prob in probabilidades]
 
         # Criar um dicionário para o resultado deste jogo
         linha_resultado = {
@@ -84,8 +88,8 @@ def cs_page():
         }
 
         for i, placar in enumerate(placares):
-            # Formatar a probabilidade como número inteiro com símbolo de porcentagem
-            prob_formatada = f"{probabilidades[i]}%"
+            # Formatar a probabilidade com uma casa decimal e em formato de porcentagem
+            prob_formatada = f"{probabilidades[i] * 100:.1f}%"
             linha_resultado[placar] = prob_formatada
 
         # Adicionar o dicionário à lista
@@ -95,10 +99,22 @@ def cs_page():
     resultado_global = pd.DataFrame(linhas_resultados)
 
     # Iniciar aplicativo Streamlit
-    st.subheader("Probabilidade de Placar para Todos os Jogos do Dia")
+    st.subheader("Dutching CS")
 
     # Exibir o DataFrame com os resultados
     st.write(resultado_global)
+
+    # Obter a data atual no formato desejado
+    data_atual = datetime.now().strftime('%Y-%m-%d')
+
+    # Criar um link para download do CSV
+    csv_link_cs = resultado_global.to_csv(index=False, encoding='utf-8-sig')
+    st.download_button(
+        label="Baixar CSV",
+        data=csv_link_cs,
+        file_name=f"dutching_cs_{data_atual}.csv",
+        key="dutching_cs_csv"
+    )
 
 # Chamar a função para executar o aplicativo
 cs_page()
