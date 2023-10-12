@@ -804,7 +804,156 @@ def bck_home_page():
         # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
         st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_U05HT', use_container_width=True)
 
-########################################################################################        
+########################################################################################  
+
+
+##### Calculo Win/Loss Over 05FT ####
+
+        # Create a new DataFrame for the "Over 05FT" table
+        df_over05ft = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Calculate the number of "Win" and "Loss" occurrences
+        num_win = len(filtered_df[(filtered_df["FT_Goals_H"] + filtered_df["FT_Goals_A"]) != 0])
+        num_loss = len(filtered_df[(filtered_df["FT_Goals_H"] + filtered_df["FT_Goals_A"]) == 0])
+        total_games = num_win + num_loss
+
+        # Check if total_games is not zero before performing division
+        if total_games != 0:
+        # Calculate win and loss percentages
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+        # Handle the case when total_games is zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calculate the fair odds with 2 decimal places
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+        # Handle the case when win_percentage is zero
+            fair_odd = 0
+
+        #### Add the data to the "Over 05FT" table ####
+        df_over05ft.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Display the "Over 05FT" table
+        st.subheader("Over 05FT")
+        st.dataframe(df_over05ft)
+
+    ###### Calculo Lucro/Prejuízo ####
+
+    # Verificar se o DataFrame não está vazio
+        if not filtered_df.empty:
+    # Somar os valores da coluna 'profit_home' para obter o lucro total
+            lucro_total = filtered_df['profit_over05'].sum()
+            
+    # Calcular o ROI
+            total_de_jogos = len(filtered_df)
+            roi = (lucro_total / total_de_jogos) * 100
+    
+    # Arredondar os valores para duas casas decimais
+            lucro_total = round(lucro_total, 2)
+            roi = round(roi, 2)
+    
+    # Exibir os resultados usando st.write()
+            st.write(f"Lucro/Prejuízo: {lucro_total} Und em {total_de_jogos} jogos")
+            st.write(f"Yield: {roi}%")
+        else:
+    # Exibir mensagem de DataFrame vazio
+            st.write("Nenhum dado disponível. O DataFrame está vazio.")
+
+          ###### ADD Gráfico Over 05FT #####   
+
+    # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+
+        # Converter a coluna 'Date' para o tipo datetime e formatar como "DD/MM/YYYY"
+        filtered_df_copy['Date'] = pd.to_datetime(filtered_df_copy['Date'], format='%d/%m/%Y')
+
+        # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
+
+        # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df_copy['Lucro_Acumulado_O05FT'] = filtered_df_copy['profit_over05'].cumsum()
+
+        # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_O05FT', use_container_width=True)
+
+##### Calculo Win/Loss Under 05FT ####
+
+        # Create a new DataFrame for the "Under 05FT" table
+        df_under05ft = pd.DataFrame(columns=["Win", "Loss", "Odd Justa"])
+
+        # Calculate the number of "Win" and "Loss" occurrences
+        num_win = len(filtered_df[(filtered_df["FT_Goals_H"] + filtered_df["FT_Goals_A"]) == 0])
+        num_loss = len(filtered_df[(filtered_df["FT_Goals_H"] + filtered_df["FT_Goals_A"]) != 0])
+        total_games = num_win + num_loss
+
+        # Check if total_games is not zero before performing division
+        if total_games != 0:
+        # Calculate win and loss percentages
+            win_percentage = (num_win / total_games) * 100
+            loss_percentage = (num_loss / total_games) * 100
+        else:
+        # Handle the case when total_games is zero
+            win_percentage = 0
+            loss_percentage = 0
+
+        # Calculate the fair odds with 2 decimal places
+        if win_percentage != 0:
+            fair_odd = round(100 / win_percentage, 2)
+        else:
+        # Handle the case when win_percentage is zero
+            fair_odd = 0
+
+        #### Add the data to the "Under 05FT" table ####
+        df_under05ft.loc[0] = [f"{win_percentage:.2f}%", f"{loss_percentage:.2f}%", fair_odd]
+
+        # Display the "Under 05FT" table
+        st.subheader("Under 05FT")
+        st.dataframe(df_under05ft)
+
+    ###### Calculo Lucro/Prejuízo ####
+
+    # Verificar se o DataFrame não está vazio
+        if not filtered_df.empty:
+    # Somar os valores da coluna 'profit_home' para obter o lucro total
+            lucro_total = filtered_df['profit_under05'].sum()
+            
+    # Calcular o ROI
+            total_de_jogos = len(filtered_df)
+            roi = (lucro_total / total_de_jogos) * 100
+    
+    # Arredondar os valores para duas casas decimais
+            lucro_total = round(lucro_total, 2)
+            roi = round(roi, 2)
+    
+    # Exibir os resultados usando st.write()
+            st.write(f"Lucro/Prejuízo: {lucro_total} Und em {total_de_jogos} jogos")
+            st.write(f"Yield: {roi}%")
+        else:
+    # Exibir mensagem de DataFrame vazio
+            st.write("Nenhum dado disponível. O DataFrame está vazio.")
+
+        ###### ADD Gráfico Under 05FT #####  
+
+        # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
+        filtered_df_copy = filtered_df.copy()
+
+        # Converter a coluna 'Date' para o tipo datetime e formatar como "DD/MM/YYYY"
+        filtered_df_copy['Date'] = pd.to_datetime(filtered_df_copy['Date'], format='%d/%m/%Y')
+
+        # Ordenar o dataframe pela coluna Date (caso não esteja ordenado)
+        filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
+
+        # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
+        filtered_df_copy['Lucro_Acumulado_U05FT'] = filtered_df_copy['profit_under05'].cumsum()
+
+        # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_U05FT', use_container_width=True)
+
+#######################################################################################      
 
 ##### Calculo Win/Loss Over 15FT ####
 
@@ -1946,6 +2095,8 @@ def bck_home_page():
         display_home_stats('profit_draw', 'Back Empate')
         display_home_stats('profit_over05HT', 'Over 05HT')
         display_home_stats('profit_under05HT', 'Under 05HT')
+        display_home_stats('profit_over05', 'Over 05FT')
+        display_home_stats('profit_under15', 'Under 05FT')
         display_home_stats('profit_over15', 'Over 15FT')
         display_home_stats('profit_under15', 'Under 15FT')
         display_home_stats('profit_over25', 'Over 25FT')
@@ -1983,6 +2134,8 @@ def bck_home_page():
         display_league_stats('profit_draw', 'Back Empate')
         display_league_stats('profit_over05HT', 'Over 05HT')
         display_league_stats('profit_under05HT', 'Under 05HT')
+        display_league_stats('profit_over05', 'Over 05FT')
+        display_league_stats('profit_under015', 'Under 05FT')
         display_league_stats('profit_over15', 'Over 15FT')
         display_league_stats('profit_under15', 'Under 15FT')
         display_league_stats('profit_over25', 'Over 25FT')
