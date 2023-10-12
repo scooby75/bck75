@@ -25,7 +25,7 @@ def load_base():
     df = pd.read_csv(url)
 
     # Excluir linhas em que 'Home' ou 'Away' contenham substrings específicas
-    substrings_para_excluir = ['U16', 'U17', 'U18', 'U19', 'U20', '21', 'U22', 'U23']
+    substrings_para_excluir = ['U16', 'U17', 'U18', 'U19', 'U20', '21', 'U22', 'U23', 'Women']
     mask = ~df['Home'].str.contains('|'.join(substrings_para_excluir), case=False) & \
            ~df['Away'].str.contains('|'.join(substrings_para_excluir), case=False)
     df = df[mask]
