@@ -154,7 +154,7 @@ def tips_page():
             st.text("Apostar em Lay visitante, Odd máxima 6")
             layzebraht_df = df[
                 (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
-                (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10) &
+                (df["FT_Odd_A"] >= 4) & (df["FT_Odd_A"] <= 7) &
                 (df["PPG_Home"] >= 1.7) &
                 (df["Rodada"] >= 10)
             ]
@@ -180,7 +180,7 @@ def tips_page():
             st.text("Apostar em Lay visitante, Odd máxima 6")
             layzebraft_df = df[
                 (df["FT_Odd_H"] >= 1.4) & (df["FT_Odd_H"] <= 2.1) &
-                (df["FT_Odd_A"] >= 5) & (df["FT_Odd_A"] <= 10) &
+                (df["FT_Odd_A"] >= 4) & (df["FT_Odd_A"] <= 7) &
                 (df["PPG_Home"] >= 1.7) &
                 (df["Rodada"] >= 10)
             ]
