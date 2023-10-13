@@ -20,24 +20,16 @@ def value_bets_page():
         return
 
     # Carrega o dado
-    url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/value_bet.csv"
+    url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/value%20bet.csv"
     df = pd.read_csv(url)
-    
-    
-    # Rename the columns
-    df.rename(columns={
-        'Match': 'Partida',
-        'Stats': 'Mercado',
-        'Implied Odds': 'Odd Esperada',
-        'Real Odds': 'Odd Ofertada',
-       
-    }, inplace=True)
 
-   
+    # Remover a coluna "Data" do DataFrame
+    df = df.drop(columns=["Data"])  
+        
     
     # Display the "Value Bets" DataFrame
     st.subheader("Value Bets")
-    st.text("Se a Odd ofertada é maior que o valor esperado (casas e bolsas de apostas podem estar desajustadas, pagando mais que o previsto), o que tende a ser lucrativo a longo prazo")
+    st.text("Se a Odd ofertada é maior que o valor esperado, a tendência é ser lucrativo a longo prazo")
     st.dataframe(df)
 
 # Chamar a função para exibir a aplicação web
