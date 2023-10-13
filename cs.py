@@ -1,13 +1,9 @@
 import streamlit as st
 import pandas as pd
-import io
 from scipy.stats import poisson
 from session_state import SessionState
-from datetime import datetime  # Importe datetime para obter a data atual
-
-from io import StringIO
-from io import BytesIO
-
+from datetime import datetime
+from io import StringIO, BytesIO
 
 def cs_page():
     # Inicializa o estado da sessão
@@ -26,6 +22,17 @@ def cs_page():
 
     # Carregar os dados do arquivo CSV em um DataFrame
     df = pd.read_csv(url)
+
+    # Excluir linhas em que 'Home' ou 'Away' contenham substrings específicas
+    substrings_para_excluir = ['U16', 'U17', 'U18', 'U19', 'U20', '21', 'U22', 'U23', 'Women', 'reserve']
+    mask = ~df['Home'].str.contains('|'.join(substrings_para_excluir), case=False) & \
+           ~df['Away'].str.contains('|'.join(substrings_para_excluir), case=False)
+    df = df[mask]
+
+    # Excluir linhas em que 'League' contenha 'WOMEN'
+    substring_para_excluir = ['WOMEN', 'Reserve']
+    mask = ~df['Liga'].str.contains(substring_para_excluir, case=False)
+    df = df[mask]
 
     # Filtrar jogos com round maior ou igual a 10
     df = df[df['Rodada'] >= 10]
