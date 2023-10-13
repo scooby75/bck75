@@ -12,6 +12,7 @@ from h2h import h2h_page
 from last4 import last4_page
 from stats_equipes import stats_equipes_page
 from tips import tips_page
+from value bets import value_bets_page
 
 from session_state import get_or_create_session_state
 from session_state import SessionState
@@ -43,7 +44,7 @@ def main():
             logout()
 
         # Caixa de seleção para diferentes páginas
-        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Análise Home", "Análise Away", "Análise Liga", "Desempenho Equipes", "Dutching CS",  "H2H", "Last4", "Predict", "Tips"])
+        selected_tab = st.sidebar.selectbox("Selecione uma aba", ["Jogos do Dia", "Análise Home", "Análise Away", "Análise Liga", "Desempenho Equipes", "Dutching CS",  "H2H", "Last4", "Predict", "Tips", "Value Bets"])
 
         # Exibe o conteúdo da página selecionada, considerando as permissões do perfil
         user_profile = session_state.user_profile  # Use session_state here
@@ -68,6 +69,8 @@ def main():
             predict_page()
         elif selected_tab == "Tips" and user_profile >= 1:
             tips_page()
+        elif selected_tab == "Value Bets" and user_profile >= 2:
+            value_bets_page()
         
        
 
