@@ -26,6 +26,9 @@ def value_bets_page():
     # Remover a coluna "Data" do DataFrame
     df = df.drop(columns=["Data"])  
 
+    # Converter a coluna "Probabilidade" em valores numéricos
+    df['Probabilidade'] = df['Probabilidade'].str.rstrip('%').astype(float)
+
     # Filtrar os jogos com Probabilidade >= 75%
     df_filtered = df[df['Probabilidade'] >= 75]        
     
