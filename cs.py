@@ -31,7 +31,7 @@ def cs_page():
 
     # Excluir linhas em que 'League' contenha 'WOMEN'
     substring_para_excluir = ['WOMEN', 'Reserve']
-    mask = ~df['Liga'].str.contains(substring_para_excluir, case=False)
+    mask = ~df['Liga'].str.contains('|'.join(substring_para_excluir), case=False)
     df = df[mask]
 
     # Filtrar jogos com round maior ou igual a 10
