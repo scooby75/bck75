@@ -25,12 +25,14 @@ def value_bets_page():
 
     # Remover a coluna "Data" do DataFrame
     df = df.drop(columns=["Data"])  
-        
+
+    # Filtrar os jogos com Probabilidade >= 75%
+    df_filtered = df[df['Probabilidade'] >= 75]        
     
     # Display the "Value Bets" DataFrame
     st.subheader("Value Bets")
-    st.text("Se a Odd ofertada é maior que o valor esperado, a tendência é ser lucrativo a longo prazo")
-    st.dataframe(df)
+    st.text("Se a Odd ofertada é maior que o valor esperado, a tendência é ser lucrativo no longo prazo")
+    st.dataframe(df_filtered)
 
 # Chamar a função para exibir a aplicação web
 value_bets_page()
