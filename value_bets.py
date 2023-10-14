@@ -23,7 +23,7 @@ def value_bets_page():
         return
 
     # Carrega o dado
-    url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/value%20bet.csv"
+    url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/value_bet.csv"
     df = pd.read_csv(url)
 
     # Remover a coluna "Data" do DataFrame
