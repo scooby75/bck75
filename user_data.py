@@ -48,5 +48,6 @@ valid_users = {
     "franklinmg": {"password": "Emp@#123", "profile": 3},
     "MatheusFujii": {"password": "520044", "profile": 3},
     "Chami1414": {"password": "Eljunquitokm23", "profile": 3},
+    "cleberssaba": {"password": "POsitivo80@", "profile": 3},
     "fellipinho": {"password": "110099", "profile": 3}
 }
