@@ -24,7 +24,7 @@ valid_users = {
     #"fagnerom": {"password": "120714", "profile": 3},
     #"Mayconjp19": {"password": "210319", "profile": 3},
     #"Edward": {"password": "Edward23", "profile": 3},
-    "suporteacampo": {"password": "analise2023", "profile": 3}, 
+    #"suporteacampo": {"password": "analise2023", "profile": 3}, 
     "bhctorres1982": {"password": "Rafael2015*", "profile": 3},
     "Felipe Gonçalves": {"password": "felipesantos", "profile": 3},
     "Marcel Verona": {"password": "Euro2023", "profile": 1},
