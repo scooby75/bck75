@@ -65,19 +65,20 @@ def stats_equipes_page():
     
     # Subheaders e estatísticas em FT e HT
     col1, col2 = st.columns(2)
+
+    with col1:
+        st.subheader("Desempenho HT:")
+        st.write(f"Vitórias: {vitorias_HT} ({(vitorias_HT / total_partidas * 100):.2f}%)")
+        st.write(f"Empates: {empates_HT} ({(empates_HT / total_partidas * 100):.2f}%)")
+        st.write(f"Derrotas: {derrotas_HT} ({(derrotas_HT / total_partidas * 100):.2f}%)")
     
     with col2:
-        st.subheader("Resultados em FT:")
+        st.subheader("Desempenho FT:")
         st.write(f"Vitórias: {vitorias_FT} ({(vitorias_FT / total_partidas * 100):.2f}%)")
         st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
         st.write(f"Derrotas: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
     
-    with col1:
-        st.subheader("Resultados em HT:")
-        st.write(f"Vitórias: {vitorias_HT} ({(vitorias_HT / total_partidas * 100):.2f}%)")
-        st.write(f"Empates: {empates_HT} ({(empates_HT / total_partidas * 100):.2f}%)")
-        st.write(f"Derrotas: {derrotas_HT} ({(derrotas_HT / total_partidas * 100):.2f}%)")
-
+    
     # Calcular a média de gols feitos e tomados no HT
     media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
     media_gols_tomados_HT = ultimas_partidas['HT_Goals_A'].mean()
