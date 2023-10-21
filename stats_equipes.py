@@ -78,6 +78,7 @@ def stats_equipes_page():
         st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
         st.write(f"Derrotas: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
     
+    
     # Calcular a média de gols feitos e tomados no HT
     media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
     media_gols_tomados_HT = ultimas_partidas['HT_Goals_A'].mean()
@@ -104,42 +105,6 @@ def stats_equipes_page():
         st.subheader("Média de Gols FT:")
         st.write(f"Gols Feitos FT: {media_gols_feitos_FT:.2f}")
         st.write(f"Gols Tomados FT: {media_gols_tomados_FT:.2f}")
-
-    # Filtrar as partidas em que Goals_Minutes_Home não está vazio
-    partidas_com_gols = ultimas_partidas[ultimas_partidas['Goals_Minutes_Home'] != '[]']
-
-    # Inicializar uma lista para armazenar as médias de tempo de gol em cada partida
-    medias_por_partida = []
-
-    # Iterar pelas partidas
-    for index, partida in partidas_com_gols.iterrows():
-        # Obter a coluna Goals_Minutes_Home como uma lista de inteiros
-        minutos_gols = [int(minuto) for minuto in partida['Goals_Minutes_Home'].strip('[]').split(', ')]
-        # Calcular a média dos minutos de gol na partida
-        media_partida = sum(minutos_gols) / len(minutos_gols)
-        medias_por_partida.append(media_partida)
-
-    # Calcular a média da equipe
-    if medias_por_partida:
-        media_equipe = sum(medias_por_partida) / len(medias_por_partida)
-
-        # Adicionar a quinta coluna para exibir a média de tempo de gol
-        col5 = st.columns(1)
-        with col5:
-            st.subheader("Média de Tempo de Gol da Equipe (Home):")
-            st.write(f"{media_equipe:.2f} minutos")
-    
-    # Rank Home da partida mais recente
-    rank_home_partida_mais_recente = df_equipe_liga.iloc[0]['Rank_Home']
-
-    # Exibir o Rank Home da partida mais recente
-    col6 = st.columns(1)
-    with col6:
-        st.subheader("Rank Home")
-        st.write(rank_home_partida_mais_recente)
-
-    else:
-        st.warning("Nenhuma partida encontrada para a equipe e liga selecionadas.")
 
 # Execute a função para criar a página
 stats_equipes_page()
