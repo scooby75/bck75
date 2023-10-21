@@ -78,7 +78,6 @@ def stats_equipes_page():
         st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
         st.write(f"Derrotas: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
     
-    
     # Calcular a média de gols feitos e tomados no HT
     media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
     media_gols_tomados_HT = ultimas_partidas['HT_Goals_A'].mean()
@@ -110,7 +109,6 @@ def stats_equipes_page():
     ultimas_partidas['Goals_Minutes_Home'] = ultimas_partidas['Goals_Minutes_Home'].apply(lambda x: [int(minute.strip('[]')) if minute.strip('[]').isdigit() else 0 for minute in x])
     ultimas_partidas['Goals_Minutes_Home'] = ultimas_partidas['Goals_Minutes_Home'].apply(lambda x: sum(x) / len(x) if len(x) > 0 else 0)
 
-
     # Calcular o tempo médio do gol
     tempo_medio_gol = ultimas_partidas['Goals_Minutes_Home'].mean()
 
@@ -121,7 +119,7 @@ def stats_equipes_page():
     col5 = st.columns(1)
     with col5:
         st.subheader("Tempo Médio do Gol")
-        st.dataframe(ultimas_partidas[['Tempo_Medio_Gol']])
+        st.dataframe(ultimas_partidas[['Tempo_Medio_Gol'])
     
     # Adicione a nova coluna 'Rank_Home' ao DataFrame partidas_recentes
     partidas_recentes['Rank_Home'] = df_equipe_liga['Rank_Home']
