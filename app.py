@@ -11,7 +11,7 @@ from bck_league_home import bck_league_home_page
 from h2h import h2h_page
 from last4 import last4_page
 from stats_equipes import stats_equipes_page
-from stats_equipes import stats_away_page
+from stats_away import stats_away_page
 from tips import tips_page
 from value_bets import value_bets_page
 
