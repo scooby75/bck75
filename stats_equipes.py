@@ -66,17 +66,23 @@ def stats_equipes_page():
     # Subheaders e estatísticas em FT e HT
     col1, col2 = st.columns(2)
     
-    with col1:
-        st.subheader("Resultados em FT:")
-        st.write(f"Vitórias: {vitorias_FT} ({(vitorias_FT / total_partidas * 100):.2f}%)")
-        st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
-        st.write(f"Derrotas: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
-    
     with col2:
+        st.subheader("Resultados em FT:")
+        st.dataframe({
+            'Vitórias': [vitorias_FT],
+            'Empates': [empates_FT],
+            'Derrotas': [derrotas_FT],
+            'Porcentagem': [f"{(vitorias_FT / total_partidas * 100):.2f}%"]
+        })
+
+    with col1:
         st.subheader("Resultados em HT:")
-        st.write(f"Vitórias: {vitorias_HT} ({(vitorias_HT / total_partidas * 100):.2f}%)")
-        st.write(f"Empates: {empates_HT} ({(empates_HT / total_partidas * 100):.2f}%)")
-        st.write(f"Derrotas: {derrotas_HT} ({(derrotas_HT / total_partidas * 100):.2f}%)")
+        st.dataframe({
+            'Vitórias': [vitorias_HT],
+            'Empates': [empates_HT],
+            'Derrotas': [derrotas_HT],
+            'Porcentagem': [f"{(vitorias_HT / total_partidas * 100):.2f}%"]
+        })
 
     # Calcular a média de gols feitos e tomados no HT
     media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
@@ -97,13 +103,17 @@ def stats_equipes_page():
     
     with col3:
         st.subheader("Média de Gols HT:")
-        st.write(f"Gols Feitos HT: {media_gols_feitos_HT:.2f}")
-        st.write(f"Gols Tomados HT: {media_gols_tomados_HT:.2f}")
-    
+        st.dataframe({
+            'Gols Feitos HT': [media_gols_feitos_HT],
+            'Gols Tomados HT': [media_gols_tomados_HT]
+        })
+
     with col4:
         st.subheader("Média de Gols FT:")
-        st.write(f"Gols Feitos FT: {media_gols_feitos_FT:.2f}")
-        st.write(f"Gols Tomados FT: {media_gols_tomados_FT:.2f}")
+        st.dataframe({
+            'Gols Feitos FT': [media_gols_feitos_FT],
+            'Gols Tomados FT': [media_gols_tomados_FT]
+        })
 
 # Execute a função para criar a página
 stats_equipes_page()
