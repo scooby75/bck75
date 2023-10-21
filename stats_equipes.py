@@ -46,7 +46,7 @@ def stats_equipes_page():
     # Calcular as estatísticas das últimas N partidas selecionadas
     ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
     
-    total_partidas = ultimas_partidas.shape[0]
+    total_partidas = ultimas_partidas.shape[0
     
     # Mapear os valores nas colunas 'Resultado_FT' e 'Resultado_HT' para os resultados correspondentes
     mapeamento_resultados = {'H': 'Vitória', 'D': 'Empate', 'A': 'Away'}
@@ -65,46 +65,68 @@ def stats_equipes_page():
     
     # Subheaders e estatísticas em FT e HT
     col1, col2 = st.columns(2)
-
+    
     with col1:
-        st.subheader("Desempenho HT:")
-        st.write(f"Vitórias: {vitorias_HT} ({(vitorias_HT / total_partidas * 100):.2f}%)")
-        st.write(f"Empates: {empates_HT} ({(empates_HT / total_partidas * 100):.2f}%)")
-        st.write(f"Derrotas: {derrotas_HT} ({(derrotas_HT / total_partidas * 100):.2f}%)")
-    
+        st.subheader("Resultados em FT:")
+        total_resultados_FT = vitorias_FT + empates_FT + derrotas_FT
+        if total_resultados_FT > 0:
+            porcentagem_vitorias_FT = int((vitorias_FT / total_resultados_FT) * 100)
+            porcentagem_empates_FT = int((empates_FT / total_resultados_FT) * 100)
+            porcentagem_derrotas_FT = int((derrotas_FT / total_resultados_FT) * 100)
+        else:
+            porcentagem_vitorias_FT = 0
+            porcentagem_empates_FT = 0
+            porcentagem_derrotas_FT = 0
+
+        st.dataframe({
+            'Vitórias': [vitorias_FT],
+            'Empates': [empates_FT],
+            'Derrotas': [derrotas_FT],
+            'Porcentagem (%)': [
+                f"{porcentagem_vitorias_FT}%",
+                f"{porcentagem_empates_FT}%",
+                f"{porcentagem_derrotas_FT}%"
+            ]
+        })
+
     with col2:
-        st.subheader("Desempenho FT:")
-        st.write(f"Vitórias: {vitorias_FT} ({(vitorias_FT / total_partidas * 100):.2f}%)")
-        st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
-        st.write(f"Derrotas: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
+        st.subheader("Resultados em HT:")
+        total_resultados_HT = vitorias_HT + empates_HT + derrotas_HT
+        if total_resultados_HT > 0:
+            porcentagem_vitorias_HT = int((vitorias_HT / total_resultados_HT) * 100)
+            porcentagem_empates_HT = int((empates_HT / total_resultados_HT) * 100)
+            porcentagem_derrotas_HT = int((derrotas_HT / total_resultados_HT) * 100)
+        else:
+            porcentagem_vitorias_HT = 0
+            porcentagem_empates_HT = 0
+            porcentagem_derrotas_HT = 0
+
+        st.dataframe({
+            'Vitórias': [vitorias_HT],
+            'Empates': [empates_HT],
+            'Derrotas': [derrotas_HT],
+            'Porcentagem (%)': [
+                f"{porcentagem_vitorias_HT}%",
+                f"{porcentagem_empates_HT}%",
+                f"{porcentagem_derrotas_HT}%"
+            ]
+        })
     
-    
-    # Calcular a média de gols feitos e tomados no HT
-    media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
-    media_gols_tomados_HT = ultimas_partidas['HT_Goals_A'].mean()
-    
-    # Calcular a média de gols feitos e tomados no FT
-    media_gols_feitos_FT = ultimas_partidas['FT_Goals_H'].mean()
-    media_gols_tomados_FT = ultimas_partidas['FT_Goals_A'].mean()
-    
-    # Adicionar as médias ao DataFrame
-    ultimas_partidas['Média_Gols_Feitos_HT'] = media_gols_feitos_HT
-    ultimas_partidas['Média_Gols_Tomados_HT'] = media_gols_tomados_HT
-    ultimas_partidas['Média_Gols_Feitos_FT'] = media_gols_feitos_FT
-    ultimas_partidas['Média_Gols_Tomados_FT'] = media_gols_tomados_FT
-    
-    # Exibir as médias em uma tabela
-    col3, col4 = st.columns(2)
-    
-    with col3:
-        st.subheader("Média de Gols HT:")
-        st.write(f"Gols Feitos HT: {media_gols_feitos_HT:.2f}")
-        st.write(f"Gols Tomados HT: {media_gols_tomados_HT:.2f}")
-    
-    with col4:
-        st.subheader("Média de Gols FT:")
-        st.write(f"Gols Feitos FT: {media_gols_feitos_FT:.2f}")
-        st.write(f"Gols Tomados FT: {media_gols_tomados_FT:.2f}")
+    # Calcular o tempo médio do gol a partir da coluna Goals_Minutes_Home
+    ultimas_partidas['Goals_Minutes_Home'] = ultimas_partidas['Goals_Minutes_Home'].apply(lambda x: [int(minute) for minute in x])
+    ultimas_partidas['Goals_Minutes_Home'] = ultimas_partidas['Goals_Minutes_Home'].apply(lambda x: sum(x) / len(x) if len(x) > 0 else 0)
+
+    # Calcular o tempo médio do gol
+    tempo_medio_gol = ultimas_partidas['Goals_Minutes_Home'].mean()
+
+    # Criar a nova coluna "Tempo_Medio_Gol"
+    ultimas_partidas['Tempo_Medio_Gol'] = tempo_medio_gol
+
+    # Exibir a nova coluna em uma tabela
+    col5 = st.columns(1)
+    with col5:
+        st.subheader("Tempo Médio do Gol")
+        st.dataframe(ultimas_partidas[['Tempo_Medio_Gol']])
 
 # Execute a função para criar a página
 stats_equipes_page()
