@@ -38,7 +38,7 @@ def stats_equipes_page():
     df_equipe_liga = df_equipe_liga.sort_values(by='Unnamed: 0', ascending=False)
 
     # Exiba as últimas N partidas selecionadas em uma tabela
-    partidas_recentes = df_equipe_liga[['Date', 'League', 'Home', 'Away', 'Placar_HT', 'Placar_FT']].head(num_partidas)
+    partidas_recentes = df_equipe_liga[['Date', 'League', 'Home', 'Away', 'Placar_HT', 'Placar_FT', 'Rank_Home']].head(num_partidas)
     partidas_recentes = partidas_recentes.reset_index(drop=True)  # Remover o índice
     st.subheader("Partidas mais recentes:")
     st.dataframe(partidas_recentes)
@@ -77,7 +77,6 @@ def stats_equipes_page():
         st.write(f"Vitórias: {vitorias_FT} ({(vitorias_FT / total_partidas * 100):.2f}%)")
         st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
         st.write(f"Derrotas: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
-    
     
     # Calcular a média de gols feitos e tomados no HT
     media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
