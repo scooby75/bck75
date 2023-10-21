@@ -1,10 +1,9 @@
 import streamlit as st
 import pandas as pd
-
-from session_state import get
+from session_state import SessionState
 
 def stats_equipes_page():
-    session_state = get(user_profile=3)
+    session_state = SessionState.get(user_profile=3)
 
     if session_state.user_profile < 3:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
