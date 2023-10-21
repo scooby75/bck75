@@ -46,8 +46,7 @@ def stats_equipes_page():
     # Calcular as estatísticas das últimas N partidas selecionadas
     ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
     
-    total_partidas = ultimas_partidas.shape[0]
-    
+    total_partidas = ultimas_partidas.shape[0
     # Mapear os valores nas colunas 'Resultado_FT' e 'Resultado_HT' para os resultados correspondentes
     mapeamento_resultados = {'H': 'Vitória', 'D': 'Empate', 'A': 'Away'}
     
@@ -68,20 +67,48 @@ def stats_equipes_page():
     
     with col2:
         st.subheader("Resultados em FT:")
+        total_resultados_FT = vitorias_FT + empates_FT + derrotas_FT
+        if total_resultados_FT > 0:
+            porcentagem_vitorias_FT = (vitorias_FT / total_resultados_FT) * 100
+            porcentagem_empates_FT = (empates_FT / total_resultados_FT) * 100
+            porcentagem_derrotas_FT = (derrotas_FT / total_resultados_FT) * 100
+        else:
+            porcentagem_vitorias_FT = 0
+            porcentagem_empates_FT = 0
+            porcentagem_derrotas_FT = 0
+
         st.dataframe({
             'Vitórias': [vitorias_FT],
             'Empates': [empates_FT],
             'Derrotas': [derrotas_FT],
-            'Porcentagem': [f"{(vitorias_FT / total_partidas * 100):.2f}%"]
+            'Porcentagem': [
+                f"{porcentagem_vitorias_FT:.2f}%",
+                f"{porcentagem_empates_FT:.2f}%",
+                f"{porcentagem_derrotas_FT:.2f}%"
+            ]
         })
 
     with col1:
         st.subheader("Resultados em HT:")
+        total_resultados_HT = vitorias_HT + empates_HT + derrotas_HT
+        if total_resultados_HT > 0:
+            porcentagem_vitorias_HT = (vitorias_HT / total_resultados_HT) * 100
+            porcentagem_empates_HT = (empates_HT / total_resultados_HT) * 100
+            porcentagem_derrotas_HT = (derrotas_HT / total_resultados_HT) * 100
+        else:
+            porcentagem_vitorias_HT = 0
+            porcentagem_empates_HT = 0
+            porcentagem_derrotas_HT = 0
+
         st.dataframe({
             'Vitórias': [vitorias_HT],
             'Empates': [empates_HT],
             'Derrotas': [derrotas_HT],
-            'Porcentagem': [f"{(vitorias_HT / total_partidas * 100):.2f}%"]
+            'Porcentagem': [
+                f"{porcentagem_vitorias_HT:.2f}%",
+                f"{porcentagem_empates_HT:.2f}%",
+                f"{porcentagem_derrotas_HT:.2f}%"
+            ]
         })
 
     # Calcular a média de gols feitos e tomados no HT
