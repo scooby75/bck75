@@ -84,12 +84,12 @@ def stats_equipes_page():
     if medias_por_partida:
         media_equipe = sum(medias_por_partida) / len(medias_por_partida)
 
-        st.subheader("Média de Tempo de Gol da Equipe (Home):")
+        st.subheader("Tempo Médio do Primeiro Gol - Home:")
         st.write(f"{media_equipe:.2f} minutos")
 
     rank_home_partida_mais_recente = df_equipe_liga.iloc[0]['Rank_Home']
 
-    st.subheader("Rank Home")
+    st.subheader("Posição no Ranking - Home")
     st.write(rank_home_partida_mais_recente)
 
 # Execute the function to create the page
