@@ -94,8 +94,6 @@ def stats_equipes_page():
         ultimas_partidas['Média_Gols_Tomados_FT'] = media_gols_tomados_FT
 
         # Exibir as médias em uma tabela
-        col3, col4 = st.columns(2)
-
         with col3:
             st.subheader("Média de Gols HT:")
             st.write(f"Gols Feitos HT: {media_gols_feitos_HT:.2f}")
@@ -108,7 +106,7 @@ def stats_equipes_page():
 
         # Cálculo da média geral do tempo de gol
         if total_partidas > 0:
-            media_tempo_gol = sum(sum(x) / len(x) for x in ultimas_partidas['Goals_Minutes_Home']) / total_partidas
+            media_tempo_gol = sum(sum([int(minute) for minute in x if minute.isdigit()] for x in ultimas_partidas['Goals_Minutes_Home'])) / total_partidas
         else:
             media_tempo_gol = 0
 
@@ -117,14 +115,14 @@ def stats_equipes_page():
 
         # Exibir a nova coluna em uma tabela
         col5, col6 = st.columns(2)
-        
+
         with col5:
             st.subheader("Tempo Médio do Gol")
             st.dataframe(ultimas_partidas[['Media_Tempo_Gol']])
-        
+
         # Rank Home da partida mais recente
         rank_home_partida_mais_recente = df_equipe_liga.iloc[0]['Rank_Home']
-        
+
         # Exibir o Rank Home da partida mais recente
         with col6:
             st.subheader("Rank Home da Partida Mais Recente")
