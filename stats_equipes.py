@@ -1,14 +1,20 @@
 import streamlit as st
 import pandas as pd
+
 from session_state import SessionState
 
 def stats_equipes_page():
-    session_state = SessionState.get(user_profile=3)
+    # Inicializa o estado da sessão
+    session_state = SessionState()
 
+    # Defina o valor de user_profile após a criação da instância
+    session_state.user_profile = 3  # Ou qualquer outro valor desejado
+
+    # Verifica se o usuário tem permissão para acessar a página
     if session_state.user_profile < 3:
         st.error("Você não tem permissão para acessar esta página. Faça um upgrade do seu plano!!")
         return
-
+        
     url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/BD_Geral.csv"
     df = pd.read_csv(url)
 
