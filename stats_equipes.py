@@ -94,6 +94,8 @@ def stats_equipes_page():
         ultimas_partidas['Média_Gols_Tomados_FT'] = media_gols_tomados_FT
 
         # Exibir as médias em uma tabela
+        col3, col4 = st.columns(2)
+
         with col3:
             st.subheader("Média de Gols HT:")
             st.write(f"Gols Feitos HT: {media_gols_feitos_HT:.2f}")
@@ -114,16 +116,16 @@ def stats_equipes_page():
         ultimas_partidas['Media_Tempo_Gol'] = media_tempo_gol
 
         # Exibir a nova coluna em uma tabela
-        col5 = st.columns(1)
+        col5, col6 = st.columns(2)
+        
         with col5:
             st.subheader("Tempo Médio do Gol")
             st.dataframe(ultimas_partidas[['Media_Tempo_Gol']])
-
+        
         # Rank Home da partida mais recente
         rank_home_partida_mais_recente = df_equipe_liga.iloc[0]['Rank_Home']
-
+        
         # Exibir o Rank Home da partida mais recente
-        col6 = st.columns(1)
         with col6:
             st.subheader("Rank Home da Partida Mais Recente")
             st.write(rank_home_partida_mais_recente)
