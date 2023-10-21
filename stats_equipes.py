@@ -107,7 +107,7 @@ def stats_equipes_page():
         st.write(f"Gols Tomados FT: {media_gols_tomados_FT:.2f}")
 
     # Calcular o tempo médio do gol a partir da coluna Goals_Minutes_Home
-    ultimas_partidas['Goals_Minutes_Home'] = ultimas_partidas['Goals_Minutes_Home'].apply(lambda x: [int(minute) for minute in x])
+    ultimas_partidas['Goals_Minutes_Home'] = ultimas_partidas['Goals_Minutes_Home'].apply(lambda x: [int(minute.strip('[]')) for minute in x])
     ultimas_partidas['Goals_Minutes_Home'] = ultimas_partidas['Goals_Minutes_Home'].apply(lambda x: sum(x) / len(x) if len(x) > 0 else 0)
 
     # Calcular o tempo médio do gol
