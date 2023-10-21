@@ -34,100 +34,101 @@ def stats_equipes_page():
     # Filtre o DataFrame com base nas escolhas do usuário
     df_equipe_liga = df[(df['Home'] == equipe_escolhida) & (df['League'] == liga_escolhida)]
 
-    # Organize as partidas com base na coluna 'Unnamed: 0' do maior para o menor
-    df_equipe_liga = df_equipe_liga.sort_values(by='Unnamed: 0', ascending=False)
+    if not df_equipe_liga.empty:
+        # Organize as partidas com base na coluna 'Unnamed: 0' do maior para o menor
+        df_equipe_liga = df_equipe_liga.sort_values(by='Unnamed: 0', ascending=False)
 
-    # Exiba as últimas N partidas selecionadas em uma tabela
-    partidas_recentes = df_equipe_liga[['Date', 'League', 'Home', 'Away', 'Placar_HT', 'Placar_FT']].head(num_partidas)
-    partidas_recentes = partidas_recentes.reset_index(drop=True)  # Remover o índice
-    #st.subheader("Partidas mais recentes:")
-    #st.dataframe(partidas_recentes)
+        # Exiba as últimas N partidas selecionadas em uma tabela
+        partidas_recentes = df_equipe_liga[['Date', 'League', 'Home', 'Away', 'Placar_HT', 'Placar_FT']].head(num_partidas)
+        partidas_recentes = partidas_recentes.reset_index(drop=True)  # Remover o índice
+        #st.subheader("Partidas mais recentes:")
+        #st.dataframe(partidas_recentes)
 
-    # Calcular as estatísticas das últimas N partidas selecionadas
-    ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
-    
-    total_partidas = ultimas_partidas.shape[0]
-    
-    # Mapear os valores nas colunas 'Resultado_FT' e 'Resultado_HT' para os resultados correspondentes
-    mapeamento_resultados = {'H': 'Vitória', 'D': 'Empate', 'A': 'Away'}
-    
-    ultimas_partidas['Resultado_FT'] = ultimas_partidas['Resultado_FT'].map(mapeamento_resultados)
-    ultimas_partidas['Resultado_HT'] = ultimas_partidas['Resultado_HT'].map(mapeamento_resultados)
-    
-    # Contar as ocorrências de cada resultado
-    vitorias_FT = ultimas_partidas['Resultado_FT'].eq('Vitória').sum()
-    empates_FT = ultimas_partidas['Resultado_FT'].eq('Empate').sum()
-    derrotas_FT = ultimas_partidas['Resultado_FT'].eq('Away').sum()  # Alterado de 'Derrota' para 'Away'
-    
-    vitorias_HT = ultimas_partidas['Resultado_HT'].eq('Vitória').sum()
-    empates_HT = ultimas_partidas['Resultado_HT'].eq('Empate').sum()
-    derrotas_HT = ultimas_partidas['Resultado_HT'].eq('Away').sum()  # Alterado de 'Derrota' para 'Away'
-    
-    # Subheaders e estatísticas em FT e HT
-    col1, col2, col3, col4 = st.columns(4)
+        # Calcular as estatísticas das últimas N partidas selecionadas
+        ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
 
-    with col1:
-        st.subheader("Desempenho HT:")
-        st.write(f"Vitórias: {vitorias_HT} ({(vitorias_HT / total_partidas * 100):.2f}%)")
-        st.write(f"Empates: {empates_HT} ({(empates_HT / total_partidas * 100):.2f}%)")
-        st.write(f"Derrotas: {derrotas_HT} ({(derrotas_HT / total_partidas * 100):.2f}%)")
-    
-    with col2:
-        st.subheader("Desempenho FT:")
-        st.write(f"Vitórias: {vitorias_FT} ({(vitorias_FT / total_partidas * 100):.2f}%)")
-        st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
-        st.write(f"Derrotas: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
+        total_partidas = ultimas_partidas.shape[0]
 
-    # Calcular a média de gols feitos e tomados no HT
-    media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
-    media_gols_tomados_HT = ultimas_partidas['HT_Goals_A'].mean()
-    
-    # Calcular a média de gols feitos e tomados no FT
-    media_gols_feitos_FT = ultimas_partidas['FT_Goals_H'].mean()
-    media_gols_tomados_FT = ultimas_partidas['FT_Goals_A'].mean()
-    
-    # Adicionar as médias ao DataFrame
-    ultimas_partidas['Média_Gols_Feitos_HT'] = media_gols_feitos_HT
-    ultimas_partidas['Média_Gols_Tomados_HT'] = media_gols_tomados_HT
-    ultimas_partidas['Média_Gols_Feitos_FT'] = media_gols_feitos_FT
-    ultimas_partidas['Média_Gols_Tomados_FT'] = media_gols_tomados_FT
-    
-    # Exibir as médias em uma tabela
-    with col3:
-        st.subheader("Média de Gols HT:")
-        st.write(f"Gols Feitos HT: {media_gols_feitos_HT:.2f}")
-        st.write(f"Gols Tomados HT: {media_gols_tomados_HT:.2f}")
-    
-    with col4:
-        st.subheader("Média de Gols FT:")
-        st.write(f"Gols Feitos FT: {media_gols_feitos_FT:.2f}")
-        st.write(f"Gols Tomados FT: {media_gols_tomados_FT:.2f}")
+        # Mapear os valores nas colunas 'Resultado_FT' e 'Resultado_HT' para os resultados correspondentes
+        mapeamento_resultados = {'H': 'Vitória', 'D': 'Empate', 'A': 'Away'}
 
-    # Calcular a média de tempo de gol
-    ultimas_partidas['Goals_Minutes_Home'] = ultimas_partidas['Goals_Minutes_Home'].apply(lambda x: [int(minute.strip('[]')) if minute.strip('[]').isdigit() else 0 for minute in x])
-    
-    if total_partidas > 0:
-        media_tempo_gol = sum(sum(x) / len(x) for x in ultimas_partidas['Goals_Minutes_Home']) / total_partidas
+        ultimas_partidas['Resultado_FT'] = ultimas_partidas['Resultado_FT'].map(mapeamento_resultados)
+        ultimas_partidas['Resultado_HT'] = ultimas_partidas['Resultado_HT'].map(mapeamento_resultados)
+
+        # Contar as ocorrências de cada resultado
+        vitorias_FT = ultimas_partidas['Resultado_FT'].eq('Vitória').sum()
+        empates_FT = ultimas_partidas['Resultado_FT'].eq('Empate').sum()
+        derrotas_FT = ultimas_partidas['Resultado_FT'].eq('Away').sum()  # Alterado de 'Derrota' para 'Away'
+
+        vitorias_HT = ultimas_partidas['Resultado_HT'].eq('Vitória').sum()
+        empates_HT = ultimas_partidas['Resultado_HT'].eq('Empate').sum()
+        derrotas_HT = ultimas_partidas['Resultado_HT'].eq('Away').sum()  # Alterado de 'Derrota' para 'Away'
+
+        # Subheaders e estatísticas em FT e HT
+        col1, col2, col3, col4 = st.columns(4)
+
+        with col1:
+            st.subheader("Desempenho HT:")
+            st.write(f"Vitórias: {vitorias_HT} ({(vitorias_HT / total_partidas * 100):.2f}%)")
+            st.write(f"Empates: {empates_HT} ({(empates_HT / total_partidas * 100):.2f}%)")
+            st.write(f"Derrotas: {derrotas_HT} ({(derrotas_HT / total_partidas * 100):.2f}%)")
+
+        with col2:
+            st.subheader("Desempenho FT:")
+            st.write(f"Vitórias: {vitorias_FT} ({(vitorias_FT / total_partidas * 100):.2f}%)")
+            st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
+            st.write(f"Derrotas: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
+
+        # Calcular a média de gols feitos e tomados no HT
+        media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
+        media_gols_tomados_HT = ultimas_partidas['HT_Goals_A'].mean()
+
+        # Calcular a média de gols feitos e tomados no FT
+        media_gols_feitos_FT = ultimas_partidas['FT_Goals_H'].mean()
+        media_gols_tomados_FT = ultimas_partidas['FT_Goals_A'].mean()
+
+        # Adicionar as médias ao DataFrame
+        ultimas_partidas['Média_Gols_Feitos_HT'] = media_gols_feitos_HT
+        ultimas_partidas['Média_Gols_Tomados_HT'] = media_gols_tomados_HT
+        ultimas_partidas['Média_Gols_Feitos_FT'] = media_gols_feitos_FT
+        ultimas_partidas['Média_Gols_Tomados_FT'] = media_gols_tomados_FT
+
+        # Exibir as médias em uma tabela
+        with col3:
+            st.subheader("Média de Gols HT:")
+            st.write(f"Gols Feitos HT: {media_gols_feitos_HT:.2f}")
+            st.write(f"Gols Tomados HT: {media_gols_tomados_HT:.2f}")
+
+        with col4:
+            st.subheader("Média de Gols FT:")
+            st.write(f"Gols Feitos FT: {media_gols_feitos_FT:.2f}")
+            st.write(f"Gols Tomados FT: {media_gols_tomados_FT:.2f}")
+
+        # Cálculo da média geral do tempo de gol
+        if total_partidas > 0:
+            media_tempo_gol = sum(sum(x) / len(x) for x in ultimas_partidas['Goals_Minutes_Home']) / total_partidas
+        else:
+            media_tempo_gol = 0
+
+        # Adicionar a nova coluna 'Media_Tempo_Gol'
+        ultimas_partidas['Media_Tempo_Gol'] = media_tempo_gol
+
+        # Exibir a nova coluna em uma tabela
+        col5 = st.columns(1)
+        with col5:
+            st.subheader("Tempo Médio do Gol")
+            st.dataframe(ultimas_partidas[['Media_Tempo_Gol']])
+
+        # Rank Home da partida mais recente
+        rank_home_partida_mais_recente = df_equipe_liga.iloc[0]['Rank_Home']
+
+        # Exibir o Rank Home da partida mais recente
+        col6 = st.columns(1)
+        with col6:
+            st.subheader("Rank Home da Partida Mais Recente")
+            st.write(rank_home_partida_mais_recente)
     else:
-        media_tempo_gol = 0
-
-    # Adicionar a nova coluna 'Media_Tempo_Gol'
-    ultimas_partidas['Media_Tempo_Gol'] = media_tempo_gol
-
-    # Exibir a nova coluna em uma tabela
-    col5 = st.columns(1)
-    with col5:
-        st.subheader("Tempo Médio do Gol")
-        st.dataframe(ultimas_partidas[['Media_Tempo_Gol']])
-
-    # Rank Home da partida mais recente
-    rank_home_partida_mais_recente = df_equipe_liga.iloc[0]['Rank_Home']
-
-    # Exibir o Rank Home da partida mais recente
-    col6 = st.columns(1)
-    with col6:
-        st.subheader("Rank Home da Partida Mais Recente")
-        st.write(rank_home_partida_mais_recente)
+        st.warning("Nenhuma partida encontrada para a equipe e liga selecionadas.")
 
 # Execute a função para criar a página
 stats_equipes_page()
