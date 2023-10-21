@@ -138,8 +138,8 @@ def stats_equipes_page():
         st.subheader("Rank Home")
         st.write(rank_home_partida_mais_recente)
 
-    else:
-        st.warning("Nenhuma partida encontrada para a equipe e liga selecionadas.")
+else:
+    st.warning("Nenhuma partida encontrada para a equipe e liga selecionadas.")
 
 # Execute a função para criar a página
 stats_equipes_page()
