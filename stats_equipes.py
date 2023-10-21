@@ -48,19 +48,15 @@ def stats_equipes_page():
     empates_HT = ultimas_partidas['Resultado_HT'].eq('Empate').sum()
     derrotas_HT = ultimas_partidas['Resultado_HT'].eq('Away').sum()
 
-    col1, col2 = st.columns(2)
+    st.subheader("Desempenho HT:")
+    st.write(f"Vitórias HT: {vitorias_HT} ({(vitorias_HT / total_partidas * 100):.2f}%)")
+    st.write(f"Empates HT: {empates_HT} ({(empates_HT / total_partidas * 100):.2f}%)")
+    st.write(f"Derrotas HT: {derrotas_HT} ({(derrotas_HT / total_partidas * 100):.2f}%)")
 
-    with col1:
-        st.subheader("Desempenho HT:")
-        st.write(f"Vitórias: {vitorias_HT} ({(vitorias_HT / total_partidas * 100):.2f}%)")
-        st.write(f"Empates: {empates_HT} ({(empates_HT / total_partidas * 100):.2f}%)")
-        st.write(f"Derrotas: {derrotas_HT} ({(derrotas_HT / total_partidas * 100):.2f}%)")
-
-    with col2:
-        st.subheader("Desempenho FT:")
-        st.write(f"Vitórias: {vitorias_FT} ({(vitorias_FT / total_partidas * 100):.2f}%)")
-        st.write(f"Empates: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
-        st.write(f"Derrotas: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
+    st.subheader("Desempenho FT:")
+    st.write(f"Vitórias FT: {vitorias_FT} ({(vitorias_FT / total_partidas * 100):.2f}%)")
+    st.write(f"Empates FT: {empates_FT} ({(empates_FT / total_partidas * 100):.2f}%)")
+    st.write(f"Derrotas FT: {derrotas_FT} ({(derrotas_FT / total_partidas * 100):.2f}%)")
 
     media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
     media_gols_tomados_HT = ultimas_partidas['HT_Goals_A'].mean()
@@ -68,22 +64,13 @@ def stats_equipes_page():
     media_gols_feitos_FT = ultimas_partidas['FT_Goals_H'].mean()
     media_gols_tomados_FT = ultimas_partidas['FT_Goals_A'].mean()
     
-    ultimas_partidas['Média_Gols_Feitos_HT'] = media_gols_feitos_HT
-    ultimas_partidas['Média_Gols_Tomados_HT'] = media_gols_tomados_HT
-    ultimas_partidas['Média_Gols_Feitos_FT'] = media_gols_feitos_FT
-    ultimas_partidas['Média_Gols_Tomados_FT'] = media_gols_tomados_FT
+    st.subheader("Média de Gols HT:")
+    st.write(f"Gols Feitos HT: {media_gols_feitos_HT:.2f}")
+    st.write(f"Gols Tomados HT: {media_gols_tomados_HT:.2f}")
 
-    col3, col4 = st.columns(2)
-
-    with col3:
-        st.subheader("Média de Gols HT:")
-        st.write(f"Gols Feitos HT: {media_gols_feitos_HT:.2f}")
-        st.write(f"Gols Tomados HT: {media_gols_tomados_HT:.2f}")
-
-    with col4:
-        st.subheader("Média de Gols FT:")
-        st.write(f"Gols Feitos FT: {media_gols_feitos_FT:.2f}")
-        st.write(f"Gols Tomados FT: {media_gols_tomados_FT:.2f}")
+    st.subheader("Média de Gols FT:")
+    st.write(f"Gols Feitos FT: {media_gols_feitos_FT:.2f}")
+    st.write(f"Gols Tomados FT: {media_gols_tomados_FT:.2f}")
 
     partidas_com_gols = ultimas_partidas[ultimas_partidas['Goals_Minutes_Home'] != '[]']
 
@@ -97,17 +84,13 @@ def stats_equipes_page():
     if medias_por_partida:
         media_equipe = sum(medias_por_partida) / len(medias_por_partida)
 
-        col5 = st.columns(1)
-        with col5:
-            st.subheader("Média de Tempo de Gol da Equipe (Home):")
-            st.write(f"{media_equipe:.2f} minutos")
+        st.subheader("Média de Tempo de Gol da Equipe (Home):")
+        st.write(f"{media_equipe:.2f} minutos")
 
     rank_home_partida_mais_recente = df_equipe_liga.iloc[0]['Rank_Home']
 
-    col6 = st.columns(1)
-    with col6:
-        st.subheader("Rank Home")
-        st.write(rank_home_partida_mais_recente)
+    st.subheader("Rank Home")
+    st.write(rank_home_partida_mais_recente)
 
-# Execute a função para criar a página
+# Execute the function to create the page
 stats_equipes_page()
