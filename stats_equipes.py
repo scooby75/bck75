@@ -33,7 +33,7 @@ def stats_equipes_page():
     st.dataframe(partidas_recentes)
 
     ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
-    total_partidas = ultimas_partidas.shape(0)
+    total_partidas = ultimas_partidas.shape[0  # Fix the syntax here. Use ultimas_partidas.shape[0]
 
     mapeamento_resultados = {'H': 'Vitória', 'D': 'Empate', 'A': 'Away'}
 
@@ -95,14 +95,14 @@ def stats_equipes_page():
 
         col7 = st.columns(1)
         with col7:
-            st.subheader("Tempo Médio do Gol - Home:")
+            st.subheader("Média de Tempo de Gol da Equipe (Home):")
             st.write(f"{media_equipe:.2f} minutos")
 
     rank_home_partida_mais_recente = df_equipe_liga.iloc[0]['Rank_Home']
 
     col8 = st.columns(1)
     with col8:
-        st.subheader("Posição no Ranking - Home")
+        st.subheader("Rank Home")
         st.write(rank_home_partida_mais_recente)
 
 # Execute the function to create the page
