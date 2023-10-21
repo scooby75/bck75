@@ -47,6 +47,7 @@ def stats_equipes_page():
     ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
     
     total_partidas = ultimas_partidas.shape[0
+    
     # Mapear os valores nas colunas 'Resultado_FT' e 'Resultado_HT' para os resultados correspondentes
     mapeamento_resultados = {'H': 'Vitória', 'D': 'Empate', 'A': 'Away'}
     
@@ -110,7 +111,7 @@ def stats_equipes_page():
                 f"{porcentagem_derrotas_HT:.2f}%"
             ]
         })
-
+    
     # Calcular a média de gols feitos e tomados no HT
     media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
     media_gols_tomados_HT = ultimas_partidas['HT_Goals_A'].mean()
