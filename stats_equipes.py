@@ -46,7 +46,7 @@ def stats_equipes_page():
     # Calcular as estatísticas das últimas N partidas selecionadas
     ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
     
-    total_partidas = ultimas_partidas.shape[0)
+    total_partidas = ultimas_partidas.shape[0]
     
     # Mapear os valores nas colunas 'Resultado_FT' e 'Resultado_HT' para os resultados correspondentes
     mapeamento_resultados = {'H': 'Vitória', 'D': 'Empate', 'A': 'Away'}
