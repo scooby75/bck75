@@ -1,5 +1,3 @@
-# stats_equipes.py
-
 import streamlit as st
 import pandas as pd
 
@@ -80,6 +78,32 @@ def stats_equipes_page():
         st.write(f"Empates: {empates_HT} ({(empates_HT / total_partidas * 100):.2f}%)")
         st.write(f"Derrotas: {derrotas_HT} ({(derrotas_HT / total_partidas * 100):.2f}%)")
 
+    # Calcular a média de gols feitos e tomados no HT
+    media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
+    media_gols_tomados_HT = ultimas_partidas['HT_Goals_A'].mean()
+    
+    # Calcular a média de gols feitos e tomados no FT
+    media_gols_feitos_FT = ultimas_partidas['FT_Goals_H'].mean()
+    media_gols_tomados_FT = ultimas_partidas['FT_Goals_A'].mean()
+    
+    # Adicionar as médias ao DataFrame
+    ultimas_partidas['Média_Gols_Feitos_HT'] = media_gols_feitos_HT
+    ultimas_partidas['Média_Gols_Tomados_HT'] = media_gols_tomados_HT
+    ultimas_partidas['Média_Gols_Feitos_FT'] = media_gols_feitos_FT
+    ultimas_partidas['Média_Gols_Tomados_FT'] = media_gols_tomados_FT
+    
+    # Exibir as médias em uma tabela
+    col3, col4 = st.columns(2)
+    
+    with col3:
+        st.subheader("Média de Gols HT:")
+        st.write(f"Gols Feitos HT: {media_gols_feitos_HT:.2f}")
+        st.write(f"Gols Tomados HT: {media_gols_tomados_HT:.2f}")
+    
+    with col4:
+        st.subheader("Média de Gols FT:")
+        st.write(f"Gols Feitos FT: {media_gols_feitos_FT:.2f}")
+        st.write(f"Gols Tomados FT: {media_gols_tomados_FT:.2f}")
+
 # Execute a função para criar a página
 stats_equipes_page()
-
