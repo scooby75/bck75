@@ -41,8 +41,8 @@ def stats_equipes_page():
         # Exiba as últimas N partidas selecionadas em uma tabela
         partidas_recentes = df_equipe_liga[['Date', 'League', 'Home', 'Away', 'Placar_HT', 'Placar_FT']].head(num_partidas)
         partidas_recentes = partidas_recentes.reset_index(drop=True)  # Remover o índice
-        #st.subheader("Partidas mais recentes:")
-        #st.dataframe(partidas_recentes)
+        st.subheader("Partidas mais recentes:")
+        st.dataframe(partidas_recentes)
 
         # Calcular as estatísticas das últimas N partidas selecionadas
         ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
