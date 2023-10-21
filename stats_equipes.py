@@ -37,11 +37,12 @@ def stats_equipes_page():
     # Organize as partidas com base na coluna 'Unnamed: 0' do maior para o menor
     df_equipe_liga = df_equipe_liga.sort_values(by='Unnamed: 0', ascending=False)
 
-    # Exiba as últimas N partidas selecionadas em uma tabela
-    partidas_recentes = df_equipe_liga[['Date', 'League', 'Home', 'Away', 'Placar_HT', 'Placar_FT', 'Rank_Home']].head(num_partidas)
-    partidas_recentes = partidas_recentes.reset_index(drop=True)  # Remover o índice
-    st.subheader("Partidas mais recentes:")
-    st.dataframe(partidas_recentes)
+    # Obtenha os detalhes da partida mais recente
+    partida_mais_recente = df_equipe_liga.iloc[0]
+    
+    # Exiba os detalhes da partida mais recente
+    st.subheader("Partida mais recente:")
+    st.dataframe(partida_mais_recente[['Date', 'League', 'Home', 'Away', 'Placar_HT', 'Placar_FT', 'Rank_Home', 'Goals_Minutes_Home']])
 
     # Calcular as estatísticas das últimas N partidas selecionadas
     ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
@@ -107,10 +108,7 @@ def stats_equipes_page():
 
     # Calcular o tempo médio do gol a partir da coluna Goals_Minutes_Home
     ultimas_partidas['Goals_Minutes_Home'] = ultimas_partidas['Goals_Minutes_Home'].apply(lambda x: [int(minute.strip('[]')) if minute.strip('[]').isdigit() else 0 for minute in x])
-    ultimas_partidas['Goals_Minutes_Home'] = ultimas_partidas['Goals_Minutes_Home'].apply(lambda x: sum(x) / len(x) if len(x) > 0 else 0)
-
-    # Calcular o tempo médio do gol
-    tempo_medio_gol = ultimas_partidas['Goals_Minutes_Home'].mean()
+    tempo_medio_gol = sum([minute for minutes in ultimas_partidas['Goals_Minutes_Home'] for minute in minutes]) / total_partidas if total_partidas > 0 else 0
 
     # Criar a nova coluna "Tempo_Medio_Gol"
     ultimas_partidas['Tempo_Medio_Gol'] = tempo_medio_gol
@@ -119,11 +117,11 @@ def stats_equipes_page():
     col5, col6 = st.columns(2)
     with col5:
         st.subheader("Tempo Médio do Gol")
-        st.dataframe(ultimas_partidas[['Tempo_Medio_Gol']])
-    
+        st.write(f"Tempo Médio do Gol: {tempo_medio_gol:.2f} minutos")
+
     with col6:
         st.subheader("Rank Home")
-        st.dataframe(partidas_recentes[['Rank_Home']])
+        st.write(f"Rank Home (Partida Mais Recente): {partida_mais_recente['Rank_Home']}")
 
 # Execute a função para criar a página
 stats_equipes_page()
