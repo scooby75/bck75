@@ -122,10 +122,10 @@ def stats_equipes_page():
     with col5:
         st.subheader("Tempo Médio do Gol")
         st.dataframe(ultimas_partidas[['Tempo_Medio_Gol']])
-
+    
     # Adicione a nova coluna 'Rank_Home' ao DataFrame partidas_recentes
     partidas_recentes['Rank_Home'] = df_equipe_liga['Rank_Home']
-
+    
     # Exiba as informações na coluna Rank_Home na coluna 6
     col6 = st.columns(1)
     with col6:
