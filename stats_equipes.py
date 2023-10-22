@@ -134,25 +134,25 @@ def stats_equipes_page():
     percentagem_gols_25ft = (contagem_gols_25ft / len(ultimas_partidas)) * 100
     percentagem_gols_25ft = round(percentagem_gols_25ft, 2)
 
-    # Criar quatro colunas
-    col5, col6, col7, col8 = st.columns(4)
-    
     st.subheader("Goal Line")
+    
+    # Criar quatro colunas
+    col5, col6, col7, col8 = st.columns(4)    
     
     # Coluna 5: Over 0.5HT
     col5.write(f'Over 05HT: {contagem_gols_ht} jogo(s)')
     col5.write(f'Percentagem: {percentagem_gols_ht}%')
 
     # Coluna 6: Over 0.5FT
-    col6.write(f'Over 05FT: {contagem_gols_ht} jogo(s)')
+    col6.write(f'Over 05FT: {contagem_gols_ft} jogo(s)')
     col6.write(f'Percentagem: {percentagem_gols_ft}%')
 
     # Coluna 7: Over 1.5FT
-    col7.write(f'Over 15FT: {contagem_gols_ht} jogo(s)')
+    col7.write(f'Over 15FT: {contagem_gols_15ft} jogo(s)')
     col7.write(f'Percentagem: {percentagem_gols_15ft}%')
 
     # Coluna 8: Over 2.5FT
-    col8.write(f'Over 25FT: {contagem_gols_ht} jogo(s)')
+    col8.write(f'Over 25FT: {contagem_gols_25ft} jogo(s)')
     col8.write(f'Percentagem: {percentagem_gols_25ft}')
 
 # Execute the function to create the page
