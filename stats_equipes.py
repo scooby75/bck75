@@ -110,5 +110,48 @@ def stats_equipes_page():
     st.subheader("Posição no Ranking - Home")
     st.write(rank_home_partida_mais_recente)
 
+    # Cálculo Over 0.5HT
+    partidas_com_gol_ht = ultimas_partidas[(ultimas_partidas['HT_Goals_H'] > 0) | (ultimas_partidas['HT_Goals_A'] > 0)]
+    contagem_gols_ht = len(partidas_com_gol_ht)
+    percentagem_gols_ht = (contagem_gols_ht / len(ultimas_partidas)) * 100
+    percentagem_gols_ht = round(percentagem_gols_ht, 2)
+
+    # Cálculo Over 0.5FT
+    partidas_com_gol_ft = ultimas_partidas[(ultimas_partidas['FT_Goals_H'] > 0) | (ultimas_partidas['FT_Goals_A'] > 0)]
+    contagem_gols_ft = len(partidas_com_gol_ft)
+    percentagem_gols_ft = (contagem_gols_ft / len(ultimas_partidas)) * 100
+    percentagem_gols_ft = round(percentagem_gols_ft, 2)
+
+    # Cálculo Over 1.5FT
+    partidas_com_gol_15ft = ultimas_partidas[(ultimas_partidas['FT_Goals_H'] + ultimas_partidas['FT_Goals_A'] >= 2)]
+    contagem_gols_15ft = len(partidas_com_gol_15ft)
+    percentagem_gols_15ft = (contagem_gols_15ft / len(ultimas_partidas)) * 100
+    percentagem_gols_15ft = round(percentagem_gols_15ft, 2)
+
+    # Cálculo Over 2.5FT
+    partidas_com_gol_25ft = ultimas_partidas[(ultimas_partidas['FT_Goals_H'] + ultimas_partidas['FT_Goals_A'] > 2)]
+    contagem_gols_25ft = len(partidas_com_gol_25ft)
+    percentagem_gols_25ft = (contagem_gols_25ft / len(ultimas_partidas)) * 100
+    percentagem_gols_25ft = round(percentagem_gols_25ft, 2)
+
+    # Criar quatro colunas
+    col5, col6, col7, col8 = st.columns(4)
+
+    # Coluna 5: Over 0.5HT
+    col5.write(f'Over 05HT: {contagem_gols_ht}')
+    col5.write(f'Percentagem: {percentagem_gols_ht}%')
+
+    # Coluna 6: Over 0.5FT
+    col6.write(f'Over 05FT: {contagem_gols_ft}')
+    col6.write(f'Percentagem: {percentagem_gols_ft}%')
+
+    # Coluna 7: Over 1.5FT
+    col7.write(f'Over 15FT: {contagem_gols_15ft}')
+    col7.write(f'Percentagem: {percentagem_gols_15ft}%')
+
+    # Coluna 8: Over 2.5FT
+    col8.write(f'Over 25FT: {contagem_gols_25ft}')
+    col8.write(f'Percentagem: {percentagem_gols_25ft}')
+
 # Execute the function to create the page
 stats_equipes_page()
