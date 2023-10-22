@@ -123,7 +123,7 @@ def stats_equipes_page():
     percentagem_gols_ft = round(percentagem_gols_ft, 2)
 
     # Cálculo Over 1.5FT
-    partidas_com_gol_15ft = ultimas_partidas[(ultimas_partidas['FT_Goals_H'] >= 2)]
+    partidas_com_gol_15ft = ultimas_partidas[(ultimas_partidas['FT_Goals_H'] > 1)]
     contagem_gols_15ft = len(partidas_com_gol_15ft)
     percentagem_gols_15ft = (contagem_gols_15ft / len(ultimas_partidas)) * 100
     percentagem_gols_15ft = round(percentagem_gols_15ft, 2)
