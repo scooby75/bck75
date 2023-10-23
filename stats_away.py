@@ -35,7 +35,7 @@ def stats_away_page():
     ultimas_partidas = df_equipe_liga.head(num_partidas).copy()
     total_partidas = ultimas_partidas.shape[0]
 
-    mapeamento_resultados = {'H': 'Vitória', 'D': 'Empate', 'A': 'Away'}
+    mapeamento_resultados = {'A': 'Vitória', 'D': 'Empate', 'H': 'Away'}
 
     ultimas_partidas['Resultado_FT'] = ultimas_partidas['Resultado_FT'].map(mapeamento_resultados)
     ultimas_partidas['Resultado_HT'] = ultimas_partidas['Resultado_HT'].map(mapeamento_resultados)
