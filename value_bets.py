@@ -7,7 +7,6 @@ import datetime as dt
 from datetime import datetime
 from io import StringIO, BytesIO
 
-
 from session_state import SessionState
 
 def value_bets_page():
@@ -27,14 +26,18 @@ def value_bets_page():
     df = pd.read_csv(url)
 
     # Remover a coluna "Data" do DataFrame
-    df = df.drop(columns=["Data"])  
+    df = df.drop(columns=["Data"])
 
-    # Converter a coluna "Probabilidade" em valores numéricos
+    # Assuming "Probabilidade" column initially contains numeric values as percentages (e.g., 75%)
+    # Convert the numeric values to string percentages
+    df['Probabilidade'] = df['Probabilidade'].astype(str) + '%'
+
+    # Now you can use the .str accessor to remove '%' from the strings
     df['Probabilidade'] = df['Probabilidade'].str.rstrip('%').astype(float)
 
     # Filtrar os jogos com Probabilidade >= 75%
-    df_filtered = df[df['Probabilidade'] >= 75]        
-    
+    df_filtered = df[df['Probabilidade'] >= 75]
+
     # Display the "Value Bets" DataFrame
     st.subheader("Value Bets")
     st.text("Se a Odd ofertada é maior que o valor esperado a tendência é ser lucrativo no longo prazo")
