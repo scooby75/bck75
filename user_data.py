@@ -30,7 +30,7 @@ valid_users = {
     #"Marcel Verona": {"password": "Euro2023", "profile": 1},
     #"Borguezam": {"password": "91579877Luiz.", "profile": 1},
     #"Romeu": {"password": "301510", "profile": 2},
-    "lucrobr": {"password": "cnRt6374#", "profile": 2},
+    #"lucrobr": {"password": "cnRt6374#", "profile": 2},
     "Marcos morais": {"password": "06091992", "profile": 3},
     "lucastrader6": {"password": "0@Lp4Q8Fz", "profile": 3},
     #"HarleyLeal": {"password": "Galo1353@", "profile": 3},
