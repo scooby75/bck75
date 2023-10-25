@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 
 from session_state import SessionState
 
@@ -71,6 +72,44 @@ def stats_equipes_page():
     media_gols_feitos_FT = ultimas_partidas['FT_Goals_H'].mean()
     media_gols_tomados_FT = ultimas_partidas['FT_Goals_A'].mean()
     
+    # Importe a biblioteca numpy para calcular o desvio padrão
+    import numpy as np
+
+    # Calcule o desvio padrão dos gols feitos no HT e FT
+    desvio_padrao_gols_feitos_HT = np.std(ultimas_partidas['HT_Goals_H'])
+    desvio_padrao_gols_feitos_FT = np.std(ultimas_partidas['FT_Goals_H'])
+
+    # Calcule o desvio padrão dos gols tomados no HT e FT
+    desvio_padrao_gols_tomados_HT = np.std(ultimas_partidas['HT_Goals_A'])
+    desvio_padrao_gols_tomados_FT = np.std(ultimas_partidas['FT_Goals_A'])
+
+    # Calcule o coeficiente de variação para gols feitos e tomados no HT e FT
+    cv_gols_feitos_HT = (desvio_padrao_gols_feitos_HT / media_gols_feitos_HT) * 100
+    cv_gols_feitos_FT = (desvio_padrao_gols_feitos_FT / media_gols_feitos_FT) * 100
+    cv_gols_tomados_HT = (desvio_padrao_gols_tomados_HT / media_gols_tomados_HT) * 100
+    cv_gols_tomados_FT = (desvio_padrao_gols_tomados_FT / media_gols_tomados_FT) * 100
+
+    # Subheaders para CV de gols
+    col3, col4 = st.columns(2)
+
+    with col3:
+        st.subheader("CV Gols HT:")
+        st.write(f"CV Gols Feitos HT: {cv_gols_feitos_HT:.2f}%")
+        st.write(f"CV Gols Tomados HT: {cv_gols_tomados_HT:.2f}%")
+
+    with col4:
+        st.subheader("CV Gols FT:")
+        st.write(f"CV Gols Feitos FT: {cv_gols_feitos_FT:.2f}%")
+        st.write(f"CV Gols Tomados FT: {cv_gols_tomados_FT:.2f}%")
+
+    # Calcular a média de gols feitos e tomados no HT
+    media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
+    media_gols_tomados_HT = ultimas_partidas['HT_Goals_A'].mean()
+    
+    # Calcular a média de gols feitos e tomados no FT
+    media_gols_feitos_FT = ultimas_partidas['FT_Goals_H'].mean()
+    media_gols_tomados_FT = ultimas_partidas['FT_Goals_A'].mean()
+    
     # Adicionar as médias ao DataFrame
     ultimas_partidas['Média_Gols_Feitos_HT'] = media_gols_feitos_HT
     ultimas_partidas['Média_Gols_Tomados_HT'] = media_gols_tomados_HT
@@ -78,14 +117,14 @@ def stats_equipes_page():
     ultimas_partidas['Média_Gols_Tomados_FT'] = media_gols_tomados_FT
     
     # Exibir as médias em uma tabela
-    col3, col4 = st.columns(2)
+    col5, col6 = st.columns(2)
     
-    with col3:
+    with col5:
         st.subheader("Média de Gols HT:")
         st.write(f"Gols Feitos HT: {media_gols_feitos_HT:.2f}")
         st.write(f"Gols Tomados HT: {media_gols_tomados_HT:.2f}")
     
-    with col4:
+    with col6:
         st.subheader("Média de Gols FT:")
         st.write(f"Gols Feitos FT: {media_gols_feitos_FT:.2f}")
         st.write(f"Gols Tomados FT: {media_gols_tomados_FT:.2f}")
@@ -137,23 +176,23 @@ def stats_equipes_page():
     st.subheader("Goal Line")
     
     # Criar quatro colunas
-    col5, col6, col7, col8 = st.columns(4)    
+    col7, col8, col9, col10 = st.columns(4)    
     
-    # Coluna 5: Over 0.5HT
-    col5.write(f'Over 05HT: {contagem_gols_ht} jogo(s)')
-    col5.write(f'Desempenho: {percentagem_gols_ht}%')
+    # Coluna 7: Over 0.5HT
+    col7.write(f'Over 05HT: {contagem_gols_ht} jogo(s)')
+    col7.write(f'Desempenho: {percentagem_gols_ht}%')
 
-    # Coluna 6: Over 0.5FT
-    col6.write(f'Over 05FT: {contagem_gols_ft} jogo(s)')
-    col6.write(f'Desempenho: {percentagem_gols_ft}%')
+    # Coluna 8: Over 0.5FT
+    col8.write(f'Over 05FT: {contagem_gols_ft} jogo(s)')
+    col8.write(f'Desempenho: {percentagem_gols_ft}%')
 
-    # Coluna 7: Over 1.5FT
-    col7.write(f'Over 15FT: {contagem_gols_15ft} jogo(s)')
-    col7.write(f'Desempenho: {percentagem_gols_15ft}%')
+    # Coluna 9: Over 1.5FT
+    col9.write(f'Over 15FT: {contagem_gols_15ft} jogo(s)')
+    col9.write(f'Desempenho: {percentagem_gols_15ft}%')
 
-    # Coluna 8: Over 2.5FT
-    col8.write(f'Over 25FT: {contagem_gols_25ft} jogo(s)')
-    col8.write(f'Desempenho: {percentagem_gols_25ft}')
+    # Coluna 10: Over 2.5FT
+    col10.write(f'Over 25FT: {contagem_gols_25ft} jogo(s)')
+    col10.write(f'Desempenho: {percentagem_gols_25ft}')
 
-# Execute the function to create the page
+# Execute a função para criar a página
 stats_equipes_page()
