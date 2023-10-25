@@ -84,23 +84,23 @@ def stats_equipes_page():
     desvio_padrao_gols_tomados_FT = np.std(ultimas_partidas['FT_Goals_A'])
 
     # Calcule o coeficiente de variação para gols feitos e tomados no HT e FT
-    cv_gols_feitos_HT = (desvio_padrao_gols_feitos_HT / media_gols_feitos_HT) * 100
-    cv_gols_feitos_FT = (desvio_padrao_gols_feitos_FT / media_gols_feitos_FT) * 100
-    cv_gols_tomados_HT = (desvio_padrao_gols_tomados_HT / media_gols_tomados_HT) * 100
-    cv_gols_tomados_FT = (desvio_padrao_gols_tomados_FT / media_gols_tomados_FT) * 100
+    cv_gols_feitos_HT = round((desvio_padrao_gols_feitos_HT / media_gols_feitos_HT), 2)
+    cv_gols_feitos_FT = round((desvio_padrao_gols_feitos_FT / media_gols_feitos_FT), 2)
+    cv_gols_tomados_HT = round((desvio_padrao_gols_tomados_HT / media_gols_tomados_HT), 2)
+    cv_gols_tomados_FT = round((desvio_padrao_gols_tomados_FT / media_gols_tomados_FT), 2)
 
     # Subheaders para CV de gols
     col3, col4 = st.columns(2)
 
     with col3:
         st.subheader("CV Gols HT:")
-        st.write(f"CV Gols Feitos HT: {cv_gols_feitos_HT:.2f}%")
-        st.write(f"CV Gols Tomados HT: {cv_gols_tomados_HT:.2f}%")
+        st.write(f"CV Gols Feitos HT: {cv_gols_feitos_HT}")
+        st.write(f"CV Gols Tomados HT: {cv_gols_tomados_HT}")
 
     with col4:
         st.subheader("CV Gols FT:")
-        st.write(f"CV Gols Feitos FT: {cv_gols_feitos_FT:.2f}%")
-        st.write(f"CV Gols Tomados FT: {cv_gols_tomados_FT:.2f}%")
+        st.write(f"CV Gols Feitos FT: {cv_gols_feitos_FT}")
+        st.write(f"CV Gols Tomados FT: {cv_gols_tomados_FT}")
 
     # Calcular a média de gols feitos e tomados no HT
     media_gols_feitos_HT = ultimas_partidas['HT_Goals_H'].mean()
