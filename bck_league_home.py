@@ -132,6 +132,9 @@ def bck_league_home_page():
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_away_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_away', aggfunc='sum')
 
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
+
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Back Visitante - Desempenho por Liga")
         st.dataframe(pivot_table, width=800)
@@ -144,6 +147,9 @@ def bck_league_home_page():
 
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_draw_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_draw', aggfunc='sum')
+
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Back Empate - Desempenho por Liga")
@@ -158,6 +164,10 @@ def bck_league_home_page():
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_ov05ht_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over05HT', aggfunc='sum')
 
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
+
+        
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Over 05HT - Desempenho por Liga")
         st.dataframe(pivot_table, width=800)
@@ -171,6 +181,9 @@ def bck_league_home_page():
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_u05ht_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_under05HT', aggfunc='sum')
 
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
+
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Under 05HT - Desempenho por Liga")
         st.dataframe(pivot_table, width=800)
@@ -181,6 +194,9 @@ def bck_league_home_page():
 
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_ov15ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over15', aggfunc='sum')
+
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Over 15FT - Desempenho por Liga")
@@ -193,6 +209,9 @@ def bck_league_home_page():
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_u15ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_under15', aggfunc='sum')
 
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
+
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Under 15FT - Desempenho por Liga")
         st.dataframe(pivot_table, width=800)
@@ -203,6 +222,9 @@ def bck_league_home_page():
 
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_ov25ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over25', aggfunc='sum')
+
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Over 25FT - Desempenho por Liga")
@@ -215,6 +237,9 @@ def bck_league_home_page():
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_u25ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_under25', aggfunc='sum')
 
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
+
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Under 25FT - Desempenho por Liga")
         st.dataframe(pivot_table, width=800)
@@ -225,6 +250,9 @@ def bck_league_home_page():
 
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_ov35ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over35', aggfunc='sum')
+
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Over 35FT - Desempenho por Liga")
@@ -237,6 +265,9 @@ def bck_league_home_page():
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_u35ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_under35', aggfunc='sum')
 
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
+        
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Under 35FT - Desempenho por Liga")
         st.dataframe(pivot_table, width=800)
@@ -248,6 +279,9 @@ def bck_league_home_page():
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_ov45ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_over45', aggfunc='sum')
 
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
+
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Over 45FT - Desempenho por Liga")
         st.dataframe(pivot_table, width=800)
@@ -258,6 +292,9 @@ def bck_league_home_page():
 
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_u45ft_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_under45', aggfunc='sum')
+
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Under 45FT - Desempenho por Liga")
@@ -271,6 +308,9 @@ def bck_league_home_page():
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_lay01_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_0x1', aggfunc='sum')
 
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
+
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Lay 0x1 - Desempenho por Liga")
         st.dataframe(pivot_table, width=800)
@@ -281,6 +321,9 @@ def bck_league_home_page():
 
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_lay10_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_1x0', aggfunc='sum')
+
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Lay 1x0 - Desempenho por Liga")
@@ -293,6 +336,9 @@ def bck_league_home_page():
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_lay12_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_1x2', aggfunc='sum')
 
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
+
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Lay 1x2 - Desempenho por Liga")
         st.dataframe(pivot_table, width=800)
@@ -303,6 +349,9 @@ def bck_league_home_page():
 
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_lay21_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_Lay_2x1', aggfunc='sum')
+
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
 
         # Display profit/loss by Season and League with Season as columns and League as rows
         st.subheader("Lay 2x1 - Desempenho por Liga")
