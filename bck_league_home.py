@@ -116,9 +116,13 @@ def bck_league_home_page():
         # Use a função pivot_table para reorganizar os dados
         pivot_table = profit_home_by_season_league.reset_index().pivot_table(index='League', columns='Season', values='profit_home', aggfunc='sum')
 
-        # Display profit/loss by Season and League with Season as columns and League as rows
+        # Calculate the sum of each row and store it in a new column
+        pivot_table['Total'] = pivot_table.sum(axis=1)
+
+        # Display the updated dataframe with the total column
         st.subheader("Back Casa - Desempenho por Liga")
         st.dataframe(pivot_table, width=800)
+
 
 
         ####################################################        
