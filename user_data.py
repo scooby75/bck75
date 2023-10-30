@@ -36,7 +36,7 @@ valid_users = {
     #"HarleyLeal": {"password": "Galo1353@", "profile": 3},
     #"thomasgabriel": {"password": "thomas123", "profile": 1},
     "ACarlosFreitas": {"password": "198120@Ac", "profile": 3},
-    "JorgeSilva": {"password": "Teste123", "profile": 3},
+    #"JorgeSilva": {"password": "Teste123", "profile": 3},
     "Wandersonvip": {"password": "Hillsong932", "profile": 3},
     "RenanTL": {"password": "renan123", "profile": 3},
     "Julio": {"password": "Abcd102030*", "profile": 3},
