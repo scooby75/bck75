@@ -35,7 +35,7 @@ valid_users = {
     #"lucastrader6": {"password": "0@Lp4Q8Fz", "profile": 3},
     #"HarleyLeal": {"password": "Galo1353@", "profile": 3},
     #"thomasgabriel": {"password": "thomas123", "profile": 1},
-    "ACarlosFreitas": {"password": "198120@Ac", "profile": 3},
+    #"ACarlosFreitas": {"password": "198120@Ac", "profile": 3},
     #"JorgeSilva": {"password": "Teste123", "profile": 3},
     "Wandersonvip": {"password": "Hillsong932", "profile": 3},
     "RenanTL": {"password": "renan123", "profile": 3},
@@ -50,5 +50,5 @@ valid_users = {
     "Chami1414": {"password": "Eljunquitokm23", "profile": 3},
     "cleberssaba": {"password": "POsitivo80@", "profile": 3},
     "LuisFreire50": {"password": "LA2023l+++", "profile": 3},
-    "fellipinho": {"password": "110099", "profile": 3}
+    #"fellipinho": {"password": "110099", "profile": 3}
 }
