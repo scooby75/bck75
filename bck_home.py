@@ -2226,6 +2226,7 @@ def bck_home_page():
         display_league_stats('profit_Lay_1x0', 'Lay 1x0')
         display_league_stats('profit_Lay_2x1', 'Lay 2x1')
         display_league_stats('profit_Lay_1x2', 'Lay 1x2')
+        display_league_stats('profit_Lay_0x2', 'Lay 0x2')
 
 
 # Execute a função para criar a página
