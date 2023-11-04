@@ -38,7 +38,7 @@ valid_users = {
     #"ACarlosFreitas": {"password": "198120@Ac", "profile": 3},
     #"JorgeSilva": {"password": "Teste123", "profile": 3},
     #"Wandersonvip": {"password": "Hillsong932", "profile": 3},
-    #"RenanTL": {"password": "renan123", "profile": 3},
+    "RenanTL": {"password": "renan123", "profile": 2},
     #"Julio": {"password": "Abcd102030*", "profile": 3},
     "Lucasbd": {"password": "Laybackbot", "profile": 1},
     "regiscotrim": {"password": "Cida1212@", "profile": 3},
