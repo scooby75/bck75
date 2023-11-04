@@ -53,7 +53,7 @@ def tips_page():
         df = load_base()
 
         # ##### PÁGINA BCK HOME ######
-        tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Resultados", "HA", "Back Casa HT", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "BTTS Sim", "Scalping"])
+        tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Resultados", "HA", "Lay 0x2", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "BTTS Sim", "Scalping"])
 
         with tab1:
             # Use df aqui para a aba "HA"
@@ -83,30 +83,26 @@ def tips_page():
 
             
         with tab2:
-            # Use df aqui para a aba "Back Casa HT"
-            st.subheader("Back Casa HT")
-            st.text("Apostar em Back Casa HT, Odd Mínima 1.90")
-            back_casa_ht = df[
-                (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
-                (df["FT_Odd_A"] >= 5.5) & (df["FT_Odd_A"] <= 10) &
-                (df["PPG_Home"] >= 2.1) &
-                (df["PPG_Away"] <= 1) &
-                (df["Rodada"] >= 10)
+            # Use df aqui para a aba "Lay 0x2"
+            st.subheader("Lay 0x2")
+            st.text("Apostar em Lay 0x2, Odd Maxima 50")
+            lay_02_ft = df[
+                (df["FT_Odd_A"] >= 6) & (df["FT_Odd_A"] <= 10)
             ]
-            colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
-            back_casa_ht = back_casa_ht[colunas_desejadas]
-            st.dataframe(back_casa_ht, width=800)
+            colunas_desejadas = ["Date", "Hora", "Pais", "Liga", "Home", "Away"]
+            lay_02_ft = lay_02_ft[colunas_desejadas]
+            st.dataframe(lay_02_ft, width=800)
 
             # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
             data_atual = datetime.now().strftime("%d-%m-%Y")
 
             # Criar um link para download do CSV
-            csv_back_casa_ht = back_casa_ht.to_csv(index=False, encoding='utf-8-sig')
+            csv_lay_02_ft = lay_02_ft.to_csv(index=False, encoding='utf-8-sig')
             st.download_button(
                 label="Baixar CSV",
-                data=csv_back_casa_ht,
-                file_name=f"back_casa_ht_{data_atual}.csv",
-                key="back_casa_ht_csv"
+                data=csv_lay_02_ft,
+                file_name=f"lay_02_ft_{data_atual}.csv",
+                key="lay_02_ft_csv"
             )
 
         with tab3:
