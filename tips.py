@@ -313,17 +313,17 @@ def tips_page():
             df = pd.read_csv(csv_data)
 
             # Conversão da coluna "Profit" para um tipo numérico (float)
-            df['Profit'] = df['Profit FT'].str.replace(',', '.').astype(float)
+            df['Profit FT'] = df['Profit FT'].str.replace(',', '.').astype(float)
             
             # Cálculo do Winrate com 2 casas decimais e formato de porcentagem
-            winrate = (df['Winrate'] * 100).mean()  # Média dos Winrates em formato de porcentagem
+            winrate = (df['Winrate FT'] * 100).mean()  # Média dos Winrates em formato de porcentagem
             winrate_formatted = "{:.2f}%".format(winrate)
             
             # Conversão da coluna "Profit" para um tipo numérico (float)
-            df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
+            df['Profit FT'] = pd.to_numeric(df['Profit FT'], errors='coerce')
             
             # Cálculo do Lucro/Prejuízo
-            profit = round(df['Profit'].sum(), 2)
+            profit = round(df['Profit FT'].sum(), 2)
             
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
