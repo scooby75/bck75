@@ -53,7 +53,7 @@ def tips_page():
         df = load_base()
 
         # ##### PÁGINA BCK HOME ######
-        tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Resultados", "HA", "Lay 0x2", "Lay Goleada", "Lay Zebra HT", "Lay Zebra FT", "BTTS Sim", "Scalping"])
+        tab0, tab1, tab2, tab3, tab4, tab6, tab7 = st.tabs(["Resultados", "HA", "Lay 0x2", "Lay Goleada", "Lay Zebra HT", "BTTS Sim", "Scalping"])
 
         with tab1:
             # Use df aqui para a aba "HA"
@@ -106,26 +106,7 @@ def tips_page():
             )
 
         with tab3:
-            # Use df aqui para a aba "Lay Goleada Casa"
-            st.subheader("Lay Goleada Casa")
-            st.text("Apostar em Lay Goleada Casa, Odd máxima 30")
-            eventos_raros_df = df[(df["FT_Odd_H"] >= 2) & (df["FT_Odd_H"] <= 5) & (df["FT_Odd_Over25"] >= 2.30) & (df["FT_Odd_BTTS_Yes"] <= 2) & (df["Rodada"] >= 10)]
-            colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
-            eventos_raros_df = eventos_raros_df[colunas_desejadas]
-            st.dataframe(eventos_raros_df, width=800)
-
-            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
-            data_atual = datetime.now().strftime("%d-%m-%Y")
-
-            # Criar um link para download do CSV
-            csv_link_goleada_casa = eventos_raros_df.to_csv(index=False, encoding='utf-8-sig')
-            st.download_button(
-                label="Baixar CSV",
-                data=csv_link_goleada_casa,
-                file_name=f"lay_goleada_casa_{data_atual}.csv",
-                key="lay_goleada_casa_csv"
-            )
-
+        
             st.subheader("Lay Goleada Visitante")
             st.text("Apostar em Lay Goleada Visitante, Odd máxima 30")
             eventos_raros2_df = df[(df["FT_Odd_A"] >= 2) & (df["FT_Odd_A"] <= 5) & (df["FT_Odd_Over25"] >= 2.30) & (df["FT_Odd_BTTS_Yes"] >= 2) & (df["Rodada"] >= 10)]
@@ -170,32 +151,7 @@ def tips_page():
                 key="lay_zebra_ht_csv"
             )
 
-        with tab5:
-            # Use df aqui para a aba "Lay Zebra FT"
-            st.subheader("Lay Zebra FT")
-            st.text("Apostar em Lay visitante, Odd máxima 6")
-            layzebraft_df = df[
-                (df["FT_Odd_H"] >= 1.4) & (df["FT_Odd_H"] <= 2.1) &
-                (df["FT_Odd_A"] >= 4) & (df["FT_Odd_A"] <= 7) &
-                (df["PPG_Home"] >= 1.7) &
-                (df["Rodada"] >= 10)
-            ]
-            colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
-            layzebraft_df = layzebraft_df[colunas_desejadas]
-            st.dataframe(layzebraft_df, width=800)
-
-            # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
-            data_atual = datetime.now().strftime("%d-%m-%Y")
-
-            # Criar um link para download do CSV
-            csv_link_zebra_ft = layzebraft_df.to_csv(index=False, encoding='utf-8-sig')
-            st.download_button(
-                label="Baixar CSV",
-                data=csv_link_zebra_ft,
-                file_name=f"lay_zebra_ft_{data_atual}.csv",
-                key="lay_zebra_ft_csv"
-            )
-
+        
         with tab6:
             
             # Use df aqui para a aba "BTTS Sim"
@@ -346,10 +302,10 @@ def tips_page():
                 st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
 
 
-############### Back  Casa HT ##########################
+############### Lay 0 x 2 ##########################
 
             # Baixe o arquivo CSV do GitHub usando a URL fornecida
-            url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/tips_back_casa_ht_geral.csv"
+            url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/lay_02_ft_geral.csv"
             response = requests.get(url)
             csv_data = StringIO(response.text)
 
@@ -376,8 +332,8 @@ def tips_page():
             df['Partidas'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
             
             # Exiba os resultados no Streamlit em três colunas separadas com centralização
-            st.subheader("Back Casa HT")
-            st.text("A partir de 16/09/2023")
+            st.subheader("Lay 0x2")
+            st.text("A partir de 04/11/2023")
             
             col19, col20, col21, col22 = st.columns(4)
             
@@ -394,57 +350,6 @@ def tips_page():
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
 
             with col22:
-                st.markdown('<div style="text-align: center;"> Partidas </div>', unsafe_allow_html=True)
-                st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
-
-############### Lay Goleada Casa ##########################
-
-            # Baixe o arquivo CSV do GitHub usando a URL fornecida
-            url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/tips_lay_goleada_casa_geral.csv"
-            response = requests.get(url)
-            csv_data = StringIO(response.text)
-
-            # Carregue os dados do CSV em um DataFrame do Pandas
-            df = pd.read_csv(csv_data)
-
-            # Conversão da coluna "Profit" para um tipo numérico (float)
-            df['Profit'] = df['Profit'].str.replace(',', '.').astype(float)
-            
-            # Cálculo do Winrate com 2 casas decimais e formato de porcentagem
-            winrate = (df['Winrate'] * 100).mean()  # Média dos Winrates em formato de porcentagem
-            winrate_formatted = "{:.2f}%".format(winrate)
-            
-            # Conversão da coluna "Profit" para um tipo numérico (float)
-            df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
-            
-            # Cálculo do Lucro/Prejuízo
-            profit = round(df['Profit'].sum(), 2)
-            
-            # Cálculo da Odd Justa com 2 casas decimais
-            odd_justa = round(100 / winrate, 2)
-
-            # Adicione a nova coluna "Partidas" com a quantidade total de jogos
-            df['Partidas'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
-
-            # Exiba os resultados no Streamlit em três colunas separadas com centralização
-            st.subheader("Lay Goleada Casa")
-            st.text("A partir de 16/09/2023")
-            
-            col4, col5, col6, col7 = st.columns(4)
-            
-            with col4:
-                st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
-                st.markdown('<div style="text-align: center;">{}</div>'.format(winrate_formatted), unsafe_allow_html=True)
-            
-            with col5:
-                st.markdown('<div style="text-align: center;"> Profit </div>', unsafe_allow_html=True)
-                st.markdown('<div style="text-align: center;">{}</div>'.format(profit), unsafe_allow_html=True)
-            
-            with col6:
-                st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
-                st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
-
-            with col7:
                 st.markdown('<div style="text-align: center;"> Partidas </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
 
@@ -548,58 +453,6 @@ def tips_page():
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
 
             with col13:
-                st.markdown('<div style="text-align: center;"> Partidas </div>', unsafe_allow_html=True)
-                st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
-
-
-############### Lay Visitante FT ##########################
-
-            # Baixe o arquivo CSV do GitHub usando a URL fornecida
-            url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/tips_lay_zebra_ft_geral.csv"
-            response = requests.get(url)
-            csv_data = StringIO(response.text)
-
-            # Carregue os dados do CSV em um DataFrame do Pandas
-            df = pd.read_csv(csv_data)
-
-            # Conversão da coluna "Profit" para um tipo numérico (float)
-            df['Profit'] = df['Profit'].str.replace(',', '.').astype(float)
-            
-            # Cálculo do Winrate com 2 casas decimais e formato de porcentagem
-            winrate = (df['Winrate'] * 100).mean()  # Média dos Winrates em formato de porcentagem
-            winrate_formatted = "{:.2f}%".format(winrate)
-            
-            # Conversão da coluna "Profit" para um tipo numérico (float)
-            df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
-            
-            # Cálculo do Lucro/Prejuízo
-            profit = round(df['Profit'].sum(), 2)
-            
-            # Cálculo da Odd Justa com 2 casas decimais
-            odd_justa = round(100 / winrate, 2)
-
-            # Adicione a nova coluna "Partidas" com a quantidade total de jogos
-            df['Partidas'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
-            
-            # Exiba os resultados no Streamlit em três colunas separadas com centralização
-            st.subheader("Lay Visitante FT")
-            st.text("A partir de 16/09/2023")
-            
-            col13, col14, col15, col16 = st.columns(4)
-            
-            with col13:
-                st.markdown('<div style="text-align: center;"> Winrate </div>', unsafe_allow_html=True)
-                st.markdown('<div style="text-align: center;">{}</div>'.format(winrate_formatted), unsafe_allow_html=True)
-            
-            with col14:
-                st.markdown('<div style="text-align: center;"> Profit </div>', unsafe_allow_html=True)
-                st.markdown('<div style="text-align: center;">{}</div>'.format(profit), unsafe_allow_html=True)
-            
-            with col15:
-                st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
-                st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
-
-            with col16:
                 st.markdown('<div style="text-align: center;"> Partidas </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
 
