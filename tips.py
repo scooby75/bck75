@@ -313,7 +313,7 @@ def tips_page():
             df = pd.read_csv(csv_data)
 
             # Conversão da coluna "Profit" para um tipo numérico (float)
-            df['Profit'] = df['Profit'].str.replace(',', '.').astype(float)
+            df['Profit'] = df['Profit FT'].str.replace(',', '.').astype(float)
             
             # Cálculo do Winrate com 2 casas decimais e formato de porcentagem
             winrate = (df['Winrate'] * 100).mean()  # Média dos Winrates em formato de porcentagem
