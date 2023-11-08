@@ -68,7 +68,7 @@ def bck_dia_home_page():
 
             # Filter by "dia_semana"
             all_dias_semana = "Todos"
-            selected_dias_semana = st.multiselect("Selecionar Dia da Semana", [all_dias_semana] + list(bck_dia_home_df['dia_semana'].unique()))
+            selected_dias_semana = st.multiselect("Selecionar Dia da Semana", [all_dias_semana] + list(bck_dia_home_df['dia_semana'].unique())
 
         # Remover espaços em branco dos nomes das colunas
         bck_dia_home_df.columns = bck_dia_home_df.columns.str.strip()
