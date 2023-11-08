@@ -48,13 +48,13 @@ def bck_dia_home_page():
         # Filter for Odd_Home and Odd_Away range
         with col2:
             odd_h_min = st.number_input("Odd_Home Mínimo", value=0.0)
-            odd_h_max = st.number_input("Odd_Home Máximo", value=10.0)
+            odd_h_max = st.number_input("Odd_Home Máximo", value=20.0)
 
             odd_a_min = st.number_input("Odd_Away Mínimo", value=0.0)
-            odd_a_max = st.number_input("Odd_Away Máximo", value=10.0)
+            odd_a_max = st.number_input("Odd_Away Máximo", value=20.0)
 
             odd_draw_min = st.number_input("Odd_Empate Mínimo", value=0.0)
-            odd_draw_max = st.number_input("Odd_Empate Máximo", value=10.0)
+            odd_draw_max = st.number_input("Odd_Empate Máximo", value=20.0)
 
         # Filter for PPG and Day
         with col3:
