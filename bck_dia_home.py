@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime, timedelta
 from session_state import SessionState
+from math import round  # Import the round function
 
 def bck_dia_home_page():
     # Inicializa o estado da sessão
@@ -16,7 +17,7 @@ def bck_dia_home_page():
         return
 
     ##### PÁGINA BCK DIA ######
-    tab0, tab1 = st.columns(2)  # Changed from st.tabs to st.columns
+    tab0, tab1, tab2 = st.columns(3)  # Changed from st.tabs to st.columns
 
     with tab0:
         # Carregar os dados
@@ -40,13 +41,11 @@ def bck_dia_home_page():
             all_leagues = "Todos"
             selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_dia_home_df['League'].unique()))
 
-        
             all_rounds = "Todos"
             selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique()))
 
-        
             all_seasons = "Todos"
-            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique()))
+            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique())
 
             home_teams = bck_dia_home_df['Home'].unique()  # Get unique teams from 'Home' column
             selected_home = st.multiselect("Selecionar Mandante", home_teams)
@@ -108,20 +107,19 @@ def bck_dia_home_page():
             empate_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'D']
             visitante_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'A']
 
-            # Calculate profit for each outcome
-            profit_casa = casa_matches['profit_home'].astype(float).sum()
-            profit_empate = empate_matches['profit_draw'].astype(float).sum()
-            profit_visitante = visitante_matches['profit_away'].astype(float).sum()
+            # Calculate profit for each outcome and round to 2 decimal places
+            profit_casa = round(casa_matches['profit_home'].astype(float).sum(), 2)
+            profit_empate = round(empate_matches['profit_draw'].astype(float).sum(), 2)
+            profit_visitante = round(visitante_matches['profit_away'].astype(float).sum(), 2)
 
             return profit_casa, profit_empate, profit_visitante
 
         # Define the list of days of the week
         days_of_week = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']
 
-    with tab1:
-
-        # Create a table to display profit for each day of the week
-        st.header("Análise por Dia da Semana")
+    with tab2:
+        # Create a table to display profit for each day of the week with 2 decimal places
+        st.header("Análise por Dia da Semana (Lucro Arredondado)")
         for day in days_of_week:
             profit_casa, profit_empate, profit_visitante = calculate_profit_by_day(filtered_df, day)
 
