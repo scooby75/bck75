@@ -40,11 +40,11 @@ def bck_dia_home_page():
             all_leagues = "Todos"
             selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_dia_home_df['League'].unique()))
 
-        with col2:
+        
             all_rounds = "Todos"
             selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique()))
 
-        with col3:
+        
             all_seasons = "Todos"
             selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique()))
 
@@ -119,7 +119,7 @@ def bck_dia_home_page():
         days_of_week = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']
 
 with tab1:
-    
+
         # Create a table to display profit for each day of the week
         st.header("Análise por Dia da Semana")
         for day in days_of_week:
