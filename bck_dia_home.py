@@ -48,8 +48,8 @@ def bck_dia_home_page():
             all_seasons = "Todos"
             selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique()))
 
-        home_teams = bck_dia_home_df['Home'].unique()  # Get unique teams from 'Home' column
-        selected_home = st.multiselect("Selecionar Mandante", home_teams)
+            home_teams = bck_dia_home_df['Home'].unique()  # Get unique teams from 'Home' column
+            selected_home = st.multiselect("Selecionar Mandante", home_teams)
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
@@ -109,15 +109,17 @@ def bck_dia_home_page():
             visitante_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'A']
 
             # Calculate profit for each outcome
-            profit_casa = casa_matches['FT_Odd_H'].astype(float).sum()
-            profit_empate = empate_matches['FT_Odd_D'].astype(float).sum()
-            profit_visitante = visitante_matches['FT_Odd_A'].astype(float).sum()
+            profit_casa = casa_matches['profit_home'].astype(float).sum()
+            profit_empate = empate_matches['profit_draw'].astype(float).sum()
+            profit_visitante = visitante_matches['profit_away'].astype(float).sum()
 
             return profit_casa, profit_empate, profit_visitante
 
         # Define the list of days of the week
         days_of_week = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']
 
+with tab1:
+    
         # Create a table to display profit for each day of the week
         st.header("Análise por Dia da Semana")
         for day in days_of_week:
