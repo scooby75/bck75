@@ -1,6 +1,5 @@
 import pandas as pd
 import streamlit as st
-from datetime import datetime, timedelta
 from session_state import SessionState
 
 def bck_dia_home_page():
@@ -39,12 +38,10 @@ def bck_dia_home_page():
         with col1:
             all_leagues = "Todos"
             selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_dia_home_df['League'].unique()))
-
         
             all_rounds = "Todos"
             selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique()))
-
-        
+            
             all_seasons = "Todos"
             selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique()))
 
@@ -123,8 +120,8 @@ def bck_dia_home_page():
             profit_casa, profit_empate, profit_visitante = calculate_profit_by_day(filtered_df, day)
             results_df.loc[day] = [profit_casa, profit_empate, profit_visitante]
 
-        # Display the results DataFrame as a table
-        st.table(results_df)
+        # Display the results DataFrame as a table with 2 decimal places
+        st.dataframe(results_df.round(2))
 
 # Execute the function to create the page
 bck_dia_home_page()
