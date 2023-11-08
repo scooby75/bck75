@@ -42,11 +42,11 @@ def bck_dia_home_page():
 
         with col2:
             all_rounds = "Todos"
-            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique())
+            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique()])
 
         with col3:
             all_seasons = "Todos"
-            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique()))
+            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique())
 
         home_teams = bck_dia_home_df['Home'].unique()  # Get unique teams from 'Home' column
         selected_home = st.multiselect("Selecionar Mandante", home_teams)
@@ -109,7 +109,7 @@ def bck_dia_home_page():
             visitante_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'A']
 
             # Calculate profit for each outcome
-            profit_casa = casa_matches['FT_Odd_H'].astype(float).sum()
+            profit_casa = casa_matches['FT_Odd_H'].astype float sum()
             profit_empate = empate_matches['FT_Odd_D'].astype(float).sum()
             profit_visitante = visitante_matches['FT_Odd_A'].astype(float).sum()
 
