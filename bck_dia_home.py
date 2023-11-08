@@ -109,7 +109,7 @@ def bck_dia_home_page():
             visitante_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'A']
 
             # Calculate profit for each outcome
-            profit_casa = casa_matches['FT_Odd_H'].astype float sum()
+            profit_casa = casa_matches['FT_Odd_H'].astype(float).sum()
             profit_empate = empate_matches['FT_Odd_D'].astype(float).sum()
             profit_visitante = visitante_matches['FT_Odd_A'].astype(float).sum()
 
