@@ -15,7 +15,7 @@ def bck_dia_home_page():
         return
 
     ##### PÁGINA BCK DIA ######
-    tab0, tab1, tab2 = st.columns(3)
+    tab0, tab1 = st.tabs(["Partidas Filtradas", "Back Casa FT"])
 
     with tab0:
         # Carregar os dados
@@ -111,7 +111,7 @@ def bck_dia_home_page():
         # Define the list of days of the week
         days_of_week = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']
 
-    with tab2:
+    with tab1:
         # Create an empty DataFrame to store the results
         results_df = pd.DataFrame(columns=['Casa', 'Empate', 'Visitante'], index=days_of_week)
 
