@@ -38,7 +38,8 @@ def bck_dia_home_page():
         # Filter by League, Season, Round, Home
         with col1:
             all_leagues = "Todos"
-            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_dia_home_df['League'].unique())
+            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_dia_home_df['League'].unique()))
+
 
             all_rounds = "Todos"
             selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique())
