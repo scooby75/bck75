@@ -16,7 +16,7 @@ def bck_dia_home_page():
         return
 
     ##### PÁGINA BCK DIA ######
-    tab0, tab1, tab2 = st.columns(3)  # Changed from st.tabs to st.columns
+    tab0, tab1, tab2 = st.columns(3)
 
     with tab0:
         # Carregar os dados
@@ -115,15 +115,16 @@ def bck_dia_home_page():
         days_of_week = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']
 
     with tab2:
-        # Create a table to display profit for each day of the week with 2 decimal places
-        st.header("Análise por Dia da Semana (Lucro Arredondado)")
+        # Create an empty DataFrame to store the results
+        results_df = pd.DataFrame(columns=['Casa', 'Empate', 'Visitante'], index=days_of_week)
+
+        # Calculate profits and populate the results DataFrame
         for day in days_of_week:
             profit_casa, profit_empate, profit_visitante = calculate_profit_by_day(filtered_df, day)
+            results_df.loc[day] = [profit_casa, profit_empate, profit_visitante]
 
-            st.subheader(day.capitalize())
-            st.write("Casa:", profit_casa)
-            st.write("Empate:", profit_empate)
-            st.write("Visitante:", profit_visitante)
+        # Display the results DataFrame as a table
+        st.table(results_df)
 
 # Execute the function to create the page
 bck_dia_home_page()
