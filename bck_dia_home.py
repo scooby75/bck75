@@ -118,7 +118,7 @@ def bck_dia_home_page():
         # Define the list of days of the week
         days_of_week = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']
 
-with tab1:
+    with tab1:
 
         # Create a table to display profit for each day of the week
         st.header("Análise por Dia da Semana")
