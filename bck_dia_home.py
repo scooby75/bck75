@@ -42,11 +42,11 @@ def bck_dia_home_page():
 
         with col2:
             all_rounds = "Todos"
-            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique()])
+            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique()))
 
         with col3:
             all_seasons = "Todos"
-            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique())
+            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique()))
 
         home_teams = bck_dia_home_df['Home'].unique()  # Get unique teams from 'Home' column
         selected_home = st.multiselect("Selecionar Mandante", home_teams)
