@@ -42,11 +42,11 @@ def bck_dia_home_page():
 
         
             all_rounds = "Todos"
-            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique())
+            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique()))
 
         
             all_seasons = "Todos"
-            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique())
+            selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique()))
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
