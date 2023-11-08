@@ -16,7 +16,7 @@ def bck_dia_home_page():
         return
 
     ##### PÁGINA BCK DIA ######
-    tab0, tab1 = st.tabs(["Partidas Filtradas", "Desempenho Dia"])
+    tab0, tab1 = st.columns(2)  # Changed from st.tabs to st.columns
 
     with tab0:
         # Carregar os dados
@@ -41,7 +41,7 @@ def bck_dia_home_page():
             selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_dia_home_df['League'].unique()))
 
             all_rounds = "Todos"
-            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique()))
+            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique())
 
             all_seasons = "Todos"
             selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique()))
@@ -101,25 +101,30 @@ def bck_dia_home_page():
             # Filter the DataFrame for the given day of the week
             day_filtered_df = filtered_df[filtered_df['dia_semana'] == day_of_week]
 
-            # Calculate profit for the selected day
-            profit = day_filtered_df['Placar_FT'] - day_filtered_df['FT_Odd_H']
+            # Filter matches for Casa (H), Empate (D), and Visitante (A) outcomes
+            casa_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'H']
+            empate_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'D']
+            visitante_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'A']
 
-            return profit.sum()
+            # Calculate profit for each outcome
+            profit_casa = casa_matches['FT_Odd_H'].astype(float).sum()
+            profit_empate = empate_matches['FT_Odd_D'].astype(float).sum()
+            profit_visitante = visitante_matches['FT_Odd_A'].astype(float).sum()
+
+            return profit_casa, profit_empate, profit_visitante
 
         # Define the list of days of the week
         days_of_week = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']
 
-        # Create an empty DataFrame to store profit per day of the week
-        profit_by_day_df = pd.DataFrame(columns=days_of_week)
-
-        # Calculate and populate profit for each day of the week
+        # Create a table to display profit for each day of the week
+        st.header("Análise por Dia da Semana")
         for day in days_of_week:
-            profit = calculate_profit_by_day(filtered_df, day)
-            profit_by_day_df.loc[0, day] = profit
+            profit_casa, profit_empate, profit_visitante = calculate_profit_by_day(filtered_df, day)
 
-        # Display the resulting DataFrame
-        st.header("Desempenho Dia")
-        st.dataframe(profit_by_day_df)
+            st.subheader(day.capitalize())
+            st.write("Casa:", profit_casa)
+            st.write("Empate:", profit_empate)
+            st.write("Visitante:", profit_visitante)
 
-# Execute a função para criar a página
+# Execute the function to create the page
 bck_dia_home_page()
