@@ -38,18 +38,17 @@ def bck_dia_home_page():
         # Filter by League, Season, Round, Home
         with col1:
             all_leagues = "Todos"
-            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_home_df['League'].unique())
+            selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_home_df['League'].unique()))
 
             all_rounds = "Todos"
-            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique()))
+            selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_home_df['Round'].unique())
 
             all_seasons = "Todos"
             selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_home_df['Season'].unique())
-        
+
             home_teams = bck_home_df['Home'].unique()  # Get unique teams from 'Home' column
             selected_home = st.multiselect("Selecionar Mandante", home_teams)
 
-            
         # Filter for Odd_Home and Odd_Away range
         with col2:
             odd_h_min = st.number_input("Odd_Home Mínimo", value=0.0)
@@ -69,7 +68,7 @@ def bck_dia_home_page():
 
             # Filter by "dia_semana"
             all_dias_semana = "Todos"
-            selected_dias_semana = st.multiselect("Selecionar Dia da Semana", [all_dias_semana] + list(bck_dia_home_df['dia_semana'].unique())
+            selected_dias_semana = st.multiselect("Selecionar Dia da Semana", [all_dias_semana] + list(bck_dia_home_df['dia_semana'].unique()))
 
         # Remover espaços em branco dos nomes das colunas
         bck_dia_home_df.columns = bck_dia_home_df.columns.str.strip()
