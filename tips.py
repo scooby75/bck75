@@ -53,7 +53,7 @@ def tips_page():
         df = load_base()
 
         # ##### PÁGINA BCK HOME ######
-        tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Resultados", "HA", "Lay 0x2", "Lay Goleada", "Lay Zebra HT", "Drakito, ""BTTS Sim", "Scalping"])
+        tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Resultados", "HA", "Lay 0x2", "Lay Goleada", "Lay Zebra HT", "Drakito", "BTTS Sim", "Scalping"])
 
         with tab1:
             # Use df aqui para a aba "HA"
