@@ -53,7 +53,7 @@ def tips_page():
         df = load_base()
 
         # ##### PÁGINA BCK HOME ######
-        tab0, tab1, tab2, tab3, tab4, tab6, tab7 = st.tabs(["Resultados", "HA", "Lay 0x2", "Lay Goleada", "Lay Zebra HT", "BTTS Sim", "Scalping"])
+        tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Resultados", "HA", "Lay 0x2", "Lay Goleada", "Lay Zebra HT", "Drakito, ""BTTS Sim", "Scalping"])
 
         with tab1:
             # Use df aqui para a aba "HA"
@@ -151,6 +151,55 @@ def tips_page():
                 key="lay_zebra_ht_csv"
             )
 
+        with tab5:
+            # Definir URLs para os arquivos CSV
+            url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
+            url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
+            url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
+
+            try:
+                # Carregar dados CSV
+                jogosdodia = pd.read_csv(url_jogosdodia)
+                momento_gol_home = pd.read_csv(url_momento_gol_home)
+                momento_gol_away = pd.read_csv(url_momento_gol_away)
+
+                # Lógica de mesclagem e filtragem de dados
+                jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home', right_on='Equipe')
+                jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away', right_on='Equipe')
+                jogos_filtrados = jogos_filtrados_home.merge(jogos_filtrados_away, on=['Date', 'Home', 'Away'], suffixes=('_home', '_away'))
+                
+                # Filtrar jogos com critérios específicos
+                filtered_games = jogos_filtrados[
+                    (jogos_filtrados['16_30_mar_home'] >= 4) &
+                    (jogos_filtrados['FT_Odd_H_home'] <= 2.0) &
+                    (jogos_filtrados['FT_Odd_H_away'] >= 4.0)
+                ]
+
+                # Selecionar colunas relevantes e renomear
+                result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home',
+                                            'FT_Odd_H_away', 'FT_Odd_A_away', 'FT_Odd_Over25_away']]
+                result_df.columns = ['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home',
+                                     'FT_Odd_H_away', 'FT_Odd_A_away', 'FT_Odd_Over25_away']
+
+                # Streamlit App
+                st.subheader("Drakito")
+                st.text("Entrar após o primeiro gol e fechar a posição no segundo gol ou termino do HT")
+                st.dataframe(result_df, width=800)
+
+                # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+                data_atual = datetime.now().strftime("%d-%m-%Y")
+
+                # Criar um link para download do CSV
+                csv_link_drakito = result_df.to_csv(index=False, encoding='utf-8-sig')
+                st.download_button(
+                    label="Baixar CSV",
+                    data=csv_link_drakito,
+                    file_name=f"drakito_{data_atual}.csv",
+                    key="drakito_csv"
+                )
+
+            except Exception as e:
+                st.error("Ocorreu um erro: " + str(e))
         
         with tab6:
             
