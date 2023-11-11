@@ -174,8 +174,8 @@ def tips_page():
                 ]
             
                 # Selecionar colunas relevantes e renomear
-                result_df = jogos_filtrados_home[['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25']]
-                result_df.columns = ['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home']
+                result_df = jogos_filtrados_home[['Hora','Pais', 'Liga', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A']]
+                result_df.columns = ['Hora','Pais', 'Liga', 'Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home']
             
                 # Streamlit App
                 st.subheader("Drakito")
