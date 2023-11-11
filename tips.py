@@ -167,8 +167,10 @@ def tips_page():
             
                 # Adicionar condições para filtrar os jogos em url_jogosdodia
                 jogos_filtrados_home = jogos_filtrados_home[
+                    (jogos_filtrados_home['FT_Odd_H'] >= 1.40) &
                     (jogos_filtrados_home['FT_Odd_H'] <= 2) &
                     (jogos_filtrados_home['FT_Odd_A'] >= 4) &
+                    (jogos_filtrados_home['FT_Odd_A'] <= 10) &
                     (jogos_filtrados_home['Home'] == jogos_filtrados_home['Equipe']) &
                     (jogos_filtrados_home['16_30_mar'] >= 4)
                 ]
