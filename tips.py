@@ -318,7 +318,7 @@ def tips_page():
                 # Adicionar condições para filtrar os jogos
                 condicoes_filtragem = (
                     (jogos_filtrados_home['Odds_Home_Win'].between(2, 10)) &
-                    (jogos_filtrados_home['Odds_Away_Win]'].between(2, 10)) &
+                    (jogos_filtrados_home['Odds_Away_Win'].between(2, 10)) &
                     (jogos_filtrados_home['Under35 Average'].between(85, 100)) &
                     (jogos_filtrados_home['Home Team'] == jogos_filtrados_home['Equipe']) &
                     (jogos_filtrados_away['Away Team'] == jogos_filtrados_away['Equipe']) &
