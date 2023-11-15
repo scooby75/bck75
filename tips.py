@@ -53,7 +53,7 @@ def tips_page():
         df = load_base()
 
         # ##### PÁGINA BCK HOME ######
-        tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Resultados", "HA", "Lay 0x2", "Lay Goleada", "Lay Zebra HT", "Drakito", "BTTS Sim", "Scalping"])
+        tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs(["Resultados", "HA", "Lay 0x2", "Lay Goleada", "Lay Zebra HT", "Drakito", "BTTS Sim", "Scalping", "Scalping HT"])
 
         with tab1:
             # Use df aqui para a aba "HA"
@@ -297,6 +297,61 @@ def tips_page():
             except Exception as e:
                 st.error("Ocorreu um erro: " + str(e))
 
+        with tab8:
+        
+
+            # Definir URLs para os arquivos CSV
+            url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/bd_fts_bruto.csv?raw=true'
+            url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
+            url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
+
+            try:
+                # Carregar dados CSV
+                jogosdodia = pd.read_csv(url_jogosdodia)
+                momento_gol_home = pd.read_csv(url_momento_gol_home)
+                momento_gol_away = pd.read_csv(url_momento_gol_away)
+
+                # Lógica de mesclagem e filtragem de dados
+                jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home', right_on='Equipe')
+                jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away', right_on='Equipe')
+
+                # Adicionar condições para filtrar os jogos
+                condicoes_filtragem = (
+                    (jogos_filtrados_home['Odds_Home_Win'].between(2, 10)) &
+                    (jogos_filtrados_home['Odds_Away_Win]'].between(2, 10)) &
+                    (jogos_filtrados_home['Under35 Average'].between(85, 100)) &
+                    (jogos_filtrados_home['Home'] == jogos_filtrados_home['Equipe']) &
+                    (jogos_filtrados_away['Away'] == jogos_filtrados_away['Equipe']) &
+                    (jogos_filtrados_home['31_45_mar'] <= 1) &
+                    (jogos_filtrados_away['31_45_mar'] <= 1)
+                )
+
+                jogos_filtrados_home = jogos_filtrados_home[condicoes_filtragem]
+
+                # Selecionar colunas relevantes e renomear
+                result_df = jogos_filtrados_home[['Home Team', 'Away Team', 'Odds_Home_Win', 'Odds_Away_Win', 'Odds_Over25']]
+                result_df.columns = ['Home Team', 'Away Team', 'Odds_Home_Win', 'Odds_Away_Win', 'Odds_Over25']
+
+                # Streamlit App
+                st.subheader("Scalping HT")
+                st.dataframe(result_df, width=800)
+
+                # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
+                #data_atual = datetime.now().strftime("%d-%m-%Y")
+
+                # Criar um link para download do CSV
+                csv_link_scalping_ht = result_df.to_csv(index=False, encoding='utf-8-sig')
+                st.download_button(
+                    label="Baixar CSV",
+                    data=csv_link_scalping_ht,
+                    file_name=f"Scalping_HT_{data_atual}.csv",
+                    key="scalping_ht_csv"
+                )
+
+            except Exception as e:
+                st.error(f"Ocorreu um erro: {e}")
+
+             
         with tab0:
  
 
