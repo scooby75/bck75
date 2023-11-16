@@ -317,6 +317,7 @@ def tips_page():
 
                 # Adicionar condições para filtrar os jogos
                 condicoes_filtragem = (
+                    (jogosdodia['Country'] != 'Esports') &
                     (jogosdodia['Odds_Home_Win'].between(2, 10)) &
                     (jogosdodia['Odds_Away_Win'].between(2, 10)) &
                     (jogosdodia['Under35 Average'].between(85, 100)) 
