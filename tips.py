@@ -302,24 +302,24 @@ def tips_page():
 
             # Definir URLs para os arquivos CSV
             url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/bd_fts_bruto.csv?raw=true'
-            url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
-            url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
+            #url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
+            #url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
 
             try:
                 # Carregar dados CSV
                 jogosdodia = pd.read_csv(url_jogosdodia)
-                momento_gol_home = pd.read_csv(url_momento_gol_home)
-                momento_gol_away = pd.read_csv(url_momento_gol_away)
+                #momento_gol_home = pd.read_csv(url_momento_gol_home)
+                #momento_gol_away = pd.read_csv(url_momento_gol_away)
 
                 # Lógica de mesclagem e filtragem de dados
-                jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home Team', right_on='Equipe')
-                jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away Team', right_on='Equipe')
+                #jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home Team', right_on='Equipe')
+                #jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away Team', right_on='Equipe')
 
                 # Adicionar condições para filtrar os jogos
                 condicoes_filtragem = (
-                    (jogos_filtrados_home['Odds_Home_Win'].between(2, 10)) &
-                    (jogos_filtrados_home['Odds_Away_Win'].between(2, 10)) &
-                    (jogos_filtrados_home['Under35 Average'].between(85, 100)) 
+                    (jogosdodia['Odds_Home_Win'].between(2, 10)) &
+                    (jogosdodia['Odds_Away_Win'].between(2, 10)) &
+                    (jogosdodia['Under35 Average'].between(85, 100)) 
                     #(jogos_filtrados_home['Home Team'] == jogos_filtrados_home['Equipe']) &
                     #(jogos_filtrados_away['Away Team'] == jogos_filtrados_away['Equipe']) 
                     #(jogos_filtrados_home['31_45_mar'] <= 1) &
@@ -329,7 +329,7 @@ def tips_page():
                 jogos_filtrados_home = jogos_filtrados_home[condicoes_filtragem]
 
                 # Selecionar colunas relevantes e renomear
-                result_df = jogos_filtrados_home[['Country', 'League', 'Home Team', 'Away Team', 'Odds_Home_Win', 'Odds_Away_Win', 'Odds_Over25']]
+                result_df = jogosdodia[['Country', 'League', 'Home Team', 'Away Team', 'Odds_Home_Win', 'Odds_Away_Win', 'Odds_Over25']]
                 result_df.columns = ['Country', 'League', 'Home Team', 'Away Team', 'Odds_Home_Win', 'Odds_Away_Win', 'Odds_Over25']
 
                 # Streamlit App
