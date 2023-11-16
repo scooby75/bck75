@@ -326,7 +326,7 @@ def tips_page():
                     #(jogos_filtrados_away['31_45_mar'] <= 1)
                 )
 
-                jogos_filtrados_home = jogos_filtrados_home[condicoes_filtragem]
+                jogosdodia = jogosdodia[condicoes_filtragem]
 
                 # Selecionar colunas relevantes e renomear
                 result_df = jogosdodia[['Country', 'League', 'Home Team', 'Away Team', 'Odds_Home_Win', 'Odds_Away_Win', 'Odds_Over25']]
