@@ -319,9 +319,9 @@ def tips_page():
                 condicoes_filtragem = (
                     (jogos_filtrados_home['Odds_Home_Win'].between(2, 10)) &
                     (jogos_filtrados_home['Odds_Away_Win'].between(2, 10)) &
-                    (jogos_filtrados_home['Under35 Average'].between(85, 100)) &
-                    (jogos_filtrados_home['Home Team'] == jogos_filtrados_home['Equipe']) &
-                    (jogos_filtrados_away['Away Team'] == jogos_filtrados_away['Equipe']) 
+                    (jogos_filtrados_home['Under35 Average'].between(85, 100)) 
+                    #(jogos_filtrados_home['Home Team'] == jogos_filtrados_home['Equipe']) &
+                    #(jogos_filtrados_away['Away Team'] == jogos_filtrados_away['Equipe']) 
                     #(jogos_filtrados_home['31_45_mar'] <= 1) &
                     #(jogos_filtrados_away['31_45_mar'] <= 1)
                 )
@@ -329,8 +329,8 @@ def tips_page():
                 jogos_filtrados_home = jogos_filtrados_home[condicoes_filtragem]
 
                 # Selecionar colunas relevantes e renomear
-                result_df = jogos_filtrados_home[['Home Team', 'Away Team', 'Odds_Home_Win', 'Odds_Away_Win', 'Odds_Over25']]
-                result_df.columns = ['Home Team', 'Away Team', 'Odds_Home_Win', 'Odds_Away_Win', 'Odds_Over25']
+                result_df = jogos_filtrados_home[['Country', 'League', 'Home Team', 'Away Team', 'Odds_Home_Win', 'Odds_Away_Win', 'Odds_Over25']]
+                result_df.columns = ['Country', 'League', 'Home Team', 'Away Team', 'Odds_Home_Win', 'Odds_Away_Win', 'Odds_Over25']
 
                 # Streamlit App
                 st.subheader("Scalping HT")
