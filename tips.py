@@ -320,7 +320,8 @@ def tips_page():
                     (jogosdodia['Country'] != 'Esports') &
                     (jogosdodia['Odds_Home_Win'].between(2, 10)) &
                     (jogosdodia['Odds_Away_Win'].between(2, 10)) &
-                    (jogosdodia['Under35 Average'].between(85, 100)) 
+                    (jogosdodia['Over25 Average'].between(0, 30)) &
+                    (jogosdodia['Under35 Average'].between(85, 100))
                     #(jogos_filtrados_home['Home Team'] == jogos_filtrados_home['Equipe']) &
                     #(jogos_filtrados_away['Away Team'] == jogos_filtrados_away['Equipe']) 
                     #(jogos_filtrados_home['31_45_mar'] <= 1) &
