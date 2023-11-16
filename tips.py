@@ -318,6 +318,8 @@ def tips_page():
                 # Adicionar condições para filtrar os jogos
                 condicoes_filtragem = (
                     (jogosdodia['Country'] != 'Esports') &
+                    (jogosdodia['League'] != 'U21 League') &
+                    (jogosdodia['League'] != 'UEFA U21 Championship Qualification') &
                     (jogosdodia['Odds_Home_Win'].between(2, 10)) &
                     (jogosdodia['Odds_Away_Win'].between(2, 10)) &
                     (jogosdodia['Over25 Average'].between(0, 30)) &
