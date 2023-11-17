@@ -39,7 +39,7 @@ valid_users = {
     #"JorgeSilva": {"password": "Teste123", "profile": 3},
     #"Wandersonvip": {"password": "Hillsong932", "profile": 3},
     "RenanTL": {"password": "renan123", "profile": 2},
-    #"Julio": {"password": "Abcd102030*", "profile": 3},
+    "Julio": {"password": "Abcd102030*", "profile": 3},
     #"Lucasbd": {"password": "Laybackbot", "profile": 1},
     #"regiscotrim": {"password": "Cida1212@", "profile": 3},
     #"maycon22": {"password": "Meg1309", "profile": 3},
