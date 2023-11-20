@@ -11,7 +11,7 @@ valid_users = {
     #"wagnercw": {"password": "G28M1V97@", "profile": 1}, 
     #"bjales": {"password": "kisso1cc", "profile": 3}, 
     #"DANIELSANTOS": {"password": "140751@Ju", "profile": 3},
-    "estevaobayerl": {"password": "Test2320", "profile": 3},
+    #"estevaobayerl": {"password": "Test2320", "profile": 3},
     #"Alison": {"password": "040712aJ@19", "profile": 3},
     #"GustavoMartins": {"password": "1985", "profile": 2}, 
     #"douglasgornimello": {"password": "feliz@!2023", "profile": 1}, 
