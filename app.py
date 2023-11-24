@@ -75,7 +75,7 @@ def main():
             tips_page()
         elif selected_tab == "Value Bets" and user_profile >= 2:
             value_bets_page()
-        elif selected_tab == "Análise Dia" and user_profile >= 3:
+        elif selected_tab == "Análise Dia" and user_profile >= 4:
             bck_dia_home_page()
         
        
