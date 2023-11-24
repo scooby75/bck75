@@ -1,5 +1,5 @@
 valid_users = {
-    "Lyssandro": {"password": "Fcl2fcl2#", "profile": 3},
+    "Lyssandro": {"password": "Fcl2fcl2#", "profile": 4},
     #"lamaral": {"password": "lamaral23", "profile": 3},
     #"blamim": {"password": "lamim23", "profile": 3},
     #"mrodrigues": {"password": "mrodrigues23", "profile": 3},
