@@ -302,8 +302,8 @@ def tips_page():
 
             # Definir URLs para os arquivos CSV
             url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/bd_fts_bruto.csv?raw=true'
-            #url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
-            #url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
+            url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
+            url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
 
             try:
                 # Carregar dados CSV
