@@ -308,12 +308,12 @@ def tips_page():
             try:
                 # Carregar dados CSV
                 jogosdodia = pd.read_csv(url_jogosdodia)
-                #momento_gol_home = pd.read_csv(url_momento_gol_home)
-                #momento_gol_away = pd.read_csv(url_momento_gol_away)
+                momento_gol_home = pd.read_csv(url_momento_gol_home)
+                momento_gol_away = pd.read_csv(url_momento_gol_away)
 
                 # Lógica de mesclagem e filtragem de dados
-                #jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home Team', right_on='Equipe')
-                #jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away Team', right_on='Equipe')
+                jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home Team', right_on='Equipe')
+                jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away Team', right_on='Equipe')
 
                 # Adicionar condições para filtrar os jogos
                 condicoes_filtragem = (
