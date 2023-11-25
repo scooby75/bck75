@@ -322,12 +322,18 @@ def tips_page():
                     (jogosdodia['League'] != 'UEFA U21 Championship Qualification') &
                     (jogosdodia['Odds_Home_Win'].between(2, 10)) &
                     (jogosdodia['Odds_Away_Win'].between(2, 10)) &
-                    (jogosdodia['Under25 Average'].between(75, 100)) &
-                    (jogosdodia['Under35 Average'].between(90, 100))
-                    #(jogos_filtrados_home['Home Team'] == jogos_filtrados_home['Equipe']) &
-                    #(jogos_filtrados_away['Away Team'] == jogos_filtrados_away['Equipe']) 
-                    #(jogos_filtrados_home['31_45_mar'] <= 1) &
-                    #(jogos_filtrados_away['31_45_mar'] <= 1)
+                    #(jogosdodia['Under25 Average'].between(75, 100))
+                    (jogosdodia['Under45 Average'].between(90, 100)) &
+                    (jogos_filtrados_home['Home Team'] == jogos_filtrados_home['Equipe']) &
+                    (jogos_filtrados_away['Away Team'] == jogos_filtrados_away['Equipe']) &
+                    (jogos_filtrados_home['46_60_mar'] <= 1) &
+                    (jogos_filtrados_home['46_60_sofri'] <= 1) &
+                    (jogos_filtrados_home['61_75_mar'] <= 1) &
+                    (jogos_filtrados_home['61_75_sofri'] <= 1) &
+                    (jogos_filtrados_away['46_60_mar'] <= 1) &
+                    (jogos_filtrados_away['46_60_sofri'] <= 1) &
+                    (jogos_filtrados_away['61_75_mar'] <= 1) &
+                    (jogos_filtrados_away['61_75_sofri'] <= 1) 
                 )
 
                 jogosdodia = jogosdodia[condicoes_filtragem]
