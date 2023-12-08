@@ -35,9 +35,9 @@ def jogos_do_dia_page():
 
     # Define columns to display
     columns_to_display = [
-        'Date', 'Hora', 'Liga', 'Rodada', 'Home', 'Away', 
-        'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
-        'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes', 'XG_Home', 'XG_Away', 'Average Goals', 'PPG_Home', 'PPG_Away'
+        'Date', 'Hora', 'Liga', 'Rodada', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
+        'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes', 'XG_Home', 'XG_Away', 'Media_Gols', 'AVG_05HT',
+        'AVG_15FT', 'AVG_25FT', 'AVG_25FT', 'PPG_Home', 'PPG_Away'
     ]
 
     # Create filters for selected columns
@@ -54,12 +54,16 @@ def jogos_do_dia_page():
         ('PPG Away', 'selected_ppg_a'),
         ('XG Home', 'selected_hg_home'),
         ('XG Away', 'selected_hg_away'),
-        ('Média de Gols', 'selected_average_goals'),
+        ('Média de Gols', 'selected_Media_Gols'),
+        ('AVG_05HT', 'selected_AVG_05HT'),
+        ('AVG_15FT', 'selected_AVG_15FT'),
+        ('AVG_25FT', 'selected_AVG_25FT'),
+        ('AVG_BTTS_Yes', 'selected_AVG_BTTS_Yes'),
         
     ]
 
     # Create number inputs for filter conditions
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
         selected_ft_odd_h_min = st.number_input("FT Odds Home (min)", 0.0, 10.0, 0.0)
         selected_ft_odd_h_max = st.number_input("FT Odds Home (max)", selected_ft_odd_h_min, 15.0, 15.0)
@@ -89,10 +93,18 @@ def jogos_do_dia_page():
         selected_hg_home_max = st.number_input("XG Home (max)", 0.0, 10.0, 10.0)
         selected_hg_away_min = st.number_input("XG Away (min)", 0.0, 10.0, 0.0)
         selected_hg_away_max = st.number_input("XG Away (max)", 0.0, 10.0, 10.0)
-        selected_average_goals_min = st.number_input("Média de Gols (min)", 0.0, 10.0, 0.0)
-        selected_average_goals_max = st.number_input("Média de Gols (max)", 0.0, 10.0, 10.0)
+        selected_selected_Media_Gols_min = st.number_input("Média de Gols (min)", 0.0, 10.0, 0.0)
+        selected_selected_Media_Gols_max = st.number_input("Média de Gols (max)", 0.0, 10.0, 10.0)
         
-
+    with col5:
+        selected_AVG_05HT_min = st.number_input("AVG 05HT (min)", 0.0, 100.0, 0.0)
+        selected_AVG_05HT_max = st.number_input("AVG 05HT (max)", 0.0, 100.0, 100.0)
+        selected_AVG_15FT_min = st.number_input("AVG 15FT (min)", 0.0, 100.0, 0.0)
+        selected_AVG_15FT_max = st.number_input("AVG 15FT (max)", 0.0, 100.0, 100.0)
+        selected_AVG_25FT_min = st.number_input("AVG 25FT (min)", 0.0, 100.0, 0.0)
+        selected_AVG_25FT_max = st.number_input("AVG 25FT (max)", 0.0, 100.0, 100.0)
+        selected_AVG_BTTS_Yes_min = st.number_input("AVG BTTS Yes (min)", 0.0, 100.0, 0.0)
+        selected_AVG_BTTS_Yes_max = st.number_input("AVG BTTS Yes (max)", 0.0, 100.0, 100.0)
 
     
 
@@ -120,8 +132,16 @@ def jogos_do_dia_page():
         (df2['XG_Home'] <= selected_hg_home_max) &
         (df2['XG_Away'] >= selected_hg_away_min) &
         (df2['XG_Away'] <= selected_hg_away_max) &
-        (df2['Average Goals'] >= selected_average_goals_min) &
-        (df2['Average Goals'] <= selected_average_goals_max)
+        (df2['Media_Gols'] >= selected_average_goals_min) &
+        (df2['Media_Gols'] <= selected_average_goals_max) &
+        (df2['AVG_05HT'] >= selected_average_goals_min) &
+        (df2['AVG_05HT'] <= selected_average_goals_max) &
+        (df2['AVG_15FT'] >= selected_average_goals_min) &
+        (df2['AVG_15FT'] <= selected_average_goals_max) &
+        (df2['AVG_25FT'] >= selected_average_goals_min) &
+        (df2['AVG_25FT'] <= selected_average_goals_max) &
+        (df2['AVG_BTTS_Yes'] >= selected_average_goals_min) &
+        (df2['AVG_BTTS_Yes'] <= selected_average_goals_max) 
     ]
 
     if not filtered_data.empty:
