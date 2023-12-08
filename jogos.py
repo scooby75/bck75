@@ -2,16 +2,14 @@
 
 import streamlit as st
 import pandas as pd
-import datetime as dt
-
-
 from session_state import SessionState
+import datetime as dt
 
 def jogos_do_dia_page():
     # Inicializa o estado da sessão
     session_state = SessionState()
 
-    # Defina o valor de user_profile após a criação da instância
+    # Define o valor de user_profile após a criação da instância
     session_state.user_profile = 1  # Ou qualquer outro valor desejado
 
     # Verifica se o usuário tem permissão para acessar a página
@@ -27,20 +25,18 @@ def jogos_do_dia_page():
     def load_base():
         url = "https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true"
         data_jogos = pd.read_csv(url)
-
-       
         return data_jogos
 
     df2 = load_base()
 
-    # Define columns to display
+    # Define colunas a serem exibidas
     columns_to_display = [
         'Date', 'Hora', 'Liga', 'Rodada', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
         'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes', 'XG_Home', 'XG_Away', 'Media_Gols', 'AVG_05HT',
-        'AVG_15FT', 'AVG_25FT', 'AVG_25FT', 'PPG_Home', 'PPG_Away'
+        'AVG_15FT', 'AVG_25FT', 'PPG_Home', 'PPG_Away'
     ]
 
-    # Create filters for selected columns
+    # Cria filtros para colunas selecionadas
     filter_values = {}
     filter_columns = [
         ('FT Odds Home', 'selected_ft_odd_h'),
@@ -59,10 +55,9 @@ def jogos_do_dia_page():
         ('AVG_15FT', 'selected_AVG_15FT'),
         ('AVG_25FT', 'selected_AVG_25FT'),
         ('AVG_BTTS_Yes', 'selected_AVG_BTTS_Yes'),
-        
     ]
 
-    # Create number inputs for filter conditions
+    # Cria entradas de número para condições de filtro
     col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
         selected_ft_odd_h_min = st.number_input("FT Odds Home (min)", 0.0, 10.0, 0.0)
@@ -95,7 +90,7 @@ def jogos_do_dia_page():
         selected_hg_away_max = st.number_input("XG Away (max)", 0.0, 10.0, 10.0)
         selected_selected_Media_Gols_min = st.number_input("Média de Gols (min)", 0.0, 10.0, 0.0)
         selected_selected_Media_Gols_max = st.number_input("Média de Gols (max)", 0.0, 10.0, 10.0)
-        
+
     with col5:
         selected_AVG_05HT_min = st.number_input("AVG 05HT (min)", 0.0, 100.0, 0.0)
         selected_AVG_05HT_max = st.number_input("AVG 05HT (max)", 0.0, 100.0, 100.0)
@@ -106,9 +101,7 @@ def jogos_do_dia_page():
         selected_AVG_BTTS_Yes_min = st.number_input("AVG BTTS Yes (min)", 0.0, 100.0, 0.0)
         selected_AVG_BTTS_Yes_max = st.number_input("AVG BTTS Yes (max)", 0.0, 100.0, 100.0)
 
-    
-
-    # Apply filters to the DataFrame
+    # Aplica filtros ao DataFrame
     filtered_data = df2[
         (df2['FT_Odd_H'] >= selected_ft_odd_h_min) &
         (df2['FT_Odd_H'] <= selected_ft_odd_h_max) &
@@ -132,8 +125,8 @@ def jogos_do_dia_page():
         (df2['XG_Home'] <= selected_hg_home_max) &
         (df2['XG_Away'] >= selected_hg_away_min) &
         (df2['XG_Away'] <= selected_hg_away_max) &
-        (df2['Media_Gols'] >= selected_Media_Gols_min) &
-        (df2['Media_Gols'] <= selected_Media_Gols_max) &
+        (df2['Media_Gols'] >= selected_selected_Media_Gols_min) &
+        (df2['Media_Gols'] <= selected_selected_Media_Gols_max) &
         (df2['AVG_05HT'] >= selected_AVG_05HT_min) &
         (df2['AVG_05HT'] <= selected_AVG_05HT_max) &
         (df2['AVG_15FT'] >= selected_AVG_15FT_min) &
@@ -150,5 +143,5 @@ def jogos_do_dia_page():
     else:
         st.warning("Não existem jogos com esses critérios!")
 
-# Chamar a função para exibir a aplicação web
+# Chama a função para exibir a aplicação web
 jogos_do_dia_page()
