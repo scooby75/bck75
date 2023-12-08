@@ -125,8 +125,8 @@ def jogos_do_dia_page():
         (df2['XG_Home'] <= selected_hg_home_max) &
         (df2['XG_Away'] >= selected_hg_away_min) &
         (df2['XG_Away'] <= selected_hg_away_max) &
-        (df2['Media_Gols'] >= selected_selected_Media_Gols_min) &
-        (df2['Media_Gols'] <= selected_selected_Media_Gols_max) &
+        (df2['Media_Gols'] >= selected_Media_Gols_min) &
+        (df2['Media_Gols'] <= selected_Media_Gols_max) &
         (df2['AVG_05HT'] >= selected_AVG_05HT_min) &
         (df2['AVG_05HT'] <= selected_AVG_05HT_max) &
         (df2['AVG_15FT'] >= selected_AVG_15FT_min) &
