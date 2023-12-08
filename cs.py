@@ -54,7 +54,7 @@ def cs_page():
         # Calcular as médias de gols esperados para cada time e o total esperado
         lambda_home = row['XG_Home']
         lambda_away = row['XG_Away']
-        lambda_total = row['Average Goals']
+        lambda_total = row['Media_Gols']
 
         # Calcular as probabilidades usando a distribuição de Poisson
         probabilidades = []
