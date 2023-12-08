@@ -132,16 +132,16 @@ def jogos_do_dia_page():
         (df2['XG_Home'] <= selected_hg_home_max) &
         (df2['XG_Away'] >= selected_hg_away_min) &
         (df2['XG_Away'] <= selected_hg_away_max) &
-        (df2['Media_Gols'] >= selected_average_goals_min) &
-        (df2['Media_Gols'] <= selected_average_goals_max) &
-        (df2['AVG_05HT'] >= selected_average_goals_min) &
-        (df2['AVG_05HT'] <= selected_average_goals_max) &
-        (df2['AVG_15FT'] >= selected_average_goals_min) &
-        (df2['AVG_15FT'] <= selected_average_goals_max) &
-        (df2['AVG_25FT'] >= selected_average_goals_min) &
-        (df2['AVG_25FT'] <= selected_average_goals_max) &
-        (df2['AVG_BTTS_Yes'] >= selected_average_goals_min) &
-        (df2['AVG_BTTS_Yes'] <= selected_average_goals_max) 
+        (df2['Media_Gols'] >= selected_Media_Gols_min) &
+        (df2['Media_Gols'] <= selected_Media_Gols_max) &
+        (df2['AVG_05HT'] >= selected_AVG_05HT_min) &
+        (df2['AVG_05HT'] <= selected_AVG_05HT_max) &
+        (df2['AVG_15FT'] >= selected_AVG_15FT_min) &
+        (df2['AVG_15FT'] <= selected_AVG_15FT_max) &
+        (df2['AVG_25FT'] >= selected_AVG_25FT_min) &
+        (df2['AVG_25FT'] <= selected_AVG_25FT_max) &
+        (df2['AVG_BTTS_Yes'] >= selected_AVG_BTTS_Yes_min) &
+        (df2['AVG_BTTS_Yes'] <= selected_AVG_BTTS_Yes_max) 
     ]
 
     if not filtered_data.empty:
