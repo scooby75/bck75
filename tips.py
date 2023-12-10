@@ -132,7 +132,7 @@ def tips_page():
             layzebraht_df = df[
                 (df["FT_Odd_H"] >= 1.01) & (df["FT_Odd_H"] <= 1.7) &
                 (df["FT_Odd_A"] >= 4) & (df["FT_Odd_A"] <= 7) &
-                (df["PPG_Home"] >= 1.7) &
+                (df["PPG_Home"] >= 2) &
                 (df["Rodada"] >= 10)
             ]
             colunas_desejadas = ["Date", "Hora", "Liga", "Home", "Away"]
