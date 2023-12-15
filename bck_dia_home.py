@@ -15,7 +15,7 @@ def bck_dia_home_page():
         return
 
     ##### PÁGINA BCK DIA ######
-    tab0, tab1 = st.tabs(["Partidas Filtradas", "Back Casa FT"])
+    tab0, tab1 = st.tabs(["Partidas Filtradas", "Back Dia FT"])
 
     with tab0:
         # Carregar os dados
@@ -44,6 +44,10 @@ def bck_dia_home_page():
             
             all_seasons = "Todos"
             selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique()))
+
+            home_teams = bck_home_df['Home'].unique()  # Get unique teams from 'Home' column
+            selected_home = st.multiselect("Selecionar Mandante", home_teams)
+
 
         # Filter for Odd_Home and Odd_Away range
         with col2:
@@ -74,6 +78,7 @@ def bck_dia_home_page():
             (bck_dia_home_df['League'].isin(selected_leagues) | (all_leagues in selected_leagues)) &
             (bck_dia_home_df['Season'].isin(selected_seasons) | (all_seasons in selected_seasons)) &
             ((bck_dia_home_df['Round'].isin(selected_rounds)) if all_rounds not in selected_rounds else True) &
+            ((bck_dia_home_df['Home'].isin(selected_home)) if selected_home else True) &
             (bck_dia_home_df['Rank_Home'] >= min_rank_home) &
             (bck_dia_home_df['Rank_Home'] <= max_rank_home) &
             (bck_dia_home_df['FT_Odd_H'] >= odd_h_min) &
