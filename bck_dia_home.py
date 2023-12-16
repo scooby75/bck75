@@ -154,15 +154,24 @@ def bck_dia_home_page():
     with tab3:
         st.header("Profit")
     
+        # Adicione um novo filtro para escolher entre "Mandante", "Visitante" ou ambos
+        selected_team_option = st.selectbox("Selecionar Equipe(s)", ["Ambos", "Mandante", "Visitante"])
+
         # Verifica se há resultados filtrados na tab0
         if not filtered_df.empty:
-            # Agrupa por 'Season' e 'dia_semana' e calcula a soma para cada coluna de lucro
-            df_agrupado = filtered_df.groupby(['Season', 'dia_semana']).agg({
-                'Home': 'first',  # Supondo que 'Home' seja o mesmo para todas as linhas em uma temporada
-                'Away': 'first',  # Supondo que 'Away' seja o mesmo para todas as linhas em uma temporada
+            # Filtra os resultados com base na opção selecionada
+            if selected_team_option == "Mandante":
+                filtered_df_team = filtered_df[['Date', 'Season', 'Home', 'profit_home', 'profit_draw', 'profit_away']]
+            elif selected_team_option == "Visitante":
+                filtered_df_team = filtered_df[['Date', 'Season', 'profit_home', 'profit_draw', 'profit_away']]
+            else:  # Se a opção for "Ambos" ou qualquer outra coisa, mostra todas as equipes
+                filtered_df_team = filtered_df[['Date', 'Season', 'Home', 'Away', 'profit_home', 'profit_draw', 'profit_away']]
+
+            # Agrupa por 'Season' e 'Equipe' e calcula a soma para cada coluna de lucro
+            df_agrupado = filtered_df_team.groupby(['Season', 'Home', 'Away']).agg({
                 'profit_home': 'sum',
                 'profit_draw': 'sum',
-                'profit_away': 'sum'
+                'profit_away': 'sum',
             }).reset_index()
             
             # Exibe o DataFrame agrupado
