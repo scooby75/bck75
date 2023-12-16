@@ -38,10 +38,10 @@ def bck_dia_home_page():
         with col1:
             all_leagues = "Todos"
             selected_leagues = st.multiselect("Selecionar Liga(s)", [all_leagues] + list(bck_dia_home_df['League'].unique()))
-        
+
             all_rounds = "Todos"
             selected_rounds = st.multiselect("Selecionar Rodada(s)", [all_rounds] + list(bck_dia_home_df['Round'].unique()))
-            
+
             all_seasons = "Todos"
             selected_seasons = st.multiselect("Selecionar Temporada(s)", [all_seasons] + list(bck_dia_home_df['Season'].unique()))
 
@@ -100,7 +100,7 @@ def bck_dia_home_page():
         st.dataframe(filtered_df[selected_columns])
 
     with tab1:
-         st.header("Back Dia FT")
+        st.header("Back Dia FT")
 
         # Verifica se há resultados filtrados na tab0
         if not filtered_df.empty:
