@@ -15,7 +15,7 @@ def bck_dia_home_page():
         return
 
     ##### PÁGINA BCK DIA ######
-    tab0, tab1 = st.tabs(["Partidas Filtradas", "Back Dia FT"])  # Corrigido para "Back Dia FT"
+    tab0, tab1, tab2 = st.tabs(["Partidas Filtradas", "Back Dia FT", "Placar FT"])  # Adicionada a nova tab "Placar FT"
 
     with tab0:
         # Carregar os dados
@@ -130,6 +130,22 @@ def bck_dia_home_page():
 
         # Display the results DataFrame as a table with 2 decimal places
         st.dataframe(results_df.round(2))
+
+    with tab2:
+        st.header("Contagem de Placar FT")
+
+        # Check if there are filtered results
+        if not filtered_df.empty:
+            # Count the occurrences of each Placar_FT value
+            placar_counts = filtered_df['Placar_FT'].value_counts()
+
+            # Create a DataFrame to display the counts
+            placar_counts_df = pd.DataFrame({'Placar_FT': placar_counts.index, 'Quantidade': placar_counts.values})
+
+            # Display the DataFrame
+            st.dataframe(placar_counts_df)
+        else:
+            st.warning("Nenhum resultado filtrado. Aplique os filtros na aba 'Partidas Filtradas.'")
 
 # Execute a função principal
 bck_dia_home_page()
