@@ -96,7 +96,7 @@ def bck_dia_home_page():
 
         # Display selected columns from the filtered data
         selected_columns = ["Date", "League", "Season", "Round", 'Rank_Home', "Home", "Away",
-                            "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "dia_semana", "Placar_HT", "Placar_FT"]
+                            "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "dia_semana", "Placar_HT", "Placar_FT", "profit_home", "profit_draw", "profit_away"]
         st.dataframe(filtered_df[selected_columns])
 
     with tab1:
