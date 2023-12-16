@@ -15,7 +15,7 @@ def bck_dia_home_page():
         return
 
     ##### PÁGINA BCK DIA ######
-    tab0, tab1, tab2 = st.tabs(["Partidas Filtradas", "Back Dia FT", "Placar FT"])  # Adicionada a nova tab "Placar FT"
+    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Back Dia FT", "Placar FT", "Profit"])  # Adicionada a nova tab "Placar FT"
 
     with tab0:
         # Carregar os dados
@@ -132,7 +132,7 @@ def bck_dia_home_page():
         st.dataframe(results_df.round(2))
 
     with tab2:
-        st.header("Contagem de Placar FT")
+        st.header("Frequência Placar FT")
 
         # Check if there are filtered results
         if not filtered_df.empty:
@@ -144,6 +144,22 @@ def bck_dia_home_page():
 
             # Display the DataFrame
             st.dataframe(placar_counts_df)
+        else:
+            st.warning("Nenhum resultado filtrado. Aplique os filtros na aba 'Partidas Filtradas.'")
+
+    with tab3:
+        st.header("Profit")
+
+        # Check if there are filtered results in session_state
+        if hasattr(session_state, 'filtered_df') and not session_state.filtered_df.empty:
+            # Choose between Home and Away
+            team_type = st.radio("Selecione o tipo de equipe:", ['Home', 'Away'])
+
+            # Group by Season and calculate the total financial result for each team
+            team_profit_by_season = session_state.filtered_df.groupby(['Season', team_type])[[f'profit_{team_type.lower()}']].sum().reset_index()
+
+            # Display the result as a DataFrame
+            st.dataframe(team_profit_by_season)
         else:
             st.warning("Nenhum resultado filtrado. Aplique os filtros na aba 'Partidas Filtradas.'")
 
