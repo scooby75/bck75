@@ -101,14 +101,14 @@ def bck_dia_home_page():
 
     with tab1:
         # Define a function to calculate profit for a given day of the week
-        def calculate_profit_by_day(filtered_df, day_of_week):
+        def calculate_profit_by_day(filtered_df, day_of_week, selected_home, selected_away):
             # Filter the DataFrame for the given day of the week
             day_filtered_df = filtered_df[filtered_df['dia_semana'] == day_of_week]
 
             # Filter matches for Casa (H), Empate (D), and Visitante (A) outcomes
-            casa_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'H']
+            casa_matches = day_filtered_df[(day_filtered_df['Resultado_FT'] == 'H') & (day_filtered_df['Home'].isin(selected_home))]
             empate_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'D']
-            visitante_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'A']
+            visitante_matches = day_filtered_df[(day_filtered_df['Resultado_FT'] == 'A') & (day_filtered_df['Away'].isin(selected_away))]
 
             # Ensure the columns 'profit_home', 'profit_draw', and 'profit_away' exist in the DataFrame
             if 'profit_home' in casa_matches.columns and 'profit_draw' in empate_matches.columns and 'profit_away' in visitante_matches.columns:
@@ -129,7 +129,7 @@ def bck_dia_home_page():
 
         # Calculate profits and populate the results DataFrame
         for day in days_of_week:
-            profit_casa, profit_empate, profit_visitante = calculate_profit_by_day(filtered_df, day)
+            profit_casa, profit_empate, profit_visitante = calculate_profit_by_day(filtered_df, day, selected_home, selected_away)
             results_df.loc[day] = [profit_casa, profit_empate, profit_visitante]
 
         # Display the results DataFrame as a table with 2 decimal places
