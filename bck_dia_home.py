@@ -136,7 +136,7 @@ def bck_dia_home_page():
         st.header("Profit")
     
         selected_team_option = st.selectbox("Selecionar Equipe(s)", ["Ambos", "Mandante", "Visitante"])
-    
+        
         if not filtered_df.empty:
             if selected_team_option == "Mandante":
                 # Check if 'Home' column exists before including it
@@ -169,11 +169,17 @@ def bck_dia_home_page():
                 elif 'Away' in filtered_df_team.columns:
                     group_by_columns.append('Away')
     
+                # Aggregate only the existing columns
                 df_agrupado = filtered_df_team.groupby(group_by_columns).agg({
                     'profit_home': 'sum',
                     'profit_draw': 'sum',
-                    'profit_away': 'sum',
-                }).reset_index()
+                })
+    
+                # If 'profit_away' is present, include it in the aggregation
+                if 'profit_away' in filtered_df_team.columns:
+                    df_agrupado['profit_away'] = filtered_df_team['profit_away'].sum()
+    
+                df_agrupado = df_agrupado.reset_index()
                 
                 st.dataframe(df_agrupado)
             else:
