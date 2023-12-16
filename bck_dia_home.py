@@ -149,19 +149,30 @@ def bck_dia_home_page():
 
     with tab3:
         st.header("Profit")
-
+    
         # Check if there are filtered results in session_state
         if hasattr(session_state, 'filtered_df') and not session_state.filtered_df.empty:
-            # Choose between Home and Away
-            team_type = st.radio("Selecione o tipo de equipe:", ['Home', 'Away'])
-
-            # Group by Season and calculate the total financial result for each team
-            team_profit_by_season = session_state.filtered_df.groupby(['Season', team_type])[[f'profit_{team_type.lower()}']].sum().reset_index()
-
+            # Group by Season, Team, and calculate the total financial result for each team
+            team_profit_by_season = session_state.filtered_df.groupby(['Season', 'Home'])[['profit_home']].sum().reset_index()
+            team_profit_by_season.rename(columns={'profit_home': 'Total Profit Home'}, inplace=True)
+    
+            away_team_profit_by_season = session_state.filtered_df.groupby(['Season', 'Away'])[['profit_away']].sum().reset_index()
+            away_team_profit_by_season.rename(columns={'profit_away': 'Total Profit Away'}, inplace=True)
+    
+            # Merge the DataFrames on 'Season' and team name
+            team_profit_by_season = pd.merge(team_profit_by_season, away_team_profit_by_season, how='outer', left_on=['Season', 'Home'], right_on=['Season', 'Away'])
+    
+            # Drop redundant 'Away' column
+            team_profit_by_season.drop(columns=['Away'], inplace=True)
+    
+            # Fill NaN values with 0
+            team_profit_by_season.fillna(0, inplace=True)
+    
             # Display the result as a DataFrame
             st.dataframe(team_profit_by_season)
         else:
             st.warning("Nenhum resultado filtrado. Aplique os filtros na aba 'Partidas Filtradas.'")
+
 
 # Execute a função principal
 bck_dia_home_page()
