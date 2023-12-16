@@ -100,40 +100,21 @@ def bck_dia_home_page():
         st.dataframe(filtered_df[selected_columns])
 
     with tab1:
-        # Define a function to calculate profit for a given day of the week
-        def calculate_profit_by_day(filtered_df, day_of_week, selected_home, selected_away):
-            # Filter the DataFrame for the given day of the week
-            day_filtered_df = filtered_df[filtered_df['dia_semana'] == day_of_week]
+         st.header("Back Dia FT")
 
-            # Filter matches for Casa (H), Empate (D), and Visitante (A) outcomes
-            casa_matches = day_filtered_df[(day_filtered_df['Resultado_FT'] == 'H') & (day_filtered_df['Home'].isin(selected_home))]
-            empate_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'D']
-            visitante_matches = day_filtered_df[(day_filtered_df['Resultado_FT'] == 'A') & (day_filtered_df['Away'].isin(selected_away))]
-
-            # Ensure the columns 'profit_home', 'profit_draw', and 'profit_away' exist in the DataFrame
-            if 'profit_home' in casa_matches.columns and 'profit_draw' in empate_matches.columns and 'profit_away' in visitante_matches.columns:
-                # Calculate profit for each outcome and round to 2 decimal places
-                profit_casa = round(casa_matches['profit_home'].astype(float).sum(), 2)
-                profit_empate = round(empate_matches['profit_draw'].astype(float).sum(), 2)
-                profit_visitante = round(visitante_matches['profit_away'].astype(float).sum(), 2)
-
-                return profit_casa, profit_empate, profit_visitante
-            else:
-                return 0.0, 0.0, 0.0  # Return 0 for each profit if columns are not present
-
-        # Define the list of days of the week
-        days_of_week = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']
-
-        # Create an empty DataFrame to store the results
-        results_df = pd.DataFrame(columns=['Casa', 'Empate', 'Visitante'], index=days_of_week)
-
-        # Calculate profits and populate the results DataFrame
-        for day in days_of_week:
-            profit_casa, profit_empate, profit_visitante = calculate_profit_by_day(filtered_df, day, selected_home, selected_away)
-            results_df.loc[day] = [profit_casa, profit_empate, profit_visitante]
-
-        # Display the results DataFrame as a table with 2 decimal places
-        st.dataframe(results_df.round(2))
+        # Verifica se há resultados filtrados na tab0
+        if not filtered_df.empty:
+            # Agrupa por 'dia_semana' e calcula a soma para cada coluna de lucro
+            df_agrupado = filtered_df.groupby('dia_semana').agg({
+                'profit_home': 'sum',
+                'profit_draw': 'sum',
+                'profit_away': 'sum'
+            }).reset_index()
+            
+            # Exibe o DataFrame agrupado
+            st.dataframe(df_agrupado)
+        else:
+            st.warning("Nenhum resultado filtrado. Aplique os filtros na aba 'Partidas Filtradas.'")
 
     with tab2:
         st.header("Frequência Placar FT")
