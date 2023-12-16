@@ -110,12 +110,16 @@ def bck_dia_home_page():
             empate_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'D']
             visitante_matches = day_filtered_df[day_filtered_df['Resultado_FT'] == 'A']
 
-            # Calculate profit for each outcome and round to 2 decimal places
-            profit_casa = round(casa_matches['profit_home'].astype(float).sum(), 2)
-            profit_empate = round(empate_matches['profit_draw'].astype(float).sum(), 2)
-            profit_visitante = round(visitante_matches['profit_away'].astype(float).sum(), 2)
+            # Ensure the columns 'profit_home', 'profit_draw', and 'profit_away' exist in the DataFrame
+            if 'profit_home' in casa_matches.columns and 'profit_draw' in empate_matches.columns and 'profit_away' in visitante_matches.columns:
+                # Calculate profit for each outcome and round to 2 decimal places
+                profit_casa = round(casa_matches['profit_home'].astype(float).sum(), 2)
+                profit_empate = round(empate_matches['profit_draw'].astype(float).sum(), 2)
+                profit_visitante = round(visitante_matches['profit_away'].astype(float).sum(), 2)
 
-            return profit_casa, profit_empate, profit_visitante
+                return profit_casa, profit_empate, profit_visitante
+            else:
+                return 0.0, 0.0, 0.0  # Return 0 for each profit if columns are not present
 
         # Define the list of days of the week
         days_of_week = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']
