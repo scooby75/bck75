@@ -155,9 +155,9 @@ def bck_dia_home_page():
         st.header("Profit")
     
         # Verifica se há resultados filtrados na tab0
-        if not filtered_df_tab0.empty:
+        if not filtered_df.empty:
             # Agrupa por 'Season' e 'dia_semana' e calcula a soma para cada coluna de lucro
-            df_agrupado = filtered_df_tab0.groupby(['Season', 'dia_semana']).agg({
+            df_agrupado = filtered_df.groupby(['Season', 'dia_semana']).agg({
                 'Home': 'first',  # Supondo que 'Home' seja o mesmo para todas as linhas em uma temporada
                 'Away': 'first',  # Supondo que 'Away' seja o mesmo para todas as linhas em uma temporada
                 'profit_home': 'sum',
