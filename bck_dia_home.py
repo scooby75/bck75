@@ -135,28 +135,49 @@ def bck_dia_home_page():
     with tab3:
         st.header("Profit")
     
-        # Adicione um novo filtro para escolher entre "Mandante", "Visitante" ou ambos
         selected_team_option = st.selectbox("Selecionar Equipe(s)", ["Ambos", "Mandante", "Visitante"])
-
-        # Verifica se há resultados filtrados na tab0
+    
         if not filtered_df.empty:
-            # Filtra os resultados com base na opção selecionada
             if selected_team_option == "Mandante":
-                filtered_df_team = filtered_df[['Date', 'Season', 'Home', 'profit_home', 'profit_draw', 'profit_away']]
+                # Check if 'Home' column exists before including it
+                if 'Home' in filtered_df.columns:
+                    filtered_df_team = filtered_df[['Season', 'Home', 'profit_home', 'profit_draw', 'profit_away']]
+                else:
+                    st.warning("A coluna 'Home' não está presente no DataFrame.")
+                    filtered_df_team = pd.DataFrame()  # Create an empty DataFrame
             elif selected_team_option == "Visitante":
-                filtered_df_team = filtered_df[['Date', 'Season', 'profit_home', 'profit_draw', 'profit_away']]
-            else:  # Se a opção for "Ambos" ou qualquer outra coisa, mostra todas as equipes
-                filtered_df_team = filtered_df[['Date', 'Season', 'Home', 'Away', 'profit_home', 'profit_draw', 'profit_away']]
-
-            # Agrupa por 'Season' e 'Equipe' e calcula a soma para cada coluna de lucro
-            df_agrupado = filtered_df_team.groupby(['Season', 'Home', 'Away']).agg({
-                'profit_home': 'sum',
-                'profit_draw': 'sum',
-                'profit_away': 'sum',
-            }).reset_index()
-            
-            # Exibe o DataFrame agrupado
-            st.dataframe(df_agrupado)
+                # Check if 'Away' column exists before including it
+                if 'Away' in filtered_df.columns:
+                    filtered_df_team = filtered_df[['Season', 'Away', 'profit_home', 'profit_draw', 'profit_away']]
+                else:
+                    st.warning("A coluna 'Away' não está presente no DataFrame.")
+                    filtered_df_team = pd.DataFrame()  # Create an empty DataFrame
+            else:
+                # Include 'Home' and 'Away' columns if they exist
+                relevant_columns = ['Season', 'profit_home', 'profit_draw']
+                if 'Home' in filtered_df.columns:
+                    relevant_columns.append('Home')
+                if 'Away' in filtered_df.columns:
+                    relevant_columns.append('Away')
+                filtered_df_team = filtered_df[relevant_columns]
+    
+            if not filtered_df_team.empty:
+                # Group by 'Season' and 'Team' (either 'Home' or 'Away')
+                group_by_columns = ['Season']
+                if 'Home' in filtered_df_team.columns:
+                    group_by_columns.append('Home')
+                elif 'Away' in filtered_df_team.columns:
+                    group_by_columns.append('Away')
+    
+                df_agrupado = filtered_df_team.groupby(group_by_columns).agg({
+                    'profit_home': 'sum',
+                    'profit_draw': 'sum',
+                    'profit_away': 'sum',
+                }).reset_index()
+                
+                st.dataframe(df_agrupado)
+            else:
+                st.warning("Nenhum resultado filtrado para a opção selecionada.")
         else:
             st.warning("Nenhum resultado filtrado. Aplique os filtros na aba 'Partidas Filtradas.'")
 
