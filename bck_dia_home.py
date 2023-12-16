@@ -15,7 +15,7 @@ def bck_dia_home_page():
         return
 
     ##### PÁGINA BCK DIA ######
-    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Back Dia FT", "Placar FT", "Profit"])  # Adicionada a nova tab "Placar FT"
+    tab0, tab1, tab2, tab3 = st.tabs(["Partidas Filtradas", "Back Dia FT", "Placar FT", "Profit"])  
 
     with tab0:
         # Carregar os dados
@@ -154,10 +154,10 @@ def bck_dia_home_page():
     with tab3:
         st.header("Profit")
     
-        # Verifica se há resultados filtrados em session_state
-        if hasattr(session_state, 'filtered_df') and not session_state.filtered_df.empty:
-            # Agrupa por 'Season' e calcula a soma para cada coluna
-            df_agrupado = session_state.filtered_df.groupby('Season').agg({
+        # Verifica se há resultados filtrados na tab0
+        if not filtered_df_tab0.empty:
+            # Agrupa por 'Season' e 'dia_semana' e calcula a soma para cada coluna de lucro
+            df_agrupado = filtered_df_tab0.groupby(['Season', 'dia_semana']).agg({
                 'Home': 'first',  # Supondo que 'Home' seja o mesmo para todas as linhas em uma temporada
                 'Away': 'first',  # Supondo que 'Away' seja o mesmo para todas as linhas em uma temporada
                 'profit_home': 'sum',
