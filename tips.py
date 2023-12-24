@@ -412,7 +412,7 @@ def tips_page():
                 st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
             
             # Adicione um gráfico de linha usando Plotly
-            fig = px.line(df, x='Date', y='Profit', title='Profit Over Time', labels={'Profit': 'Profit (Currency)'})
+            fig = px.line(df, x='Date', y='profit_acumulado', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
             st.plotly_chart(fig)
 
 
