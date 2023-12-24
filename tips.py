@@ -366,29 +366,33 @@ def tips_page():
  
 
             # Baixe o arquivo CSV do GitHub usando a URL fornecida
+            import requests
+            import pandas as pd
+            from io import StringIO
+            import streamlit as st
+            import plotly.express as px
+            
+            # Baixe o arquivo CSV do GitHub usando a URL fornecida
             url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/tips_ha_geral.csv"
             response = requests.get(url)
             csv_data = StringIO(response.text)
-
+            
             # Carregue os dados do CSV em um DataFrame do Pandas
             df = pd.read_csv(csv_data)
-
+            
             # Conversão da coluna "Profit" para um tipo numérico (float)
-            df['Profit'] = df['Profit'].str.replace(',', '.').astype(float)
+            df['Profit'] = pd.to_numeric(df['Profit'].str.replace(',', '.'), errors='coerce')
             
             # Cálculo do Winrate com 2 casas decimais e formato de porcentagem
             winrate = (df['Winrate'] * 100).mean()  # Média dos Winrates em formato de porcentagem
             winrate_formatted = "{:.2f}%".format(winrate)
-            
-            # Conversão da coluna "Profit" para um tipo numérico (float)
-            df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
             
             # Cálculo do Lucro/Prejuízo
             profit = round(df['Profit'].sum(), 2)
             
             # Cálculo da Odd Justa com 2 casas decimais
             odd_justa = round(100 / winrate, 2)
-
+            
             # Adicione a nova coluna "Partidas" com a quantidade total de jogos
             df['Eventos'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
             
@@ -409,10 +413,15 @@ def tips_page():
             with col3:
                 st.markdown('<div style="text-align: center;"> Odd Justa </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{:.2f}</div>'.format(odd_justa), unsafe_allow_html=True)
-
+            
             with col4:
                 st.markdown('<div style="text-align: center;"> Partidas </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
+            
+            # Adicione um gráfico de linha usando Plotly
+            fig = px.line(df, x='Date', y='Profit', title='Profit Over Time', labels={'Profit': 'Profit (Currency)'})
+            st.plotly_chart(fig)
+
 
 
 ############### Lay 0 x 2 ##########################
