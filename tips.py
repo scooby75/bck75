@@ -416,27 +416,21 @@ def tips_page():
             
             # Adicione um gráfico de linha usando Plotly
 
-            # Converta a coluna 'Date' para o formato datetime
+            # Convert the 'Date' column to datetime format
             df['Date'] = pd.to_datetime(df['Date'], format='%d.%m.%Y')
-            
-            # Some a coluna 'Profit' e agrupe por dia ('Date')
-            cumulative_profit = df.groupby('Date')['Profit'].sum().cumsum().reset_index()
-            
-            # Exiba um gráfico de linha usando o Plotly
-            fig = px.line(cumulative_profit, x='Date', y='Profit', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
-            
-            # Personalize os rótulos do eixo Y para mostrar as datas
-            fig.update_layout(
-                yaxis=dict(
-                    tickmode='array',
-                    tickvals=cumulative_profit['Date'].tolist(),
-                    ticktext=cumulative_profit['Date'].dt.strftime('%d.%m').tolist()
-                )
-            )
-            
+
+            # Filter the DataFrame to include data from 16.09.2023 onwards
+            start_date = '2023-09-16'
+            df_filtered = df[df['Date'] >= start_date]
+
+            # Sum the 'Profit' column and group by day ('Date')
+            cumulative_profit = df.groupby('Date')['Profit_HA'].sum().cumsum().reset_index()
+
+            # Display a line chart using Plotly
+            fig = px.line(cumulative_profit, x='Date', y='Profit_HA', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
             fig.update_traces(mode='lines+markers')
             st.plotly_chart(fig)
-                        
+            
 
 ############### Lay 0 x 2 ##########################
 
@@ -489,6 +483,23 @@ def tips_page():
                 st.markdown('<div style="text-align: center;"> Partidas </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
 
+            # Adicione um gráfico de linha usando Plotly
+
+            # Convert the 'Date' column to datetime format
+            df['Date'] = pd.to_datetime(df['Date'], format='%d.%m.%Y')
+
+            # Filter the DataFrame to include data from 16.09.2023 onwards
+            start_date = '2023-09-16'
+            df_filtered = df[df['Date'] >= start_date]
+
+            # Sum the 'Profit' column and group by day ('Date')
+            cumulative_profit = df.groupby('Date')['Profit_FT_02'].sum().cumsum().reset_index()
+
+            # Display a line chart using Plotly
+            fig = px.line(cumulative_profit, x='Date', y='Profit_FT_02', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
+            fig.update_traces(mode='lines+markers')
+            st.plotly_chart(fig)
+
 
 ############### Lay Goleada Visitante ##########################
 
@@ -540,6 +551,23 @@ def tips_page():
             with col10:
                 st.markdown('<div style="text-align: center;"> Partidas </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
+            
+            # Adicione um gráfico de linha usando Plotly
+
+            # Convert the 'Date' column to datetime format
+            df['Date'] = pd.to_datetime(df['Date'], format='%d.%m.%Y')
+
+            # Filter the DataFrame to include data from 16.09.2023 onwards
+            start_date = '2023-09-16'
+            df_filtered = df[df['Date'] >= start_date]
+
+            # Sum the 'Profit' column and group by day ('Date')
+            cumulative_profit = df.groupby('Date')['Profit_Goleada'].sum().cumsum().reset_index()
+
+            # Display a line chart using Plotly
+            fig = px.line(cumulative_profit, x='Date', y='Profit_Goleada', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
+            fig.update_traces(mode='lines+markers')
+            st.plotly_chart(fig)
 
 ############### Lay Visitante HT ##########################
 
@@ -592,6 +620,23 @@ def tips_page():
                 st.markdown('<div style="text-align: center;"> Partidas </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
 
+                        # Adicione um gráfico de linha usando Plotly
+
+            # Convert the 'Date' column to datetime format
+            df['Date'] = pd.to_datetime(df['Date'], format='%d.%m.%Y')
+
+            # Filter the DataFrame to include data from 16.09.2023 onwards
+            start_date = '2023-09-16'
+            df_filtered = df[df['Date'] >= start_date]
+
+            # Sum the 'Profit' column and group by day ('Date')
+            cumulative_profit = df.groupby('Date')['Profit_Visitante_HT'].sum().cumsum().reset_index()
+
+            # Display a line chart using Plotly
+            fig = px.line(cumulative_profit, x='Date', y='Profit_Visitante_HT', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
+            fig.update_traces(mode='lines+markers')
+            st.plotly_chart(fig)
+
 
 ############### BTTS ##########################
 
@@ -643,6 +688,23 @@ def tips_page():
             with col19:
                 st.markdown('<div style="text-align: center;"> Partidas </div>', unsafe_allow_html=True)
                 st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
+
+            # Adicione um gráfico de linha usando Plotly
+
+            # Convert the 'Date' column to datetime format
+            df['Date'] = pd.to_datetime(df['Date'], format='%d.%m.%Y')
+
+            # Filter the DataFrame to include data from 16.09.2023 onwards
+            start_date = '2023-09-16'
+            df_filtered = df[df['Date'] >= start_date]
+
+            # Sum the 'Profit' column and group by day ('Date')
+            cumulative_profit = df.groupby('Date')['Profit_Btts'].sum().cumsum().reset_index()
+
+            # Display a line chart using Plotly
+            fig = px.line(cumulative_profit, x='Date', y='Profit_Btts', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
+            fig.update_traces(mode='lines+markers')
+            st.plotly_chart(fig)
 
 
 # Chama a função tips_page() no início do código para criar a página
