@@ -415,12 +415,15 @@ def tips_page():
                 st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
             
             # Adicione um gráfico de linha usando Plotly
-            
-            fig = px.line(df, x='Date', y='profit_acumulado', title='Lucro Acumulado ao Longo do Tempo', labels={'L/P': 'L/P (Und)'})
+
+            # Sum the 'profit_acumulado' column and group by day ('Date')
+            daily_profit = df.groupby('Date')['profit_acumulado'].sum().reset_index()
+
+            # Display a line chart using Plotly
+            fig = px.line(daily_profit, x='Date', y='profit_acumulado', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
             fig.update_traces(mode='lines+markers')
-            st.plotly_chart(fig)
-
-
+            st.plotly_chart(fig)            
+            
 
 ############### Lay 0 x 2 ##########################
 
