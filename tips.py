@@ -416,6 +416,13 @@ def tips_page():
             
             # Adicione um gráfico de linha usando Plotly
 
+            # Convert the 'Date' column to datetime format
+            df['Date'] = pd.to_datetime(df['Date'], format='%d.%m.%Y')
+
+            # Filter the DataFrame to include data from 16.09.2023 onwards
+            start_date = '2023-09-16'
+            df_filtered = df[df['Date'] >= start_date]
+
             # Sum the 'Profit' column and group by day ('Date')
             cumulative_profit = df.groupby('Date')['Profit'].sum().cumsum().reset_index()
 
