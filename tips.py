@@ -420,7 +420,7 @@ def tips_page():
             daily_profit = df.groupby('Date')['Profit'].sum().reset_index()
 
             # Display a line chart using Plotly
-            fig = px.line(daily_profit, x='Date', y='L/P', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
+            fig = px.line(daily_profit, x='Date', y='Profit', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
             fig.update_traces(mode='lines+markers')
             st.plotly_chart(fig)            
             
