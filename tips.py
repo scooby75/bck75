@@ -7,7 +7,7 @@ import datetime as dt
 import requests
 import csv
 import io
-import streamlit as st
+import plotly.express as px
 
 
 
@@ -364,15 +364,7 @@ def tips_page():
 
              
         with tab0:
- 
-
-            # Baixe o arquivo CSV do GitHub usando a URL fornecida
-            import requests
-            import pandas as pd
-            from io import StringIO
-            import streamlit as st
-            import plotly.express as px
-            
+                 
             # Baixe o arquivo CSV do GitHub usando a URL fornecida
             url = "https://raw.githubusercontent.com/scooby75/bdfootball/main/tips_ha_geral.csv"
             response = requests.get(url)
