@@ -388,6 +388,9 @@ def tips_page():
             
             # Adicione a nova coluna "Partidas" com a quantidade total de jogos
             df['Eventos'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
+
+            # Formatação da coluna "profit_acumulado" para substituir vírgulas por pontos
+            df['profit_acumulado'] = df['profit_acumulado'].str.replace(',', '.').astype(float)
             
             # Exiba os resultados no Streamlit em três colunas separadas com centralização
             st.subheader("HA -0,25")
@@ -412,7 +415,9 @@ def tips_page():
                 st.markdown('<div style="text-align: center;">{}</div>'.format(len(df)), unsafe_allow_html=True)
             
             # Adicione um gráfico de linha usando Plotly
-            fig = px.line(df, x='Date', y='profit_acumulado', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
+            
+            fig = px.line(df, x='Date', y='profit_acumulado', title='Lucro Acumulado ao Longo do Tempo', labels={'L/P': 'L/P (Und)'})
+            fig.update_traces(mode='lines+markers')
             st.plotly_chart(fig)
 
 
