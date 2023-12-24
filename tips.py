@@ -387,10 +387,7 @@ def tips_page():
             odd_justa = round(100 / winrate, 2)
             
             # Adicione a nova coluna "Partidas" com a quantidade total de jogos
-            df['Eventos'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos
-
-            # Formatação da coluna "profit_acumulado" para substituir vírgulas por pontos
-            df['profit_acumulado'] = df['profit_acumulado'].str.replace(',', '.').astype(float)
+            df['Eventos'] = len(df)  # O comprimento do DataFrame é a quantidade total de jogos           
             
             # Exiba os resultados no Streamlit em três colunas separadas com centralização
             st.subheader("HA -0,25")
