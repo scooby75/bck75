@@ -516,7 +516,7 @@ def tips_page():
             winrate_formatted = "{:.2f}%".format(winrate)
             
             # Conversão da coluna "Profit" para um tipo numérico (float)
-            df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
+            df['Profit_Goleada'] = pd.to_numeric(df['Profit_Goleada'], errors='coerce')
             
             # Cálculo do Lucro/Prejuízo
             profit = round(df['Profit_Goleada'].sum(), 2)
@@ -584,7 +584,7 @@ def tips_page():
             winrate_formatted = "{:.2f}%".format(winrate)
             
             # Conversão da coluna "Profit" para um tipo numérico (float)
-            df['Profit'] = pd.to_numeric(df['Profit'], errors='coerce')
+            df['Profit_Visitante_HT'] = pd.to_numeric(df['Profit_Visitante_HT'], errors='coerce')
             
             # Cálculo do Lucro/Prejuízo
             profit = round(df['Profit_Visitante_HT'].sum(), 2)
