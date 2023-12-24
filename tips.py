@@ -416,21 +416,27 @@ def tips_page():
             
             # Adicione um gráfico de linha usando Plotly
 
-            # Convert the 'Date' column to datetime format
+            # Converta a coluna 'Date' para o formato datetime
             df['Date'] = pd.to_datetime(df['Date'], format='%d.%m.%Y')
-
-            # Filter the DataFrame to include data from 16.09.2023 onwards
-            start_date = '2023-09-16'
-            df_filtered = df[df['Date'] >= start_date]
-
-            # Sum the 'Profit' column and group by day ('Date')
+            
+            # Some a coluna 'Profit' e agrupe por dia ('Date')
             cumulative_profit = df.groupby('Date')['Profit'].sum().cumsum().reset_index()
-
-            # Display a line chart using Plotly
+            
+            # Exiba um gráfico de linha usando o Plotly
             fig = px.line(cumulative_profit, x='Date', y='Profit', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
+            
+            # Personalize os rótulos do eixo Y para mostrar as datas
+            fig.update_layout(
+                yaxis=dict(
+                    tickmode='array',
+                    tickvals=cumulative_profit['Date'].tolist(),
+                    ticktext=cumulative_profit['Date'].dt.strftime('%d.%m').tolist()
+                )
+            )
+            
             fig.update_traces(mode='lines+markers')
             st.plotly_chart(fig)
-            
+                        
 
 ############### Lay 0 x 2 ##########################
 
