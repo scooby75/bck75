@@ -427,7 +427,7 @@ def tips_page():
             cumulative_profit = df.groupby('Date')['Profit_HA'].sum().cumsum().reset_index()
 
             # Display a line chart using Plotly
-            fig = px.line(cumulative_profit, x='Date', y='Profit_HA', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
+            fig = px.line(cumulative_profit, x='Date', y='Profit_HA', title='Lucro Acumulado HA -0,25', labels={'L/P': 'L/P (Und)'})
             fig.update_traces(mode='lines+markers')
             st.plotly_chart(fig)
             
@@ -496,7 +496,7 @@ def tips_page():
             cumulative_profit = df.groupby('Date')['Profit_FT_02'].sum().cumsum().reset_index()
 
             # Display a line chart using Plotly
-            fig = px.line(cumulative_profit, x='Date', y='Profit_FT_02', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
+            fig = px.line(cumulative_profit, x='Date', y='Profit_FT_02', title='Lucro Acumulado Lay 0x2', labels={'L/P': 'L/P (Und)'})
             fig.update_traces(mode='lines+markers')
             st.plotly_chart(fig)
 
@@ -565,7 +565,7 @@ def tips_page():
             cumulative_profit = df.groupby('Date')['Profit_Goleada'].sum().cumsum().reset_index()
 
             # Display a line chart using Plotly
-            fig = px.line(cumulative_profit, x='Date', y='Profit_Goleada', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
+            fig = px.line(cumulative_profit, x='Date', y='Profit_Goleada', title='Lucro Acumulado Lay Goleada Visitante', labels={'L/P': 'L/P (Und)'})
             fig.update_traces(mode='lines+markers')
             st.plotly_chart(fig)
 
@@ -633,7 +633,7 @@ def tips_page():
             cumulative_profit = df.groupby('Date')['Profit_Visitante_HT'].sum().cumsum().reset_index()
 
             # Display a line chart using Plotly
-            fig = px.line(cumulative_profit, x='Date', y='Profit_Visitante_HT', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
+            fig = px.line(cumulative_profit, x='Date', y='Profit_Visitante_HT', title='Lucro Acumulado Away HT', labels={'L/P': 'L/P (Und)'})
             fig.update_traces(mode='lines+markers')
             st.plotly_chart(fig)
 
@@ -702,7 +702,7 @@ def tips_page():
             cumulative_profit = df.groupby('Date')['Profit_Btts'].sum().cumsum().reset_index()
 
             # Display a line chart using Plotly
-            fig = px.line(cumulative_profit, x='Date', y='Profit_Btts', title='Lucro Acumulado', labels={'L/P': 'L/P (Und)'})
+            fig = px.line(cumulative_profit, x='Date', y='Profit_Btts', title='Lucro Acumulado BTTS Sim', labels={'L/P': 'L/P (Und)'})
             fig.update_traces(mode='lines+markers')
             st.plotly_chart(fig)
 
