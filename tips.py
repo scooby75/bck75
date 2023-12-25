@@ -284,7 +284,7 @@ def tips_page():
             except Exception as e:
                 st.error("Ocorreu um erro: " + str(e))
         
-                with tab8:
+        with tab8:
         
 
             # Definir URLs para os arquivos CSV
