@@ -248,44 +248,30 @@ def tips_page():
             )
     
         with tab7:
-            # Definir URLs para os arquivos CSV
+            # Definir URLs para os arquivos CSV            
             url_jogosdodia = 'https://github.com/scooby75/bdfootball/blob/main/Jogos_do_Dia_FS.csv?raw=true'
-            url_momento_gol_home = 'https://github.com/scooby75/bdfootball/blob/main/scalping_home.csv?raw=true'
-            url_momento_gol_away = 'https://github.com/scooby75/bdfootball/blob/main/scalping_away.csv?raw=true'
-
+        
+            # Carregar dados CSV
+            jogosdodia = pd.read_csv(url_jogosdodia)
+        
+            # Filtrar jogos com critérios específicos
+            filtered_games = jogosdodia[
+                (jogosdodia['FT_Odd_H'] >= 1.80) & (jogosdodia['FT_Odd_A'] >= 1.80) & (jogosdodia['AVG_25FT'] <= 50)
+            ]
+        
             try:
-                # Carregar dados CSV
-                jogosdodia = pd.read_csv(url_jogosdodia)
-                momento_gol_home = pd.read_csv(url_momento_gol_home)
-                momento_gol_away = pd.read_csv(url_momento_gol_away)
-
-                # Lógica de mesclagem e filtragem de dados
-                jogos_filtrados_home = jogosdodia.merge(momento_gol_home, left_on='Home', right_on='Equipe')
-                jogos_filtrados_away = jogosdodia.merge(momento_gol_away, left_on='Away', right_on='Equipe')
-                jogos_filtrados = jogos_filtrados_home.merge(jogos_filtrados_away, on=['Date', 'Home', 'Away'], suffixes=('_home', '_away'))
-                
-                # Filtrar jogos com critérios específicos
-                filtered_games = jogos_filtrados[
-                    (jogos_filtrados['0_15_mar_home'] == 0) & (jogos_filtrados['0_15_sofri_home'] == 0) &
-                    (jogos_filtrados['0_15_mar_away'] == 0) & (jogos_filtrados['0_15_sofri_away'] == 0) &
-                    (jogos_filtrados['FT_Odd_H_home'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25_home'] >= 2.02) &
-                    (jogos_filtrados['FT_Odd_H_away'] >= 1.70) & (jogos_filtrados['FT_Odd_Over25_away'] >= 2.02)
-                ]
-
                 # Selecionar colunas relevantes e renomear
-                result_df = filtered_games[['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home',
-                                            'FT_Odd_H_away', 'FT_Odd_A_away', 'FT_Odd_Over25_away']]
-                result_df.columns = ['Home', 'Away', 'FT_Odd_H_home', 'FT_Odd_A_home', 'FT_Odd_Over25_home',
-                                     'FT_Odd_H_away', 'FT_Odd_A_away', 'FT_Odd_Over25_away']
-
+                result_df = filtered_games[['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25', 'AVG_25FT']]
+                result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Over25', 'AVG_25FT']
+        
                 # Streamlit App
-                st.subheader("Lay Over 25FT")
-                st.text("Apostar em Lay Over 25FT e fechar posição com 3% ou 5min de exposição.")
+                st.subheader("Scalping Gols")
+                st.text("Realizar scalping pós gol e fechar posição com 3% ou 5min de exposição.")
                 st.dataframe(result_df, width=800)
-
+        
                 # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
                 data_atual = datetime.now().strftime("%d-%m-%Y")
-
+        
                 # Criar um link para download do CSV
                 csv_link_scalping = result_df.to_csv(index=False, encoding='utf-8-sig')
                 st.download_button(
@@ -294,11 +280,11 @@ def tips_page():
                     file_name=f"scalping_{data_atual}.csv",
                     key="scalping_csv"
                 )
-
+        
             except Exception as e:
                 st.error("Ocorreu um erro: " + str(e))
-
-        with tab8:
+        
+                with tab8:
         
 
             # Definir URLs para os arquivos CSV
