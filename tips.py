@@ -261,12 +261,12 @@ def tips_page():
         
             try:
                 # Selecionar colunas relevantes e renomear
-                result_df = filtered_games[['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Under05', 'FT_Odd_Under45', 'AVG_25FT']]
-                result_df.columns = ['Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Under05', 'FT_Odd_Under45', 'AVG_25FT']
+                result_df = filtered_games[['Date', 'Hora', 'Pais', 'Liga', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Under05', 'FT_Odd_Under45', 'AVG_25FT']]
+                result_df.columns = ['Date', 'Hora', 'Pais', 'Liga', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Under05', 'FT_Odd_Under45', 'AVG_25FT']
         
                 # Streamlit App
                 st.subheader("Scalping Gols")
-                st.text("Realizar scalping pós gol e fechar posição com 3% ou 5min de exposição.")
+                #st.text("Realizar scalping pós gol e fechar posição com 3% ou 5min de exposição.")
                 st.dataframe(result_df, width=800)
         
                 # Obter a data atual no formato desejado (por exemplo, "DD-MM-YYYY")
@@ -277,7 +277,7 @@ def tips_page():
                 st.download_button(
                     label="Baixar CSV",
                     data=csv_link_scalping,
-                    file_name=f"scalping_{data_atual}.csv",
+                    file_name=f"scalping_gols_{data_atual}.csv",
                     key="scalping_csv"
                 )
         
