@@ -208,25 +208,30 @@ def tips_page():
                     
             # Lista de ligas para apostar
             ligas_para_apostar = [
-                "1 Lyga",
-                "3. Liga",
+                "3. Liga MSFL",
+                "K League 1",
+                "Super Liga",
                 "3. Liga CFL",
-                "Eerste Divisie",
-                "Eliteserien",
-                "National League",
-                "Oberliga Rheinland Pfalz Saar",
-                "Pro League",
-                "Regionalliga Ost",
                 "Regionalliga West",
+                "3 Liga Group 3",
+                "Damallsvenskan",
+                "National Division",
+                "3 Liga Group 1",
+                "Division 2 Vastra Gotaland",
+                "1 Lyga",
+                "Regionalliga Ost",
+                "Division 2 Sodra Gotaland",
                 "Southern League Premier Central",
-                "Southern League Premier South"
+                "Southern League Premier South",
+                "Eerste Divisie"
+
             ]
         
             btts_yes_df = df[
                 (df["FT_Odd_Over25"] <= 1.7) & 
                 (df["FT_Odd_BTTS_Yes"] <= 1.7) &
-                (df["XG_Home"] >= 1.2) & 
-                (df["XG_Away"] >= 1.2) &
+                (df["XG_Home"] >= 1.5) & 
+                (df["XG_Away"] >= 1.5) &
                 (df["Rodada"] >= 10) &
                 (df["Liga"].isin(ligas_para_apostar))  # Adiciona a condição para apostar nas ligas desejadas
             ]
