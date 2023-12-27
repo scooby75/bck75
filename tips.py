@@ -266,8 +266,8 @@ def tips_page():
         
             try:
                 # Selecionar colunas relevantes e renomear
-                result_df = filtered_games[['Date', 'Hora', 'Pais', 'Liga', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Under05', 'FT_Odd_Over45', 'AVG_25FT']]
-                result_df.columns = ['Date', 'Hora', 'Pais', 'Liga', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Under05', 'FT_Odd_Over45', 'AVG_25FT']
+                result_df = filtered_games[['Date', 'Hora', 'Pais', 'Liga', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Under05', 'FT_Odd_Over25', 'AVG_25FT']]
+                result_df.columns = ['Date', 'Hora', 'Pais', 'Liga', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_Under05', 'FT_Odd_Over25', 'AVG_25FT']
         
                 # Streamlit App
                 st.subheader("Scalping Gols")
