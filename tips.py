@@ -261,7 +261,7 @@ def tips_page():
         
             # Filtrar jogos com critérios específicos
             filtered_games = jogosdodia[
-                (jogosdodia['FT_Odd_H'] >= 1.80) & (jogosdodia['FT_Odd_A'] >= 1.80) & (jogosdodia['AVG_25FT'] <= 50)
+                (jogosdodia['FT_Odd_H'] >= 1.80) & (jogosdodia['FT_Odd_A'] >= 1.80) & (jogosdodia['FT_Odd_Over25'] >= 2.30)  & (jogosdodia['AVG_25FT'] <= 50)
             ]
         
             try:
