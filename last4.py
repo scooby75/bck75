@@ -35,7 +35,7 @@ def last4_page():
         top_equipes = df[(df['Vitórias'] + df['Empates']) >= 6]
 
         # Filtrar as equipes com pelo menos 4 derrotas para o "Piores Equipes"
-        piores_equipes = df[(df['Derrotas'] + df['Empates']) >= 5]
+        piores_equipes = df[(df['Derrotas'] + df['Empates']) >= 7]
         
         # Filtrar as equipes com 4 vitórias para o "Top Equipes"
         #top_equipes = df[df['Vitórias'] == 4]
@@ -87,11 +87,11 @@ def last4_page():
         # Encontra os nomes que coincidem entre as duas colunas
         nomes_coincidentes = merged_df[merged_df["W"].isin([0, 4])]
 
-        # Filtra os resultados com W == 4 (Melhores Equipes)
-        melhores_equipes = nomes_coincidentes[nomes_coincidentes["W"] == 4].head(800)
+        # Filtra os resultados com W + D >= 6 (Melhores Equipes)
+        melhores_equipes = nomes_coincidentes[(nomes_coincidentes["W"] + nomes_coincidentes["D"]) >= 6].head(800)
 
-        # Filtra os resultados com W == 0 (Piores Equipes)
-        piores_equipes = nomes_coincidentes[nomes_coincidentes["W"] == 0].head(800)
+        # Filtra os resultados com L + D >= 7 (Piores Equipes)
+        piores_equipes = nomes_coincidentes[(nomes_coincidentes["L"] + nomes_coincidentes["D"]) >= 7].head(800)
 
         # Função para destacar o time em vermelho
         def highlight_red(s):
