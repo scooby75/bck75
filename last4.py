@@ -35,7 +35,7 @@ def last4_page():
         top_equipes = df[(df['Vitórias'] + df['Empates']) >= 6]
 
         # Filtrar as equipes com pelo menos 4 derrotas para o "Piores Equipes"
-        piores_equipes = df[(df['Derrotas'] + df['Empates']) <= 3]
+        piores_equipes = df[(df['Derrotas'] + df['Empates']) >= 5]
         
         # Filtrar as equipes com 4 vitórias para o "Top Equipes"
         #top_equipes = df[df['Vitórias'] == 4]
