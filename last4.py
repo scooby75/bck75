@@ -78,6 +78,9 @@ def last4_page():
         # Filtro para selecionar apenas as linhas em que a coluna "Rodada" seja >= 8
         partidas_df = partidas_df[partidas_df["Rodada"] >= 8]
 
+        # Filtro para selecionar apenas as linhas em que a coluna "FT_Odd_H" seja <= 1.90
+        partidas_df = partidas_df[partidas_df["FT_Odd_H"] <= 1.90]
+
         # Merge dos DataFrames com base na coluna "Home"
         merged_df = pd.merge(partidas_df, equipe_df, left_on="Home", right_on="Equipe", suffixes=("_partida", "_equipe"))
 
