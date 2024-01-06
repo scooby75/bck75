@@ -32,10 +32,10 @@ def last4_page():
         df.rename(columns={'W': 'Vitórias', 'D': 'Empates', 'L': 'Derrotas', 'GF': 'Gols_Feitos', 'GA': 'Gols_Tomados', 'GD': 'Saldo_Gols'}, inplace=True)
 
         # Filtrar as equipes com pelo menos 4 vitórias para o "Top Equipes"
-        top_equipes = df[(df['Vitórias'] + df['Empates']) >= 4]
+        top_equipes = df[(df['Vitórias'] + df['Empates']) >= 6]
 
         # Filtrar as equipes com pelo menos 4 derrotas para o "Piores Equipes"
-        piores_equipes = df[(df['Derrotas'] + df['Empates']) <= 2]
+        piores_equipes = df[(df['Derrotas'] + df['Empates']) <= 3]
         
         # Filtrar as equipes com 4 vitórias para o "Top Equipes"
         #top_equipes = df[df['Vitórias'] == 4]
