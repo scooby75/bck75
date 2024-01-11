@@ -43,7 +43,7 @@ def bck_home_page():
         st.header("Filtros")
 
         # Organize filters into columns
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
 
         # Filter by League, Season, Round, Home
         with col1:
