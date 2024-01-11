@@ -43,7 +43,7 @@ def bck_home_page():
         st.header("Filtros")
 
         # Organize filters into columns
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3 = st.columns(3)
 
         # Filter by League, Season, Round, Home
         with col1:
@@ -86,29 +86,29 @@ def bck_home_page():
             btts_yes_min = st.number_input("BTTS_Yes Mínimo", value=0.0)
             btts_yes_max = st.number_input("BTTS_Yes Máximo", value=10.0)
 
-        # Filter for placar HT 
-        with col4:
-            filtered_df = filtered_df[
-                (filtered_df['Placar_HT'].isin(selected_placar_ht) if selected_placar_ht and all_placar_ht not in selected_placar_ht else True)
-            ]
-
-
         # Remover espaços em branco dos nomes das colunas
         bck_home_df.columns = bck_home_df.columns.str.strip()
 
         # Apply filters
-        filtered_df = bck_home_df[
+        filtered_df = bck_home_df[     
             (bck_home_df['League'].isin(selected_leagues) | (all_leagues in selected_leagues)) &
             (bck_home_df['Season'].isin(selected_seasons) | (all_seasons in selected_seasons)) &
-            ((bck_home_df['Round'].isin(selected_rounds)) | (all_rounds in selected_rounds)) &
+            ((bck_home_df['Round'].isin(selected_rounds)) if all_rounds not in selected_rounds else True) &
             ((bck_home_df['Home'].isin(selected_home)) if selected_home else True) &
-            (bck_home_df['Rank_Home'].between(min_rank_home, max_rank_home)) & 
-            (bck_home_df['FT_Odd_H'].between(odd_h_min, odd_h_max)) &
-            (bck_home_df['FT_Odd_A'].between(odd_a_min, odd_a_max)) &
-            (bck_home_df['FT_Odd_D'].between(odd_draw_min, odd_draw_max)) &
-            (bck_home_df['HT_Odd_Over05'].between(over_05ht_min, over_05ht_max)) &
-            (bck_home_df['FT_Odd_Over25'].between(over_25ft_min, over_25ft_max)) &
-            (bck_home_df['Odd_BTTS_Yes'].between(btts_yes_min, btts_yes_max))
+            (bck_home_df['Rank_Home'] >= min_rank_home) & 
+            (bck_home_df['Rank_Home'] <= max_rank_home) & 
+            (bck_home_df['FT_Odd_H'] >= odd_h_min) &
+            (bck_home_df['FT_Odd_H'] <= odd_h_max) &
+            (bck_home_df['FT_Odd_A'] >= odd_a_min) &
+            (bck_home_df['FT_Odd_A'] <= odd_a_max) &
+            (bck_home_df['FT_Odd_D'] >= odd_draw_min) &
+            (bck_home_df['FT_Odd_D'] <= odd_draw_max) &
+            (bck_home_df['HT_Odd_Over05'] >= over_05ht_min) &
+            (bck_home_df['HT_Odd_Over05'] <= over_05ht_max) &
+            (bck_home_df['FT_Odd_Over25'] >= over_25ft_min) &
+            (bck_home_df['FT_Odd_Over25'] <= over_25ft_max) &
+            (bck_home_df['Odd_BTTS_Yes'] >= btts_yes_min) &
+            (bck_home_df['Odd_BTTS_Yes'] <= btts_yes_max)
         ]
 
         # Display selected columns from the filtered data
