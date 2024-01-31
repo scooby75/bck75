@@ -2314,7 +2314,7 @@ def bck_home_page():
         def display_league_stats(metric_column, metric_name):
             league_total_profit = filtered_df.groupby('League')[metric_column].sum().reset_index()
             league_total_profit = league_total_profit.rename(columns={metric_column: f'Total_{metric_name}_by_league'})
-            league_total_profit = league_total_profit[league_total_profit[f'Total_{metric_name}_by_league'] <= 1]
+            league_total_profit = league_total_profit[league_total_profit[f'Total_{metric_name}_by_league'] <= -1]
             league_total_profit = league_total_profit.sort_values(by=f'Total_{metric_name}_by_league', ascending=False)
             top_20_leagues = league_total_profit.head(20)
             st.subheader(metric_name)
