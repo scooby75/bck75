@@ -24,7 +24,7 @@ def bck_home_page():
         #st.write("Acesso concedido!")  # Debug
          
     ##### PÁGINA BCK HOME ######
-    tab0, tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top Equipes", "Top Ligas"])
+    tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top Equipes", "Top Ligas", "Piores Ligas"])
 
     with tab0:
         # Carregar os dados
@@ -2281,6 +2281,47 @@ def bck_home_page():
 
         st.subheader("Top 20 Ligas")
         st.text("Serão exibidas apenas as Ligas que acumulam pelo menos 3und de lucro")
+       
+        # Display statistics for different metrics
+        display_league_stats('profit_home', 'Back Casa')
+        display_league_stats('profit_lay_away', 'Lay Zebra Visitante')
+        display_league_stats('profit_draw', 'Back Empate')
+        display_league_stats('profit_over05HT', 'Over 05HT')
+        display_league_stats('profit_under05HT', 'Under 05HT')
+        display_league_stats('profit_over05', 'Over 05FT')
+        display_league_stats('profit_under05', 'Under 05FT')
+        display_league_stats('profit_over15', 'Over 15FT')
+        display_league_stats('profit_under15', 'Under 15FT')
+        display_league_stats('profit_over25', 'Over 25FT')
+        display_league_stats('profit_under25', 'Under 25FT')
+        display_league_stats('profit_over35', 'Over 35FT')
+        display_league_stats('profit_under35', 'Under 35FT')
+        display_league_stats('profit_over45', 'Over 45FT')
+        display_league_stats('profit_under45', 'Under 45FT')
+        display_league_stats('profit_btts_yes', 'BTTS Yes')
+        display_league_stats('profit_Lay_0x1', 'Lay 0x1')
+        display_league_stats('profit_Lay_1x0', 'Lay 1x0')
+        display_league_stats('profit_Lay_2x1', 'Lay 2x1')
+        display_league_stats('profit_Lay_1x2', 'Lay 1x2')
+        display_league_stats('profit_Lay_0x2', 'Lay 0x2')
+        display_league_stats('profit_Lay_0x1_ht', 'Lay 0x1 HT')
+
+    with tab7:      
+
+     ######################### Piores LIGAS ############################
+       
+
+        def display_league_stats(metric_column, metric_name):
+            league_total_profit = filtered_df.groupby('League')[metric_column].sum().reset_index()
+            league_total_profit = league_total_profit.rename(columns={metric_column: f'Total_{metric_name}_by_league'})
+            league_total_profit = league_total_profit[league_total_profit[f'Total_{metric_name}_by_league'] <= 1]
+            league_total_profit = league_total_profit.sort_values(by=f'Total_{metric_name}_by_league', ascending=False)
+            top_20_leagues = league_total_profit.head(20)
+            st.subheader(metric_name)
+            st.dataframe(top_20_leagues, width=800)
+
+        st.subheader("20 Piores Ligas")
+        st.text("Serão exibidas apenas as Ligas que acumulam pelo menos 1und de prejuizo")
        
         # Display statistics for different metrics
         display_league_stats('profit_home', 'Back Casa')
