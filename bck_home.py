@@ -2314,13 +2314,13 @@ def bck_home_page():
         def display_league_stats(metric_column, metric_name):
             league_total_profit = filtered_df.groupby('League')[metric_column].sum().reset_index()
             league_total_profit = league_total_profit.rename(columns={metric_column: f'Total_{metric_name}_by_league'})
-            league_total_profit = league_total_profit[league_total_profit[f'Total_{metric_name}_by_league'] <= -1]
+            league_total_profit = league_total_profit[league_total_profit[f'Total_{metric_name}_by_league'] <= 0]
             league_total_profit = league_total_profit.sort_values(by=f'Total_{metric_name}_by_league', ascending=False)
-            top_20_leagues = league_total_profit.head(20)
+            top_20_leagues = league_total_profit.head(25)
             st.subheader(metric_name)
             st.dataframe(top_20_leagues, width=800)
 
-        st.subheader("20 Piores Ligas")
+        st.subheader("25 Piores Ligas")
         st.text("Serão exibidas apenas as Ligas que acumulam pelo menos 1und de prejuizo")
        
         # Display statistics for different metrics
