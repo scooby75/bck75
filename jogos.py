@@ -33,7 +33,7 @@ def jogos_do_dia_page():
     columns_to_display = [
         'Date', 'Hora', 'Liga', 'Rodada', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
         'FT_Odd_Over25', 'FT_Odd_Under25', 'FT_Odd_BTTS_Yes', 'XG_Home', 'XG_Away', 'Media_Gols', 'AVG_05HT',
-        'AVG_15FT', 'AVG_25FT', 'PPG_Home', 'PPG_Away', 'Elo_Home', 'Elo_Away', 'Prob_Home', 'Prob_Away'
+        'AVG_15FT', 'AVG_25FT', 'PPG_Home', 'PPG_Away', 'Real_Prob_Home', 'Real_Prob_Draw', 'Real_Prob_Away'
     ]
 
     # Cria filtros para colunas selecionadas
