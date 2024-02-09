@@ -2062,7 +2062,7 @@ def bck_home_page():
     # Exibir mensagem de DataFrame vazio
             st.write("Nenhum dado disponível. O DataFrame está vazio.")
 
-    ###### ADD Gráfico Lay 0x2 #####   
+    ###### ADD Gráfico Lay 2x2 #####   
 
         # Fazer uma cópia do DataFrame para evitar o aviso "SettingWithCopyWarning"
         filtered_df_copy = filtered_df.copy()
@@ -2074,10 +2074,10 @@ def bck_home_page():
         filtered_df_copy.sort_values(by='Date', ascending=True, inplace=True)
     
         # Calcular o acumulado de capital ao longo do tempo (soma cumulativa da coluna Profit)
-        filtered_df_copy['Lucro_Acumulado_Lay_02'] = filtered_df_copy['profit_Lay_0x2'].cumsum()
+        filtered_df_copy['Lucro_Acumulado_Lay_22'] = filtered_df_copy['profit_Lay_2x2'].cumsum()
 
         # Criar o gráfico de linha com o acumulado de capital ao longo do tempo
-        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_Lay_02', use_container_width=True)
+        st.line_chart(filtered_df_copy, x='Date', y='Lucro_Acumulado_Lay_22', use_container_width=True)
 
 
 
@@ -2340,8 +2340,9 @@ def bck_home_page():
         display_home_stats('profit_Lay_1x0', 'Lay 1x0')
         display_home_stats('profit_Lay_2x1', 'Lay 2x1')
         display_home_stats('profit_Lay_1x2', 'Lay 1x2')
-        display_home_stats('profit_Lay_0x1_ht', 'Lay 0x1 HT')
         display_league_stats('profit_Lay_2x2', 'Lay 2x2')
+        display_home_stats('profit_Lay_0x1_ht', 'Lay 0x1 HT')
+        
 
     with tab6:      
 
@@ -2382,8 +2383,9 @@ def bck_home_page():
         display_league_stats('profit_Lay_2x1', 'Lay 2x1')
         display_league_stats('profit_Lay_1x2', 'Lay 1x2')
         display_league_stats('profit_Lay_0x2', 'Lay 0x2')
-        display_league_stats('profit_Lay_0x1_ht', 'Lay 0x1 HT')
         display_league_stats('profit_Lay_2x2', 'Lay 2x2')
+        display_league_stats('profit_Lay_0x1_ht', 'Lay 0x1 HT')
+        
 
     with tab7:      
 
