@@ -2306,7 +2306,7 @@ def bck_home_page():
 
         ########### Top 20 Times ###############
 
-        def display_home_stats(metric_column, metric_name):
+        def display_home_stats_tab5(metric_column, metric_name):
             home_total_profit = filtered_df.groupby('Home')[metric_column].sum().reset_index()
             home_total_profit = home_total_profit.rename(columns={metric_column: f'Total_{metric_name}_by_home'})
             home_total_profit = home_total_profit[home_total_profit[f'Total_{metric_name}_by_home'] > 2]
@@ -2320,28 +2320,28 @@ def bck_home_page():
      
 
         # Display statistics for different metrics
-        display_home_stats('profit_home', 'Back Casa')
-        display_home_stats('profit_lay_away', 'Lay Zebra Visitante')
-        display_home_stats('profit_draw', 'Back Empate')
-        display_home_stats('profit_over05HT', 'Over 05HT')
-        display_home_stats('profit_under05HT', 'Under 05HT')
-        display_home_stats('profit_over05', 'Over 05FT')
-        display_home_stats('profit_under05', 'Under 05FT')
-        display_home_stats('profit_over15', 'Over 15FT')
-        display_home_stats('profit_under15', 'Under 15FT')
-        display_home_stats('profit_over25', 'Over 25FT')
-        display_home_stats('profit_under25', 'Under 25FT')
-        display_home_stats('profit_over35', 'Over 35FT')
-        display_home_stats('profit_under35', 'Under 35FT')
-        display_home_stats('profit_over45', 'Over 45FT')
-        display_home_stats('profit_under45', 'Under 45FT')
-        display_home_stats('profit_btts_yes', 'BTTS Yes')
-        display_home_stats('profit_Lay_0x1', 'Lay 0x1')
-        display_home_stats('profit_Lay_1x0', 'Lay 1x0')
-        display_home_stats('profit_Lay_2x1', 'Lay 2x1')
-        display_home_stats('profit_Lay_1x2', 'Lay 1x2')
-        display_league_stats('profit_Lay_2x2', 'Lay 2x2')
-        display_home_stats('profit_Lay_0x1_ht', 'Lay 0x1 HT')
+        display_league_stats_tab5('profit_home', 'Back Casa')
+        display_league_stats_tab5('profit_lay_away', 'Lay Zebra Visitante')
+        display_league_stats_tab5('profit_draw', 'Back Empate')
+        display_league_stats_tab5('profit_over05HT', 'Over 05HT')
+        display_league_stats_tab5('profit_under05HT', 'Under 05HT')
+        display_league_stats_tab5('profit_over05', 'Over 05FT')
+        display_league_stats_tab5('profit_under05', 'Under 05FT')
+        display_league_stats_tab5('profit_over15', 'Over 15FT')
+        display_league_stats_tab5('profit_under15', 'Under 15FT')
+        display_league_stats_tab5('profit_over25', 'Over 25FT')
+        display_league_stats_tab5('profit_under25', 'Under 25FT')
+        display_league_stats_tab5('profit_over35', 'Over 35FT')
+        display_league_stats_tab5('profit_under35', 'Under 35FT')
+        display_league_stats_tab5('profit_over45', 'Over 45FT')
+        display_league_stats_tab5('profit_under45', 'Under 45FT')
+        display_league_stats_tab5('profit_btts_yes', 'BTTS Yes')
+        display_league_stats_tab5('profit_Lay_0x1', 'Lay 0x1')
+        display_league_stats_tab5('profit_Lay_1x0', 'Lay 1x0')
+        display_league_stats_tab5('profit_Lay_2x1', 'Lay 2x1')
+        display_league_stats_tab5('profit_Lay_1x2', 'Lay 1x2')
+        display_league_stats_tab5('profit_Lay_2x2', 'Lay 2x2')
+        display_league_stats_tab5('profit_Lay_0x1_ht', 'Lay 0x1 HT')
         
 
     with tab6:      
@@ -2349,7 +2349,7 @@ def bck_home_page():
      ######################### TOP LIGAS ############################
        
 
-        def display_league_stats(metric_column, metric_name):
+        def display_league_stats_tab6(metric_column, metric_name):
             league_total_profit = filtered_df.groupby('League')[metric_column].sum().reset_index()
             league_total_profit = league_total_profit.rename(columns={metric_column: f'Total_{metric_name}_by_league'})
             league_total_profit = league_total_profit[league_total_profit[f'Total_{metric_name}_by_league'] > 3]
@@ -2362,29 +2362,29 @@ def bck_home_page():
         st.text("Serão exibidas apenas as Ligas que acumulam pelo menos 3und de lucro")
        
         # Display statistics for different metrics
-        display_league_stats('profit_home', 'Back Casa')
-        display_league_stats('profit_lay_away', 'Lay Zebra Visitante')
-        display_league_stats('profit_draw', 'Back Empate')
-        display_league_stats('profit_over05HT', 'Over 05HT')
-        display_league_stats('profit_under05HT', 'Under 05HT')
-        display_league_stats('profit_over05', 'Over 05FT')
-        display_league_stats('profit_under05', 'Under 05FT')
-        display_league_stats('profit_over15', 'Over 15FT')
-        display_league_stats('profit_under15', 'Under 15FT')
-        display_league_stats('profit_over25', 'Over 25FT')
-        display_league_stats('profit_under25', 'Under 25FT')
-        display_league_stats('profit_over35', 'Over 35FT')
-        display_league_stats('profit_under35', 'Under 35FT')
-        display_league_stats('profit_over45', 'Over 45FT')
-        display_league_stats('profit_under45', 'Under 45FT')
-        display_league_stats('profit_btts_yes', 'BTTS Yes')
-        display_league_stats('profit_Lay_0x1', 'Lay 0x1')
-        display_league_stats('profit_Lay_1x0', 'Lay 1x0')
-        display_league_stats('profit_Lay_2x1', 'Lay 2x1')
-        display_league_stats('profit_Lay_1x2', 'Lay 1x2')
-        display_league_stats('profit_Lay_0x2', 'Lay 0x2')
-        display_league_stats('profit_Lay_2x2', 'Lay 2x2')
-        display_league_stats('profit_Lay_0x1_ht', 'Lay 0x1 HT')
+        display_league_stats_tab6('profit_home', 'Back Casa')
+        display_league_stats_tab6('profit_lay_away', 'Lay Zebra Visitante')
+        display_league_stats_tab6('profit_draw', 'Back Empate')
+        display_league_stats_tab6('profit_over05HT', 'Over 05HT')
+        display_league_stats_tab6('profit_under05HT', 'Under 05HT')
+        display_league_stats_tab6('profit_over05', 'Over 05FT')
+        display_league_stats_tab6('profit_under05', 'Under 05FT')
+        display_league_stats_tab6('profit_over15', 'Over 15FT')
+        display_league_stats_tab6('profit_under15', 'Under 15FT')
+        display_league_stats_tab6('profit_over25', 'Over 25FT')
+        display_league_stats_tab6('profit_under25', 'Under 25FT')
+        display_league_stats_tab6('profit_over35', 'Over 35FT')
+        display_league_stats_tab6('profit_under35', 'Under 35FT')
+        display_league_stats_tab6('profit_over45', 'Over 45FT')
+        display_league_stats_tab6('profit_under45', 'Under 45FT')
+        display_league_stats_tab6('profit_btts_yes', 'BTTS Yes')
+        display_league_stats_tab6('profit_Lay_0x1', 'Lay 0x1')
+        display_league_stats_tab6('profit_Lay_1x0', 'Lay 1x0')
+        display_league_stats_tab6('profit_Lay_2x1', 'Lay 2x1')
+        display_league_stats_tab6('profit_Lay_1x2', 'Lay 1x2')
+        display_league_stats_tab6('profit_Lay_0x2', 'Lay 0x2')
+        display_league_stats_tab6('profit_Lay_2x2', 'Lay 2x2')
+        display_league_stats_tab6('profit_Lay_0x1_ht', 'Lay 0x1 HT')
         
 
     with tab7:      
@@ -2392,7 +2392,7 @@ def bck_home_page():
      ######################### Piores LIGAS ############################
        
 
-        def display_league_stats(metric_column, metric_name):
+        def display_league_stats_tab7(metric_column, metric_name):
             league_total_profit = filtered_df.groupby('League')[metric_column].sum().reset_index()
             league_total_profit = league_total_profit.rename(columns={metric_column: f'Total_{metric_name}_by_league'})
             league_total_profit = league_total_profit[league_total_profit[f'Total_{metric_name}_by_league'] <= 0]
@@ -2405,29 +2405,29 @@ def bck_home_page():
         st.text("Serão exibidas apenas as Ligas que acumulam pelo menos 1und de prejuizo")
        
         # Display statistics for different metrics
-        display_league_stats('profit_home', 'Back Casa')
-        display_league_stats('profit_lay_away', 'Lay Zebra Visitante')
-        display_league_stats('profit_draw', 'Back Empate')
-        display_league_stats('profit_over05HT', 'Over 05HT')
-        display_league_stats('profit_under05HT', 'Under 05HT')
-        display_league_stats('profit_over05', 'Over 05FT')
-        display_league_stats('profit_under05', 'Under 05FT')
-        display_league_stats('profit_over15', 'Over 15FT')
-        display_league_stats('profit_under15', 'Under 15FT')
-        display_league_stats('profit_over25', 'Over 25FT')
-        display_league_stats('profit_under25', 'Under 25FT')
-        display_league_stats('profit_over35', 'Over 35FT')
-        display_league_stats('profit_under35', 'Under 35FT')
-        display_league_stats('profit_over45', 'Over 45FT')
-        display_league_stats('profit_under45', 'Under 45FT')
-        display_league_stats('profit_btts_yes', 'BTTS Yes')
-        display_league_stats('profit_Lay_0x1', 'Lay 0x1')
-        display_league_stats('profit_Lay_1x0', 'Lay 1x0')
-        display_league_stats('profit_Lay_2x1', 'Lay 2x1')
-        display_league_stats('profit_Lay_1x2', 'Lay 1x2')
-        display_league_stats('profit_Lay_0x2', 'Lay 0x2')
-        display_league_stats('profit_Lay_2x2', 'Lay 2x2')
-        display_league_stats('profit_Lay_0x1_ht', 'Lay 0x1 HT')
+        display_league_stats_tab7('profit_home', 'Back Casa')
+        display_league_stats_tab7('profit_lay_away', 'Lay Zebra Visitante')
+        display_league_stats_tab7('profit_draw', 'Back Empate')
+        display_league_stats_tab7('profit_over05HT', 'Over 05HT')
+        display_league_stats_tab7('profit_under05HT', 'Under 05HT')
+        display_league_stats_tab7('profit_over05', 'Over 05FT')
+        display_league_stats_tab7('profit_under05', 'Under 05FT')
+        display_league_stats_tab7('profit_over15', 'Over 15FT')
+        display_league_stats_tab7('profit_under15', 'Under 15FT')
+        display_league_stats_tab7('profit_over25', 'Over 25FT')
+        display_league_stats_tab7('profit_under25', 'Under 25FT')
+        display_league_stats_tab7('profit_over35', 'Over 35FT')
+        display_league_stats_tab7('profit_under35', 'Under 35FT')
+        display_league_stats_tab7('profit_over45', 'Over 45FT')
+        display_league_stats_tab7('profit_under45', 'Under 45FT')
+        display_league_stats_tab7('profit_btts_yes', 'BTTS Yes')
+        display_league_stats_tab7('profit_Lay_0x1', 'Lay 0x1')
+        display_league_stats_tab7('profit_Lay_1x0', 'Lay 1x0')
+        display_league_stats_tab7('profit_Lay_2x1', 'Lay 2x1')
+        display_league_stats_tab7('profit_Lay_1x2', 'Lay 1x2')
+        display_league_stats_tab7('profit_Lay_0x2', 'Lay 0x2')
+        display_league_stats_tab7('profit_Lay_2x2', 'Lay 2x2')
+        display_league_stats_tab7('profit_Lay_0x1_ht', 'Lay 0x1 HT')
 
 
 # Execute a função para criar a página
