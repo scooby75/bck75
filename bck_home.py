@@ -2306,7 +2306,7 @@ def bck_home_page():
 
         ########### Top 20 Times ###############
 
-        def display_league_stats_tab6(metric_column, metric_name):
+        def display_league_stats_tab5(metric_column, metric_name):
             home_total_profit = filtered_df.groupby('Home')[metric_column].sum().reset_index()
             home_total_profit = home_total_profit.rename(columns={metric_column: f'Total_{metric_name}_by_home'})
             home_total_profit = home_total_profit[home_total_profit[f'Total_{metric_name}_by_home'] > 2]
