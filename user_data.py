@@ -55,5 +55,6 @@ valid_users = {
     "avimar": {"password": "Poi7$5RE", "profile": 3},
     "mayroncesar": {"password": "Mayron@23", "profile": 3},
     "chami1414": {"password": "@Chami1414#24", "profile": 3},
+    "Marcelo8302": {"password": "@marcelo8302#", "profile": 3},
     #"fellipinho": {"password": "110099", "profile": 3}
 }
