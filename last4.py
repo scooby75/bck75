@@ -93,18 +93,18 @@ def last4_page():
         # Filtra os resultados com L + D >= 7 (Piores Equipes)
         piores_equipes = nomes_coincidentes[(nomes_coincidentes["L"] + nomes_coincidentes["D"]) >= 7].head(800)
 
-        # Função para destacar o time em vermelho
-        def highlight_red(s):
-            return f"<span style='color:red'>{s}</span>"
+        # Função para destacar o time em verde
+        def highlight_green(s):
+            return f"<span style='color:green'>{s}</span>"
 
         # Apresenta os resultados em DataFrames do Streamlit com destaque em vermelho
         st.subheader("Jogos do Dia - Melhores Equipes")
         melhores_equipes_styled = melhores_equipes[["Date", "Hora", "Liga", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A"]].copy()
-        melhores_equipes_styled["Home"] = melhores_equipes_styled["Home"].apply(highlight_red)
+        melhores_equipes_styled["Home"] = melhores_equipes_styled["Home"].apply(highlight_green)
         st.write(melhores_equipes_styled.to_html(escape=False), unsafe_allow_html=True)
 
         # Cria um arquivo CSV temporário
-        temp_csv = st.cache(pd.DataFrame.to_csv)(melhores_equipes_styled, index=False)
+        temp_csv = st.cache_data(pd.DataFrame.to_csv)(melhores_equipes_styled, index=False)
 
         # Adiciona um botão para fazer o download do arquivo CSV
         st.download_button(
@@ -116,7 +116,7 @@ def last4_page():
 
         st.subheader("Jogos do Dia - Piores Equipes")
         piores_equipes_styled = piores_equipes[["Date", "Hora", "Liga", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A"]].copy()
-        piores_equipes_styled["Home"] = piores_equipes_styled["Home"].apply(highlight_red)
+        piores_equipes_styled["Home"] = piores_equipes_styled["Home"].apply(highlight_green)
         st.write(piores_equipes_styled.to_html(escape=False), unsafe_allow_html=True)
 
 # Chamar a função para iniciar o aplicativo
