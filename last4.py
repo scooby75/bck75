@@ -103,6 +103,17 @@ def last4_page():
         melhores_equipes_styled["Home"] = melhores_equipes_styled["Home"].apply(highlight_red)
         st.write(melhores_equipes_styled.to_html(escape=False), unsafe_allow_html=True)
 
+        # Cria um arquivo CSV temporário
+        temp_csv = st.cache(pd.DataFrame.to_csv)(melhores_equipes_styled, index=False)
+
+        # Adiciona um botão para fazer o download do arquivo CSV
+        st.download_button(
+            label="Download CSV",
+            data=temp_csv,
+            file_name="melhores_equipes_last4.csv",
+            mime="text/csv",
+        )
+
         st.subheader("Jogos do Dia - Piores Equipes")
         piores_equipes_styled = piores_equipes[["Date", "Hora", "Liga", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A"]].copy()
         piores_equipes_styled["Home"] = piores_equipes_styled["Home"].apply(highlight_red)
