@@ -88,6 +88,7 @@ def bck_home_page():
 
         # Filter for placar_ht e placar_ft
         with col4:
+            
             Placar_HT_H_min = st.number_input("HT_Goals_H Mínimo", value=0.0)
             Placar_HT_H_max = st.number_input("HT_Goals_H Máximo", value=10.0)
 
@@ -119,10 +120,10 @@ def bck_home_page():
             (bck_home_df['FT_Odd_Over25'] <= over_25ft_max) &
             (bck_home_df['Odd_BTTS_Yes'] >= btts_yes_min) &
             (bck_home_df['Odd_BTTS_Yes'] <= btts_yes_max) &
-            (bck_home_df['Placar_HT_H'] >= Placar_HT_H_min) &
-            (bck_home_df['Placar_HT_H'] <= Placar_HT_H_max) &
-            (bck_home_df['Placar_HT_A'] >= Placar_HT_A_min) &
-            (bck_home_df['Placar_HT_A'] <= Placar_HT_A_max) &
+            (bck_home_df['HT_Goals_H'] >= Placar_HT_H_min) &
+            (bck_home_df['HT_Goals_H'] <= Placar_HT_H_max) &
+            (bck_home_df['HT_Goals_A'] >= Placar_HT_A_min) &
+            (bck_home_df['HT_Goals_A'] <= Placar_HT_A_max) &
         ]
 
         # Display selected columns from the filtered data
