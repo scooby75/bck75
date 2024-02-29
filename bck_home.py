@@ -43,7 +43,7 @@ def bck_home_page():
         st.header("Filtros")
 
         # Organize filters into columns
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
 
         # Filter by League, Season, Round, Home
         with col1:
@@ -86,6 +86,16 @@ def bck_home_page():
             btts_yes_min = st.number_input("BTTS_Yes Mínimo", value=0.0)
             btts_yes_max = st.number_input("BTTS_Yes Máximo", value=10.0)
 
+        # Filter for placar_ht e placar_ft
+        with col4:
+            Placar_HT_H_min = st.number_input("HT_Goals_H Mínimo", value=0.0)
+            Placar_HT_H_max = st.number_input("HT_Goals_H Máximo", value=10.0)
+
+            Placar_HT_A_min = st.number_input("HT_Goals_A Mínimo", value=0.0)
+            Placar_HT_A_max = st.number_input("HT_Goals_A Máximo", value=10.0)
+        
+            
+
         # Remover espaços em branco dos nomes das colunas
         bck_home_df.columns = bck_home_df.columns.str.strip()
 
@@ -108,7 +118,11 @@ def bck_home_page():
             (bck_home_df['FT_Odd_Over25'] >= over_25ft_min) &
             (bck_home_df['FT_Odd_Over25'] <= over_25ft_max) &
             (bck_home_df['Odd_BTTS_Yes'] >= btts_yes_min) &
-            (bck_home_df['Odd_BTTS_Yes'] <= btts_yes_max)
+            (bck_home_df['Odd_BTTS_Yes'] <= btts_yes_max) &
+            (bck_home_df['Placar_HT_H'] >= Placar_HT_H_min) &
+            (bck_home_df['Placar_HT_H'] <= Placar_HT_H_max) &
+            (bck_home_df['Placar_HT_A'] >= Placar_HT_A_min) &
+            (bck_home_df['Placar_HT_A'] <= Placar_HT_A_max) &
         ]
 
         # Display selected columns from the filtered data
