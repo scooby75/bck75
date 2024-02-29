@@ -123,7 +123,7 @@ def bck_home_page():
             (bck_home_df['HT_Goals_H'] >= Placar_HT_H_min) &
             (bck_home_df['HT_Goals_H'] <= Placar_HT_H_max) &
             (bck_home_df['HT_Goals_A'] >= Placar_HT_A_min) &
-            (bck_home_df['HT_Goals_A'] <= Placar_HT_A_max) &
+            (bck_home_df['HT_Goals_A'] <= Placar_HT_A_max) 
         ]
 
         # Display selected columns from the filtered data
