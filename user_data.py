@@ -52,7 +52,7 @@ valid_users = {
     #"LuisFreire50": {"password": "LA2023l+++", "profile": 3},
     #"Fagundes": {"password": "Fagundes2023", "profile": 3},
     #"Heltonbh": {"password": "Senha@01", "profile": 3},
-    "avimar": {"password": "Poi7$5RE", "profile": 3}, #02/03
+    #"avimar": {"password": "Poi7$5RE", "profile": 3}, #02/03
     "mayroncesar": {"password": "Mayron@23", "profile": 3}, #04/03
     #"chami1414": {"password": "@Chami1414#24", "profile": 3},
     "Marcelo8302": {"password": "@marcelo8302#", "profile": 3}, #13/03
