@@ -24,7 +24,7 @@ def bck_home_page():
         #st.write("Acesso concedido!")  # Debug
          
     ##### PÁGINA BCK HOME ######
-    tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top Equipes", "Top Ligas", "Piores Ligas"])
+    tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs(["Partidas Filtradas", "Desempenho HT", "Desempenho FT", "Backtesting Mercado", "Placar", "Top Equipes", "Top Ligas", "Piores Ligas", "Piores Equipes"])
 
     with tab0:
         # Carregar os dados
@@ -2443,6 +2443,48 @@ def bck_home_page():
         display_league_stats_tab7('profit_Lay_0x2', 'Lay 0x2')
         display_league_stats_tab7('profit_Lay_2x2', 'Lay 2x2')
         display_league_stats_tab7('profit_Lay_0x1_ht', 'Lay 0x1 HT')
+
+   with tab8:      
+
+     ######################### Piores Times ############################
+       
+
+        def display_home_stats_tab8(metric_column, metric_name):
+            home_total_profit = filtered_df.groupby('Home')[metric_column].sum().reset_index()
+            home_total_profit = home_total_profit.rename(columns={metric_column: f'Total_{metric_name}_by_home'})
+            home_total_profit = home_total_profit[home_total_profit[f'Total_{metric_name}_by_home'] <= 0]
+            home_total_profit = home_total_profit.sort_values(by=f'Total_{metric_name}_by_home', ascending=False)
+            top_25_home = home_total_profit.head(25)
+            st.subheader(metric_name)
+            st.dataframe(top_25_home, width=800)
+
+        st.subheader("25 Piores Times Jogando em Casa")
+        st.text("Serão exibidas apenas os Times que acumulam pelo menos 1und de prejuizo")
+       
+        # Display statistics for different metrics
+        display_home_stats_tab8('profit_home', 'Back Casa')
+        display_home_stats_tab8('profit_lay_away', 'Lay Zebra Visitante')
+        display_home_stats_tab8('profit_draw', 'Back Empate')
+        display_home_stats_tab8('profit_over05HT', 'Over 05HT')
+        display_home_stats_tab8('profit_under05HT', 'Under 05HT')
+        display_home_stats_tab8('profit_over05', 'Over 05FT')
+        display_home_stats_tab8('profit_under05', 'Under 05FT')
+        display_home_stats_tab8('profit_over15', 'Over 15FT')
+        display_home_stats_tab8('profit_under15', 'Under 15FT')
+        display_home_stats_tab8('profit_over25', 'Over 25FT')
+        display_home_stats_tab8('profit_under25', 'Under 25FT')
+        display_home_stats_tab8('profit_over35', 'Over 35FT')
+        display_home_stats_tab8('profit_under35', 'Under 35FT')
+        display_home_stats_tab8('profit_over45', 'Over 45FT')
+        display_home_stats_tab8('profit_under45', 'Under 45FT')
+        display_home_stats_tab8('profit_btts_yes', 'BTTS Yes')
+        display_home_stats_tab8('profit_Lay_0x1', 'Lay 0x1')
+        display_home_stats_tab8('profit_Lay_1x0', 'Lay 1x0')
+        display_home_stats_tab8('profit_Lay_2x1', 'Lay 2x1')
+        display_home_stats_tab8('profit_Lay_1x2', 'Lay 1x2')
+        display_home_stats_tab8('profit_Lay_0x2', 'Lay 0x2')
+        display_home_stats_tab8('profit_Lay_2x2', 'Lay 2x2')
+        display_home_stats_tab8('profit_Lay_0x1_ht', 'Lay 0x1 HT')
 
 
 # Execute a função para criar a página
