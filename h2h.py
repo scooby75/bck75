@@ -27,12 +27,15 @@ def h2h_page():
     home_team = st.selectbox("Selecione a equipe Home:", home_teams)
     away_team = st.selectbox("Selecione a equipe Away:", away_teams)
 
+    # Adicionar um slider para selecionar o intervalo de odds
+    min_odd_home, max_odd_home = st.slider("Selecione o intervalo de odds:", min_value=1.0, max_value=10.0, value=(1.0, 2.0), step=0.01)
+
     # Definir os intervalos de Odd
     odd_intervals = [(1.01, 1.30), (1.31, 1.50), (1.51, 1.70), (1.71, 1.90), (1.91, 2.1), (2.11, 2.3), (2.31, 2.5), (2.51, 2.7), (2.71, 3), (3.01, 3.5), (3.51, 4), (4.01, 4.50), (4.51, 5.5), (5.51, 6.5), (6.51, 7.5)]
 
     # Filtrar os resultados para as equipes selecionadas
-    home_team_wins = data[(data['Resultado_FT'] == 'H') & (data['Home'] == home_team) & (data['Away'] == away_team)]
-    away_team_wins = data[(data['Resultado_FT'] == 'A') & (data['Home'] == home_team) & (data['Away'] == away_team)]
+    home_team_wins = data[(data['Resultado_FT'] == 'H') & (data['Home'] == home_team) & (data['Away'] == away_team) & (data['FT_Odd_H'] >= min_odd_home) & (data['FT_Odd_H'] <= max_odd_home)]
+    away_team_wins = data[(data['Resultado_FT'] == 'A') & (data['Home'] == home_team) & (data['Away'] == away_team) & (data['FT_Odd_A'] >= min_odd_home) & (data['FT_Odd_A'] <= max_odd_home)]
     draws = data[(data['Resultado_FT'] == 'D') & (data['Home'] == home_team) & (data['Away'] == away_team)]
 
     # Contar o número de partidas vencidas por cada equipe
