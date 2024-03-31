@@ -3,16 +3,13 @@ datetime
 scipy
 openpyxl
 bcrypt
-psycopg2
 numpy
 altair
 requests
 secure
-#streamlit==1.26.0
 streamlit
 matplotlib
 plotly
-libpq-dev
 psycopg2-binary
 
 
