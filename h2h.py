@@ -48,6 +48,14 @@ def h2h_page():
         st.subheader("Últimos confrontos h2h:")
         st.dataframe(matching_games[['Date', 'Season', 'League', 'Home', 'Away', 'Resultado_FT', 'Placar_FT', 'FT_Odd_H', 'FT_Odd_A']])
 
+        # Verificar se há dados nos últimos confrontos h2h
+        if not matching_games.empty:
+        # Encontrar o placar FT mais comum
+            most_common_score = matching_games['Placar_FT'].value_counts().idxmax()
+            st.write(f'O placar FT mais comum é: {most_common_score}')
+        else:
+            st.write("Nenhum jogo correspondente encontrado.")
+
         # Filtrar os últimos jogos da equipe da casa com base no intervalo de odds
         ultimos_jogos_casa = matching_games.loc[(matching_games['Home'] == home_team)].sort_values(by='Date', ascending=False).head(5)
 
