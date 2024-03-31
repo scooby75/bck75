@@ -74,7 +74,7 @@ def h2h_page():
                 most_common_score_in_group = odd_group['Placar_FT'].value_counts().idxmax()
                 st.write(f'Intervalo de Odd: [{lower_bound:.2f}, {upper_bound:.2f}): Placar mais comum: {most_common_score_in_group}')
 
-   # Filtrar os jogos correspondentes às equipes selecionadas e ao intervalo de odds
+    # Filtrar os jogos correspondentes às equipes selecionadas e ao intervalo de odds
     matching_games = data.loc[(data['Home'] == home_team) & 
                               (data['Away'] == away_team) & 
                               (data['FT_Odd_H'] >= min_odd_home) & 
@@ -89,11 +89,7 @@ def h2h_page():
     # Filtrar os últimos jogos da equipe da casa com base no intervalo de odds
     ultimos_jogos_casa = data.loc[(data['Home'] == home_team) & 
                                   (data['FT_Odd_H'] >= min_odd_home) & 
-                                  (data['FT_Odd_H'] <= max_odd_home)].sort_values(by='Unnamed: 0', ascending=False).head(5)[['Date', 'Time', 'League', 'Season', 'Home', 'Away', 'Placar_HT', 'Placar_FT', 'FT_Odd_H', 'FT_Odd_A']]
-
-    # Exibir o novo DataFrame para a equipe da casa
-    st.subheader("Últimos Jogos - Equipe da Casa")
-    st.dataframe(ultimos_jogos_casa, width=800)
+                                  (data['FT_Odd_H'] <= max_odd_home)].sort_values(by='Unnamed: 0', ascending=False).head(5)
 
     # Verificar se a coluna 'Resultado_FT' está presente no DataFrame
     if 'Resultado_FT' in ultimos_jogos_casa.columns:
@@ -151,7 +147,7 @@ def h2h_page():
         vitorias_visitante = 0
         empates_visitante = 0
         derrotas_visitante = 0
-    
+
     # Criar um DataFrame com as estatísticas para a equipe visitante
     stats_visitante = pd.DataFrame({
         'Estatísticas': ['Vitórias', 'Empates', 'Derrotas'],
