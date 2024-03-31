@@ -27,15 +27,18 @@ def h2h_page():
     home_team = st.selectbox("Selecione a equipe Home:", home_teams)
     away_team = st.selectbox("Selecione a equipe Away:", away_teams)
 
-    # Adicionar um slider para selecionar o intervalo de odds
-    min_odd_home, max_odd_home = st.slider("Selecione o intervalo de odds:", min_value=1.0, max_value=10.0, value=(1.0, 2.0), step=0.01)
+    # Adicionar um slider para selecionar o intervalo de odds home
+    min_odd_home, max_odd_home = st.slider("Selecione o intervalo de odds para a equipe da casa:", min_value=1.0, max_value=10.0, value=(1.0, 2.0), step=0.01)
+
+    # Adicionar um slider para selecionar o intervalo de odds away
+    min_odd_away, max_odd_away = st.slider("Selecione o intervalo de odds para a equipe visitante:", min_value=1.0, max_value=10.0, value=(1.0, 2.0), step=0.01)
 
     # Definir os intervalos de Odd
     odd_intervals = [(1.01, 1.30), (1.31, 1.50), (1.51, 1.70), (1.71, 1.90), (1.91, 2.1), (2.11, 2.3), (2.31, 2.5), (2.51, 2.7), (2.71, 3), (3.01, 3.5), (3.51, 4), (4.01, 4.50), (4.51, 5.5), (5.51, 6.5), (6.51, 7.5)]
 
     # Filtrar os resultados para as equipes selecionadas
     home_team_wins = data.loc[(data['Resultado_FT'] == 'H') & (data['Home'] == home_team) & (data['Away'] == away_team) & (data['FT_Odd_H'] >= min_odd_home) & (data['FT_Odd_H'] <= max_odd_home)]
-    away_team_wins = data.loc[(data['Resultado_FT'] == 'A') & (data['Home'] == home_team) & (data['Away'] == away_team) & (data['FT_Odd_A'] >= min_odd_home) & (data['FT_Odd_A'] <= max_odd_home)]
+    away_team_wins = data.loc[(data['Resultado_FT'] == 'A') & (data['Home'] == home_team) & (data['Away'] == away_team) & (data['FT_Odd_A'] >= min_odd_away) & (data['FT_Odd_A'] <= max_odd_away)]
     draws = data.loc[(data['Resultado_FT'] == 'D') & (data['Home'] == home_team) & (data['Away'] == away_team)]
 
     # Contar o número de partidas vencidas por cada equipe
@@ -78,7 +81,9 @@ def h2h_page():
     matching_games = data.loc[(data['Home'] == home_team) & 
                               (data['Away'] == away_team) & 
                               (data['FT_Odd_H'] >= min_odd_home) & 
-                              (data['FT_Odd_H'] <= max_odd_home)]
+                              (data['FT_Odd_H'] <= max_odd_home) &
+                              (data['FT_Odd_A'] >= min_odd_away) & 
+                              (data['FT_Odd_A'] <= max_odd_away)]
 
     if not matching_games.empty:
         st.subheader("Últimos confrontos h2h:")
@@ -135,10 +140,10 @@ def h2h_page():
         st.subheader(f"Stats Gols - {home_team}")
         st.dataframe(stats_gols_casa)
 
-    # Selecionar as 5 últimas partidas da equipe visitante
+    # Filtrar os últimos jogos da equipe visitante com base no intervalo de odds
     ultimos_jogos_visitante = data.loc[(data['Away'] == away_team) & 
-                                       (data['FT_Odd_A'] >= min_odd_home) & 
-                                       (data['FT_Odd_A'] <= max_odd_home)].sort_values(by='Unnamed: 0', ascending=False).head(5)
+                                       (data['FT_Odd_A'] >= min_odd_away) & 
+                                       (data['FT_Odd_A'] <= max_odd_away)].sort_values(by='Unnamed: 0', ascending=False).head(5)
 
     # Calcular as estatísticas de vitórias, empates e derrotas para a equipe visitante
     if not ultimos_jogos_visitante.empty and 'Resultado_FT' in ultimos_jogos_visitante.columns:
