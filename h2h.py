@@ -146,10 +146,15 @@ def h2h_page():
     ultimos_jogos_visitante = data.loc[(data['Away'] == away_team)].sort_values(by='Unnamed: 0', ascending=False).head(5)
 
     # Calcular as estatísticas de vitórias, empates e derrotas
-    vitorias = ultimos_jogos_visitante.loc[ultimos_jogos_visitante['Resultado_FT'] == 'A', 'Resultado_FT'].count()
-    empates = ultimos_jogos_visitante.loc[ultimos_jogos_visitante['Resultado_FT'] == 'D', 'Resultado_FT'].count()
-    derrotas = ultimos_jogos_visitante.loc[ultimos_jogos_visitante['Resultado_FT'] == 'H', 'Resultado_FT'].count()
-
+    if not ultimos_jogos_casa.empty and 'Resultado_FT' in ultimos_jogos_casa.columns:
+        vitorias = ultimos_jogos_casa.loc[ultimos_jogos_casa['Resultado_FT'] == 'H', 'Resultado_FT'].count()
+        empates = ultimos_jogos_casa.loc[ultimos_jogos_casa['Resultado_FT'] == 'D', 'Resultado_FT'].count()
+        derrotas = ultimos_jogos_casa.loc[ultimos_jogos_casa['Resultado_FT'] == 'A', 'Resultado_FT'].count()
+    else:
+        vitorias = 0
+        empates = 0
+        derrotas = 0
+    
     # Criar um DataFrame com as estatísticas
     stats_casa = pd.DataFrame({
         'Estatísticas': ['Vitórias', 'Empates', 'Derrotas'],
