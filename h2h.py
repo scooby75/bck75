@@ -95,8 +95,15 @@ def h2h_page():
     st.subheader("Últimos Jogos - Equipe da Casa")
     st.dataframe(ultimos_jogos_casa, width=800)
 
+    # Verificar se a coluna 'Resultado_FT' está presente no DataFrame
+    if 'Resultado_FT' in ultimos_jogos_casa.columns:
+        # Calcular o número de vitórias da equipe da casa
+        vitorias = ultimos_jogos_casa.loc[ultimos_jogos_casa['Resultado_FT'] == 'H', 'Resultado_FT'].count()
+    else:
+        # Definir vitorias como 0 caso a coluna não esteja presente
+        vitorias = 0
+
     # Calcular as estatísticas de vitórias, empates e derrotas
-    vitorias = ultimos_jogos_casa.loc[ultimos_jogos_casa['Resultado_FT'] == 'H', 'Resultado_FT'].count()
     empates = ultimos_jogos_casa.loc[ultimos_jogos_casa['Resultado_FT'] == 'D', 'Resultado_FT'].count()
     derrotas = ultimos_jogos_casa.loc[ultimos_jogos_casa['Resultado_FT'] == 'A', 'Resultado_FT'].count()
 
@@ -106,89 +113,76 @@ def h2h_page():
         'Total': [vitorias, empates, derrotas]
     })
 
-    # Selecionar as 5 últimas partidas da equipe da casa
-    ultimos_jogos_casa = data.loc[data['Home'] == home_team].sort_values(by='Unnamed: 0', ascending=False).head(5)
-
     # Calcular a média de gols marcados (Home) nas últimas 5 partidas
-    media_gols_feitos = ultimos_jogos_casa['FT_Goals_H'].mean()
+    media_gols_feitos_casa = ultimos_jogos_casa['FT_Goals_H'].mean()
 
     # Calcular a média de gols tomados (Home) nas últimas 5 partidas
-    media_gols_tomados = ultimos_jogos_casa['FT_Goals_A'].mean()
+    media_gols_tomados_casa = ultimos_jogos_casa['FT_Goals_A'].mean()
 
-    # Criar um DataFrame com os valores calculados
-    stats_gols = pd.DataFrame({
+    # Criar um DataFrame com os valores calculados para a equipe da casa
+    stats_gols_casa = pd.DataFrame({
         'Equipe da Casa': [home_team],
-        'Gols Feitos (Home)': [media_gols_feitos],
-        'Gols Tomados (Home)': [media_gols_tomados]
+        'Gols Feitos (Home)': [media_gols_feitos_casa],
+        'Gols Tomados (Home)': [media_gols_tomados_casa]
     })
 
-    # Criar duas colunas, col1 e col2
+    # Criar duas colunas, col3 e col4
     col3, col4 = st.columns(2)
 
     # Em col3, exibir st.dataframe(stats_casa)
     with col3:
-        st.subheader("Stats Desempenho")
+        st.subheader("Stats Desempenho - Equipe da Casa")
         st.dataframe(stats_casa)
 
     # Em col4, exibir st.dataframe(stats_gols)
     with col4:
-        st.subheader("Stats Gols")
-        st.dataframe(stats_gols)
-
-    # Selecionar as 5 últimas partidas da equipe visitante
-    ultimos_jogos_visitante = data.loc[(data['Away'] == away_team)].sort_values(by='Unnamed: 0', ascending=False).head(5)[['Date', 'Time', 'League', 'Season', 'Home', 'Away', 'Placar_HT', 'Placar_FT']]
-
-    # Exibir o novo DataFrame para a equipe visitante
-    st.subheader("Últimos Jogos - Equipe Visitante")
-    st.dataframe(ultimos_jogos_visitante, width=800)
+        st.subheader("Stats Gols - Equipe da Casa")
+        st.dataframe(stats_gols_casa)
 
     # Selecionar as 5 últimas partidas da equipe visitante
     ultimos_jogos_visitante = data.loc[(data['Away'] == away_team)].sort_values(by='Unnamed: 0', ascending=False).head(5)
 
-    # Calcular as estatísticas de vitórias, empates e derrotas
-    if not ultimos_jogos_casa.empty and 'Resultado_FT' in ultimos_jogos_casa.columns:
-        vitorias = ultimos_jogos_casa.loc[ultimos_jogos_casa['Resultado_FT'] == 'H', 'Resultado_FT'].count()
-        empates = ultimos_jogos_casa.loc[ultimos_jogos_casa['Resultado_FT'] == 'D', 'Resultado_FT'].count()
-        derrotas = ultimos_jogos_casa.loc[ultimos_jogos_casa['Resultado_FT'] == 'A', 'Resultado_FT'].count()
+    # Calcular as estatísticas de vitórias, empates e derrotas para a equipe visitante
+    if not ultimos_jogos_visitante.empty and 'Resultado_FT' in ultimos_jogos_visitante.columns:
+        vitorias_visitante = ultimos_jogos_visitante.loc[ultimos_jogos_visitante['Resultado_FT'] == 'A', 'Resultado_FT'].count()
+        empates_visitante = ultimos_jogos_visitante.loc[ultimos_jogos_visitante['Resultado_FT'] == 'D', 'Resultado_FT'].count()
+        derrotas_visitante = ultimos_jogos_visitante.loc[ultimos_jogos_visitante['Resultado_FT'] == 'H', 'Resultado_FT'].count()
     else:
-        vitorias = 0
-        empates = 0
-        derrotas = 0
+        vitorias_visitante = 0
+        empates_visitante = 0
+        derrotas_visitante = 0
     
-    # Criar um DataFrame com as estatísticas
-    stats_casa = pd.DataFrame({
+    # Criar um DataFrame com as estatísticas para a equipe visitante
+    stats_visitante = pd.DataFrame({
         'Estatísticas': ['Vitórias', 'Empates', 'Derrotas'],
-        'Total': [vitorias, empates, derrotas]
+        'Total': [vitorias_visitante, empates_visitante, derrotas_visitante]
     })
 
-    # Selecionar as 5 últimas partidas da equipe visitante
-    ultimos_jogos_visitante = data.loc[(data['Away'] == away_team)].sort_values(by='Unnamed: 0', ascending=False).head(5)
-
     # Calcular a média de gols marcados (Away) nas últimas 5 partidas
-    media_gols_feitos = ultimos_jogos_visitante['FT_Goals_A'].mean()
+    media_gols_feitos_visitante = ultimos_jogos_visitante['FT_Goals_A'].mean()
 
     # Calcular a média de gols tomados (Away) nas últimas 5 partidas
-    media_gols_tomados = ultimos_jogos_visitante['FT_Goals_H'].mean()
+    media_gols_tomados_visitante = ultimos_jogos_visitante['FT_Goals_H'].mean()
 
-    # Criar um DataFrame com os valores calculados
-    stats_gols = pd.DataFrame({
+    # Criar um DataFrame com os valores calculados para a equipe visitante
+    stats_gols_visitante = pd.DataFrame({
         'Equipe Visitante': [away_team],
-        'Gols Feitos (Away)': [media_gols_feitos],
-        'Gols Tomados (Away)': [media_gols_tomados]
+        'Gols Feitos (Away)': [media_gols_feitos_visitante],
+        'Gols Tomados (Away)': [media_gols_tomados_visitante]
     })
 
     # Criar duas colunas, col5 e col6
     col5, col6 = st.columns(2)
 
-    # Em col1, exibir st.dataframe(stats_casa)
+    # Em col5, exibir st.dataframe(stats_visitante)
     with col5:
-        st.subheader("Stats Desempenho")
-        st.dataframe(stats_casa)
+        st.subheader("Stats Desempenho - Equipe Visitante")
+        st.dataframe(stats_visitante)
 
-    # Em col2, exibir st.dataframe(stats_gols)
+    # Em col6, exibir st.dataframe(stats_gols_visitante)
     with col6:
-        st.subheader("Stats Gols")
-        st.dataframe(stats_gols)
+        st.subheader("Stats Gols - Equipe Visitante")
+        st.dataframe(stats_gols_visitante)
 
 # Chamar a função para iniciar o aplicativo
 h2h_page()
