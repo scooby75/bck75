@@ -74,24 +74,26 @@ def h2h_page():
                 most_common_score_in_group = odd_group['Placar_FT'].value_counts().idxmax()
                 st.write(f'Intervalo de Odd: [{lower_bound:.2f}, {upper_bound:.2f}): Placar mais comum: {most_common_score_in_group}')
 
-    # Filtrar os jogos correspondentes às equipes selecionadas
-    matching_games = data.loc[(data['Home'] == home_team) & (data['Away'] == away_team)]
+   # Filtrar os jogos correspondentes às equipes selecionadas e ao intervalo de odds
+    matching_games = data.loc[(data['Home'] == home_team) & 
+                              (data['Away'] == away_team) & 
+                              (data['FT_Odd_H'] >= min_odd_home) & 
+                              (data['FT_Odd_H'] <= max_odd_home)]
 
     if not matching_games.empty:
         st.subheader("Últimos confrontos h2h:")
-        st.dataframe(matching_games[['Date', 'Season', 'League', 'Home', 'Away', 'Resultado_FT', 'Placar_FT', 'FT_Odd_H']])
+        st.dataframe(matching_games[['Date', 'Season', 'League', 'Home', 'Away', 'Resultado_FT', 'Placar_FT', 'FT_Odd_H', 'FT_Odd_A']])
     else:
         st.write("Nenhum jogo correspondente encontrado.")
 
-    # Selecionar as 5 últimas partidas da equipe da casa
-    ultimos_jogos_casa = data.loc[data['Home'] == home_team].sort_values(by='Unnamed: 0', ascending=False).head(5)[['Date', 'Time', 'League', 'Season', 'Home', 'Away', 'Placar_HT', 'Placar_FT']]
+    # Filtrar os últimos jogos da equipe da casa com base no intervalo de odds
+    ultimos_jogos_casa = data.loc[(data['Home'] == home_team) & 
+                                  (data['FT_Odd_H'] >= min_odd_home) & 
+                                  (data['FT_Odd_H'] <= max_odd_home)].sort_values(by='Unnamed: 0', ascending=False).head(5)[['Date', 'Time', 'League', 'Season', 'Home', 'Away', 'Placar_HT', 'Placar_FT', 'FT_Odd_H', 'FT_Odd_A']]
 
     # Exibir o novo DataFrame para a equipe da casa
     st.subheader("Últimos Jogos - Equipe da Casa")
     st.dataframe(ultimos_jogos_casa, width=800)
-
-    # Selecionar as 5 últimas partidas da equipe da casa
-    ultimos_jogos_casa = data.loc[data['Home'] == home_team].sort_values(by='Unnamed: 0', ascending=False).head(5)
 
     # Calcular as estatísticas de vitórias, empates e derrotas
     vitorias = ultimos_jogos_casa.loc[ultimos_jogos_casa['Resultado_FT'] == 'H', 'Resultado_FT'].count()
