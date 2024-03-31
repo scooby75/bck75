@@ -127,16 +127,18 @@ def h2h_page():
 
     # Em col3, exibir st.dataframe(stats_casa)
     with col3:
-        st.subheader("Stats Desempenho - Equipe da Casa")
+        st.subheader(f"Stats Desempenho - {home_team}")
         st.dataframe(stats_casa)
 
     # Em col4, exibir st.dataframe(stats_gols)
     with col4:
-        st.subheader("Stats Gols - Equipe da Casa")
+        st.subheader(f"Stats Gols - {home_team}")
         st.dataframe(stats_gols_casa)
 
     # Selecionar as 5 últimas partidas da equipe visitante
-    ultimos_jogos_visitante = data.loc[(data['Away'] == away_team)].sort_values(by='Unnamed: 0', ascending=False).head(5)
+    ultimos_jogos_visitante = data.loc[(data['Away'] == away_team) & 
+                                       (data['FT_Odd_A'] >= min_odd_home) & 
+                                       (data['FT_Odd_A'] <= max_odd_home)].sort_values(by='Unnamed: 0', ascending=False).head(5)
 
     # Calcular as estatísticas de vitórias, empates e derrotas para a equipe visitante
     if not ultimos_jogos_visitante.empty and 'Resultado_FT' in ultimos_jogos_visitante.columns:
@@ -172,12 +174,12 @@ def h2h_page():
 
     # Em col5, exibir st.dataframe(stats_visitante)
     with col5:
-        st.subheader("Stats Desempenho - Equipe Visitante")
+        st.subheader(f"Stats Desempenho - {away_team}")
         st.dataframe(stats_visitante)
 
     # Em col6, exibir st.dataframe(stats_gols_visitante)
     with col6:
-        st.subheader("Stats Gols - Equipe Visitante")
+        st.subheader(f"Stats Gols - {away_team}")
         st.dataframe(stats_gols_visitante)
 
 # Chamar a função para iniciar o aplicativo
