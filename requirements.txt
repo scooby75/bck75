@@ -8,7 +8,8 @@ numpy
 altair
 requests
 secure
-streamlit==1.26.0
+#streamlit==1.26.0
+streamlit
 matplotlib
 plotly
 libpq-dev
