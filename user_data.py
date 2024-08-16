@@ -56,5 +56,6 @@ valid_users = {
     #"mayroncesar": {"password": "Mayron@23", "profile": 3}, #04/03
     #"chami1414": {"password": "@Chami1414#24", "profile": 3},
     #"Marcelo8302": {"password": "@marcelo8302#", "profile": 3}, #13/03
-    #"fellipinho": {"password": "110099", "profile": 3}
+    #"fellipinho": {"password": "110099", "profile": 3},
+    #"jpc0rrea": {"password": "jpc0rrea@24", "profile": 3}
 }
